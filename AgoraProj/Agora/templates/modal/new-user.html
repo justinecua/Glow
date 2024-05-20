@@ -1,0 +1,71 @@
+
+{% block modal %}
+        <div id="PopUp-Overlay">
+            <div id="PopUp-Container1">
+
+                <div class="PopUp-Content">
+                
+                    <div class="PUC-Top">
+                        <div class="Pop-Cover">
+                            <img src="../static/images/new-user-welcome.jpg" alt="">
+                        </div>
+                    </div>
+
+                    <div class="PUC-Mid">
+                        {% if request.user.is_authenticated %}
+                            <h1> Welcome, {{ request.user.username | capfirst }}!</h1>
+                            <p>Your feed awaits. Let's spread some positivity!</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="PUC-Bottom">
+                        <button id="Modal1-Button">Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="PopUp-Container2">
+                <form id="change-prof" action="{% url 'uploadprofile' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="PopUp-Content">
+
+                        <div class="PopUp-Top">
+                            <h2>Upload Profile</h2>
+                            <p>Click camera to choose profile</p>
+                        </div>
+                        <div class="PopUp-Mid">
+
+                            <div class="Prof-Container1">
+
+                                <div class="ProfSub-Cont">
+                                    <img id="default-profile" src="../static/images/default-profile2.jpg" alt="">
+                                    <div id="camera-prof"> <img src="static/images/camera6.png" alt=""></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="PopUp-Bottom">
+                            <input type="file" name="accprofile" id="Profile-file" style="display:none" ;>
+                            <input type="text" placeholder="First Name" name="firstname">
+                            <input type="text" placeholder="Last Name" name="lastname">
+                            <select name="gender" id="">
+                                <option value="">Choose Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="PopUp-Bottom2">
+                            <button>Submit</button>
+                        </div>
+                    </div>
+                </form>    
+            </div>
+
+            <div id="PopUp-Container3">
+                <div class="PopUp-Content">
+                    <p>last tab</p>
+                </div>
+            </div>
+
+        </div>
+    
+{% endblock %}

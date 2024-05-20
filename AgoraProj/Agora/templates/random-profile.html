@@ -1,0 +1,545 @@
+{% extends "master.html" %}
+{% load static %}
+{% load account %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
+    <script type="module" src="{% static 'js/friend.js' %}"></script>
+    <script type="module" src="{% static 'js/toggle.js' %}"></script>
+    <script type="module" src="{% static 'js/show-search.js' %}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">  
+{% endblock %}
+
+{% block content %}
+<script>
+    function insertEmoji(emoji) {
+        var textarea = document.getElementById("post-textarea");
+        var cursorPos = textarea.selectionStart;
+        var textBeforeCursor = textarea.value.substring(0, cursorPos);
+        var textAfterCursor = textarea.value.substring(cursorPos);
+    
+        textarea.value = textBeforeCursor + emoji + textAfterCursor;
+        textarea.selectionStart = textarea.selectionEnd = cursorPos + emoji.length;
+        
+        let Caption = textarea.value;
+        return Caption;
+    }
+    
+
+</script>
+<style>
+    
+</style>
+<div id="Modal-Overlay">
+    <div id="Post-Container">
+        <div class="Modal-Content">
+            <div class="Modal-Top">
+                <h1>Create</h1>
+            </div>
+
+            <div class="Modal-MainContent">
+                <div class="Modal-Top2">
+                    {% if accountInfo %}
+                        <div class="CProf-Container">
+                            <img id="CP-Prof" src="{{ accountInfo.profile_photo }}" alt="">
+                        </div>
+    
+                        <div class="CProf-Right">
+                            <p>{{ accountInfo.firstname | capfirst }} {{ accountInfo.lastname | capfirst }}</p>
+                            <input id="accountID" type="text" value="{{accountInfo.id}}"  style="display:none" ;>
+                            <input id="Manila-Time" name="ManilaTime" type="text" style="display:none">
+                            <div class="custom-select-wrapper ">
+                                <div class="custom-select">
+                                    <div class="custom-select-trigger">
+                                        <span></span>
+                                        <div class="arrow"></div>
+                                    </div>
+                                    <div class="custom-options">
+                                        {% for audience in audienceInfo %}
+                                            <span class="custom-option" data-value="{{ audience.id }}" data-img="{{ audience.link }}">
+                                                <img src="{{ audience.link }}" alt="Audience Image" class="option-img">{{ audience.audience }}
+                                            </span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="audience-select" id="audience-select">
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="Modal-Mid">
+                    
+                    <textarea name="" id="post-textarea" placeholder="Tell your friends about your thoughts"></textarea>
+                    <div id="Photo-upload-container2">
+                        <div class="Photo-Upload-Top">
+                            <button id="Remove-Post-Image"> &times;</button>
+                        </div>
+                        <div id="RPI-container" class="Photo-Upload-Top2">
+                            <button id="Remove-Post-Image2"> &times;</button>
+                        </div>
+                        <div id="Photo-upload-container">
+                            <div id="PUC-image">
+                                <img src="../static/images/image-gallery (1).png" alt="">
+                            </div>
+                            <input id="Image-Post" type="file" name="Image-Post" multiple style="display:none" ;>
+                            <p id="Post-P">Add Photos</p>
+                        
+                            <P>(Media files limited to 25MB)</p>
+                        </div>
+                        <div id="PUC-ImageCont">
+
+                        </div>
+                    </div>
+
+                    <div id="Video-upload-container2">
+                        <div class="Video-Upload-Top">
+                            <button id="Remove-Post-Video"> &times;</button>
+                        </div>
+                        <div id="Video-upload-container">
+                            <div id="PUC-Video">
+                                <img src="../static/images/add-videos.png" alt="">
+                            </div>
+                            <input id="Video-Post" type="file" name="Video-Post" accept="video/*" multiple style="display:none" ;>
+                            <p id="Post-V">Add Videos</p>
+                            <P>(Media files limited to 25MB)</p>
+                        </div>
+                        <div id="PUC-VideoCont">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Modal-Bottom">
+                    <div class="MB-Left">
+                        <span>Options</span>
+                    </div>
+
+                    <div class="MB-Right">
+                        <div id="Images-Icon" class="option-icon">
+                            <img src="../static/images/photos-icon.png" alt="">
+                        </div>
+                            <!--
+                        <div id="Videos-Icon" class="option-icon">
+                            <img src="../static/images/vid.png" alt="">
+                        </div>
+                        
+                        <div class="option-icon">
+                            <img src="../static/images/label.png" alt="">
+                        </div>
+                            -->
+                        <div id="Emoji-Icon" class="option-icon">
+                            <img src="../static/images/smiling.png" alt="">
+                            <div class="emoji-floating-div">
+                                {% if emoji %}
+                                    {% for emoji_code in emoji %}
+                                        <div class="Emoji-Container" onclick="insertEmoji('{{ emoji_code }}')">
+                                            {{ emoji_code | safe }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Modal-Bottom2">
+                    <div class="MM-Top">
+                        <span>Total Media Size:&nbsp;</span>
+                        <span id="SizeCounter"></span>
+                    </div>
+
+                    <div class="MM-Bottom">
+                        <button type="button" id="User-PostBtn">Post
+                            <div id="loadingIndicator" ><img src="static/images/rolling.gif" alt=""></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+<div id="root">
+    <!-- 
+            <h1> Welcome, {{ request.user.username }}!</h1>
+            <a href="{% url 'account_logout' %}">Sign Out</a>
+        
+        -->
+        
+<script type="module" src="{% static 'js/nav.js' %}"></script>
+
+<div class="Nav-Cont">
+    <nav class="NLeft">
+        <ul>
+        
+            <div class="NavLogo">
+                <h1>Glow</h1>
+                <img src="../static/images/glow logo5.png" alt="">
+            </div>
+            <a href="{% url 'dashboard' %}"><li><img src="../static/images/home2.png" alt=""><p>Home</p></li></a>
+            <li id="SearchNav"><img src="../static/images/search.png" alt=""><p>Search</p></li>
+            <!--<li><img src="../static/images/chat.png" alt=""><p>Messages</p></li>-->
+            <li id="Notification-Tab">
+                <div class="NT-Tab">
+                    <img src="../static/images/bell.png" alt="">
+                    <p>Notifications</p>
+                </div>
+                {% if unread_count %}
+                <div id="Notif-Counter"><span>{{ unread_count }}</span> </div>
+                {% endif %}
+            </li>
+            <li>
+                <img src="../static/images/bright.png" alt="">
+                <p>Appearance</p>
+                <label class="switch">
+                    <input type="checkbox" id="toggleTheme">
+                    <span class="slider round"></span>
+                </label>
+            </li>
+            <li id="Create-Btn-Nav" ><img src="../static/images/create.png" alt=""><p>Create</p></li>
+            <a href="{% url 'account_logout' %}"><li><img src="../static/images/logout.png" alt=""><p>Logout</p></li></a>
+        </ul>
+    
+        <div>
+            <a href="{% url 'UserProfile' %}">
+                <div class="Profile-Nav">
+                
+                    <img src="{{ accountInfo.profile_photo }}">
+                    <p>{{ accountInfo.firstname }} {{ accountInfo.lastname }}</p>
+                </div>
+            </a>
+        </div>
+    </nav>
+
+    
+    <div class="Notification-Container">
+        <h2>Notifications</h2>
+
+        <div class="Notif-content">
+            {% if notifications %}
+                {% for notifID, notification, date, friendID, friend_status, profile_photo in notifications %}
+                    <div class="UserNotifs">
+                        <div class="UN-Top">
+                            <div class="UN-Left">
+                                <img src="{{ profile_photo }}">
+                            </div>
+                            <div class="UN-Right">
+                                <span>{{ notification }}</span>
+                            </div>
+                        </div>
+                        <div class="UN-Bottom">
+                            <div class="UNB-Left"></div>
+                            <div class="UNB-Right">
+                                <span>{{ date }}</span>
+                            </div>
+                        </div>
+                        {% if friend_status == "pending" %}
+                            <div class="UN-Buttons">
+                                <div class="UNBT-Left"></div>
+                                <div class="UNBT-Right">
+                                    <button class="Confirm-friend" data-notif-id="{{ notifID }}" friendrequestID="{{ friendID }}">Confirm</button>
+                                    <button class="Delete-friend" data-notif-id="{{ notifID }}" friendrequestID="{{ friendID }}">Delete</button>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <span>No notifications</span>
+            {% endif %}
+        </div>
+        
+        
+    </div>
+</div>
+
+<div class="Search-Container">
+    <div class="NRightTop">
+        <div class="input-icon">
+            <img src="../static/images/search.png" alt="icon">
+            <input id="GlobalSearch" type="text" placeholder="Search">
+            <span id="ClearButton" class="clear-button">&times;</span>
+        </div>
+    </div>
+    <div class="Search-Results-Container">
+        
+    </div>
+    <style>
+        .Search-Results-Container{
+            display:none;
+        }
+    </style>
+    <div class="NRightMid">
+        <div class="NRightMid-content">
+            <div class="NRightMid-title">
+                <p>Latest Tags</p>
+            </div>
+            <div class="HashTagsCont">
+                {% if hashtags %}
+                    {% for tags in hashtags %}
+                    <a href="/tags/{{ tags.tag_object.id }}">
+                        <div class="hashtags-div">
+                            <div class="hashtag-a">
+                                <span>#{{ tags.tag_object.tag }} </span>
+                            </div>
+                            <div class="hashtag-span">
+                                {% if tags.post_count > 1 %}
+                                <span>{{ tags.post_count }} posts</span>
+                                {% else %}
+                                <span>{{ tags.post_count }} post</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </a>
+                
+                    {% endfor %}
+                    
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="NRightBottom">
+        <div class="NRightBottom-content">
+            <div class="NRBC-title">
+                <p>Friends</p>
+            </div>
+            <div class="NRBC-Friends">
+                {% if friends %}
+                    {% for friend in friends.friendsInfo %}
+                    <a href="/profile/{{ friend.id }}"><div class="UserFriends-Cont"> <img src="{{ friend.profile_photo }}" alt="">{{ friend.firstname }} {{ friend.lastname }}</div></a>
+                    {% endfor %}
+                    {%else%}
+                    <p>No Friends</p>
+                {% endif %}
+            </div>
+        </div>
+    
+    </div>
+
+</div>
+
+
+
+        <div class="NCenter">
+                <div class="Profile-Container">
+                    
+                    <div class="PPC-Cover-Container">
+                        
+                        {% if randomaccount.cover_photo %}
+                            <img id="UserCoverPhoto" src="{{ randomaccount.cover_photo }}">
+                        {% else %}
+                            <img id="UserCoverPhoto" src="../static/images/default-coverphoto1.jpg">
+                        {% endif %}
+
+                        <div class="PPC-Profile-Cont">
+                            <div class="PPC-My-Profile">
+                                <img src="{{ randomaccount.profile_photo }}">
+                            </div>
+                            
+                                <div class="PPC-Buttons">
+                                    <div class="PPCB-Top">
+                                    
+                                        <input type="text" id="user_ID" name="user_ID" value="{{ request.user.id }}" style="display:none">
+                                        <input type="text" id="visited_profile_ID" name="visited_profile_ID" value="{{ randomaccount.id }}" style="display:none">
+                                        <input type="text" id="currentTime-Prof" name="currentTime-Prof" style="display:none">
+                                    </div>
+                                    <div class="PPCB-Bottom">
+                                        
+                                        {% if friendship_is_pending %}
+                                            
+                                            {% if accountInfo.bio %}
+                                            <div class="Bio-Div"><p>" {{ randomaccount.bio }} "</p></div>
+                                            {% else %}
+                                            <div class="Bio-Div"><p></p></div>
+                                            {% endif %}
+                                            <button id="Cancel-ReqFriend-Btn"> <div id="loadingIndicator2"><img src="../static/images/rolling.gif"></div>Cancel Request</button>
+                                        {% elif friendship_is_friends %}
+                                            {% if randomaccount.bio %}
+                                            <div class="Bio-Div"><p>" {{ randomaccount.bio }} "</p></div>
+                                            {% else %}
+                                            <div class="Bio-Div"><p></p></div>
+                                            {% endif %}
+                                            <button class="Friends-Btn"><img src="../static/images/friends_check.png">Friends</button>
+
+                                        {% else %}
+                                        <style>
+                                            .PPCB-Bottom{
+                                                width: 50%;
+                                            }
+                                        </style>
+                                            <button id="Cancel-ReqFriend-Btn"  style="display:none"> <div id="loadingIndicator2"><img src="../static/images/rolling.gif"></div>Cancel Request</button>
+                                            <button id="Add-Friend-Btn"> <div id="loadingIndicator2"><img src="../static/images/rolling.gif"></div>Add Friend</button>
+                                        {% endif %}
+                                        <button id="Message-Btn">Message</button>
+                                    </div>
+                                
+                                </div>
+                        </div>
+                    
+                    </div>
+
+                    <div class="OnePurpose-Container"></div>
+                    
+                    <div class="PPC-ProfInfo-Cont">
+                        <div class="PPC-Info-Left"></div>
+                        <div class="PPC-Info-Mid">
+                            {% if randomaccount %}
+                            <h2>{{ randomaccount.firstname }} {{ randomaccount.lastname }}</h2>
+                            {% endif %}
+                            <p>@{{ randomaccount.auth_user.username }}</p>
+                            <p>Joined {{ randomaccount.auth_user.date_joined|date:"F j, Y" }}</p>
+                        </div>
+                    </div>
+
+                    <div class="MyProfile-Nav">
+                        <ul>
+                            <li>About</li>
+                        </ul>
+                    </div>
+                    <div class="UserProf-Main">
+                        
+                        <div class="User-About-Prof">
+
+                            <div class="UBF-Content">
+                                <h1>Other Information</h1>
+                                <p>Birthdate: {{ randomaccount.Birthday }}</p>
+                            </div>
+
+                            <div class="UBF-Gallery"></div>
+                        </div>
+
+                        <div class="NCenter-content-user">
+                            <div class="Post-Container2">
+                                <div class="PC-Left">
+                                    <div class="PCL-Top">
+                                        {% if is_new_user %}
+                                            <img src="../static/images/default-profile2.jpg" alt="{{ request.user.username }}">
+                                        {% else %}
+                                            <img src="{{ randomaccount.profile_photo }}">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <p id="currentUserId" data-userId="{{ accountInfo.id }}"></p>
+                                <div class="PC-Right">
+                                    <div class="PCR-Top">
+                                        <input type="text" id="create-post" placeholder="Tell your friends about your thoughts">
+                                    </div>
+                                
+                                </div>
+                            </div>
+                            
+                            {% if posts.posts_with_photos %}
+                                {% for post, photos in posts.posts_with_photos.items %}
+                                    <div class="User-Post-Container2">
+                                        <div class="UPC-content-Top">
+                                            <div class="UPCCT-Left">
+                                                <a href="profile/{{ post.account.id }}">
+                                                    <div class="Post-Prof-Cont">
+                                                        <img src="{{ post.account.profile_photo }}">
+                                                    </div>
+                                                </a>
+                                                <div class="Post-Prof-Cont2">
+                                                    <div id="Post-Prof-Cont-Name1" class="Post-Prof-Cont-Name">
+                                                        <a href="profile/{{ post.account.id }}">
+                                                            <p class="Photo-Post-username">{{ post.account.firstname }}</p>
+                                                        </a>
+                                                        <p class="Post-Photo-Date-Time">{{ post.time_ago }}</p>
+                                                    </div>
+                                                    <div class="Post-Prof-Cont-Username">
+                                                        <p>@{{ post.account.auth_user.username }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="UPCCT-Right">
+                                            </div>
+                                        </div>
+                    
+                                        {% if photos %}
+                                        <div class="UPC-content-grid {% if photos|length == 3 %}three-photos{% endif %}">
+                                            {% for photo in photos %}
+                                                <div class="UPC-content {% if photos|length == 1 %}single-photo{% endif %}">
+                                                    <img src="{{ photo.link|add:'?cm-pad_resize,bg-F3F3F3' }}" alt="">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        <div class="UPCB-Tags" style="height: 2rem"></div>
+                                        {% endif %}
+                    
+                                        <div class="UPC-content-Bottom">
+                                            <div class="UPCB-Caption">
+                                                <div class="Cap-User">
+                                                    <p>{{ post.account.firstname }}</p>
+                                                </div>
+                                                <div class="Cap-Caption">
+                                                    <p class="postCaption">{{ post.caption }}</p>
+                                                    <br>
+                                                </div>
+                                            </div>
+                                            <div class="UPCB-Tags">
+                                                {% for tag in post.tags.all %}
+                                                    <a href="/tags/{{ tag.id }}"><div><span class="hashtags">#{{ tag.tag }}</span></div></a>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="UPCB-Reacts">
+                                                <div class="Reacts">
+                                                    <div class="GlowReact-Div" data-PostIDD="{{ post.id }}" data-AccID="{{ post.account.id }}">
+                                                        {% if post.has_liked %}
+                                                            <span class="ChangeGlow">&#10022;</span>
+                                                        {% else %}
+                                                            <img class="glow-react" src="../static/images/glow4.png" alt="Glow">
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="React-Div Comment-Btn-Show" data-PostID="{{ post.id }}">
+                                                        <img src="../static/images/chat (2).png" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="React-Counts">
+                                                    <div class="glow-count">
+                                                        {% if post.glows_count > 1 %}
+                                                            <p>{{ post.glows_count }} glows</p>
+                                                        {% else %}
+                                                            <p>{{ post.glows_count }} glow</p>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="Comments">
+                                                        {% if post.comment_count > 1 %}
+                                                            <p>{{ post.comment_count }} comments</p>
+                                                        {% else %}
+                                                            <p>{{ post.comment_count }} comment</p>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                                {% else %}
+                                <style>
+                                    .Profile-Container{
+                                        height: 100vh;
+                                    }
+                                    
+                                </style>
+                                <p> No posts yet</p>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+        
+        </div>
+        {% include "nav-right.html" %}
+        
+        
+    
+</div>
+
+
+{% endblock %}

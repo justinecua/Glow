@@ -1,0 +1,269 @@
+{% extends "master.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static './home/index.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">  
+{% endblock %}
+
+{% block content %}
+<div class="responsive">
+    <div class="MainContainer">
+        <div>
+            <nav>
+                <ul  id="navbar">
+                    <div class="MC-Left">
+                        <img src="../static/images/glow logo5.png" alt="">
+                        <h1>Glow</h1>
+                    </div>
+                    <div class="MC-Cont">
+                        <a href="/"><li>Home</li></a>
+                        <a href="#FeaturesSection"><li>Features</li></a>
+                        <a href="#About-Section"><li>About</li></a>
+                        <a href="#Contact-Section"><li>Contact</li></a>
+                    </div>
+                    
+                    <div class="MC-Right">
+                        <li id="MC-Login"><a href="{% url 'login' %}">Login</a></li>
+                        <li id="MC-SignUp"><a href="{% url 'signup' %}">Signup</a></li>
+                    </div>
+                    
+                </ul>
+            </nav>
+        </div>
+
+        <section id="coverSection" class="">
+            <div class="background glass">
+            <div class="CS-content">
+                <h1>Embrace the Future of Staying Connected!</h1>
+                <p>Never miss out on what`s happening. Follow your favorite people</p>
+                <a href="{% url 'signup' %}"><button id="Get-Started">Get Started</button></a>
+            </div>
+        </div>
+        </section>
+
+        <section id="FeaturesSection">
+
+            <div class="FS-Top">
+                <h1>Feature Highlights</h1>
+                <p>Unlock the Power of Glow, Explore Our Key Features</p>
+            </div>
+            <div class="FS-Center">
+
+                <div class="Feature-Container">
+                    <div class="FC-Left">
+                        <div class="FCL-Image">
+                            <img src="../static/images/glow-fill.png" alt="">
+                        </div>
+                    </div>
+                    <div class="FC-Right">
+                        <div class="FCR-Top">
+                            <h1>Post Interaction</h1>
+                        </div>
+                        <div class="FCR-Bottom">
+                            <p>Engage with posts by creating, liking, unliking, and commenting</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Feature-Container">
+                    <div class="FC-Left">
+                        <div class="FCL-Image">
+                            <img src="../static/images/Change-Background-Transparent--Streamline-Plump.png" alt="">
+                        </div>
+                    </div>
+                    <div class="FC-Right">
+                        <div class="FCR-Top">
+                            <h1>Profile Customization</h1>
+                        </div>
+                        <div class="FCR-Bottom">
+                            <p>Personalize your profile with custom profile pictures and cover photos</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Feature-Container">
+                    <div class="FC-Left">
+                        <div class="FCL-Image">
+                            <img src="../static/images/Smiley-Cool--Streamline-Core.png" alt="">
+                        </div>
+                    </div>
+                    <div class="FC-Right">
+                        <div class="FCR-Top">
+                            <h1>Emoji Integration</h1>
+                        </div>
+                        <div class="FCR-Bottom">
+                            <p>Enhance expressions with a wide range of emojis available for use</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Feature-Container">
+                    <div class="FC-Left">
+                        <div class="FCL-Image">
+                            <img src="../static/images/Sign-Hashtag--Streamline-Sharp.png" alt="">
+                        </div>
+                    </div>
+                    <div class="FC-Right">
+                        <div class="FCR-Top">
+                            <h1>Hashtags</h1>
+                        </div>
+                        <div class="FCR-Bottom">
+                            <p>Organize and discover content easily with the use of hashtags</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Feature-Container">
+                    <div class="FC-Left">
+                        <div class="FCL-Image">
+                            <img src="../static/images/User-Add-Plus--Streamline-Sharp.png" alt="">
+                        </div>
+                    </div>
+                    <div class="FC-Right">
+                        <div class="FCR-Top">
+                            <h1>Add Friends</h1>
+                        </div>
+                        <div class="FCR-Bottom">
+                            <p>Grow your social circle by sending and accepting friend requests</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Feature-Container">
+                    <div class="FC-Left">
+                        <div class="FCL-Image">
+                            <img src="../static/images/Notification-Alarm-2--Streamline-Sharp.png" alt="">
+                        </div>
+                    </div>
+                    <div class="FC-Right">
+                        <div class="FCR-Top">
+                            <h1>Notifications</h1>
+                        </div>
+                        <div class="FCR-Bottom">
+                            <p>Stay updated with notifications for likes, comments, and friend requests</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Feature-Container">
+                    <div class="FC-Left">
+                        <div class="FCL-Image">
+                            <img src="../static/images/Search-Visual--Streamline-Plump.png" alt="">
+                        </div>
+                    </div>
+                    <div class="FC-Right">
+                        <div class="FCR-Top">
+                            <h1>Search Capabilities</h1>
+                        </div>
+                        <div class="FCR-Bottom">
+                            <p>Easily find posts, accounts, and tags with the powerful search feature</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Feature-Container">
+                    <div class="FC-Left">
+                        <div class="FCL-Image">
+                            <img src="../static/images/Sun--Streamline-Blocks---Free.png" alt="">
+                        </div>
+                    </div>
+                    <div class="FC-Right">
+                        <div class="FCR-Top">
+                            <h1>Dark/Light Mode</h1>
+                        </div>
+                        <div class="FCR-Bottom">
+                            <p>Customize your viewing experience with the option to switch between dark and light modes</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </section>
+        <section id="About-Section">
+            <div class="AS-Top">
+                <h1>About</h1>
+                <p>Never miss out on what`s happening. Follow your favorite people</p>
+            </div>
+
+            <div class="AS-Center">
+                <div class="ASC-Left">
+                    <div class="ASC-Left-Image"><img src="../static/images/Online connection-amico (2).png" alt=""></div>
+                </div>
+                
+                <div class="ASC-Right">
+                    <h2>Where Connections Thrive</h2>
+                    <p>At Glow, we're dedicated to fostering genuine connections in a vibrant and inclusive community. Our platform provides a space where individuals can come together, share their passions, and forge meaningful relationships. Glow is more than just a social media platform; it's a hub for genuine interactions and authentic connections. Our mission is to create a welcoming environment where people can express themselves, discover new interests, and connect with others who share their passions.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="Contact-Section">
+            <div class="AS-Top">
+                <h1>Contact Me</h1>
+                <p>Have questions or suggestions? Feel free to contact me</p>
+            </div>
+            <div class="CSC-Center">
+                <form id="contact-form" class="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </div>
+                </form>
+            </div>
+            
+        </section>
+
+
+        <footer>
+            <div class="FooterLeft">
+                <p>&copy; 2024 | All rights reserved </p>
+            </div>
+            <div class="FooterRight">
+                <p>Developed by Justine Cua</p>
+                <a href="https://www.facebook.com/profile.php?id=100008423448596">
+                    <img src="../static/images/Facebook-1--Streamline-Plump.png" alt="">
+                </a>
+                <a href="https://www.instagram.com/">
+                    <img src="../static/images/Instagram--Streamline-Core.png" alt="">
+                </a>
+            </div>
+        </footer>
+    </div>
+</div>
+
+<script>
+    const navbar = document.getElementById('navbar');
+
+    function handleScroll() {
+        if (window.scrollY > 0) {
+            navbar.style.transition = 'all 0.5s ease'; 
+            navbar.style.marginTop = '2%';
+            navbar.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.063), rgba(255, 255, 255, 0))';
+            navbar.style.backdropFilter = 'blur(1px)';
+            navbar.style.webkitBackdropFilter = 'blur(10px)';
+            navbar.style.boxShadow = '0 8px 32px 0 rgba(0, 0, 0, 0.37)';
+        } else {
+            navbar.style.marginTop = '';
+            navbar.style.background = '';
+            navbar.style.backdropFilter = '';
+            navbar.style.webkitBackdropFilter = '';
+            navbar.style.border = '';
+            navbar.style.boxShadow = '';
+        }
+    }
+
+    window.addEventListener('scroll', handleScroll);
+</script>
+{% endblock %}

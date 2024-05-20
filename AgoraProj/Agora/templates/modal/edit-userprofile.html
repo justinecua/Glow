@@ -1,0 +1,99 @@
+
+
+{% block modal %}
+
+<div id="EditProfile-Overlay">
+    <div id="EditProfile-Container">
+        {% if accountInfo %}
+        <div class="EP-Content">
+            <div class="EPModal-Top">
+                <h1>Edit Profile</h1>
+            </div>
+
+            <div class="EP-MainContent">
+
+                <div class="EP-Content2">
+                    <div class="EP-CoverPhoto">
+                        <div class="EPCP-PhotoCont">
+                            <div class="EPCP-ProfCont">
+                                <img id ="cover-cameraDefault" src="../static/images/Camera-1--Streamline-Plump (2).png" alt="">
+                            </div>
+                            {% if accountInfo.cover_photo %}
+                                <img id="Selected-CoverPhoto" src="{{ accountInfo.cover_photo }}" alt="">
+                            <style>
+                                .EPCP-ProfCont{
+                                    display: flex;
+                                }
+                                #Selected-CoverPhoto{
+                                    display: flex;
+                                }
+                                .EPCP-PhotoCont{
+                                    display: flex;
+                                    
+                                }
+                            </style>
+                            {% else %}
+                            <img id="Selected-CoverPhoto" src="../static/images/Camera-1--Streamline-Plump (2).png" alt="">
+                            <style>
+                                .EPCP-ProfCont{
+                                    display: flex;
+                                
+                                }
+                                #Selected-CoverPhoto{
+                                    display: none;
+                                }
+                                .EPCP-PhotoCont{
+                                    display: none;
+                                }
+                            </style>
+                            {% endif %}
+                
+                        </div>
+                    </div>
+                    <input type="file" id="User-CoverPhoto" style="display:none">
+                    <input type="file" id="User-ProfilePhoto" style="display:none">
+                    <div class="EPPP-Container">
+                        <div class="EPPP-Camera2">
+                        </div>
+                        <div class="EPPP-Camera">
+                            <img src="../static/images/Camera-1--Streamline-Plump (2).png" alt="">
+                        </div>
+                        <div class="EP-ProfilePhoto">
+                            <img id="EP-ImageProf" src="{{ accountInfo.profile_photo }}" alt="">
+                            <img id="Selected-ProfilePhoto" src="" alt="">
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="EP-UserInfo">
+                    <label for="">First Name</label>
+                    <input id="EP-Firstname" name="EP-Firstname"  value="{{ accountInfo.firstname }}" type="text">
+                    <label for="">Last Name</label>
+                    <input id="EP-Lastname" name="EP-Lastname" value="{{ accountInfo.lastname }}" type="text">
+                    <label for="">Username</label>
+                    <input id="EP-Username" name="EP-Username"  value="{{ accountInfo.auth_user.username }}"type="text">
+                    <label for="">Bio</label>
+                    <input id="EP-Bio" name="EP-Bio" value="{{ accountInfo.bio }}" type="text" placeholder="Input something about yourself">
+                    <label for="">Birth Date:</label>
+                    {% if accountInfo.Birthday %}
+                        <input id="EP-Birthday" name="EP-Birthday" value="{{ accountInfo.Birthday|date:'Y-m-d' }}" type="date">
+                    {% else %}
+                        <input id="EP-Birthday" name="EP-Birthday" value="" type="date">
+                    {% endif %}
+                
+                </div>
+
+                <div class="EP-SaveUserInfo">
+                    <button id="Save-EditProfile">Save
+                        <div id="loadingIndicator"><img src="../static/images/rolling.gif" alt=""></div>
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

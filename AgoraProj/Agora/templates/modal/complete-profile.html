@@ -1,0 +1,80 @@
+
+{% block modal %}
+    <div id="PopUp-Overlay">
+        <div id="PopUp-Container3">
+            <div class="PopUp-Content">
+                <div class="PopUp-Top1">
+                    <img src="../static/images/verified account.gif" alt="">
+                    <h1>Profile Setup Successful</h1>
+                    <p>Congratulations! Your profile is now good to go!</p> 
+                </div>
+                
+                <div class="PopUp-Top2">
+                    <button id="Done-btn">Done</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #PopUp-Overlay{
+            width: 100vw;
+            height: 100vh;
+            background-color: #24262aa7;
+            z-index: 4;
+            position: absolute;
+            display: flex;
+        }
+        
+        #PopUp-Container3 {
+            display: flex;
+            margin: auto;
+            width: 25%;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .PopUp-Content{
+            padding: 1rem;
+            flex-direction: column;
+        }
+
+        .PopUp-Top1{
+            width: 100%;
+            height: 7rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: "Work Sans", sans-serif;
+        }
+
+        .PopUp-Top2{
+            width: 100%;
+            height: 4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .PopUp-Top2 button{
+            width: 30%;
+            height: 2.5rem;
+            border-radius: 5px;
+            border: none;
+            background-color: #0e5dc4;
+            color: white;
+        }
+        
+        .PopUp-Top2 button:hover{
+            background-color: #2e78d9;
+            cursor: pointer;
+        }
+
+        .PopUp-Top1 h1{
+            font-size: clamp(1.7rem, 1.4vw, 1.4rem);
+        }
+
+    </style>
+{% endblock %}

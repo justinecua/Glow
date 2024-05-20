@@ -1,0 +1,69 @@
+<div class="NRight">
+    <div class="NRightTop">
+        <div class="input-icon">
+            <img src="../static/images/search.png" alt="icon">
+            <input id="GlobalSearch" type="text" placeholder="Search">
+            <span id="ClearButton" class="clear-button">&times;</span>
+        </div>
+    </div>
+    <div class="Search-Results-Container">
+        
+    </div>
+    <style>
+        .Search-Results-Container{
+            display:none;
+        }
+    </style>
+    <div class="NRightMid">
+        <div class="NRightMid-content">
+            <div class="NRightMid-title">
+                <p>Latest Tags</p>
+            </div>
+            <div class="HashTagsCont">
+                {% if hashtags %}
+                    {% for tags in hashtags %}
+                    <a href="/tags/{{ tags.tag_object.id }}">
+                        <div class="hashtags-div">
+                            <div class="hashtag-a">
+                                <span>#{{ tags.tag_object.tag }} </span>
+                            </div>
+                            <div class="hashtag-span">
+                                {% if tags.post_count > 1 %}
+                                <span>{{ tags.post_count }} posts</span>
+                                {% else %}
+                                <span>{{ tags.post_count }} post</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </a>
+                
+                    {% endfor %}
+                    
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="NRightBottom">
+        <div class="NRightBottom-content">
+            <div class="NRBC-title">
+                <p>Friends</p>
+            </div>
+            <div class="NRBC-Friends">
+                {% if friends %}
+                    {% for friend in friends.friendsInfo %}
+                    <a href="/profile/{{ friend.id }}"><div class="UserFriends-Cont"> <img src="{{ friend.profile_photo }}" alt="">{{ friend.firstname }} {{ friend.lastname }}</div></a>
+                    {% endfor %}
+                    {%else%}
+                    <p>No Friends</p>
+                {% endif %}
+            </div>
+        </div>
+    
+    </div>
+
+</div>
+
+<script>
+  
+</script>

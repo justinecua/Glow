@@ -1,0 +1,271 @@
+{% extends "master.html" %}
+{% load static %}
+{% load account %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
+    <script type="module" src="{% static 'js/tags.js' %}"></script>
+    <script type="module" src="{% static 'js/toggle.js' %}"></script>
+    <script type="module" src="{% static 'js/post.js' %}"></script>
+    
+    
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">  
+{% endblock %}
+
+{% block content %}
+
+<script type="module" src="{% static 'js/nav.js' %}"></script>
+
+
+<div id="Comment-Overlay">
+
+    <div class="Comment-Container">
+        <div class="Comment-subCont">
+            <div class="CC-Left">
+                <div class="CC-Left-Images">
+
+                </div>
+                
+                <div class="Comment-btn-cont">
+                    <button class="prev-button"><img src="../static/images/arrow.png" alt=""></button>
+                    <button class="next-button"><img src="../static/images/right-arrow.png" alt=""></button>
+                </div>
+                
+            </div>
+        
+            <div class="CC-Right">
+                <div class="CCR-Main1">
+                    <div class="CCR-Top">
+                        <div class="CCRT-Sub">
+                            <div class="CCRT-Left">
+                                <img class="Post-ProfilePic" src="">
+                            </div>
+                            <div class="CCRT-Right">
+                                <p class="Post-FullName"></p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <button class="Close-Comment">x</button>
+                        </div>
+                    </div>
+
+                    <div class="CCRT-Mid">
+                        <div class="Caption-Content">
+                            <p class="Post-Caption"></p>
+                        </div>
+                        <div class="Comments-Section">
+
+                        </div>
+                    </div>
+                </div>
+            
+            
+                <div class="CCR-Main2">
+                    <div class="User-Comment-Cont">
+                        {% if accountInfo %}
+                        <div id="UserProf-Comment">
+                            <img src="{{ accountInfo.profile_photo }}" alt="">
+                        </div>
+                        {% endif %}
+                        
+                        <input id="Comment-input" type="text" placeholder="Add a comment.."> 
+                        <button id="Send-Comment">Send</button>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <div class="Nav-Cont">
+            <nav class="NLeft">
+                <ul>
+                    <div class="NavLogo">
+                        <h1>Glow</h1>
+                    </div>
+                    <a href="{% url 'dashboard' %}"><li><img src="../static/images/home2.png" alt=""><p>Home</p></li></a>
+                    <li><img src="../static/images/chat.png" alt=""><p>Messages</p></li>
+                    <li id="Notification-Tab">
+                        <div class="NT-Tab">
+                            <img src="../static/images/bell.png" alt="">
+                            <p>Notifications</p>
+                        </div>
+                        {% if unread_count %}
+                        <div id="Notif-Counter"><p>{{ unread_count }}</p> </div>
+                        {% endif %}
+                    </li>
+                    <li><img src="../static/images/settings.png" alt=""><p>Settings</p></li>
+                    <li>
+                        <img src="../static/images/bright.png" alt="">
+                        <p>Appearance</p>
+                        <label class="switch">
+                            <input type="checkbox" id="toggleTheme">
+                            <span class="slider round"></span>
+                        </label>
+                    </li>
+                    
+                    <a href="{% url 'account_logout' %}"><li><img src="../static/images/logout.png" alt="">Logout</li></a>
+                </ul>
+            
+                <div>
+                    <a href="{% url 'UserProfile' %}">
+                        <div class="Profile-Nav">
+                            <img src="{{ accountInfo.profile_photo }}">
+                            <p>{{ accountInfo.firstname }} {{ accountInfo.lastname }}</p>
+                        </div>
+                    </a>
+                </div>
+            </nav>
+
+            
+            <div class="Notification-Container">
+                <h2>Notifications</h2>
+
+                <div class="Notif-content">
+                    {% if notifications %}
+                        {% for notifID, notification, date, friendID, friend_status, profile_photo in notifications %}
+                            <div class="UserNotifs">
+                                <div class="UN-Top">
+                                    <div class="UN-Left">
+                                        <img src="{{ profile_photo }}">
+                                    </div>
+                                    <div class="UN-Right">
+                                        <span>{{ notification }}</span>
+                                    </div>
+                                </div>
+                                <div class="UN-Bottom">
+                                    <div class="UNB-Left"></div>
+                                    <div class="UNB-Right">
+                                        <span>{{ date }}</span>
+                                    </div>
+                                </div>
+                                {% if friend_status == "pending" %}
+                                    <div class="UN-Buttons">
+                                        <div class="UNBT-Left"></div>
+                                        <div class="UNBT-Right">
+                                            <button class="Confirm-friend" data-notif-id="{{ notifID }}" friendrequestID="{{ friendID }}">Confirm</button>
+                                            <button class="Delete-friend" data-notif-id="{{ notifID }}" friendrequestID="{{ friendID }}">Delete</button>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <span>No notifications</span>
+                    {% endif %}
+                </div>
+                
+                
+            </div>
+        </div>
+
+
+        <div class="NCenter">
+            
+            <div class="NCenter-content">
+                <div class="UPC-Main">
+                    <div class="TagFinder-Cont">
+                        <div class="TFC-Left">
+                            {% if tag %}
+                                {% if posts|length > 1%}
+                                    <p>Showing {{ posts|length }} posts related to <a href="/tags/{{ tag.id }}"><span>#{{ tag }}</span></a></p>
+                                {% else %}
+                                    <p>Showing {{ posts|length }} post related to <a href="/tags/{{ tag.id }}"><span>#{{ tag }}</span></a></p>
+                                {% endif %}
+                            
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                
+                    {% if posts %}
+                        {% for post in posts %}
+                            {% for p, photos in posts_with_photos.items %}
+                                {% if post == p %}
+        
+                                    <div class="User-Post-Container">
+                                        <div class="UPC-content-Top">
+                                            <div class="UPCCT-Left">
+                                                <a href="/profile/{{ post.account.id }}">
+                                                    <div class="Post-Prof-Cont">
+                                                        <img src="{{ post.account.profile_photo }}">
+                                                    </div>
+                                                </a>
+                                                <div class="Post-Prof-Cont2">
+                                                    <div id="Post-Prof-Cont-Name1" class="Post-Prof-Cont-Name">
+                                                        <a href="/profile/{{ post.account.id }}">
+                                                            <p class="Photo-Post-username">{{ post.account.firstname }}</p>
+                                                        </a>
+                                                        <p class="Post-Photo-Date-Time">{{ post.time_ago }}</p>
+                                                    </div>
+                                                    <div class="Post-Prof-Cont-Username">
+                                                        <p>@{{ post.account.auth_user.username }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="UPCCT-Right"></div>
+                                        </div>
+                                        <div class="UPC-content-grid {% if photos|length == 3 %}three-photos{% endif %}">
+                                            {% for photo in photos %}
+                                                <div class="UPC-content {% if photos|length == 1 %}single-photo{% endif %}">
+                                                    <img src="{{ photo.link|add:'?cm-pad_resize,bg-F3F3F3' }}" alt="">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    
+                                        <div class="UPC-content-Bottom">
+                                            <div class="UPCB-Caption">
+                                                <div class="Cap-User">
+                                                    <p>{{ post.account.firstname }}</p>
+                                                </div>
+                                                <div class="Cap-Caption">
+                                                    <p class="postCaption">{{ post.caption }}</p>
+                                                    <br>
+                                                </div>
+                                            </div>
+                                            <div class="UPCB-Tags">
+                                                {% for tag in post.tags.all %}
+                                                    <a href="/tags/{{ tag.id }}"><div><span class="hashtags">#{{ tag.tag }}</span></div></a>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="UPCB-Reacts">
+                                                <div class="Reacts">
+                                                    <div class="GlowReact-Div" data-PostIDD="{{ post.id }}">
+                                                        <img class="glow-react" src="../static/images/glow4.png" alt="Glow">
+                                                    </div>
+                                                    <div class="React-Div Comment-Btn-Show" data-PostID="{{ post.id }}">
+                                                        <img src="../static/images/chat (1).png" alt="">
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="React-Counts">
+                                                    <div class="Glows">
+                                                        <p>glows</p>
+                                                    </div>
+                                                    <div class="Comments">
+                                                        {% if post.comment_count > 1 %}
+                                                            <p>{{ post.comment_count }} comments</p>
+                                                        {% else %}
+                                                            <p>{{ post.comment_count }} comment</p>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            {% include "nav-right.html" %}
+        
+        </div>
+        
+        
+ 
+
+{% endblock %}
