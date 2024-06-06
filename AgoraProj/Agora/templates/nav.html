@@ -1,0 +1,93 @@
+
+{% load static %}
+<script type="module" src="{% static 'js/nav.js' %}"></script>
+
+<div class="Nav-Cont">
+    <nav class="NLeft">
+        <ul>
+        
+            <div class="NavLogo">
+                <h1>Glow</h1>
+                <img src="https://ik.imagekit.io/b9bdd5j68/glow%20logo5.png/tr:q-100,tr:w-200,h-200" alt="">
+            </div>
+            <a href="{% url 'dashboard' %}"><li><img src="../static/images/home2.png" alt=""><p>Home</p></li></a>
+            <li id="SearchNav"><img src="../static/images/search.png" alt=""><p>Search</p></li>
+            <!--<li><img src="../static/images/chat.png" alt=""><p>Messages</p></li>-->
+            <li id="Notification-Tab">
+                <div class="NT-Tab">
+                    <img src="../static/images/bell.png" alt="">
+                    <p>Notifications</p>
+                </div>
+                {% if unread_count %}
+                <div id="Notif-Counter"><span>{{ unread_count }}</span> </div>
+                {% endif %}
+            </li>
+            <li id="AppearanceNav">
+                <img src="../static/images/bright.png" alt="">
+                <p>Appearance</p>
+                <label class="switch">
+                    <input type="checkbox" id="toggleTheme">
+                    <span class="slider round"></span>
+                </label>
+            </li>
+            <li id="Create-Btn-Nav" ><img src="../static/images/create.png" alt=""><p>Create</p></li>
+            <a href="{% url 'account_logout' %}"><li><img src="../static/images/logout.png" alt=""><p>Logout</p></li></a>
+        
+    
+        <div id="UserProf-Div">
+            <a href="{% url 'UserProfile' %}">
+                <div class="Profile-Nav">
+                
+                    <img src="{{ accountInfo.profile_photo }}">
+                    <p>{{ accountInfo.firstname }} {{ accountInfo.lastname }}</p>
+                </div>
+            </a>
+        </div>
+    </ul>
+    </nav>
+
+    
+    <div class="Notification-Container">
+        <h2>Notifications</h2>
+
+        <div class="Notif-content">
+            {% if notifications %}
+                {% for notifID, notification, date, friendID, friend_status, profile_photo in notifications %}
+                    <div class="UserNotifs">
+                        <div class="UN-Top">
+                            <div class="UN-Left">
+                                <img src="{{ profile_photo }}">
+                            </div>
+                            <div class="UN-Right">
+                                <span>{{ notification }}</span>
+                            </div>
+                        </div>
+                        <div class="UN-Bottom">
+                            <div class="UNB-Left"></div>
+                            <div class="UNB-Right">
+                                <span>{{ date }}</span>
+                            </div>
+                        </div>
+                        {% if friend_status == "pending" %}
+                            <div class="UN-Buttons">
+                                <div class="UNBT-Left"></div>
+                                <div class="UNBT-Right">
+                                    <button class="Confirm-friend" data-notif-id="{{ notifID }}" friendrequestID="{{ friendID }}">Confirm</button>
+                                    <button class="Delete-friend" data-notif-id="{{ notifID }}" friendrequestID="{{ friendID }}">Delete</button>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <span>No notifications</span>
+            {% endif %}
+        </div>
+        
+        
+    </div>
+
+    
+</div>
+
+

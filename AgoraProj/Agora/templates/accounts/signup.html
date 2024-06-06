@@ -1,0 +1,110 @@
+{% extends "master.html" %}
+{% load socialaccount %}
+{% load static %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'home/login.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">  
+{% endblock %}
+
+{% block content %}
+<div class="background glass">
+    <div class="Support-Box">
+        <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
+        <script type='text/javascript'>
+            kofiwidget2.init('Support Me on Ko-fi', '#2847e0', 'S6S2YY2YZ');
+            kofiwidget2.draw();
+        </script>
+    </div>
+    <nav>
+        <ul  id="navbar">
+            <div class="MC-Left">
+                <img src="../static/images/glow logo5.png" alt="">
+                <h1>Glow</h1>
+            </div>
+            <div class="MC-Cont">
+                <a href="/"><li>Home</li></a>
+                <a href="/#FeaturesSection"><li>Features</li></a>
+                <a href="/#About-Section"><li>About</li></a>
+                <a href="/#Contact-Section"><li>Contact</li></a>
+            </div>
+            
+            <div class="MC-Right">
+                <a href="{% url 'login' %}"><li id="MC-Login">Login</li></a>
+                <a href="{% url 'signup' %}"><li id="MC-SignUp">Signup</li></a>
+            </div>
+            
+        </ul>
+    </nav>
+    <div class="responsive">
+        <div class="container glass2">
+            <div class="container-content">
+                <div class="CC-Top1">
+                    <img src="../static/images/glow logo5.png" alt="icon">
+                </div>
+                <div class="CC-Top">
+                    <p>Your Next Social Stop, Register Now!</p>
+                </div>
+                <div class="SCC-Mid">
+                    <form id="signup_form" action="{% url 'account_signup' %}" method="POST" class="my-auto">
+                        {% csrf_token %}
+
+                        <div>
+                            <span class="input-icon">
+                                <img src="../static/images/user.png" alt="icon">
+                                <input type="text" name="username" placeholder="Username" required>
+                                {{ form.username }}
+                            </span>
+                        </div>
+
+                        <div>
+                            <span class="input-icon">
+                                <img src="../static/images/Mail3.png" alt="icon">
+                                <input type="email" name="email" placeholder="Your valid email" required>
+                                {{ form.email }}
+                            </span>
+                        </div>
+            
+                        <div>
+                            <span class="input-icon">
+                                <img src="../static/images/password.png" alt="icon">
+                                <input type="password" name="password1" placeholder="Create a 6 + digit password" required>
+                                {{ form.password1 }}
+                            </span>
+                        </div>
+
+                        <div>
+                            <span class="input-icon">
+                                <img src="../static/images/password.png" alt="icon">
+                                <input type="password" name="password2" placeholder="Confirm your password" required>
+                                {{ form.password2 }}
+                            </span>
+                        </div>
+                </div>
+                
+
+                <div class="CC-Footer">
+                    <button type="submit">Sign Up</button>
+                </div>
+            </form>
+                <div class="CC-Footer2">
+                    <div class="border"></div>
+                    <p>OR</p>
+                    <div class="border"></div>
+                </div>
+                <div class="CC-Footer3">
+                    <a href="{% provider_login_url 'google' %}">
+                        <button  class="google-login-link"> <img src="../static/images/google.png" alt="">Sign in with Google </button>
+                    </a>
+                </div>
+
+                <div class="CC-Footer4">
+                    <p>Have an account? <a href="{% url 'login'%}">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

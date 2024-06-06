@@ -1,0 +1,119 @@
+{% extends "master.html" %}
+{% load socialaccount %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'home/login.css' %}">
+    <script src="{% static 'js/login.js' %}"></script> 
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+    <div class="background glass">
+        <div class="Support-Box">
+            <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
+            <script type='text/javascript'>
+                kofiwidget2.init('Support Me on Ko-fi', '#2847e0', 'S6S2YY2YZ');
+                kofiwidget2.draw();
+            </script>
+        </div>
+        <nav>
+            <ul  id="navbar">
+                <div class="MC-Left">
+                    <img src="../static/images/glow logo5.png" alt="">
+                    <h1>Glow</h1>
+                </div>
+                <div class="MC-Cont">
+                    <a href="/"><li>Home</li></a>
+                    <a href="/#FeaturesSection"><li>Features</li></a>
+                    <a href="/#About-Section"><li>About</li></a>
+                    <a href="/#Contact-Section"><li>Contact</li></a>
+                </div>
+                
+                <div class="MC-Right">
+                    <a href="{% url 'login' %}"><li id="MC-Login">Login</li></a>
+                    <a href="{% url 'signup' %}"><li id="MC-SignUp">Signup</li></a>
+                </div>
+                
+            </ul>
+        </nav>
+        <div class="responsive">
+        
+            <div class="container glass2">
+                
+                <div class="container-content">
+                    <div class="CC-Top1">
+                        <img src="../static/images/glow logo5.png" alt="icon">
+                    </div>
+                    <div class="CC-Top">
+                        <p>We are excited to have you again</p>
+                    </div>
+                    <div class="CC-Mid">
+                        <form action="{% url 'validatelogin' %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div>
+                                <span class="input-icon">
+                                    <img src="../static/images/Mail3.png" alt="icon">
+                                    <input type="email" name="login" placeholder="Email address" required>
+                                    {{ form.login }}
+                                </span>
+                            </div>
+                
+                            <div>
+                                <span class="input-icon">
+                                    <img src="../static/images/password.png" alt="icon">
+                                    <input type="password" name="password" placeholder="Password" required>
+                                    {{ form.password }}
+                                </span>
+                            </div>
+                    </div>
+                    <div class="CC-Bottom">
+                        <div class="CCB-Left">
+                            <div>
+                                <label for="remember" class="">Remember Me</label>
+                                <input type="checkbox" name="remember">
+                                {{ form.remember }}
+                            </div>
+                        </div>
+
+                        <div class="CCB-Right">
+                            <a href="{% url 'account_reset_password' %}">Forgot Password?</a>
+                        </div>
+                    </div>
+
+                    <div class="CC-Footer">
+                        <button type="submit">Login</button>
+                    </div>
+
+                    <div id="message">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="{{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                </form>
+                    <div class="CC-Footer2">
+                        <div class="border"></div>
+                        <p>OR</p>
+                        <div class="border"></div>
+                    </div>
+                    <div class="CC-Footer3">
+                        <a href="{% provider_login_url 'google' %}">
+                            <button  class="google-login-link"> <img src="../static/images/google.png" alt="">Sign in with Google </button>
+                        </a>
+                    </div>
+
+                    <div class="CC-Footer4">
+                        <p>Dont have an account? <a href="{% url 'signup'%}">Sign Up</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

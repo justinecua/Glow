@@ -1,0 +1,90 @@
+{% extends "master.html" %}
+{% load static %}
+{% load account %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
+    <script type="module" src="{% static 'js/ForYou.js' %}"></script>
+    <script type="module" src="{% static 'js/toggle.js' %}"></script>
+    <script type="module" src="{% static 'js/modal.js' %}"></script>
+    <script type="module" src="{% static 'js/search.js' %}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">  
+{% endblock %}
+
+{% block content %}
+    {% if is_new_user %}
+        {% include "modal/new-user.html" %}
+        <script type="module" src="{% static 'js/main-new-user.js' %}"></script>
+    {% else %}
+        {% include "modal/create-post.html" %}
+        {% include "modal/create-comment.html" %}
+        {% include "modal/create-share.html" %}
+        {% include "modal/edit-userprofile.html" %}
+    {% endif %}
+
+    <div class="Top-Options">
+        <div class="Center-Top">
+            <div id="For-You"><p>For You</p></div>
+            <div id="Following"><p>Following</p></div>
+        </div>
+    </div>
+
+    <div id="Logo-Overlay">
+        <img src="https://ik.imagekit.io/b9bdd5j68/glow%20logo5.png/tr:q-100,tr:w-200,h-200" alt="">
+    </div>
+<div id="root">
+        {% if request.user.is_authenticated %}
+        <!--
+            <h1> Welcome, {{ request.user.username }}!</h1>
+            <a href="{% url 'account_logout' %}">Sign Out</a>
+        -->
+        
+        {% include "nav.html" %}
+        
+        <div class="responsive">
+            
+        <div class="NCenter">
+            <div class="Center-Top3">
+                <p>loading</p>
+            </div>
+            <div class="NCenter-cont">
+                <div class="Center-Top2">
+                    
+                </div>
+
+                <div class="Post-Container">
+                    <div class="PC-Left">
+                        <div class="PCL-Top">
+                            {% if is_new_user %}
+                                <img src="../static/images/default-profile2.jpg" alt="{{ request.user.username }}">
+                            {% else %}
+                                <img src="{{ accountInfo.profile_photo }}">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <p id="currentUserId" data-userId="{{ accountInfo.id }}"></p>
+                    <div class="PC-Right">
+                        <div class="PCR-Top">
+                            <input type="text" id="create-post" placeholder="Tell your friends about your thoughts">
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+
+            <div class="NCenter-content">
+            </div>
+
+            <div class="NCenter-content2">
+                        
+            </div>
+        </div>
+        {% include "nav-right.html" %}
+        
+        <div id="messages"></div>
+    {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}

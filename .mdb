@@ -1,0 +1,10 @@
+{
+  "projectName": "glow",
+  "meta": {
+    "type": "backend"
+  },
+  "backend": {
+    "platform": "python3.10"
+  },
+  "hash": "4efc8598"
+}
