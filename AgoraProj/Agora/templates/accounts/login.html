@@ -4,8 +4,8 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'home/login.css' %}">
-    <script src="{% static 'js/login.js' %}"></script> 
     <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+    <script type="module" src="{% static 'js/index.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -21,11 +21,12 @@
         <nav>
             <ul  id="navbar">
                 <div class="MC-Left">
-                    <img src="../static/images/glow logo5.png" alt="">
-                    <h1>Glow</h1>
+                    <a href="/">
+                        <img src="../../static/images/glow logo5.png" alt="">
+                        <h1>Glow</h1>
+                    </a>
                 </div>
                 <div class="MC-Cont">
-                    <a href="/"><li>Home</li></a>
                     <a href="/#FeaturesSection"><li>Features</li></a>
                     <a href="/#About-Section"><li>About</li></a>
                     <a href="/#Contact-Section"><li>Contact</li></a>
@@ -34,17 +35,26 @@
                 <div class="MC-Right">
                     <a href="{% url 'login' %}"><li id="MC-Login">Login</li></a>
                     <a href="{% url 'signup' %}"><li id="MC-SignUp">Signup</li></a>
+
+                    <div class="Menu">
+                        <img src="../../static/images/menu2.png" alt="">
+                    </div>
                 </div>
                 
             </ul>
+            <div class="Down-Menu">
+                <a href="{% url 'login' %}"><li>Login</li></a>
+                <a href="{% url 'signup' %}"><li>Signup</li></a>
+                <a href="/#FeaturesSection"><li>Features</li></a>
+                <a href="/#About-Section"><li>About</li></a>
+                <a href="/#Contact-Section"><li>Contact</li></a>
+            </div>
         </nav>
         <div class="responsive">
-        
             <div class="container glass2">
-                
                 <div class="container-content">
                     <div class="CC-Top1">
-                        <img src="../static/images/glow logo5.png" alt="icon">
+                        <img src="../../static/images/glow logo5.png" alt="icon">
                     </div>
                     <div class="CC-Top">
                         <p>We are excited to have you again</p>
@@ -54,17 +64,15 @@
                             {% csrf_token %}
                             <div>
                                 <span class="input-icon">
-                                    <img src="../static/images/Mail3.png" alt="icon">
+                                    <img src="{% static 'images/mail-3111.svg' %}" alt="icon">
                                     <input type="email" name="login" placeholder="Email address" required>
-                                    {{ form.login }}
                                 </span>
                             </div>
                 
                             <div>
                                 <span class="input-icon">
-                                    <img src="../static/images/password.png" alt="icon">
+                                    <img src="{% static 'images/padlock-11751.svg' %}" alt="icon">
                                     <input type="password" name="password" placeholder="Password" required>
-                                    {{ form.password }}
                                 </span>
                             </div>
                     </div>
@@ -104,7 +112,7 @@
                     </div>
                     <div class="CC-Footer3">
                         <a href="{% provider_login_url 'google' %}">
-                            <button  class="google-login-link"> <img src="../static/images/google.png" alt="">Sign in with Google </button>
+                            <button  class="google-login-link"> <img src="../../static/images/google.png" alt="">Sign in with Google </button>
                         </a>
                     </div>
 
@@ -115,5 +123,4 @@
             </div>
         </div>
     </div>
-
 {% endblock %}

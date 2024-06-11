@@ -22,6 +22,7 @@ from django.utils import timezone
 from datetime import datetime
 import pytz
 from django.db.models import Count
+from django.contrib.auth.forms import PasswordResetForm
 
 def home(request):
     return render(request, 'index.html')
@@ -1054,3 +1055,34 @@ def searchResults(request):
     else:
         response_data = {"status": "error", "message": "No query provided"}
         return JsonResponse(response_data)
+
+from allauth.account.views import PasswordResetView, PasswordResetDoneView, PasswordResetFromKeyView, PasswordResetFromKeyDoneView
+
+from django.contrib.auth import get_user_model
+from django.contrib import messages
+
+class CustomPasswordResetView(PasswordResetView):
+    template_name = 'accounts/password_reset.html'
+
+    def post(self, request, *args, **kwargs):
+        # Get the submitted email
+        email = request.POST.get('email')
+
+        # Check if the email exists in the database
+        User = get_user_model()
+        if not User.objects.filter(email=email).exists():
+            # If email does not exist, display a message
+            messages.error(request, "This email is not associated with any account.")
+            return self.get(request, *args, **kwargs)
+
+        # If email exists, proceed with password reset
+        return super().post(request, *args, **kwargs)
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'accounts/password_reset_done.html'
+
+class CustomPasswordResetFromKeyView(PasswordResetFromKeyView):
+    template_name = 'account/password_reset_from_key.html'
+
+class CustomPasswordResetFromKeyDoneView(PasswordResetFromKeyDoneView):
+    template_name = 'account/password_reset_from_key_done.html'

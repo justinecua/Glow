@@ -1,5 +1,12 @@
 from django.urls import path
 from . import views
+from .views import (
+    CustomPasswordResetView,
+    CustomPasswordResetDoneView,
+    CustomPasswordResetFromKeyView,
+    CustomPasswordResetFromKeyDoneView
+)
+
 
 urlpatterns = [
     path('', views.home, name="home"),
@@ -22,5 +29,9 @@ urlpatterns = [
     path('editProfile/<int:id>', views.editProfile, name='editProfile'),
     path('searchResults/', views.searchResults, name='searchResults'),
     path('FetchForYou/', views.FetchForYou, name='FetchForYou'),
+    path('accounts/password/reset/', CustomPasswordResetView.as_view(), name='account_reset_password'),
+    path('accounts/password/reset/done/', CustomPasswordResetDoneView.as_view(), name='account_reset_done_password'),
+    path('accounts/password/reset/key/<uidb64>/<key>/', CustomPasswordResetFromKeyView.as_view(), name='account_reset_from_key'),
+    path('accounts/password/reset/key/done/', CustomPasswordResetFromKeyDoneView.as_view(), name='account_reset_from_key_done'),
     #path('FetchFriendsPosts/', views.FetchFriendsPosts, name='FetchFriendsPosts'),
 ]

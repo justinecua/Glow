@@ -57,8 +57,6 @@ SearchNav.addEventListener('click', async() =>{
     ShowSearch();
 })
 
-
-
 CreateBtnNav.addEventListener('click', async() =>{
     const { switchModal } = await import ("./modal/switchmodal.js");
     
