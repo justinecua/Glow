@@ -23,6 +23,7 @@ from datetime import datetime
 import pytz
 from django.db.models import Count
 from django.contrib.auth.forms import PasswordResetForm
+from django.utils.timezone import localtime
 
 def home(request):
     return render(request, 'index.html')
@@ -268,6 +269,15 @@ def UserProfile(request):
     showfriends = showFriends(request)
     hashtags = showTags(request)
 
+    posts_with_photos = {}
+    posts = Post.objects.filter(account=accountInfo) 
+    for post in posts:
+        photos = Photo.objects.filter(post=post)
+        posts_with_photos[post] = {
+            'photos': photos,
+            'time_ago': time_ago(post.dateTime),
+        }
+
     context = {
         'accountInfo': accountInfo,
         'audienceInfo': audience,
@@ -275,8 +285,10 @@ def UserProfile(request):
         'unread_count': unread_notifications_count,
         'friends': showfriends,
         'hashtags': hashtags,
+        'posts': {'posts_with_photos': posts_with_photos},
     }
     return render(request, 'user-profile.html', context)
+
 
 @csrf_exempt
 def AddFriend(request):
