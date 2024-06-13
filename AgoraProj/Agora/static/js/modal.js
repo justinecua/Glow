@@ -65,9 +65,10 @@ CreateBtnNav.addEventListener('click', async() =>{
 
 
 createpost.addEventListener('click', async() =>{
-    const { switchModal } = await import ("./modal/switchmodal.js");
+    const { switchModal, getEmoji } = await import ("./modal/switchmodal.js");
     
     switchModal();
+    getEmoji();
 })
 
 ImagesIcon.addEventListener('click', async () => {

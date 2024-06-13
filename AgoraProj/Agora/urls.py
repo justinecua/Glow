@@ -33,5 +33,6 @@ urlpatterns = [
     path('accounts/password/reset/done/', CustomPasswordResetDoneView.as_view(), name='account_reset_done_password'),
     path('accounts/password/reset/key/<uidb64>/<key>/', CustomPasswordResetFromKeyView.as_view(), name='account_reset_from_key'),
     path('accounts/password/reset/key/done/', CustomPasswordResetFromKeyDoneView.as_view(), name='account_reset_from_key_done'),
+    path('dashboard/emoji', views.emojis, name='get_emoji')
     #path('FetchFriendsPosts/', views.FetchFriendsPosts, name='FetchFriendsPosts'),
 ]

@@ -21,6 +21,7 @@
     --glow-button: #0058ca;
     --top-nav-color: #081224;
 }
+
 .loading-bar {
     width: 0%;
     height: 4px; /* Adjust height as needed */
@@ -1367,6 +1368,7 @@ body {
         border-radius: 10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         z-index: 7;
+        width: 25rem;
     }
     
     .emoji-floating-div2 {
@@ -2072,8 +2074,8 @@ body {
     }
     
     #loadingIndicator2 img{
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 3.5rem;
+        height: 3.5rem;
         object-fit: cover;
         display: flex;
         justify-content: center;

@@ -31,7 +31,6 @@ def dashboard(request):
     is_new_user = check_user(request) 
     accountInfo = getAccountInfo(request)
     audience = getAudience(request)
-    emoji = get_emoji()
     notif_data, unread_notifications_count = fetchNotif(request)
     showfriends = showFriends(request)
     hashtags = showTags(request)
@@ -41,7 +40,6 @@ def dashboard(request):
         'is_new_user': is_new_user,
         'accountInfo': accountInfo,
         'audienceInfo': audience,
-        'emoji': emoji,
         'notifications': notif_data,
         'unread_count': unread_notifications_count,
         'friends': showfriends,

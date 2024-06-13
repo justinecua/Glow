@@ -1,6 +1,7 @@
 
 
 {% block modal %}
+{% load static %}
 <script>
     function insertEmoji(emoji) {
         var textarea = document.getElementById("post-textarea");
@@ -121,13 +122,17 @@
                         <div id="Emoji-Icon" class="option-icon">
                             <img src="../static/images/smiling.png" alt="">
                             <div class="emoji-floating-div">
-                                {% if emoji %}
-                                    {% for emoji_code in emoji %}
-                                        <div class="Emoji-Container" onclick="insertEmoji('{{ emoji_code }}')">
-                                            {{ emoji_code | safe }}
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
+                                <div id="loadingIndicator"><p>Loading</p></div>
+
+                                <!--
+                                    {% if emoji %}
+                                        {% for emoji_code in emoji %}
+                                            <div class="Emoji-Container" onclick="insertEmoji('{{ emoji_code }}')">
+                                                {{ emoji_code | safe }}
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                -->
                             </div>
                         </div>
                     </div>
@@ -141,7 +146,9 @@
 
                     <div class="MM-Bottom">
                         <button type="button" id="User-PostBtn">Post
-                            <div id="loadingIndicator" ><img src="static/images/rolling.gif" alt=""></div>
+                            <div id="loadingIndicator" >
+                                <img src="{% static 'images/rolling.gif' %}" alt="icon">
+                            </div>
                         </button>
                     </div>
                 </div>
