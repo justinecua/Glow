@@ -60,7 +60,7 @@
                     <p>Your Next Social Stop, Register Now!</p>
                 </div>
                 <div class="SCC-Mid">
-                    <form id="signup_form" action="{% url 'account_signup' %}" method="POST" class="my-auto">
+                    <form id="signup_form" action="{% url 'account_signup' %}" method="POST">
                         {% csrf_token %}
 
                         <div>
