@@ -273,9 +273,13 @@ def UserProfile(request):
     posts = Post.objects.filter(account=accountInfo) 
     for post in posts:
         photos = Photo.objects.filter(post=post)
+        glows = Glow.objects.filter(post=post)
+        comments = Comment.objects.filter(post=post)
         posts_with_photos[post] = {
             'photos': photos,
             'time_ago': time_ago(post.dateTime),
+            'glows_count': glows.count(),
+            'comments_count': comments.count(),
         }
 
     context = {
@@ -1075,17 +1079,13 @@ class CustomPasswordResetView(PasswordResetView):
     template_name = 'accounts/password_reset.html'
 
     def post(self, request, *args, **kwargs):
-        # Get the submitted email
         email = request.POST.get('email')
 
-        # Check if the email exists in the database
         User = get_user_model()
         if not User.objects.filter(email=email).exists():
-            # If email does not exist, display a message
             messages.error(request, "This email is not associated with any account.")
             return self.get(request, *args, **kwargs)
 
-        # If email exists, proceed with password reset
         return super().post(request, *args, **kwargs)
 
 class CustomPasswordResetDoneView(PasswordResetDoneView):

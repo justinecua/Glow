@@ -159,7 +159,7 @@ function handleUnlike(changeGlow) {
 initializeButtons();
 
 
-/* --------------------------- Search Functionality ------------------------------*/
+/* --------------------------- Search Functionality ------------------------------
 let GlobalSearch = document.getElementById('GlobalSearch');
 let SearchResultsContainer = document.querySelector('.Search-Results-Container');
 let ClearButton = document.getElementById('ClearButton');
@@ -187,7 +187,7 @@ ClearButton.addEventListener('click', function(){
     SearchResultsContainer.innerHTML = '';
 });
 
-
+*/
 
 /*----------------------------Share-btn-Functionality----------------------------*/
 

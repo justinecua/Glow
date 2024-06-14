@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Agora.urls')),
     path('', TemplateView.as_view(template_name='index.html'), name='home'),
-    path('accounts/login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
-    path('accounts/signup/', TemplateView.as_view(template_name='accounts/signup.html'), name='signup'),
-    path('accounts/', include('allauth.urls')),
+    path('account/login/', auth_views.LoginView.as_view(template_name='account/login.html'), name='login'),
+    path('account/signup/', TemplateView.as_view(template_name='account/signup.html'), name='signup'),
+    path('account/', include('allauth.urls')),
 ]
