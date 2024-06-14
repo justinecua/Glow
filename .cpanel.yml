@@ -1,5 +1,5 @@
 deployment:
   tasks:
-    - export DEPLOY_STATIC=/home/glowspac/public_html
+    - export DEPLOY_STATIC=/home/glowspac/public_html/static
     
     - /bin/cp -R AgoraProj/Agora/static/. $DEPLOY_STATIC
