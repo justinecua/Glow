@@ -5,8 +5,8 @@ deployment:
     - export DEPLOY_TO_AGORA = /home/glowspace/Glow2/Agora
     - export DEPLOY_TO_AGORAPROJ = /home/glowspace/Glow2/AgoraProj
     
-    - /bin/cp -r Agora/static $DEPLOY_STATIC
-    - /bin/cp -r Agora $DEPLOY_TO_AGORA
-    - /bin/cp -r Agora $DEPLOY_TO_AGORAPROJ
+    - /bin/cp -r AgoraProj/Agora/static $DEPLOY_STATIC
+    - /bin/cp -r AgoraProj/Agora $DEPLOY_TO_AGORA
+    - /bin/cp -r AgoraProj/AgoraProj $DEPLOY_TO_AGORAPROJ
 
     
