@@ -2,11 +2,7 @@
 deployment:
   tasks:
     - export DEPLOY_STATIC = /home/glowspac/public_html
-    - export DEPLOY_TO_AGORA = /home/glowspace/Glow/Agora
-    - export DEPLOY_TO_AGORAPROJ = /home/glowspace/Glow/AgoraProj
     
-    - /bin/cp -r AgoraProj/Agora/static $DEPLOY_STATIC
-    - /bin/cp -r AgoraProj/Agora $DEPLOY_TO_AGORA
-    - /bin/cp -r AgoraProj/AgoraProj $DEPLOY_TO_AGORAPROJ
+    - /bin/cp -R AgoraProj/Agora/static $DEPLOY_STATIC
 
     
