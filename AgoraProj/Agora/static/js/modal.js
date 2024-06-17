@@ -50,7 +50,6 @@ let hiddenSelect = document.getElementById('audience-select')
 
 let hasCalled = false;
 
-
 SearchNav.addEventListener('click', async() =>{
     const { ShowSearch } = await import ("./modal/show-search.js");
     

@@ -32,7 +32,6 @@ export function getEmoji(){
         });
     })
     .catch(error => {
-        // Hide loading bar in case of <error></error>
         loadingBar.style.display = 'none';
         console.log(error);
     });

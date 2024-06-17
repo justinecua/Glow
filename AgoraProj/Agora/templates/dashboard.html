@@ -6,20 +6,27 @@
     <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
     <script type="module" src="{% static 'js/ForYou.js' %}"></script>
     <script type="module" src="{% static 'js/toggle.js' %}"></script>
-    <script type="module" src="{% static 'js/modal.js' %}"></script>
     <script type="module" src="{% static 'js/search.js' %}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">  
 {% endblock %}
 
 {% block content %}
+    {% include "modal/create-post.html" %}
+    {% include "modal/create-comment.html" %}
+    {% include "modal/create-share.html" %}
+    {% include "modal/edit-userprofile.html" %}
+
     {% if is_new_user %}
+        <style>
+            body{
+                overflow-y: hidden;
+            }
+            
+        </style>
         {% include "modal/new-user.html" %}
         <script type="module" src="{% static 'js/main-new-user.js' %}"></script>
     {% else %}
-        {% include "modal/create-post.html" %}
-        {% include "modal/create-comment.html" %}
-        {% include "modal/create-share.html" %}
-        {% include "modal/edit-userprofile.html" %}
+        <script type="module" src="{% static 'js/modal.js' %}"></script>
     {% endif %}
 
     <div class="Top-Options">
@@ -34,11 +41,6 @@
     </div>
 <div id="root">
         {% if request.user.is_authenticated %}
-        <!--
-            <h1> Welcome, {{ request.user.username }}!</h1>
-            <a href="{% url 'account_logout' %}">Sign Out</a>
-        -->
-        
         {% include "nav.html" %}
         
         <div class="responsive">
@@ -51,12 +53,12 @@
                 <div class="Center-Top2">
                     
                 </div>
-
+                <input id="accountID" type="text" value="{{accountInfo.id}}"  style="display:none" ;>
                 <div class="Post-Container">
                     <div class="PC-Left">
                         <div class="PCL-Top">
                             {% if is_new_user %}
-                                <img src="../static/images/default-profile2.jpg" alt="{{ request.user.username }}">
+                                <img src="../static/images/default-avatar-profile-picture-male-icon.png" alt="{{ request.user.username }}">
                             {% else %}
                                 <img src="{{ accountInfo.profile_photo }}">
                             {% endif %}
@@ -65,7 +67,7 @@
                     <p id="currentUserId" data-userId="{{ accountInfo.id }}"></p>
                     <div class="PC-Right">
                         <div class="PCR-Top">
-                            <input type="text" id="create-post" placeholder="Tell your friends about your thoughts">
+                            <input type="text" id="create-post" readonly placeholder="Tell your friends about your thoughts">
                         </div>
                     
                     </div>

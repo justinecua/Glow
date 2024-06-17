@@ -37,9 +37,13 @@
         <div id="UserProf-Div">
             <a href="{% url 'UserProfile' %}">
                 <div class="Profile-Nav">
-                
+                {% if is_new_user %}
+                    <img src="../static/images/default-avatar-profile-picture-male-icon.png" alt="">
+                    <p>Unknown User</p>
+                {% else %}
                     <img src="{{ accountInfo.profile_photo }}">
                     <p>{{ accountInfo.firstname }} {{ accountInfo.lastname }}</p>
+                {% endif %}
                 </div>
             </a>
         </div>

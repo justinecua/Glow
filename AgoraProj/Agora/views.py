@@ -22,8 +22,7 @@ from django.utils import timezone
 from datetime import datetime
 import pytz
 from django.db.models import Count
-from django.contrib.auth.forms import PasswordResetForm
-from django.utils.timezone import localtime
+from django.contrib.auth.forms import UserCreationForm
 
 def home(request):
     return render(request, 'index.html')
@@ -72,7 +71,7 @@ def validatelogin(request):
         else:
             messages.error(request, 'Incorrect email or password')
             return redirect('login')
-    return render(request, 'accounts/login.html')
+    return render(request, 'account/login.html')
 
 def check_user(request):
     if request.user.is_authenticated:
@@ -84,25 +83,68 @@ def check_user(request):
     else:
         return False
 
-def UploadProfile(request):
-    if request.method == "POST":
-        firstname = request.POST.get("firstname")
-        lastname = request.POST.get("lastname")
-        gender = request.POST.get("gender")
-        file = request.FILES.get("accprofile")
+def signup(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
 
-        auth_user_id = User.objects.get(id=request.user.id)
-        imgkit = ImagekitClient(file)
-        result = imgkit.upload_media_file()
+        if password1 == password2:
+            if not User.objects.filter(username=username).exists():
+                if not User.objects.filter(email=email).exists():
+                    user = User.objects.create_user(
+                        username=username,
+                        email=email,
+                        password=password1,
+                    )
+                    user = authenticate(username=username, password=password1)
+                    if user is not None:
+                        login(request, user)
+                        return redirect('dashboard')
+                    else:
+                        messages.error(request, "Authentication failed.")
+                else:
+                    messages.error(request, "Email is already in use.")
+            else:
+                messages.error(request, "Username is already taken.")
+        else:
+            messages.error(request, "Passwords do not match. Please type again.")
+    
+    return render(request, 'account/signup.html')
+
+@csrf_exempt
+def UploadProfile(request):
+    if request.method == 'POST':
+        form_data = json.loads(request.POST['data'])
+        profile = request.FILES.get('default_profile_url')
+
+        firstname = form_data.get('firstname')
+        lastname = form_data.get('lastname')
+        gender = form_data.get('gender')
+        birthday = form_data.get('birthday')
+
+        auth_user_id = request.user.id  
+
+        if profile and profile.name != '../static/images/default-avatar-profile-picture-male-icon.png':
+            imgkit = ImagekitClient(profile)
+            result = imgkit.upload_media_file()
+            profile_url = result["url"]
+        else:
+            profile_url = '../static/images/default-avatar-profile-picture-male-icon.png'
 
         Account.objects.create(
-            firstname = firstname,
-            lastname = lastname,
-            gender = gender,
-            profile_photo = result["url"],
-            auth_user = auth_user_id
+            firstname=firstname,
+            lastname=lastname,
+            gender=gender,
+            profile_photo=profile_url,
+            Birthday=birthday,
+            auth_user_id=auth_user_id
         )
-    return redirect('dashboard')
+
+        return JsonResponse({"status": "success", "message": "Profile Updated successfully"})
+    else:
+        return JsonResponse({"status": "error", "message": "Only POST requests are allowed."})
 
 
 def getAccountInfo(request):
@@ -1076,7 +1118,7 @@ from django.contrib.auth import get_user_model
 from django.contrib import messages
 
 class CustomPasswordResetView(PasswordResetView):
-    template_name = 'accounts/password_reset.html'
+    template_name = 'account/password_reset.html'
 
     def post(self, request, *args, **kwargs):
         email = request.POST.get('email')
@@ -1089,7 +1131,7 @@ class CustomPasswordResetView(PasswordResetView):
         return super().post(request, *args, **kwargs)
 
 class CustomPasswordResetDoneView(PasswordResetDoneView):
-    template_name = 'accounts/password_reset_done.html'
+    template_name = 'account/password_reset_done.html'
 
 class CustomPasswordResetFromKeyView(PasswordResetFromKeyView):
     template_name = 'account/password_reset_from_key.html'

@@ -10,7 +10,8 @@ from .views import (
 
 urlpatterns = [
     path('', views.home, name="home"),
-    path('accounts/login/validate/', views.validatelogin, name='validatelogin'),
+    path('account/login/validate/', views.validatelogin, name='validatelogin'),
+    path('account/signup/', views.signup, name='signup'),
     path('dashboard', views.dashboard, name='dashboard'), 
     path('dashboard/uploadprofile', views.UploadProfile, name='uploadprofile'), 
     path('handle_media/', views.handle_media, name='handle_media'),
@@ -29,10 +30,10 @@ urlpatterns = [
     path('editProfile/<int:id>', views.editProfile, name='editProfile'),
     path('searchResults/', views.searchResults, name='searchResults'),
     path('FetchForYou/', views.FetchForYou, name='FetchForYou'),
-    path('accounts/password/reset/', CustomPasswordResetView.as_view(), name='account_reset_password'),
-    path('accounts/password/reset/done/', CustomPasswordResetDoneView.as_view(), name='account_reset_done_password'),
-    path('accounts/password/reset/key/<uidb64>/<key>/', CustomPasswordResetFromKeyView.as_view(), name='account_reset_from_key'),
-    path('accounts/password/reset/key/done/', CustomPasswordResetFromKeyDoneView.as_view(), name='account_reset_from_key_done'),
+    path('account/password/reset/', CustomPasswordResetView.as_view(), name='account_reset_password'),
+    path('account/password/reset/done/', CustomPasswordResetDoneView.as_view(), name='account_reset_done_password'),
+    path('account/password/reset/key/<uidb64>/<key>/', CustomPasswordResetFromKeyView.as_view(), name='account_reset_from_key'),
+    path('account/password/reset/key/done/', CustomPasswordResetFromKeyDoneView.as_view(), name='account_reset_from_key_done'),
     path('dashboard/emoji', views.emojis, name='get_emoji')
     #path('FetchFriendsPosts/', views.FetchFriendsPosts, name='FetchFriendsPosts'),
 ]

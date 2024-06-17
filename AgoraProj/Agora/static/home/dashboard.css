@@ -448,12 +448,14 @@ body {
     .Post-Container2{
         display: flex;
         justify-content: center;
-        width: 95%;
+        width: 38rem;
         border-radius: 12px;
         height: 5rem;
         padding: 1rem;
         background-color: var(--nav-color);
     }
+
+
     
     .PC-Left{
         width: 10%;
@@ -587,9 +589,9 @@ body {
     }
     
     #PopUp-Container1 {
-        display: flex;
+        display:flex;
         margin: auto;
-        width: 25%;
+        width: 30rem;
         background-color: white;
         border-radius: 10px;
     }
@@ -597,11 +599,19 @@ body {
     #PopUp-Container2 {
         display: none;
         margin: auto;
-        width: 25%;
+        width: 26rem;
         background-color: white;
         border-radius: 10px;
     }
     
+    #PopUp-Container3 {
+        display: none;
+        margin: auto;
+        width: 26rem;
+        background-color: white;
+        border-radius: 10px;
+    }
+
     
     .PopUp-Content{
         width: 100%;
@@ -610,8 +620,26 @@ body {
     .PUC-Top{
         width: 100%;
         height: 15rem;
+        position: relative;
     }
     
+    .PUC-Top a{
+        margin-top: 2%;
+        width: 97%;
+        display: flex;
+        justify-content: end;
+        position: absolute;
+        text-decoration: none;
+        font-family: "Work Sans", sans-serif;
+        font-weight: 600;
+        font-size: 0.8rem;
+        color: #0058ca;
+    }
+
+    .PUC-Top a:hover{
+        text-decoration: underline;
+    }
+
     .PUC-Mid{
         width: 100%;
         height: 5rem;
@@ -638,11 +666,12 @@ body {
     
     .PUC-Mid h1{
         font-size: clamp(1.5rem, 1.5vw, 2rem);
-      
+        color: #0036ca;
     }
     
     .PUC-Mid p{
-        font-size: clamp(0.4rem, 0.9vw, 0.9rem);
+        font-size: clamp(0.9rem, 0.9vw, 0.9rem);
+        color: #053e8a;
     }
     
     
@@ -652,6 +681,12 @@ body {
         display: flex;
         justify-content: center;
         align-items: flex-start;
+    }
+
+    .PUC-Bottom2{
+        width: 100%;
+        height: 2rem;
+      
     }
     
     .PUC-Bottom button{
@@ -698,13 +733,28 @@ body {
     
     }
     
+        
+    #message{
+        font-size: clamp(0.8rem, 0.9vw, 0.8rem);
+        color: rgb(255, 49, 49);
+        font-family: "Work Sans", sans-serif;
+        font-weight: 600;
+        width: 60%;
+        text-align: center;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+    }
+
     .PopUp-Bottom{
         width: 100%;
-        height: 11rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        margin-top: 2rem;
     }
     
     .PopUp-Bottom2{
@@ -732,16 +782,18 @@ body {
     
     .PopUp-Bottom input{
         width: 80%;
-        height: 22%;
+        height: 2.5rem;
         padding: 1rem;
         margin-bottom: 2%;
         border: 1px solid #ccc;
         border-radius: 5px;
+        outline: none;
     }
+
     
     .PopUp-Bottom select{
         width: 80%;
-        height: 22%;
+        height: 2.5rem;
         padding-left: 1rem;
         border: 1px solid #ccc;
         border-radius: 5px;
