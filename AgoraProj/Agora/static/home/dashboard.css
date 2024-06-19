@@ -24,16 +24,30 @@
 
 .loading-bar {
     width: 0%;
-    height: 4px; /* Adjust height as needed */
-    background-color: #007bff; /* Loading bar color */
+    height: 4px; 
+    background-color: #007bff;
     position: fixed;
     top: 0;
     left: 0;
     z-index:5;
-    visibility: hidden; /* Initially hidden */
-    transition: width 0.3s ease-out; /* Add a smooth transition effect */
+    visibility: hidden;
+    transition: width 0.3s ease-out; 
 }
 
+
+.loader {
+    border: 0.3rem solid #e0e0e0;
+    border-top: 0.3rem solid #0036ca;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
 body {
     --bg-color: #f6f6f9;
@@ -66,6 +80,7 @@ body {
     position: fixed;
     overflow: hidden;
 }
+
 
 #Logo-Overlay img{
     width: 5rem;
@@ -566,7 +581,8 @@ body {
         display: none;
         width: 32%;
         height: 6.5rem;
-        border: 1px solid black;
+        justify-content: center;
+        align-items: center;
     }
 
     
@@ -588,6 +604,87 @@ body {
         display: none;
     }
     
+    #Logout-Overlay{
+        width: 100vw;
+        height: 100vh;
+        background-color: #24262aa7;
+        z-index: 5;
+        position: fixed;
+        display: none;
+        overflow: hidden;
+        backdrop-filter: blur(2px);
+    }
+    
+    #Logout-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        width: 25rem;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.3s ease-out forwards;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    
+
+    #Logout-container h2{
+        margin-bottom: 0.3rem;
+        margin-top: 2rem;
+        font-family: "Work Sans", sans-serif;
+    }
+
+    #Logout-container p{
+        margin-bottom: 1.5rem;
+        font-family: "Work Sans", sans-serif;
+        font-size: clamp(1rem, 1vw, 1rem);
+    }
+
+    .LC-Bottom{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 49%;
+        margin-bottom: 1.5rem;
+    }
+
+    .LC-Bottom button{
+        font-family: "Work Sans", sans-serif;
+        font-weight: 500;
+        padding: 0.6rem 1.7rem;
+        border: none;
+        border-radius: 5px;
+    }
+
+    #LC-Back{
+        background-color: #dcdcdc;
+    }
+
+    #LC-Back:hover{
+        background-color: #c8c4c4;
+        cursor: pointer;
+    }
+
+    #LC-Logout{
+        background-color: #0036ca;
+        color: white;
+    }
+
+    #LC-Logout:hover{
+        background-color: #0058ca;
+        cursor: pointer;
+    }
+
     #PopUp-Container1 {
         display:flex;
         margin: auto;
@@ -686,7 +783,6 @@ body {
     .PUC-Bottom2{
         width: 100%;
         height: 2rem;
-      
     }
     
     .PUC-Bottom button{
@@ -869,6 +965,7 @@ body {
         z-index: 5;
         position: fixed;
         display: none;
+        backdrop-filter: blur(2px);
     }
     
     #Post-Container{
@@ -878,6 +975,7 @@ body {
         width: 30rem;
         background-color: var(--nav-color);
         border-radius: 10px;
+        animation: fadeIn 0.3s ease-out forwards;
     }
     
     .Modal-Content{
@@ -2408,6 +2506,7 @@ body {
         display: none;
         justify-content: center;
         align-items: center;
+        backdrop-filter: blur(2px);
     }
     
     .Comment-Container {
@@ -2985,6 +3084,7 @@ body {
         z-index: 5;
         position: fixed;
         display: none;
+        backdrop-filter: blur(2px);
     }
     
     #Share-Container{
@@ -3011,6 +3111,7 @@ body {
         z-index: 5;
         position: fixed;
         display: none;
+        backdrop-filter: blur(2px);
     }
     
     #EditProfile-Container{
@@ -3353,7 +3454,6 @@ body {
         color: #007bff; 
         border: none; 
         border-radius: 5px; 
-        
     }
     
     #For-You,
@@ -3361,7 +3461,6 @@ body {
         border: none;
         cursor: pointer;
         border-radius: 5px;
-        transition: background-color 0.3s ease;
     }
     
     #For-You p,

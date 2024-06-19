@@ -46,9 +46,23 @@ let ShareOverlay = document.getElementById('Share-Overlay');
 let ShareContainer = document.getElementById('Share-Container');
 let CreateBtnNav = document.getElementById('Create-Btn-Nav');
 let hiddenSelect = document.getElementById('audience-select')
+let Logoutbtn = document.getElementById('Logout-btn');
+let LogoutOverlay = document.getElementById('Logout-Overlay');
+let Logoutcontainer = document.getElementById('Logout-container');
+let LCBack = document.getElementById('LC-Back');
 
 
 let hasCalled = false;
+
+Logoutbtn.addEventListener('click', async() =>{
+    const { logout } = await import ("./modal/logout.js");
+    logout();   
+})
+
+LCBack.addEventListener('click', async() =>{
+    LogoutOverlay.style.display = "none";
+    document.body.style.overflowY = "auto";
+})
 
 SearchNav.addEventListener('click', async() =>{
     const { ShowSearch } = await import ("./modal/show-search.js");
@@ -136,11 +150,21 @@ ShareContainer.addEventListener('click', function(event) {
     event.stopPropagation();
 });
 
+Logoutcontainer.addEventListener('click', function(event) {
+    event.stopPropagation();
+});
+
+
 
 document.addEventListener('click', function(event) {
     
     if (!emojiFloatingDiv.contains(event.target)) {
         HideEmojis();
+    }
+
+    if(!Logoutcontainer.contains(event.target)){
+        LogoutOverlay.style.display = "none";
+        document.body.style.overflowY = "auto";
     }
 
     if(!Post.contains(event.target)){
@@ -155,7 +179,6 @@ document.addEventListener('click', function(event) {
         customSelect.classList.remove('open');
     }
     
- 
 });
 
 

@@ -13,9 +13,8 @@ let friendPostsFetched = false;
 function allPostsInView() {
     const posts = document.querySelectorAll('.User-Post-Container');
     if (posts.length === 0) {
-        return false; // No posts found
+        return false; 
     }
-    // Check if the last post is in view
     const lastPost = posts[posts.length - 1];
     const lastPostRect = lastPost.getBoundingClientRect();
     return lastPostRect.bottom <= window.innerHeight;

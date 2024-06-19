@@ -41,13 +41,14 @@
     </div>
 <div id="root">
         {% if request.user.is_authenticated %}
+        {% include "account/logout.html" %}
         {% include "nav.html" %}
         
         <div class="responsive">
             
         <div class="NCenter">
             <div class="Center-Top3">
-                <p>loading</p>
+                <div class="loader"></div>
             </div>
             <div class="NCenter-cont">
                 <div class="Center-Top2">
