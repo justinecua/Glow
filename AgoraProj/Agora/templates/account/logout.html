@@ -1,0 +1,27 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div id="Logout-Overlay">
+    <div class="Logout-container">
+        <h2>Logout</h2>
+        <p>Are you sure you want to logout?</p>
+
+        <div class="LC-Bottom">
+            <button id="LC-Back">Back</button>
+            
+            <form action="{% url 'logout' %}" method="post" >
+                {% csrf_token %}
+                <button id="LC-Logout" type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
