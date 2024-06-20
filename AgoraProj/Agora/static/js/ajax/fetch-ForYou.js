@@ -10,6 +10,7 @@ import { getPost } from "./show-comments-images.js";
 let NCenterContent = document.querySelector('.NCenter-content');
 let PostContainer = document.querySelector('.Post-Container');
 let CenterTop3 = document.querySelector('.Center-Top3');
+let Bottomloadingposts = document.getElementById('Bottom-loading-posts');
 let fetchedPostIds = new Set();
 export let loading = false;
 
@@ -44,8 +45,10 @@ export function fetchForYou() {
         return response.json();
     })
     .then(response => {
+        loading = false;
         PostContainer.style.display = "flex";
         CenterTop3.style.display = "none";
+        
         if (response.status === "success") {
             if (response.posts.length === 0) {
                 console.log("No more posts to load");
@@ -129,12 +132,15 @@ export function fetchForYou() {
                 getComments(dataPostID2);
             });
         }
-        loading = false;
     })
     .catch(error => {
         console.error('Error fetching data:', error);
     })
-
+    .finally(() => {
+        loading = false; 
+        hideLoading(); 
+        Bottomloadingposts.style.display = "none";
+    });
 }
 
 
@@ -169,7 +175,7 @@ function createPostElement(post) {
     <div class="UPC-content-grid ${post.photos.length === 3 ? 'three-photos' : ''}">
         ${post.photos.map(photo => `
             <div class="UPC-content ${post.photos.length === 1 ? 'single-photo' : ''}">
-                <img src="${photo.link}/tr:q-90,tr:w-450,h-450?cm-pad_resize,bg-F3F3F3" alt="">
+                <img class="lazy" src="${photo.link}/tr:q-90,tr:w-450,bl-30,q-90,h-450?cm-pad_resize,bg-F3F3F3" data-src="${photo.link}/tr:q-90,tr:w-450,h-450?cm-pad_resize,bg-F3F3F3" >
             </div>`).join('')}
     </div>
     <div class="UPC-content-Bottom">
@@ -208,6 +214,7 @@ function createPostElement(post) {
     </div>
 </div>`;
 
+LazyLoading(".lazy")
 
     return postContainer;
 }
@@ -290,5 +297,26 @@ function handleUnlike(changeGlow) {
     sendUnlike(LikeObject, dataPost_ID);
     console.log("Unlike");
     console.log(dataPost_ID);
+}
+
+export function LazyLoading(selector) {
+    let lazyimages = document.querySelectorAll(selector);
+
+    if ("IntersectionObserver" in window) {
+        let observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    let lazyimage = entry.target;
+                    lazyimage.src = lazyimage.dataset.src;
+                    lazyimage.classList.remove("lazy");
+                    observer.unobserve(lazyimage);
+                }
+            });
+        });
+
+        lazyimages.forEach((lazyimage) => {
+            observer.observe(lazyimage);
+        });
+    }
 }
 

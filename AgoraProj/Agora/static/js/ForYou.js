@@ -6,6 +6,7 @@ let ForYou = document.getElementById('For-You');
 let Following = document.getElementById('Following');
 let NCenterContent = document.querySelector('.NCenter-content');
 let NCenterContent2 = document.querySelector('.NCenter-content2');
+let Bottomloadingposts = document.getElementById('Bottom-loading-posts');
 
 let forYouPostsFetched = false;
 let friendPostsFetched = false;
@@ -66,7 +67,10 @@ function fetchMoreIfAllPostsInView() {
 function checkScroll() {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
         if (!loading && allPostsInView()) {
+            Bottomloadingposts.style.display = "flex";
             fetchForYou();
         }
     }
 }
+
+
