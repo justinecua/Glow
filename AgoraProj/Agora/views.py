@@ -413,7 +413,7 @@ def FetchForYou(request):
 
             posts_with_accounts.sort(key=lambda x: x.dateTime, reverse=True)
 
-            paginator = Paginator(posts_with_accounts, 3)  
+            paginator = Paginator(posts_with_accounts, 5)  
             page_number = request.GET.get('page')
             try:
                 posts_with_accounts = paginator.page(page_number)
