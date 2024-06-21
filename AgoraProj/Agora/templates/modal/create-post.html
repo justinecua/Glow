@@ -3,19 +3,7 @@
 {% block modal %}
 {% load static %}
 <script>
-    function insertEmoji(emoji) {
-        var textarea = document.getElementById("post-textarea");
-        var cursorPos = textarea.selectionStart;
-        var textBeforeCursor = textarea.value.substring(0, cursorPos);
-        var textAfterCursor = textarea.value.substring(cursorPos);
-    
-        textarea.value = textBeforeCursor + emoji + textAfterCursor;
-        textarea.selectionStart = textarea.selectionEnd = cursorPos + emoji.length;
-        
-        let Caption = textarea.value;
-        return Caption;
-    }
-    
+  
 
 </script>
 <style>
@@ -122,7 +110,9 @@
                         <div id="Emoji-Icon" class="option-icon">
                             <img src="../static/images/smiling.png" alt="">
                             <div class="emoji-floating-div">
-                                <div id="loadingIndicator"><p>Loading</p></div>
+                                <div id="loadingIndicator">
+                                    <div class="loader"></div>
+                                </div>
 
                                 <!--
                                     {% if emoji %}
