@@ -487,6 +487,10 @@ def Fetch_NewPosts(request, last_updated):
     return posts_data
 
 def event_stream(request):
+    if not request.user.is_authenticated:
+        yield "data: {}\n\n".format(json.dumps({'status': 'error', 'message': 'User not authenticated'}))
+        return
+    
     last_updated = timezone.now()
     initial_data = ""
 
