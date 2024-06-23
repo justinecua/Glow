@@ -27,8 +27,9 @@
 }
 
 
+
 body {
-    background: url("https://ik.imagekit.io/b9bdd5j68/32998500_890684131445.jpg?updatedAt=1715944768112");
+    background: url("https://ik.imagekit.io/b9bdd5j68/tr:w-1280,h-720/32998500_890684131445%20(1).jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -37,6 +38,7 @@ body {
     overflow-x: hidden;
     background-color: black;
 }
+
 
 .Down-Menu{
     display: none;

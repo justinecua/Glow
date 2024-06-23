@@ -44,6 +44,19 @@
     animation: spin 2s linear infinite;
 }
 
+.loader2 {
+    position: absolute;
+    border: 0.2rem solid white;
+    border-top: 0.2rem solid #6587e6;
+    border-radius: 50%;
+    width: 1.2rem;
+    height: 1.2rem;
+    animation: spin 2s linear infinite;
+    right: 2.5rem;
+    display: none;
+}
+
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -1019,6 +1032,10 @@ body {
         border-bottom: var(--border-color);
     }
     
+    .Modal-Top h1{
+        font-size: clamp(1.3rem, 1vw, 1.3rem);
+    }
+
     .Modal-Top2{
         width: 100%;
         height: 3rem;
@@ -1061,8 +1078,8 @@ body {
     
     .Modal-Bottom{
         display: flex;
-        padding: 0.4rem;
-        border: var(--border-color);
+        justify-content: space-between;
+        padding: 0.3rem;
         border-radius: 10px;
     }
     
@@ -1081,11 +1098,10 @@ body {
     
     .MB-Right{
         display: flex;
-        justify-content: end;
+        justify-content: space-evenly;
         gap: 2%;
         align-items: center;
-        width: 80%;
-      
+        width: 100%;
     }
     
     .MB-Right img{
@@ -1110,7 +1126,12 @@ body {
         outline: none; 
     }
     
-    
+    .Post-Options{
+        display: flex;
+        align-items: center;
+        width: 70%;
+    }
+
     #post-textarea2 {
         width: 100%; 
         height: 10rem;
@@ -1131,17 +1152,29 @@ body {
     
     .option-icon{
         background-color: var(--nav-color);
-        padding: 0.5rem;
-        border-radius: 50%;
+        padding: 0.4rem;
         position: relative;
         display: inline-block;
+        width: 93%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Work Sans", sans-serif;
+        font-size: clamp(0.8rem, 1vw, 0.8rem);
+        font-weight: 600;
+        color: #555555;
+        border: var(--border-color);
+        border-radius: 5px;
+    }
+
+    .option-icon img{
+        margin-right: 8%;
     }
     
     .option-icon:hover{
         background-color: var(--hover-elements);
         cursor: pointer;
-        padding: 0.5rem;
-        border-radius: 50%;
+        padding: 0.4rem;
     }
     
     
@@ -1286,6 +1319,7 @@ body {
         height: 100%;
         padding: 0.5rem;
         flex-shrink: 0;
+        width: 9rem;
     }
     
     .ImageContainer:hover{
@@ -1471,13 +1505,15 @@ body {
         cursor: pointer;
     }
     
-    .Modal-Bottom2{
-        height: 3.5rem;
+    .Modal-Bottom3{
+        display: flex;
+        justify-content: space-between;
+        padding: 0.6rem;
+        border-radius: 10px;
     }
     
     .MM-Top{
         width: 100%;
-        height: 50%;
         display: none;
         justify-content: space-between;
         padding: 0.5rem;
@@ -1485,6 +1521,12 @@ body {
         font-family: "Work Sans", sans-serif;
         font-weight: 600;
         font-size: clamp(0.8rem, 1vw, 0.8rem);
+    }
+
+    #MediaSizeTotal{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
     }
     
     .MM-Bottom{
@@ -1495,9 +1537,18 @@ body {
         align-items: center;
     }
     
-    .MM-Bottom button{
+    .MM-Bottom4{
         width: 100%;
-        height: 70%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    #User-PostBtn{
+        width: 98%;
+        height: 100%;
         background-color: #0e5dc4;
         color: white;
         border:none;
@@ -1507,18 +1558,20 @@ body {
         align-items: center;
         position: relative;
     }
+
     
-    .MM-Bottom button:hover{
-        background-color: #2e78d9;
+    #User-PostBtn:hover{
+        background-color: #0036ca;
         cursor: pointer;
     }
+    
     
     .emoji-floating-div::-webkit-scrollbar{
         width: 0.8rem; 
     }
     
     .emoji-floating-div::-webkit-scrollbar-thumb {
-        background: var(--nav-color); 
+        background: #999; 
         border-radius: 10px; 
     }
     
@@ -1529,20 +1582,21 @@ body {
     
     .emoji-floating-div {
         display: none;
-        grid-template-columns: repeat(8, 1fr);
+        grid-template-columns: repeat(7, 1fr);
         gap: 5px;
         position: absolute;
         top: -210px; 
-        left: 50%;
+        left: 145%;
         height: 12rem;
         overflow-y: auto;
+        overflow-x: hidden;
         transform: translateX(-50%);
         background-color: var(--nav-color);
         padding: 0.5rem;
         border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px rgba(30, 29, 29, 0.281);
         z-index: 7;
-        width: 25rem;
+        width: 20rem;
     }
     
     .emoji-floating-div2 {
@@ -1563,7 +1617,7 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         padding: 0.2rem;
         border-radius: 5px;
     }
@@ -2029,16 +2083,10 @@ body {
         align-items: center;
         position :absolute;
         top: -1%;
-        right: -2.4rem;
     }
     
-    #loadingIndicator img{
-        width: 1.5rem;
-        height: 1.5rem;
-        object-fit: cover;
+    #loadingIndicator div{
         display: flex;
-        justify-content: center;
-        align-items: center;
     }
     
     

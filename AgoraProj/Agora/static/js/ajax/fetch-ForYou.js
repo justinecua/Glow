@@ -146,7 +146,18 @@ export function fetchForYou() {
 
 function createPostElement(post) {
     let postContainer = document.createElement('div');
+    let UPCcontentgrid = document.querySelector('.UPC-content-grid');
+
     postContainer.classList.add('MUser-Post-Container');
+    
+    let DynamicProf;
+    
+    if(post.account.profile_photo == '../static/images/default-avatar-profile-picture-male-icon.png'){
+        DynamicProf = post.account.profile_photo;
+    }
+    else{
+        DynamicProf = post.account.profile_photo;
+    }
 
     postContainer.innerHTML = `
                             
@@ -155,7 +166,7 @@ function createPostElement(post) {
         <div class="UPCCT-Left">
             <a href="profile/${post.account.id}">
                 <div class="Post-Prof-Cont">
-                    <img src="${post.account.profile_photo}/tr:q-100,tr:w-42,h-42">
+                <img src="${ DynamicProf }">
                 </div>
             </a>
             <div class="Post-Prof-Cont2">

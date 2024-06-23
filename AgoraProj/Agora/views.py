@@ -404,7 +404,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def FetchForYou(request):
     if request.user.is_authenticated:
         try:
-            accounts = Account.objects.exclude(auth_user=request.user)
+            accounts = Account.objects.all()
             posts_with_accounts = []
 
             for account in accounts:

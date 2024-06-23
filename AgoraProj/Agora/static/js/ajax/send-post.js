@@ -2,20 +2,21 @@
 export function SendPost(mediaObject){
     var xhr = new XMLHttpRequest();
     var sendButton = document.getElementById('sendButton');
-    var loadingIndicator = document.getElementById('loadingIndicator');
+    var loader2 = document.querySelector('.loader2');
     let ModalOverlay = document.getElementById('Modal-Overlay');
     var fadeBox = document.getElementById('messages');
+    let UserPostBtn = document.getElementById("User-PostBtn");
 
     xhr.open('POST', '/handle_media/'); 
     xhr.setRequestHeader("Content-Type", "application/json");
 
-    loadingIndicator.style.display = 'flex';
+    loader2.style.display = 'flex';
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             
-            loadingIndicator.style.display = 'none';
-            loadingIndicator.classList.remove('loading');
+            loader2.style.display = 'none';
+            UserPostBtn.disabled = false;
 
             if (xhr.status === 200) {
                 var response = JSON.parse(xhr.responseText);
@@ -44,3 +45,4 @@ export function SendPost(mediaObject){
     
     xhr.send(JSON.stringify(mediaObject));
 }
+

@@ -2,7 +2,7 @@
 export function switchModal(){
     let ModalOverlay = document.getElementById('Modal-Overlay');
     ModalOverlay.style.display = "flex";
-
+    document.body.style.overflowY = "hidden";
 }
 export function getEmoji(){
     let loadingBar = document.getElementById('loadingIndicator');

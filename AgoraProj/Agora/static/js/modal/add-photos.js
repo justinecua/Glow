@@ -5,10 +5,13 @@ let PUCImageCont = document.getElementById('PUC-ImageCont');
 let RemovePostImage = document.getElementById('Remove-Post-Image');
 let RemovePostImage2 = document.getElementById('Remove-Post-Image2');
 let posttextarea = document.getElementById('post-textarea');
+let UserPostBtn = document.getElementById("User-PostBtn");
+let ModalBottom3 = document.querySelector('.Modal-Bottom3');
+
 
 let Photos = [];
 
-export function PostPhotos(updateSizeCallback){
+export function PostPhotos(updateSizeCallback) {
     PhotoUploadContainer.addEventListener('click', function() {
         ImagePost.click();
     });
@@ -16,12 +19,26 @@ export function PostPhotos(updateSizeCallback){
     ImagePost.addEventListener('change', showPic); 
     
     function showPic() {
+        let totalSizeForNewFiles = 0;
+
+        for (let i = 0; i < ImagePost.files.length; i++) {
+            totalSizeForNewFiles += ImagePost.files[i].size;
+        }
+
+        if (!updateSizeCallback(totalSizeForNewFiles)) {
+            UserPostBtn.disabled = true;
+            UserPostBtn.style.opacity = "30%";
+            return;
+        }
+        else{
+            UserPostBtn.disabled = false;
+            UserPostBtn.style.opacity = "100";
+        }
+
         for (let i = 0; i < ImagePost.files.length; i++) {
             let selectedFileStudPic = ImagePost.files[i];
             let fileName = selectedFileStudPic.name;
-            
-            updateSizeCallback(selectedFileStudPic.size);
-            
+
             if (!Photos.some(photo => photo.name === fileName)) {
                 let reader = new FileReader();
                 reader.onload = function(event) {
@@ -69,9 +86,10 @@ export function PostPhotos(updateSizeCallback){
                         DelImage.innerHTML = "&times";
                         DelImageCont.className = "DelImageCont";
                         DelImage.className = "DelImage";
-                        DelImage.addEventListener('click', function() {
+                        DelImage.addEventListener('click', function(event) {
+                            event.stopPropagation();
                             let index = Photos.findIndex(photo => photo.name === fileName);
-                            
+
                             updateSizeCallback(-Photos[index].size);
                             Photos.splice(index, 1);
                             ImageContainer.remove();
@@ -81,10 +99,11 @@ export function PostPhotos(updateSizeCallback){
                                 PUCImageCont.style.display = "none";
                                 PhotoUploadContainer2.style.display = "none";
                                 posttextarea.style.height = "12rem";
+                                ModalBottom3.style.display = "none";
                             }
-                        
-
                         });
+
+                        ModalBottom3.style.display = "flex";
                         CoverImage.className = "CPPhotos";
                         CoverImage.src = fileURL;
 
@@ -99,10 +118,8 @@ export function PostPhotos(updateSizeCallback){
                         PUCImageCont.insertBefore(ImageContainer, PUCImageCont.firstChild);
                     };
                     img.src = event.target.result;
-                
                 };
                 reader.readAsDataURL(selectedFileStudPic);
-            
             }
         }
     }

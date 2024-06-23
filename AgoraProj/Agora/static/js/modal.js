@@ -2,20 +2,13 @@
 import { SendPost } from './ajax/send-post.js';
 import { SendEditProfile } from './ajax/send-editprofile.js';  
 import { AcceptFriend } from "./ajax/accept-friend.js";
-import { getPost } from "./ajax/show-comments-images.js";
-import { SendCommentToDB } from "./ajax/send-comment.js";
-import { getComments } from "./ajax/get-newComments.js";
 import { sendLike } from "./ajax/send-like.js";
 import { sendUnlike } from "./ajax/send-unlike.js";
-import { getLikes } from "./ajax/get-like.js";
 
 let Post = document.getElementById('Post-Container');
-let Schedule = document.getElementById('Schedule-Container');
-let Modal1Button = document.getElementById('Modal1-Button');
 let createpost = document.getElementById('create-post');
 let ImagesIcon = document.getElementById('Images-Icon');
 let RemovePostImage = document.getElementById('Remove-Post-Image');
-let PhotoUploadContainer = document.getElementById('Photo-upload-container');
 let RemovePostImage2 = document.getElementById('Remove-Post-Image2');
 let RPIContainer = document.getElementById('RPI-container');
 let VideoPost = document.getElementById('Video-Post');
@@ -27,9 +20,10 @@ let ModalBottom2 = document.querySelector('.Modal-Bottom2');
 let MMBottom = document.querySelector('.MM-Bottom');
 let EmojiIcon = document.getElementById('Emoji-Icon');
 let emojiFloatingDiv = document.querySelector('.emoji-floating-div');
-let AddEmojiComment = document.getElementById('Add-Emoji-Comment');
 let UserPostBtn = document.getElementById("User-PostBtn");
 let postTextarea = document.getElementById('post-textarea');
+let confirmFriendObject = '';
+var confirmButtons = document.querySelectorAll(".Confirm-friend");
 
 let audienceSelect = document.getElementById('audience-select');
 let audienceSelect2 = document.getElementById('audience-select2');
@@ -79,7 +73,7 @@ CreateBtnNav.addEventListener('click', async() =>{
 
 createpost.addEventListener('click', async() =>{
     const { switchModal, getEmoji } = await import ("./modal/switchmodal.js");
-    
+
     switchModal();
     getEmoji();
 })
@@ -155,6 +149,7 @@ Logoutcontainer.addEventListener('click', function(event) {
 });
 
 
+let ImageContainer = document.querySelector('.ImageContainer');
 
 document.addEventListener('click', function(event) {
     
@@ -167,8 +162,16 @@ document.addEventListener('click', function(event) {
         document.body.style.overflowY = "auto";
     }
 
-    if(!Post.contains(event.target)){
-        ModalOverlay.style.display = "none";
+    if (Post) {
+        if (!Post.contains(event.target)) {
+            ModalOverlay.style.display = "none";
+        }
+    }
+
+    if (ImageContainer) {
+        if (!ImageContainer.contains(event.target)) {
+            ModalOverlay.style.display = "none";
+        }
     }
 
     if(!ShareContainer.contains(event.target)){
@@ -186,15 +189,7 @@ function HideEmojis(){
     emojiFloatingDiv.style.display = "none";
 }
 
-function formatFileSize(bytes) {
-    if (bytes < 1024) {
-        return bytes + ' bytes';
-    } else if (bytes < 1024 * 1024) {
-        return (bytes / 1024).toFixed(2) + ' KB';
-    } else {
-        return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
-    }
-}
+
 
 const { PostPhotos, getPhotos} = await import ("./modal/add-photos.js");
 PostPhotos(updateTotalSize);
@@ -272,28 +267,48 @@ if (customOptions.length > 0) {
 
 /*------------------------------------------------------------------------------*/
 
-function updateMediaObject(caption) { 
+const placeholderTexts = [
+    "Enter your glowing caption here...",
+    "Share your glowing thoughts...",
+    "Oops, You forgot to add a glowing caption...",
+    "What's on your glowing mind?",
+    "Don't leave it blank! Write something glowing!"
+];
 
-    mediaObject = {
+
+let placeholderIndex = 0;
+
+function updateMediaObject(caption) {
+    if (!caption.trim() && !photosArray.length >= 1) {
+        return null; 
+    }
+    let mediaObject = {
         accID: AccountID,
         audience: hiddenSelect.value,
         photos: photosArray,
         videos: VideosArray,
-        caption: caption, 
+        caption: caption,
         tags: hashtags,
     };
-    console.log(mediaObject);
-
+    
     return mediaObject;
 }
 
 UserPostBtn.addEventListener('click', async () => {
+    UserPostBtn.disabled = true;
     let caption = postTextarea.value;
-    
     caption = removeHashtags(caption);
-    updateMediaObject(caption);
-    SendPost(mediaObject);
+    let mediaObject = updateMediaObject(caption);
+
+    if (mediaObject) {
+        SendPost(mediaObject);
+    } else {
+        postTextarea.placeholder = placeholderTexts[placeholderIndex];
+        placeholderIndex = (placeholderIndex + 1) % placeholderTexts.length;
+        UserPostBtn.disabled = false;
+    }
 });
+
 
 function removeHashtags(caption) {
     const words = caption.split(' ');
@@ -302,7 +317,26 @@ function removeHashtags(caption) {
     return newCaption;
 }
 
+function formatFileSize(bytes) {
+    if (bytes < 1024) {
+        return bytes + ' bytes';
+    } else if (bytes < 1024 * 1024) {
+        return (bytes / 1024).toFixed(2) + ' KB';
+    } else {
+        return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+}
 function updateTotalSize(fileSize) {
+    const maxSizeBytes = 25 * 1024 * 1024;
+
+    if (totalUploadedSizeBytes + fileSize > maxSizeBytes) {
+        alert('Total uploaded size cannot exceed 25 MB.');
+        if (UserPostBtn) {
+            UserPostBtn.disabled = true;
+        }
+        return false; 
+    }
+
     ModalBottom2.style.height = "7rem";
     MMBottom.style.height = "50%";
     MMTop.style.display = "flex";
@@ -311,11 +345,11 @@ function updateTotalSize(fileSize) {
     SizeCounter.innerHTML = formatFileSize(totalUploadedSizeBytes) + "&nbsp;/&nbsp;25 MB";
     console.log(`Total uploaded size: ${formatFileSize(totalUploadedSizeBytes)}`);
     console.log(mediaObject);
+    return true; 
 }
 
-    let confirmFriendObject = '';
-    var confirmButtons = document.querySelectorAll(".Confirm-friend");
 
+    
     confirmButtons.forEach(function(button) {
         button.addEventListener("click", function() {
             var notifId = button.getAttribute("data-notif-id");
