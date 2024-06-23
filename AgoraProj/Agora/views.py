@@ -402,60 +402,63 @@ def randomProfile(request, id):
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def FetchForYou(request):
-    if request.user.is_authenticated:
-        try:
-            accounts = Account.objects.all()
-            posts_with_accounts = []
-
-            for account in accounts:
-                posts = Post.objects.filter(account=account)
-                posts_with_accounts.extend(posts)
-
-            posts_with_accounts.sort(key=lambda x: x.dateTime, reverse=True)
-
-            paginator = Paginator(posts_with_accounts, 5)  
-            page_number = request.GET.get('page')
-            try:
-                posts_with_accounts = paginator.page(page_number)
-            except PageNotAnInteger:
-                posts_with_accounts = paginator.page(1)
-            except EmptyPage:
-                posts_with_accounts = paginator.page(paginator.num_pages)
-
-            posts_data = []
-            for post in posts_with_accounts:
-                tags = list(Tag.objects.filter(post=post).values('id', 'tag'))
-                comment_count = Comment.objects.filter(post=post).count()
-                glows_count = Glow.objects.filter(post=post).count()
-                has_liked = Glow.objects.filter(post=post, account__auth_user=request.user).exists()
-                photos = list(Photo.objects.filter(post=post).values())
-                post_data = {
-                    'id': post.id,
-                    'account': {
-                        'id': post.account.id,
-                        'firstname': post.account.firstname,
-                        'profile_photo': post.account.profile_photo,
-                        'username': post.account.auth_user.username
-                    },
-                    'caption': post.caption,
-                    'dateTime': post.dateTime.isoformat(),
-                    'time_ago': time_ago(post.dateTime),
-                    'tags': tags,
-                    'comment_count': comment_count,
-                    'glows_count': glows_count,
-                    'has_liked': has_liked,
-                    'photos': photos
-                }
-                posts_data.append(post_data)
-
-            return JsonResponse({'status': 'success', 'posts': posts_data})
-        except Exception as e:
-            print(f"Error fetching posts: {e}")
-            return JsonResponse({'status': 'error', 'message': str(e)})
-    else:
+    if not request.user.is_authenticated:
         return JsonResponse({'status': 'error', 'message': 'User not authenticated'})
-    
+
+    try:
+        accounts = Account.objects.all()
+        posts_with_accounts = []
+
+        for account in accounts:
+            posts = Post.objects.filter(account=account)
+            posts_with_accounts.extend(posts)
+
+        posts_with_accounts.sort(key=lambda x: x.dateTime, reverse=True)
+
+        paginator = Paginator(posts_with_accounts, 5)  
+        page_number = request.GET.get('page')
+        try:
+            posts_with_accounts = paginator.page(page_number)
+        except PageNotAnInteger:
+            posts_with_accounts = paginator.page(1)
+        except EmptyPage:
+            posts_with_accounts = paginator.page(paginator.num_pages)
+
+        posts_data = []
+        for post in posts_with_accounts:
+            tags = list(Tag.objects.filter(post=post).values('id', 'tag'))
+            comment_count = Comment.objects.filter(post=post).count()
+            glows_count = Glow.objects.filter(post=post).count()
+            has_liked = Glow.objects.filter(post=post, account__auth_user=request.user).exists()
+            photos = list(Photo.objects.filter(post=post).values())
+            post_data = {
+                'id': post.id,
+                'account': {
+                    'id': post.account.id,
+                    'firstname': post.account.firstname,
+                    'profile_photo': post.account.profile_photo,
+                    'username': post.account.auth_user.username
+                },
+                'caption': post.caption,
+                'dateTime': post.dateTime.isoformat(),
+                'time_ago': time_ago(post.dateTime),
+                'tags': tags,
+                'comment_count': comment_count,
+                'glows_count': glows_count,
+                'has_liked': has_liked,
+                'photos': photos
+            }
+            posts_data.append(post_data)
+
+        return JsonResponse({'status': 'success', 'posts': posts_data})
+    except Exception as e:
+        print(f"Error fetching posts: {e}")
+        return JsonResponse({'status': 'error', 'message': str(e)})
+
 def Fetch_NewPosts(request, last_updated):
+    if not request.user.is_authenticated:
+        return []
+
     posts_with_accounts = Post.objects.filter(dateTime__gte=last_updated).order_by('-dateTime')
 
     posts_data = []
@@ -490,7 +493,7 @@ def event_stream(request):
     if not request.user.is_authenticated:
         yield "data: {}\n\n".format(json.dumps({'status': 'error', 'message': 'User not authenticated'}))
         return
-    
+
     last_updated = timezone.now()
     initial_data = ""
 
@@ -501,11 +504,14 @@ def event_stream(request):
         if data != initial_data:
             yield "data: {}\n\n".format(data)
             initial_data = data
-            last_updated = timezone.now()  
+            last_updated = timezone.now()
         time.sleep(1)
 
 class PostStreamView(View):
     def get(self, request):
+        if not request.user.is_authenticated:
+            return JsonResponse({'status': 'error', 'message': 'User not authenticated'})
+
         response = StreamingHttpResponse(event_stream(request), content_type='text/event-stream')
         response['Cache-Control'] = 'no-cache'
         return response
