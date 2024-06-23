@@ -456,7 +456,7 @@ def FetchForYou(request):
         return JsonResponse({'status': 'error', 'message': 'User not authenticated'})
     
 def Fetch_NewPosts(request, last_updated):
-    posts_with_accounts = Post.objects.filter(dateTime__gte=last_updated).order_by('-dateTime')
+    posts_with_accounts = Post.objects.filter(dateTime__gte=last_updated)
 
     posts_data = []
     for post in posts_with_accounts:
@@ -487,10 +487,6 @@ def Fetch_NewPosts(request, last_updated):
     return posts_data
 
 def event_stream(request):
-    if not request.user.is_authenticated:
-        yield "data: {}\n\n".format(json.dumps({'status': 'error', 'message': 'User not authenticated'}))
-        return
-    
     last_updated = timezone.now()
     initial_data = ""
 
