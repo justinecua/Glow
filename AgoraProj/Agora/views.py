@@ -515,6 +515,7 @@ class PostStreamView(View):
 
         response = StreamingHttpResponse(event_stream(request), content_type='text/event-stream')
         response['Cache-Control'] = 'no-cache'
+        response['X-Accel-Buffering'] = 'no'
         return response
     
 '''
