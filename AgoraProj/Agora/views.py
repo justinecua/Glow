@@ -465,8 +465,8 @@ def Fetch_NewPosts(request, last_updated):
     for post in posts_with_accounts:
         tags = list(Tag.objects.filter(post=post).values('id', 'tag'))
         comment_count = Comment.objects.filter(post=post).count()
-        glows_count = Glow.objects.filter(post=post).count()
-        has_liked = Glow.objects.filter(post=post, account__auth_user=request.user).exists()
+        glows_count = Glow.objects.filter(post=post, account__auth_user_id=request.user.id).count()
+        has_liked = Glow.objects.filter(post=post, account__auth_user_id=request.user.id).exists()
         photos = list(Photo.objects.filter(post=post).values())
         post_data = {
             'id': post.id,
@@ -488,6 +488,7 @@ def Fetch_NewPosts(request, last_updated):
         posts_data.append(post_data)
 
     return posts_data
+
 
 def event_stream(request):
     if not request.user.is_authenticated:
