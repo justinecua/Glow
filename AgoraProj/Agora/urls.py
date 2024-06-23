@@ -4,7 +4,8 @@ from .views import (
     CustomPasswordResetView,
     CustomPasswordResetDoneView,
     CustomPasswordResetFromKeyView,
-    CustomPasswordResetFromKeyDoneView
+    CustomPasswordResetFromKeyDoneView,
+    PostStreamView
 )
 
 
@@ -12,6 +13,7 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('account/login/validate/', views.validatelogin, name='validatelogin'),
     path('account/signup/', views.signup, name='signup'),
+    path('stream/', PostStreamView.as_view(), name = 'stream'),
     path('dashboard', views.dashboard, name='dashboard'), 
     path('dashboard/uploadprofile', views.UploadProfile, name='uploadprofile'), 
     path('handle_media/', views.handle_media, name='handle_media'),
@@ -34,6 +36,6 @@ urlpatterns = [
     path('account/password/reset/done/', CustomPasswordResetDoneView.as_view(), name='account_reset_done_password'),
     path('account/password/reset/key/<uidb64>/<key>/', CustomPasswordResetFromKeyView.as_view(), name='account_reset_from_key'),
     path('account/password/reset/key/done/', CustomPasswordResetFromKeyDoneView.as_view(), name='account_reset_from_key_done'),
-    path('dashboard/emoji', views.emojis, name='get_emoji')
+    path('dashboard/emoji', views.emojis, name='get_emoji'),
     #path('FetchFriendsPosts/', views.FetchFriendsPosts, name='FetchFriendsPosts'),
 ]

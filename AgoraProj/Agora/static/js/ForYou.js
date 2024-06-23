@@ -1,4 +1,4 @@
-import { fetchForYou } from "./ajax/fetch-ForYou.js";
+import { fetchForYou, fetchNewPosts } from "./ajax/fetch-ForYou.js";
 import { fetchFriendPosts } from "./ajax/fetch-friends-posts.js";
 import { loading } from "./ajax/fetch-ForYou.js";
 
@@ -21,15 +21,16 @@ function allPostsInView() {
     return lastPostRect.bottom <= window.innerHeight;
 }
 
+    fetchNewPosts();
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchForYou();
+        ForYou.classList.add('active');
+        Following.classList.remove('active');
+        ForYou.addEventListener('click', handleForYouClick);
+        Following.addEventListener('click', handleFollowingClick);
+        window.addEventListener('scroll', handleScroll);
 
-document.addEventListener('DOMContentLoaded', function() {
-    fetchForYou();
-    ForYou.classList.add('active');
-    Following.classList.remove('active');
-    ForYou.addEventListener('click', handleForYouClick);
-    Following.addEventListener('click', handleFollowingClick);
-    window.addEventListener('scroll', handleScroll);
-});
+    });
 
 function handleForYouClick() {
     NCenterContent.style.display = "flex";
