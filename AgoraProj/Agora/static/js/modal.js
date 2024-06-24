@@ -226,7 +226,6 @@ postTextarea.addEventListener('input', function() {
 
     updateMediaObject(caption); 
 
-    console.log(hashtags);
 });
 
 accountID.addEventListener('change', function() {
@@ -290,7 +289,7 @@ function updateMediaObject(caption) {
         caption: caption,
         tags: hashtags,
     };
-    
+    console.log(mediaObject);
     return mediaObject;
 }
 
@@ -344,7 +343,7 @@ function updateTotalSize(fileSize) {
 
     SizeCounter.innerHTML = formatFileSize(totalUploadedSizeBytes) + "&nbsp;/&nbsp;25 MB";
     console.log(`Total uploaded size: ${formatFileSize(totalUploadedSizeBytes)}`);
-    console.log(mediaObject);
+    
     return true; 
 }
 

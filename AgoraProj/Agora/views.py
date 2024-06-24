@@ -4,17 +4,19 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Account, Audience, Post, Photo, Video, Tag, Friend, Notification, Comment, Glow
 from .helpers import ImagekitClient
-from django.http import StreamingHttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.base import ContentFile
 from datetime import datetime
+from django.views import View
 import requests
 import base64
 import json
-import time
 import html
 import datetime
+from ably import AblyRealtime
+import asyncio
+from django.conf import settings
 from datetime import datetime
 from django.db.models import Q
 from django.core.serializers.json import DjangoJSONEncoder
@@ -22,6 +24,7 @@ from django.utils import timezone
 from datetime import datetime
 import pytz
 from django.db.models import Count
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def home(request):
     return render(request, 'index.html')
@@ -187,6 +190,41 @@ def get_emoji():
     
     return []
 
+async def publish_to_ably(
+        post_id, caption, account_id, account_firstname,
+        account_profile_photo, username, time, photos,
+        tags, comment_count, glows_count, has_liked,):
+    
+    ably = AblyRealtime(settings.ABLY_API_KEY)
+    await ably.connection.once_async('connected')
+    print('Connected to Ably')
+
+    channel = ably.channels.get('posts')
+    
+    await channel.publish(
+        'post',
+                {
+                'post_id': post_id,
+                'time': time,
+                'caption': caption,
+                'account': {
+                        'id': account_id,
+                        'firstname': account_firstname,
+                        'profile_photo': account_profile_photo,
+                        'username': username
+                        },
+                'photos': photos,
+                'tags': tags,
+                'comment_count': comment_count,
+                'glows_count': glows_count,
+                'has_liked': has_liked,
+            }
+    )
+
+    await ably.close()
+    print('Closed the connection to Ably.')
+
+
 @csrf_exempt
 def handle_media(request):
     if request.method == 'POST':
@@ -212,7 +250,7 @@ def handle_media(request):
             audience=AudienceFK,
             caption=caption,    
         )
-
+        
         for tag_name in tag_list:
             try:
                 tag = Tag.objects.get(tag=tag_name)
@@ -246,10 +284,90 @@ def handle_media(request):
                 link = video_link,  
                 post = new_post,
             )
-    
+
+        photo_links = [photo.link for photo in new_post.photo_set.all()]
+        video_links = [video.link for video in new_post.video_set.all()]
+
+        account_username = new_post.account.auth_user.username
+        post_time = time_ago(new_post.dateTime),
+        tags = list(Tag.objects.filter(post=new_post).values('id', 'tag'))
+        comment_count = Comment.objects.filter(post=new_post).count()
+        glows_count = Glow.objects.filter(post=new_post).count()
+        has_liked = Glow.objects.filter(post=new_post, account__auth_user=request.user).exists()
+        
+        asyncio.run(publish_to_ably(
+            new_post.id,
+            caption,
+            new_post.account.id,
+            new_post.account.firstname,
+            new_post.account.profile_photo,
+            account_username,
+            post_time,
+            photo_links,
+            tags,
+            comment_count,
+            glows_count,
+            has_liked,
+        ))   
         return JsonResponse({"status": "success", "message": "Successfully posted!"})
     return JsonResponse({"status": "error", "message": "Only POST method is accepted"})
 
+
+
+def FetchForYou(request):
+    if request.user.is_authenticated:
+        try:
+            accounts = Account.objects.all()
+            posts_with_accounts = []
+
+            for account in accounts:
+                posts = Post.objects.filter(account=account)
+                posts_with_accounts.extend(posts)
+
+            posts_with_accounts.sort(key=lambda x: x.dateTime, reverse=True)
+
+            paginator = Paginator(posts_with_accounts, 5)  
+            page_number = request.GET.get('page')
+            try:
+                posts_with_accounts = paginator.page(page_number)
+            except PageNotAnInteger:
+                posts_with_accounts = paginator.page(1)
+            except EmptyPage:
+                posts_with_accounts = paginator.page(paginator.num_pages)
+
+            posts_data = []
+            for post in posts_with_accounts:
+                tags = list(Tag.objects.filter(post=post).values('id', 'tag'))
+                comment_count = Comment.objects.filter(post=post).count()
+                glows_count = Glow.objects.filter(post=post).count()
+                has_liked = Glow.objects.filter(post=post, account__auth_user=request.user).exists()
+                photos = list(Photo.objects.filter(post=post).values())
+                post_data = {
+                    'id': post.id,
+                    'account': {
+                        'id': post.account.id,
+                        'firstname': post.account.firstname,
+                        'profile_photo': post.account.profile_photo,
+                        'username': post.account.auth_user.username
+                    },
+                    'caption': post.caption,
+                    'dateTime': post.dateTime.isoformat(),
+                    'time_ago': time_ago(post.dateTime),
+                    'tags': tags,
+                    'comment_count': comment_count,
+                    'glows_count': glows_count,
+                    'has_liked': has_liked,
+                    'photos': photos
+                }
+                posts_data.append(post_data)
+
+            return JsonResponse({'status': 'success', 'posts': posts_data})
+        except Exception as e:
+            print(f"Error fetching posts: {e}")
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'User not authenticated'})
+    
 
 def time_ago(post_datetime):
     now = datetime.now(pytz.utc)
@@ -398,62 +516,6 @@ def randomProfile(request, id):
         return redirect('login')  
 
 
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
-def FetchForYou(request):
-    if request.user.is_authenticated:
-        try:
-            accounts = Account.objects.all()
-            posts_with_accounts = []
-
-            for account in accounts:
-                posts = Post.objects.filter(account=account)
-                posts_with_accounts.extend(posts)
-
-            posts_with_accounts.sort(key=lambda x: x.dateTime, reverse=True)
-
-            paginator = Paginator(posts_with_accounts, 5)  
-            page_number = request.GET.get('page')
-            try:
-                posts_with_accounts = paginator.page(page_number)
-            except PageNotAnInteger:
-                posts_with_accounts = paginator.page(1)
-            except EmptyPage:
-                posts_with_accounts = paginator.page(paginator.num_pages)
-
-            posts_data = []
-            for post in posts_with_accounts:
-                tags = list(Tag.objects.filter(post=post).values('id', 'tag'))
-                comment_count = Comment.objects.filter(post=post).count()
-                glows_count = Glow.objects.filter(post=post).count()
-                has_liked = Glow.objects.filter(post=post, account__auth_user=request.user).exists()
-                photos = list(Photo.objects.filter(post=post).values())
-                post_data = {
-                    'id': post.id,
-                    'account': {
-                        'id': post.account.id,
-                        'firstname': post.account.firstname,
-                        'profile_photo': post.account.profile_photo,
-                        'username': post.account.auth_user.username
-                    },
-                    'caption': post.caption,
-                    'dateTime': post.dateTime.isoformat(),
-                    'time_ago': time_ago(post.dateTime),
-                    'tags': tags,
-                    'comment_count': comment_count,
-                    'glows_count': glows_count,
-                    'has_liked': has_liked,
-                    'photos': photos
-                }
-                posts_data.append(post_data)
-
-            return JsonResponse({'status': 'success', 'posts': posts_data})
-        except Exception as e:
-            print(f"Error fetching posts: {e}")
-            return JsonResponse({'status': 'error', 'message': str(e)})
-    else:
-        return JsonResponse({'status': 'error', 'message': 'User not authenticated'})
-    
 
 
     
