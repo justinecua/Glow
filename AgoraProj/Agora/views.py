@@ -9,7 +9,6 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.base import ContentFile
 from datetime import datetime
-from django.views import View
 import requests
 import base64
 import json
@@ -455,57 +454,8 @@ def FetchForYou(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'User not authenticated'})
     
-def Fetch_NewPosts(request, last_updated):
-    posts_with_accounts = Post.objects.filter(dateTime__gte=last_updated)
 
-    posts_data = []
-    for post in posts_with_accounts:
-        tags = list(Tag.objects.filter(post=post).values('id', 'tag'))
-        comment_count = Comment.objects.filter(post=post).count()
-        glows_count = Glow.objects.filter(post=post).count()
-        has_liked = Glow.objects.filter(post=post, account__auth_user=request.user).exists()
-        photos = list(Photo.objects.filter(post=post).values())
-        post_data = {
-            'id': post.id,
-            'account': {
-                'id': post.account.id,
-                'firstname': post.account.firstname,
-                'profile_photo': post.account.profile_photo,
-                'username': post.account.auth_user.username
-            },
-            'caption': post.caption,
-            'dateTime': post.dateTime.isoformat(),
-            'time_ago': time_ago(post.dateTime),
-            'tags': tags,
-            'comment_count': comment_count,
-            'glows_count': glows_count,
-            'has_liked': has_liked,
-            'photos': photos
-        }
-        posts_data.append(post_data)
 
-    return posts_data
-
-def event_stream(request):
-    last_updated = timezone.now()
-    initial_data = ""
-
-    while True:
-        posts_data = Fetch_NewPosts(request, last_updated)
-        data = json.dumps(posts_data)
-        
-        if data != initial_data:
-            yield "data: {}\n\n".format(data)
-            initial_data = data
-            last_updated = timezone.now()  
-        time.sleep(1)
-
-class PostStreamView(View):
-    def get(self, request):
-        response = StreamingHttpResponse(event_stream(request), content_type='text/event-stream')
-        response['Cache-Control'] = 'no-cache'
-        response['X-Accel-Buffering'] = 'no'
-        return response
     
 '''
 def FetchFriendsPosts(request):

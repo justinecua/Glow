@@ -1,4 +1,4 @@
-import { fetchForYou, fetchNewPosts } from "./ajax/fetch-ForYou.js";
+import { fetchForYou} from "./ajax/fetch-ForYou.js";
 import { fetchFriendPosts } from "./ajax/fetch-friends-posts.js";
 import { loading } from "./ajax/fetch-ForYou.js";
 
@@ -21,7 +21,7 @@ function allPostsInView() {
     return lastPostRect.bottom <= window.innerHeight;
 }
 
-    fetchNewPosts();
+    //fetchNewPosts();
     document.addEventListener('DOMContentLoaded', function() {
         fetchForYou();
         ForYou.classList.add('active');

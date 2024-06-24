@@ -4,8 +4,7 @@ from .views import (
     CustomPasswordResetView,
     CustomPasswordResetDoneView,
     CustomPasswordResetFromKeyView,
-    CustomPasswordResetFromKeyDoneView,
-    PostStreamView
+    CustomPasswordResetFromKeyDoneView
 )
 
 
@@ -13,7 +12,7 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('account/login/validate/', views.validatelogin, name='validatelogin'),
     path('account/signup/', views.signup, name='signup'),
-    path('stream/', PostStreamView.as_view(), name = 'stream'),
+    #path('stream/', PostStreamView.as_view(), name = 'stream'),
     path('dashboard', views.dashboard, name='dashboard'), 
     path('dashboard/uploadprofile', views.UploadProfile, name='uploadprofile'), 
     path('handle_media/', views.handle_media, name='handle_media'),
