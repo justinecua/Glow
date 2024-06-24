@@ -1012,7 +1012,7 @@ body {
         width: 30rem;
         background-color: var(--nav-color);
         border-radius: 10px;
-        animation: fadeIn 0.3s ease-out forwards;
+        
     }
     
     .Modal-Content{
@@ -2089,6 +2089,22 @@ body {
         display: flex;
     }
     
+    #loadingIndicator-Comment{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position :absolute;
+        background-color: white;
+        z-index: 8;
+    }
+    
+    #loadingIndicator-Comment div{
+        display: flex;
+    }
+
     
     .hashtag {
         color: blue; 
@@ -2583,32 +2599,16 @@ body {
     
     .Comment-Container {
         z-index: 5;
-        height: 45rem;
+        height: 55rem;
         position: fixed;
-        top: 50%; 
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0.5);
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 10px;
         background-color: white;
-        opacity: 0; 
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-        animation: popUp 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+        animation: fadeIn 0.3s ease-out forwards;
     }
-    
-    @keyframes popUp {
-        from {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.5);
-        }
-        to {
-            opacity: 1; 
-            transform: translate(-50%, -50%) scale(1); 
-        }
-    }
-    
     
     .Comment-subCont{
         display: flex;
@@ -2616,7 +2616,6 @@ body {
     }
     
     .CC-Left {
-        width: 30rem;
         height: 100%;
         display: flex;
         align-items: center;
@@ -2639,7 +2638,6 @@ body {
         flex-direction: column;
         justify-content: space-between;
         padding: 1rem;
-        width: 30rem;
         position: relative;
         border-left: var(--border-color);
         height: 100%;
@@ -3709,7 +3707,6 @@ body {
     }
 
     .Comment-Container {
-        
         height: 45rem;
     }
 

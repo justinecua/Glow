@@ -201,7 +201,7 @@ export function fetchForYou() {
                     getPost(dataPostID, 0);
                     getComments(dataPostID);
                     overlayOpened = true;
-                    console.log(dataPostID);
+                    
 
                     dataPostIDForSend = dataPostID;
                 });
@@ -289,7 +289,6 @@ function createPostElement(post) {
             </div>
         </div>
         <div class="UPCCT-Right">
-           
         </div>
     </div>
     <div class="UPC-content-grid ${post.photos.length === 3 ? 'three-photos' : ''}">
@@ -334,7 +333,7 @@ function createPostElement(post) {
     </div>
 </div>`;
 
-LazyLoading(".lazy")
+    LazyLoading(".lazy")
 
     return postContainer;
 }
