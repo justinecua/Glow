@@ -195,7 +195,7 @@ async def publish_to_ably(
         account_profile_photo, username, time, photos,
         tags, comment_count, glows_count, has_liked,):
     
-    ably = AblyRealtime(settings.ABLY_API_KEY)
+    ably = AblyRealtime("ru_QJA.LX6KeA:6pykpDiiF8i68udlvvVQ6_xn6zlL7CLBUfdFZCSbm4k")
     await ably.connection.once_async('connected')
     print('Connected to Ably')
 
