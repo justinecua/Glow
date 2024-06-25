@@ -7,4 +7,10 @@ AgoraProj/AgoraProj/__pycache__/
 AgoraProj/db.sqlite3
 AgoraProj/.env
 .vscode/
+<<<<<<< HEAD
+=======
+vercel.json
+requirements.txt
+
+>>>>>>> e4f3b5fc0e138be170b95c65c0954a104bce0f40
 
