@@ -6,5 +6,6 @@ vercel.json
 AgoraProj/AgoraProj/__pycache__/
 AgoraProj/db.sqlite3
 AgoraProj/.env
-
+.github/
+.vscode/
 
