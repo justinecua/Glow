@@ -2,9 +2,8 @@
 *.log
 *.pot
 *.pyc
-__pycache__/
-db.sqlite3
-
-.env
+AgoraProj/AgoraProj/__pycache__/
+AgoraProj/db.sqlite3
+AgoraProj/.env
 
 
