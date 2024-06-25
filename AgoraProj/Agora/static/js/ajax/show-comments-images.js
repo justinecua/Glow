@@ -1,4 +1,5 @@
 export function getPost(dataPostID, currentPhotoIndex) {
+<<<<<<< HEAD
 
     let loadingBar = document.getElementById('loadingIndicator-Comment');
     loadingBar.style.display = 'flex';
@@ -7,6 +8,10 @@ export function getPost(dataPostID, currentPhotoIndex) {
 
     let CCLeft1 = document.querySelector('.CC-Left');
     let CCRight1 = document.querySelector('.CC-Right');
+=======
+    let transitionInProgress = false;
+
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
     let CCLeft = document.querySelector('.CC-Left-Images');
     let nextButton = document.querySelector('.next-button');
     let prevButton = document.querySelector('.prev-button');
@@ -17,6 +22,7 @@ export function getPost(dataPostID, currentPhotoIndex) {
     let CaptionContent = document.querySelector('.Caption-Content');
     let photos = [];
 
+<<<<<<< HEAD
     fetch(`/getCommentPost/${dataPostID}/`, {
         method: 'GET',
         headers: {
@@ -74,6 +80,49 @@ export function getPost(dataPostID, currentPhotoIndex) {
     .catch(error => {
         console.error('Error fetching data:', error);
     });
+=======
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('GET', `/getCommentPost/${dataPostID}/`);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.status === "success") {
+                    photos = response.photos;
+                    if (photos.length > 0) {
+                        CCLeft.innerHTML = '';
+                        photos.forEach(function (photo, index) {
+                            var img = document.createElement('img');
+                            img.src = photo.url;
+                            img.style.display = index === currentPhotoIndex ? 'block' : 'none'; 
+                            CCLeft.appendChild(img);
+                        });
+                        prevButton.style.display = currentPhotoIndex === 0 ? "none" : "flex";
+                        nextButton.style.display = currentPhotoIndex === photos.length - 1 ? "none" : "flex";
+                        Commentbtncont.style.justifyContent = photos.length > 1 ? (currentPhotoIndex === 1 ? "space-between" : (currentPhotoIndex === photos.length - 1 ? "flex-start" : "end")) : "space-between";
+
+                        nextButton.addEventListener('click', showNextPhoto);
+                        prevButton.addEventListener('click', showPrevPhoto);
+                    } else {
+                        nextButton.style.display = "none";
+                        prevButton.style.display = "none";
+                    }
+
+                    let account = response.accountInfo;
+                    PostFullName.innerHTML = account.firstname + " " + account.lastname;
+                    PostProfilePic.src = account.profile_photo;
+
+                    PostCaption.innerHTML = response.post.caption;
+                }
+            } else {
+                console.error('Request failed. Returned status of ' + xhr.status);
+            }
+        }
+    };
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 
     function showNextPhoto() {
         if (!transitionInProgress && currentPhotoIndex < photos.length - 1) {
@@ -106,6 +155,7 @@ export function getPost(dataPostID, currentPhotoIndex) {
         Commentbtncont.style.justifyContent = photos.length > 1 ? (currentPhotoIndex === 1 ? "space-between" : (currentPhotoIndex === photos.length - 1 ? "flex-start" : "end")) : "space-between";
 
     }
+<<<<<<< HEAD
 }
 
 export function LazyLoading(selector) {
@@ -129,3 +179,8 @@ export function LazyLoading(selector) {
     }
 }
 
+=======
+
+    xhr.send();
+}
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17

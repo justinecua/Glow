@@ -1,13 +1,39 @@
 
 
 {% block modal %}
+<<<<<<< HEAD
 {% load static %}
 
+=======
+<script>
+    function insertEmoji(emoji) {
+        var textarea = document.getElementById("post-textarea");
+        var cursorPos = textarea.selectionStart;
+        var textBeforeCursor = textarea.value.substring(0, cursorPos);
+        var textAfterCursor = textarea.value.substring(cursorPos);
+    
+        textarea.value = textBeforeCursor + emoji + textAfterCursor;
+        textarea.selectionStart = textarea.selectionEnd = cursorPos + emoji.length;
+        
+        let Caption = textarea.value;
+        return Caption;
+    }
+    
+
+</script>
+<style>
+    
+</style>
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 <div id="Modal-Overlay">
     <div id="Post-Container">
         <div class="Modal-Content">
             <div class="Modal-Top">
+<<<<<<< HEAD
                 <h1>Create Post</h1>
+=======
+                <h1>Create</h1>
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
             </div>
 
             <div class="Modal-MainContent">
@@ -82,6 +108,7 @@
                         </div>
                     </div>
                 </div>
+<<<<<<< HEAD
                 <div class="Modal-Bottom3">
                     <div class="MM-Top">
                         <p id="MediaSizeTotal">
@@ -96,6 +123,17 @@
                             <div id="Images-Icon" class="option-icon">
                                 <img src="../static/images/photo_album_fill (1).svg" alt=""> <p>Photos</p>
                             </div>
+=======
+
+                <div class="Modal-Bottom">
+                    <div class="MB-Left">
+                        <span>Options</span>
+                    </div>
+
+                    <div class="MB-Right">
+                        <div id="Images-Icon" class="option-icon">
+                            <img src="../static/images/photos-icon.png" alt="">
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
                         </div>
                             <!--
                         <div id="Videos-Icon" class="option-icon">
@@ -106,6 +144,7 @@
                             <img src="../static/images/label.png" alt="">
                         </div>
                             -->
+<<<<<<< HEAD
                         <div class="Post-Options">
                             <div id="Emoji-Icon" class="option-icon">
                                 <img src="../static/images/emoji_line.svg" alt=""><p>Emoji</p>
@@ -124,6 +163,35 @@
                 </div>
 
                 
+=======
+                        <div id="Emoji-Icon" class="option-icon">
+                            <img src="../static/images/smiling.png" alt="">
+                            <div class="emoji-floating-div">
+                                {% if emoji %}
+                                    {% for emoji_code in emoji %}
+                                        <div class="Emoji-Container" onclick="insertEmoji('{{ emoji_code }}')">
+                                            {{ emoji_code | safe }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Modal-Bottom2">
+                    <div class="MM-Top">
+                        <span>Total Media Size:&nbsp;</span>
+                        <span id="SizeCounter"></span>
+                    </div>
+
+                    <div class="MM-Bottom">
+                        <button type="button" id="User-PostBtn">Post
+                            <div id="loadingIndicator" ><img src="static/images/rolling.gif" alt=""></div>
+                        </button>
+                    </div>
+                </div>
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
             </div>
             
         </div>

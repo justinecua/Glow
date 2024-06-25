@@ -39,6 +39,23 @@ export function SearchResults(searchInfo) {
                                 Result.addEventListener('click', () => {
                                     window.location.href = `/profile/${result.id}`;
                                 });
+<<<<<<< HEAD
+=======
+                            } else if (result.type === 'post') {
+                                let caption = document.createElement("p");
+                                let ResultProfP = document.createElement("img");
+                                ResultProfP.className = "ResultProfP";
+                                ResultProfP.src = "../../static/images/search.png";
+                                caption.innerHTML = `"${result.caption}" by ${result.account}`;
+
+                                Result.appendChild(ResultProfP);
+                                Result.appendChild(caption);
+
+                                Result.addEventListener('click', () => {
+                                    window.location.href = `/post/${result.id}`;
+                                });
+
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
                             } else if (result.type === 'tag') {
                                 if (!displayedTags.has(result.tag)) {
                                     let tag = document.createElement("span");

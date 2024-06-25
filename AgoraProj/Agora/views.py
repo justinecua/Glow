@@ -4,27 +4,43 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Account, Audience, Post, Photo, Video, Tag, Friend, Notification, Comment, Glow
 from .helpers import ImagekitClient
+<<<<<<< HEAD
+=======
+from django.http import HttpResponse, HttpResponseServerError
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.base import ContentFile
 from datetime import datetime
+<<<<<<< HEAD
 from django.views import View
+=======
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 import requests
 import base64
 import json
 import html
 import datetime
+<<<<<<< HEAD
 from ably import AblyRealtime
 import asyncio
 from django.conf import settings
 from datetime import datetime
 from django.db.models import Q
+=======
+from datetime import datetime
+from django.db.models import Q
+from django.core import serializers
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils import timezone
 from datetime import datetime
 import pytz
 from django.db.models import Count
+<<<<<<< HEAD
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+=======
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 
 def home(request):
     return render(request, 'index.html')
@@ -33,6 +49,11 @@ def dashboard(request):
     is_new_user = check_user(request) 
     accountInfo = getAccountInfo(request)
     audience = getAudience(request)
+<<<<<<< HEAD
+=======
+    emoji = get_emoji()
+    posts = FetchPosts(request)
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
     notif_data, unread_notifications_count = fetchNotif(request)
     showfriends = showFriends(request)
     hashtags = showTags(request)
@@ -42,6 +63,11 @@ def dashboard(request):
         'is_new_user': is_new_user,
         'accountInfo': accountInfo,
         'audienceInfo': audience,
+<<<<<<< HEAD
+=======
+        'emoji': emoji,
+        'posts': posts,
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
         'notifications': notif_data,
         'unread_count': unread_notifications_count,
         'friends': showfriends,
@@ -73,7 +99,11 @@ def validatelogin(request):
         else:
             messages.error(request, 'Incorrect email or password')
             return redirect('login')
+<<<<<<< HEAD
     return render(request, 'account/login.html')
+=======
+    return render(request, 'accounts/login.html')
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 
 def check_user(request):
     if request.user.is_authenticated:
@@ -85,6 +115,7 @@ def check_user(request):
     else:
         return False
 
+<<<<<<< HEAD
 def signup(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -147,6 +178,27 @@ def UploadProfile(request):
         return JsonResponse({"status": "success", "message": "Profile Updated successfully"})
     else:
         return JsonResponse({"status": "error", "message": "Only POST requests are allowed."})
+=======
+def UploadProfile(request):
+    if request.method == "POST":
+        firstname = request.POST.get("firstname")
+        lastname = request.POST.get("lastname")
+        gender = request.POST.get("gender")
+        file = request.FILES.get("accprofile")
+
+        auth_user_id = User.objects.get(id=request.user.id)
+        imgkit = ImagekitClient(file)
+        result = imgkit.upload_media_file()
+
+        Account.objects.create(
+            firstname = firstname,
+            lastname = lastname,
+            gender = gender,
+            profile_photo = result["url"],
+            auth_user = auth_user_id
+        )
+    return redirect('dashboard')
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 
 
 def getAccountInfo(request):
@@ -171,11 +223,19 @@ def getAudience(request):
 
 def get_emoji():
     try:
+<<<<<<< HEAD
         response = requests.get('https://emoji-api.com/emojis?access_key=c4e0a9cde6711fdf7e6214ac04633e6032fa5513')
         response.raise_for_status()
         emoji_data = response.json()
         
         decoded_emojis = [html.unescape(emoji['character'][0]) for emoji in emoji_data]
+=======
+        response = requests.get('https://emojihub.yurace.pro/api/all')
+        response.raise_for_status()
+        emoji_data = response.json()
+        
+        decoded_emojis = [html.unescape(emoji['htmlCode'][0]) for emoji in emoji_data]
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
         decoded_emojis = [emoji.strip("[]'") for emoji in decoded_emojis if emoji]  
         return decoded_emojis
         
@@ -190,6 +250,7 @@ def get_emoji():
     
     return []
 
+<<<<<<< HEAD
 async def publish_to_ably(
         post_id, caption, account_id, account_firstname,
         account_profile_photo, username, time, photos,
@@ -225,6 +286,8 @@ async def publish_to_ably(
     print('Closed the connection to Ably.')
 
 
+=======
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 @csrf_exempt
 def handle_media(request):
     if request.method == 'POST':
@@ -250,7 +313,11 @@ def handle_media(request):
             audience=AudienceFK,
             caption=caption,    
         )
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
         for tag_name in tag_list:
             try:
                 tag = Tag.objects.get(tag=tag_name)
@@ -284,6 +351,7 @@ def handle_media(request):
                 link = video_link,  
                 post = new_post,
             )
+<<<<<<< HEAD
 
         photo_links = [photo.link for photo in new_post.photo_set.all()]
         video_links = [video.link for video in new_post.video_set.all()]
@@ -309,10 +377,14 @@ def handle_media(request):
             glows_count,
             has_liked,
         ))   
+=======
+    
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
         return JsonResponse({"status": "success", "message": "Successfully posted!"})
     return JsonResponse({"status": "error", "message": "Only POST method is accepted"})
 
 
+<<<<<<< HEAD
 
 def FetchForYou(request):
     if request.user.is_authenticated:
@@ -369,6 +441,8 @@ def FetchForYou(request):
         return JsonResponse({'status': 'error', 'message': 'User not authenticated'})
     
 
+=======
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 def time_ago(post_datetime):
     now = datetime.now(pytz.utc)
     time_diff = now - post_datetime
@@ -424,10 +498,15 @@ def NotifDate(post_datetime):
 def UserProfile(request):
     accountInfo = getAccountInfo(request)
     audience = getAudience(request)
+<<<<<<< HEAD
+=======
+    posts = FetchUserPosts(request)
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
     notif_data, unread_notifications_count = fetchNotif(request)
     showfriends = showFriends(request)
     hashtags = showTags(request)
 
+<<<<<<< HEAD
     posts_with_photos = {}
     posts = Post.objects.filter(account=accountInfo) 
     for post in posts:
@@ -444,15 +523,27 @@ def UserProfile(request):
     context = {
         'accountInfo': accountInfo,
         'audienceInfo': audience,
+=======
+    context = {
+        'accountInfo': accountInfo,
+        'audienceInfo': audience,
+        'posts': posts,
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
         'notifications': notif_data,
         'unread_count': unread_notifications_count,
         'friends': showfriends,
         'hashtags': hashtags,
+<<<<<<< HEAD
         'posts': {'posts_with_photos': posts_with_photos},
     }
     return render(request, 'user-profile.html', context)
 
 
+=======
+    }
+    return render(request, 'user-profile.html', context)
+
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 @csrf_exempt
 def AddFriend(request):
     if request.method == 'POST':
@@ -499,6 +590,11 @@ def randomProfile(request, id):
         showfriends = showFriends(request)
         hashtags = showTags(request)
         search = searchResults(request)
+<<<<<<< HEAD
+=======
+        posts = Fetch_Random_User_Posts(request, id)
+
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
         context = {
             'randomaccount': otherAccount,
             'friendship_is_pending': friendship_is_pending,
@@ -508,6 +604,10 @@ def randomProfile(request, id):
             'accountInfo': accountInfo,  
             'friends': showfriends,
             'hashtags': hashtags,
+<<<<<<< HEAD
+=======
+            'posts': posts,
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
             'search_results': search.get('results', [])
         }
 
@@ -516,10 +616,60 @@ def randomProfile(request, id):
         return redirect('login')  
 
 
+<<<<<<< HEAD
 
 
     
 '''
+=======
+def FetchForYou(request):
+    if request.user.is_authenticated:
+        try:
+            accounts = Account.objects.exclude(auth_user=request.user)
+            posts_with_accounts = []
+
+            for account in accounts:
+                posts = Post.objects.filter(account=account)
+                posts_with_accounts.extend(posts)
+
+            posts_with_accounts.sort(key=lambda x: x.dateTime, reverse=True)
+
+            posts_with_photos = {post.id: list(Photo.objects.filter(post=post).values()) for post in posts_with_accounts}
+
+            posts_data = []
+            for post in posts_with_accounts:
+                tags = list(Tag.objects.filter(post=post).values('id', 'tag'))
+                comment_count = Comment.objects.filter(post=post).count()
+                glows_count = Glow.objects.filter(post=post).count()
+                has_liked = Glow.objects.filter(post=post, account__auth_user=request.user).exists()
+                post_data = {
+                    'id': post.id,
+                    'account': {
+                        'id': post.account.id,
+                        'firstname': post.account.firstname,
+                        'profile_photo': post.account.profile_photo,
+                        'username': post.account.auth_user.username
+                    },
+                    'caption': post.caption,
+                    'dateTime': post.dateTime.isoformat(),
+                    'time_ago': time_ago(post.dateTime),
+                    'tags': tags,
+                    'comment_count': comment_count,
+                    'glows_count': glows_count,
+                    'has_liked': has_liked,
+                    'photos': posts_with_photos[post.id]
+                }
+                posts_data.append(post_data)
+
+            return JsonResponse({'status': 'success', 'posts': posts_data})
+        except Exception as e:
+            print(f"Error fetching posts: {e}")
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'User not authenticated'})
+    
+
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 def FetchFriendsPosts(request):
     if request.user.is_authenticated:
         try:
@@ -568,11 +718,18 @@ def FetchFriendsPosts(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'User not authenticated'})
 
+<<<<<<< HEAD
 '''
 
 def FetchPosts(request):
     if request.user.is_authenticated:
         accID = Account.objects.all()
+=======
+
+def FetchPosts(request):
+    if request.user.is_authenticated:
+        accID = Account.objects.get(auth_user=request.user)
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
         try:
             accounts = Account.objects.all()
             posts_with_accounts = []
@@ -612,19 +769,30 @@ def FetchPosts(request):
             return {'accounts': [], 'posts_with_photos': {}, 'posts': []}
     else:
         return {'accounts': [], 'posts_with_photos': {}, 'posts': []}
+<<<<<<< HEAD
 '''
+=======
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 
 def FetchUserPosts(request):
     if request.user.is_authenticated:
         try:
+<<<<<<< HEAD
             posts_with_accounts = Post.objects.all().order_by('-dateTime')
 
             posts_with_photos = []
+=======
+            accID = Account.objects.get(auth_user=request.user)
+            posts_with_accounts = Post.objects.filter(account=accID).order_by('-dateTime')
+
+            posts_with_photos = {}
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
             for post in posts_with_accounts:
                 post.dateTime = timezone.localtime(post.dateTime)
                 post.time_ago = time_ago(post.dateTime)
                 post.comment_count = Comment.objects.filter(post=post).count()
                 post.glows_count = Glow.objects.filter(post=post).count()
+<<<<<<< HEAD
                 post.has_liked = Glow.objects.filter(post=post).exists()
                 
                 tags = Tag.objects.filter(post=post)
@@ -657,6 +825,21 @@ def FetchUserPosts(request):
 
     '''
 
+=======
+                post.has_liked = Glow.objects.filter(post=post, account=accID).exists()
+                post.tags.set(Tag.objects.filter(post=post))
+                
+                post_photos = Photo.objects.filter(post=post)
+                posts_with_photos[post] = post_photos
+
+            return {'posts_with_photos': posts_with_photos, 'posts': posts_with_accounts}
+        except Exception as e:
+            print(f"Error fetching posts: {e}")
+            return {'posts_with_photos': {}, 'posts': []}
+    else:
+        return {'posts_with_photos': {}, 'posts': []}
+    
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 def Fetch_Random_User_Posts(request, id):
     if request.user.is_authenticated:
         try:
@@ -683,7 +866,10 @@ def Fetch_Random_User_Posts(request, id):
         return {'posts_with_photos': {}, 'posts': []}
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 def fetchNotif(request):
     if request.user.is_authenticated:
         try:
@@ -774,7 +960,11 @@ def getCommentPost(request, id):
             account_data = {
                 'firstname': accountInfo.firstname,
                 'lastname': accountInfo.lastname,
+<<<<<<< HEAD
                 'profile_photo': accountInfo.profile_photo + '/tr:q-100,tr:w-42,h-42'
+=======
+                'profile_photo': accountInfo.profile_photo
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
             }
 
             photo_data = [{
@@ -906,7 +1096,10 @@ def showTags(request):
                     'post_count': tag.num_posts
                 }
                 
+<<<<<<< HEAD
             
+=======
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
             return list(distinct_tags.values())
         except Tag.DoesNotExist:
             return None
@@ -1129,7 +1322,11 @@ def searchResults(request):
             Q(firstname__icontains=query) | Q(lastname__icontains=query)
         )
         posts = Post.objects.filter(
+<<<<<<< HEAD
             Q(tags__tag__icontains=query)
+=======
+            Q(caption__icontains=query) | Q(tags__tag__icontains=query)
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
         ).distinct()
         
         results = []
@@ -1174,6 +1371,7 @@ def searchResults(request):
         response_data = {"status": "error", "message": "No query provided"}
         return JsonResponse(response_data)
 
+<<<<<<< HEAD
 from allauth.account.views import PasswordResetView, PasswordResetDoneView, PasswordResetFromKeyView, PasswordResetFromKeyDoneView
 
 from django.contrib.auth import get_user_model
@@ -1200,3 +1398,7 @@ class CustomPasswordResetFromKeyView(PasswordResetFromKeyView):
 
 class CustomPasswordResetFromKeyDoneView(PasswordResetFromKeyDoneView):
     template_name = 'account/password_reset_from_key_done.html'
+=======
+def spline_view(request):
+    return render(request, 'Agora/index.html')
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17

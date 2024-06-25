@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+<<<<<<< HEAD
 from .views import (
     CustomPasswordResetView,
     CustomPasswordResetDoneView,
@@ -15,6 +16,13 @@ urlpatterns = [
     #path('stream/', PostStreamView.as_view(), name = 'stream'),
     path('dashboard', views.dashboard, name='dashboard'), 
     path('publish_to_ably/', views.publish_to_ably, name='publish_to_ably'),
+=======
+
+urlpatterns = [
+    path('', views.home, name="home"),
+    path('accounts/login/validate/', views.validatelogin, name='validatelogin'),
+    path('dashboard', views.dashboard, name='dashboard'), 
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
     path('dashboard/uploadprofile', views.UploadProfile, name='uploadprofile'), 
     path('handle_media/', views.handle_media, name='handle_media'),
     path('dashboard/profile', views.UserProfile, name='UserProfile'),
@@ -32,6 +40,7 @@ urlpatterns = [
     path('editProfile/<int:id>', views.editProfile, name='editProfile'),
     path('searchResults/', views.searchResults, name='searchResults'),
     path('FetchForYou/', views.FetchForYou, name='FetchForYou'),
+<<<<<<< HEAD
     path('account/password/reset/', CustomPasswordResetView.as_view(), name='account_reset_password'),
     path('account/password/reset/done/', CustomPasswordResetDoneView.as_view(), name='account_reset_done_password'),
     path('account/password/reset/key/<uidb64>/<key>/', CustomPasswordResetFromKeyView.as_view(), name='account_reset_from_key'),
@@ -39,3 +48,7 @@ urlpatterns = [
     path('dashboard/emoji', views.emojis, name='get_emoji'),
     #path('FetchFriendsPosts/', views.FetchFriendsPosts, name='FetchFriendsPosts'),
 ]
+=======
+    path('FetchFriendsPosts/', views.FetchFriendsPosts, name='FetchFriendsPosts'),
+]
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
