@@ -3,10 +3,8 @@
 *.pot
 *.pyc
 AgoraProj/AgoraProj/__pycache__/
-AgoraProj/db.sqlite3
 AgoraProj/.env
 .vscode/
 vercel.json
 requirements.txt
-
 
