@@ -4,6 +4,7 @@ import { SendEditProfile } from './ajax/send-editprofile.js';
 import { AcceptFriend } from "./ajax/accept-friend.js";
 import { sendLike } from "./ajax/send-like.js";
 import { sendUnlike } from "./ajax/send-unlike.js";
+import { count_new_posts } from "./ajax/autofetch_userPost.js"
 
 let Post = document.getElementById('Post-Container');
 let createpost = document.getElementById('create-post');
@@ -293,6 +294,7 @@ function updateMediaObject(caption) {
     return mediaObject;
 }
 
+
 UserPostBtn.addEventListener('click', async () => {
     UserPostBtn.disabled = true;
     let caption = postTextarea.value;
@@ -301,13 +303,15 @@ UserPostBtn.addEventListener('click', async () => {
 
     if (mediaObject) {
         SendPost(mediaObject);
-    } else {
+        
+  } else {
         postTextarea.placeholder = placeholderTexts[placeholderIndex];
         placeholderIndex = (placeholderIndex + 1) % placeholderTexts.length;
         UserPostBtn.disabled = false;
     }
 });
 
+count_new_posts();
 
 function removeHashtags(caption) {
     const words = caption.split(' ');
