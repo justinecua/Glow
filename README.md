@@ -20,8 +20,7 @@ Glow is more than just a social media platform; it's a hub for genuine interacti
 ## Contact Us
 
 Have questions or suggestions? Feel free to contact us:
-- Email: [info@glow.com](mailto:info@glow.com)
-- Visit our website: [www.glow.com/contact](https://www.glow.com/contact)
+- Email: [glowservice01@gmail.com](mailto:glowservice01@gmail.com)
 
 ## Getting Started
 
