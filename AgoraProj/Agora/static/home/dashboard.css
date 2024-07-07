@@ -159,13 +159,13 @@ body {
         justify-content: space-between;
         flex-direction: column;
         background-color: var(--nav-color);
-        box-shadow: 1px 0 2px rgba(0, 0, 0, 0.1); 
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1); 
     }
     
     .NCenter{
         margin: auto;
-        width: 120rem;
-        
+        width: 70rem;
+        height: 100%;
     }
     
     .NRight{
@@ -242,6 +242,7 @@ body {
     }
     
     .NCenter {
+        position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -358,23 +359,27 @@ body {
         width: 48rem;
         margin-left: -1%;
     }
+     
     
-    .NCenter-content-user{
+     .UserProfile-PostContainer{
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 70%;
+        width: 100%;
     }
-    
+
     .User-About-Prof{
-        display: flex;
+        display: none;
         width: 40%;
         height: 100%;
         padding: 1rem;
         font-family: "Work Sans", sans-serif;
     }
     
+    #Posts-Message{
+       font-family: "Work Sans", sans-serif;
+    }
+
     .UBF-Content{
         display: flex;
         flex-direction: column;
@@ -390,9 +395,14 @@ body {
     }
     
     .UserProf-Main{
+        margin-top: 2%;
+        border-radius: 15px;
+        background-color: var(--nav-color);
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
         width: 100%;
-        display: flex;
-        justify-content: center;
+        margin-left: -0.7%;
+        
     }
     
     .NCenter-content2{
@@ -1753,11 +1763,13 @@ body {
         width: 100%;
         height: auto;
     }
+   
+   
     
     .UPC-content-Top{
         display: flex;
+        padding: 1rem;
         width: 100%;
-        height: 10%;
         border-top-right-radius: 10px;
         border-top-left-radius: 10px;
     }
@@ -1791,18 +1803,58 @@ body {
         object-fit: cover;
     }
     
-    
+   
+    .NCenter-content-user{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        width: 100%;
+    }
+
     .UPC-content.single-photo {
         grid-column: 1 / -1;
+        margin-top: -1%;
     }
-    
+  
     
     .UPC-content-grid.three-photos {
-        grid-template-columns: repeat(3, 1fr); 
-        height: 25rem;
+        grid-template-columns: repeat(3, 1fr);  
+    }
+   
+    .UPC-content-grid.no-photos{
+        height: 0;
+    }
+
+    .UPC-content-grid2 {
+        
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2%;
+        width: 90%;
+        height: 90%;
+    }
+   
+    .UPC-content-grid2.three-photos{
+      grid-template-rows: 1fr;
+      grid-auto-rows: 0;
+      padding-bottom: 0;
+      row-gap: 0;
+      overflow: hidden;
+    } 
+  
+
+    .UPC-content2 {
+        width: 100%;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        overflow: hidden; 
     }
     
+     .UPC-content2 img {  
+        width: 100%; 
+        object-fit: cover;
+    }
     
+
     .UPC-content-Bottom{
         width: 100%;
         border-bottom-right-radius: 10px;
@@ -1814,7 +1866,6 @@ body {
         display: flex;
         align-items: center;
         width: 100%;
-        padding-left: 3%;
     
     }
     
@@ -1999,16 +2050,14 @@ body {
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        height: 3rem;
-        margin-left: 2%;
-        margin-top: 2%;
+        padding: 1rem;
     }
     
     .UPCB-Caption{
         display: flex;
         width: 100%;
         height: 2rem;
-        padding-left: 4%;
+        padding-left: 1rem;
     }
     
     .UPCB-Tags{
@@ -2113,10 +2162,12 @@ body {
     /*---------------------------------My profile -------------------------------------------------*/
     
     .Profile-Container{
-        width: 70rem;
-        margin-left: -0.9%;
+        width: 100%;
+        border-radius: 15px;
+        margin-left: -0.7%;
         padding: 2rem;
         background-color: var(--nav-color);
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
     }
     
     .PPC-Cover-Container{
@@ -2229,7 +2280,32 @@ body {
     .PPC-Info-Mid p{
         color: #6e6e6e;
     }
-    
+   
+    .Friends_and_Glow_Container{
+        display: flex;
+        margin-top: 2%;
+        margin-left: -0.7%;
+        width: 100%;
+        height: 4rem;
+        gap: 2%;
+    }
+   
+    .Friends_and_Glow_Container div{
+        background-color: var(--nav-color);
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+        width: 50%;
+        height: 100%;
+        padding: 1rem;
+        border-radius: 15px;
+    }
+    .FGC_Left{
+      
+    }
+
+    .FGC_Right{
+
+    }
+
     .MyProfile-Nav{
         display: flex;
         position: relative;

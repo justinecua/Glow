@@ -491,35 +491,52 @@ def randomProfile(request, id):
     if request.user.is_authenticated:
         otherAccount = Account.objects.get(id=id)
         accID = Account.objects.get(auth_user=request.user)
+        randomAccId = User.objects.get(id=otherAccount.auth_user.id)
 
         friendship_is_pending = Friend.objects.filter(user=accID, friend=otherAccount, status='pending').exists() or \
                                 Friend.objects.filter(user=otherAccount, friend=accID, status='pending').exists()
         
         friendship_is_friends = Friend.objects.filter(user=accID, friend=otherAccount, status='Friends').exists() or \
                                 Friend.objects.filter(user=otherAccount, friend=accID, status='Friends').exists()
+        
         notif_data, unread_notifications_count = fetchNotif(request)
-        accountInfo = getAccountInfo(request)
         showfriends = showFriends(request)
         hashtags = showTags(request)
+        audience = getAudience(request)
         search = searchResults(request)
+        accountInfo = getAccountInfo(request)
+
+        posts_with_photos = {}
+        posts = Post.objects.filter(account=otherAccount) 
+        for post in posts:
+            photos = Photo.objects.filter(post=post)
+            glows = Glow.objects.filter(post=post)
+            comments = Comment.objects.filter(post=post)
+            posts_with_photos[post] = {
+                'photos': photos,
+                'time_ago': time_ago(post.dateTime),
+                'glows_count': glows.count(),
+                'comments_count': comments.count(),
+                }
+
         context = {
             'randomaccount': otherAccount,
             'friendship_is_pending': friendship_is_pending,
             'friendship_is_friends': friendship_is_friends,
             'unread_count': unread_notifications_count,
             'notifications': notif_data,
-            'accountInfo': accountInfo,  
+            'random_accountInfo': randomAccId,
+            'accountInfo': accountInfo,
             'friends': showfriends,
             'hashtags': hashtags,
-            'search_results': search.get('results', [])
+            'search_results': search.get('results', []),
+            'audienceInfo': audience,    
+            'posts': {'posts_with_photos': posts_with_photos},
         }
 
         return render(request, 'random-profile.html', context)
     else:
         return redirect('login')  
-
-
-
 
     
 '''

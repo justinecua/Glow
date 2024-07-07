@@ -92,7 +92,7 @@
                         {% if accountInfo.cover_photo %}
                             <img id="UserCoverPhoto" src="{{ accountInfo.cover_photo }}">
                         {% else %}
-                            <img id="UserCoverPhoto" src="../static/images/default-coverphoto1.jpg">
+                            <img id="UserCoverPhoto" src="https://ik.imagekit.io/mygh9x3hg/pexels-blitzboy-1144176.jpg">
                         {% endif %}
                     
                         <div class="PPC-Profile-Cont">
@@ -134,6 +134,7 @@
                             <li>About</li>
                         </ul>
                     </div>
+
                     <div class="UserProf-Main">
                         
                         <div class="User-About-Prof">
@@ -147,24 +148,6 @@
                         </div>
 
                         <div class="NCenter-content-user">
-                            <div class="Post-Container2">
-                                <div class="PC-Left">
-                                    <div class="PCL-Top">
-                                        {% if is_new_user %}
-                                            <img src="../static/images/default-profile2.jpg" alt="{{ request.user.username }}">
-                                        {% else %}
-                                            <img src="{{ accountInfo.profile_photo }}">
-                                        {% endif %}
-                                    </div>
-                                </div>
-                                <p id="currentUserId" data-userId="{{ accountInfo.id }}"></p>
-                                <div class="PC-Right">
-                                    <div class="PCR-Top">
-                                        <input type="text" id="create-post" placeholder="Tell your friends about your thoughts">
-                                    </div>
-                                
-                                </div>
-                            </div>
                             
                             {% if posts.posts_with_photos %}
                             {% for post, post_info in posts.posts_with_photos.items %}
@@ -254,7 +237,14 @@
                             {% endfor %}
                         
                         {% else %}
-                            <p>No posts yet</p>
+
+                            <style>
+                            .UserProf-Main{
+                                height: 45vh;      
+                            }
+                            </style>
+
+                            <p id="Posts-Message">No posts yet</p>
                         {% endif %}
                         
                         </div>
