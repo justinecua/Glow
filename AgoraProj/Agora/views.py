@@ -190,39 +190,28 @@ def get_emoji():
     
     return []
 
-async def publish_to_ably(
-        post_id, caption, account_id, account_firstname,
-        account_profile_photo, username, time, photos,
-        tags, comment_count, glows_count, has_liked,):
-    
+Counter = 0
+
+async def count_new_posts(post_id, uploader_id):
+    global Counter
+    Counter += 1
+
     ably = AblyRealtime("ru_QJA.LX6KeA:6pykpDiiF8i68udlvvVQ6_xn6zlL7CLBUfdFZCSbm4k")
     await ably.connection.once_async('connected')
-    print('Connected to Ably')
+    print('Connected')
 
     channel = ably.channels.get('posts')
-    
+
     await channel.publish(
-        'post',
-                {
-                'post_id': post_id,
-                'time': time,
-                'caption': caption,
-                'account': {
-                        'id': account_id,
-                        'firstname': account_firstname,
-                        'profile_photo': account_profile_photo,
-                        'username': username
-                        },
-                'photos': photos,
-                'tags': tags,
-                'comment_count': comment_count,
-                'glows_count': glows_count,
-                'has_liked': has_liked,
-            }
+        'post', {
+            'New_Posts': Counter,
+            'Uploader_Id': uploader_id
+        }    
     )
 
     await ably.close()
-    print('Closed the connection to Ably.')
+    print('Closed the connection.')
+ 
 
 
 @csrf_exempt
@@ -285,31 +274,45 @@ def handle_media(request):
                 post = new_post,
             )
 
-        photo_links = [photo.link for photo in new_post.photo_set.all()]
-        video_links = [video.link for video in new_post.video_set.all()]
+        photos = list(Photo.objects.filter(post=new_post).values())
 
         account_username = new_post.account.auth_user.username
+        account_profile_photo = new_post.account.profile_photo
+        account_id = new_post.account.id
+        account_firstname = new_post.account.firstname
+
         post_time = time_ago(new_post.dateTime),
         tags = list(Tag.objects.filter(post=new_post).values('id', 'tag'))
         comment_count = Comment.objects.filter(post=new_post).count()
         glows_count = Glow.objects.filter(post=new_post).count()
         has_liked = Glow.objects.filter(post=new_post, account__auth_user=request.user).exists()
         
-        asyncio.run(publish_to_ably(
-            new_post.id,
-            caption,
-            new_post.account.id,
-            new_post.account.firstname,
-            new_post.account.profile_photo,
-            account_username,
-            post_time,
-            photo_links,
-            tags,
-            comment_count,
-            glows_count,
-            has_liked,
-        ))   
-        return JsonResponse({"status": "success", "message": "Successfully posted!"})
+        currentTime = datetime.now()
+        postDate = new_post.dateTime
+        print("current Time:", currentTime)
+        print("post Date:", postDate)
+        
+        asyncio.run(count_new_posts(new_post.id, request.user.id))   
+
+        context = {
+            'status': 'success',
+            'message': 'Successfully posted!',
+            'userId': request.user.id,
+            'accId': account_id,
+            'firstname': account_firstname,
+            'username': account_username,
+            'profile_photo': account_profile_photo,
+            'post_id': new_post.id,
+            'caption': caption,
+            'time': post_time,
+            'photos': photos,
+            'tags': tags,
+            'comment_count': comment_count,
+            'glows_count': glows_count,
+            'has_liked': has_liked,
+        }
+
+        return JsonResponse( context, encoder = DjangoJSONEncoder)
     return JsonResponse({"status": "error", "message": "Only POST method is accepted"})
 
 
@@ -488,35 +491,52 @@ def randomProfile(request, id):
     if request.user.is_authenticated:
         otherAccount = Account.objects.get(id=id)
         accID = Account.objects.get(auth_user=request.user)
+        randomAccId = User.objects.get(id=otherAccount.auth_user.id)
 
         friendship_is_pending = Friend.objects.filter(user=accID, friend=otherAccount, status='pending').exists() or \
                                 Friend.objects.filter(user=otherAccount, friend=accID, status='pending').exists()
         
         friendship_is_friends = Friend.objects.filter(user=accID, friend=otherAccount, status='Friends').exists() or \
                                 Friend.objects.filter(user=otherAccount, friend=accID, status='Friends').exists()
+        
         notif_data, unread_notifications_count = fetchNotif(request)
-        accountInfo = getAccountInfo(request)
         showfriends = showFriends(request)
         hashtags = showTags(request)
+        audience = getAudience(request)
         search = searchResults(request)
+        accountInfo = getAccountInfo(request)
+
+        posts_with_photos = {}
+        posts = Post.objects.filter(account=otherAccount) 
+        for post in posts:
+            photos = Photo.objects.filter(post=post)
+            glows = Glow.objects.filter(post=post)
+            comments = Comment.objects.filter(post=post)
+            posts_with_photos[post] = {
+                'photos': photos,
+                'time_ago': time_ago(post.dateTime),
+                'glows_count': glows.count(),
+                'comments_count': comments.count(),
+                }
+
         context = {
             'randomaccount': otherAccount,
             'friendship_is_pending': friendship_is_pending,
             'friendship_is_friends': friendship_is_friends,
             'unread_count': unread_notifications_count,
             'notifications': notif_data,
-            'accountInfo': accountInfo,  
+            'random_accountInfo': randomAccId,
+            'accountInfo': accountInfo,
             'friends': showfriends,
             'hashtags': hashtags,
-            'search_results': search.get('results', [])
+            'search_results': search.get('results', []),
+            'audienceInfo': audience,    
+            'posts': {'posts_with_photos': posts_with_photos},
         }
 
         return render(request, 'random-profile.html', context)
     else:
         return redirect('login')  
-
-
-
 
     
 '''

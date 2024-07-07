@@ -4,7 +4,6 @@
 *.pyc
 vercel.json
 AgoraProj/AgoraProj/__pycache__/
-AgoraProj/db.sqlite3
 AgoraProj/.env
 .vscode/
 <<<<<<< HEAD
@@ -12,5 +11,8 @@ AgoraProj/.env
 vercel.json
 requirements.txt
 
+<<<<<<< HEAD
 >>>>>>> e4f3b5fc0e138be170b95c65c0954a104bce0f40
 
+=======
+>>>>>>> v1

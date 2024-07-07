@@ -27,117 +27,8 @@ function displayLoading() {
 function hideLoading() {
     CenterTop3.style.display = "none";
 }
-const ablyScript = document.createElement('script');
-ablyScript.src = 'https://cdn.ably.io/lib/ably.min-1.js';
-ablyScript.onload = () => {
     
-    const ably = new Ably.Realtime('ru_QJA.LX6KeA:6pykpDiiF8i68udlvvVQ6_xn6zlL7CLBUfdFZCSbm4k');
-    const channel = ably.channels.get('posts');
-
-    channel.subscribe(message => {
-        console.log('New post received:', message.data);
-        updateUIWithNewPost(message.data);
-    });
-
-    channel.on('attached', () => {
-        console.log('Connected to posts channel');
-    });
-
-    function updateUIWithNewPost(data) {
-        let NCenterContent = document.querySelector('.NCenter-content');
-
-        if (Array.isArray(data)) {
-            data.forEach(post => {
-                createAndAppendPost(post);
-            });
-        } else if (typeof data === 'object') {
-            createAndAppendPost(data);
-        } else {
-            console.error('Unexpected data format received:', data);
-        }
-    }
-
-    function createAndAppendPost(post) {
-        let NCenterContent = document.querySelector('.NCenter-content');
-        let postContainer = document.createElement('div');
-        postContainer.classList.add('MUser-Post-Container');
-
-        let DynamicProf = post.account.profile_photo ? post.account.profile_photo : '../static/images/default-avatar-profile-picture-male-icon.png';
-
-        postContainer.innerHTML = `
-            <div class="User-Post-Container">
-                <div class="UPC-content-Top">
-                    <div class="UPCCT-Left">
-                        <a href="profile/${post.account.id}">
-                            <div class="Post-Prof-Cont">
-                                <img src="${DynamicProf}">
-                            </div>
-                        </a>
-                        <div class="Post-Prof-Cont2">
-                            <div id="Post-Prof-Cont-Name1" class="Post-Prof-Cont-Name">
-                                <a href="profile/${post.account.id}"><p class="Photo-Post-username">${post.account.firstname}</p></a>
-                                <p class="Post-Photo-Date-Time">${post.time}</p>
-                            </div>
-                            <div class="Post-Prof-Cont-Username">
-                                <p>@${post.account.username}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="UPCCT-Right">
-                        
-                    </div>
-                </div>
-                <div class="UPC-content-grid ${post.photos && post.photos.length === 3 ? 'three-photos' : ''}">
-                    ${post.photos && post.photos.map(photo => `
-                        <div class="UPC-content ${post.photos.length === 1 ? 'single-photo' : ''}">
-                            <img class="lazy" src="${photo.link}/tr:q-90,tr:w-450,bl-30,q-90,h-450?cm-pad_resize,bg-F3F3F3" data-src="${photo.link}/tr:q-90,tr:w-450,h-450?cm-pad_resize,bg-F3F3F3" >
-                        </div>`).join('')}
-                </div>
-                <div class="UPC-content-Bottom">
-                    <div class="UPCB-Caption">
-                        <div class="Cap-User">
-                            <p>${post.account.firstname}</p>
-                        </div>
-                        <div class="Cap-Caption">
-                            <p class="postCaption">${post.caption}</p>
-                            <br>
-                        </div>
-                    </div>
-                    <div class="UPCB-Tags">
-                        ${post.tags && post.tags.map(tag => `
-                            <a href="/tags/${tag.id}"><div><span class="hashtags">#${tag.tag}</span></div></a>
-                        `).join('')}
-                    </div>
-                    <div class="UPCB-Reacts">
-                        <div class="Reacts">
-                            <div class="GlowReact-Div" data-PostIDD="${post.post_id}" data-AccID="${post.account.id}">
-                                ${post.has_liked ? '<span class="ChangeGlow">&#10022;</span>' : '<img class="glow-react" src="static/images/glow4.png" alt="Glow">'}
-                            </div>
-                            <div class="React-Div Comment-Btn-Show" data-PostID="${post.post_id}">
-                                <img src="static/images/chat (2).png" alt="">
-                            </div>
-                        </div>
-                        <div class="React-Counts">
-                            <div class="glow-count">
-                                <p>${post.glows_count} ${post.glows_count > 1 ? 'glows' : 'glow'}</p>
-                            </div>
-                            <div class="Comments">
-                                <p>${post.comment_count} ${post.comment_count > 1 ? 'comments' : 'comment'}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        initializeButtons();
-        NCenterContent.insertBefore(postContainer, NCenterContent.firstChild);
-    }
-};
-
-document.body.appendChild(ablyScript);
-
-
-export function fetchForYou() {
+    export function fetchForYou() {
     if (loading) return;
     loading = true;
     displayLoading();
@@ -295,17 +186,15 @@ function createPostElement(post) {
         <div class="UPCCT-Right">
         </div>
     </div>
-    <div class="UPC-content-grid ${post.photos.length === 3 ? 'three-photos' : ''}">
-        ${post.photos.map(photo => `
-            <div class="UPC-content ${post.photos.length === 1 ? 'single-photo' : ''}">
-                <img class="lazy" src="${photo.link}/tr:q-90,tr:w-450,bl-30,q-90,h-450?cm-pad_resize,bg-F3F3F3" data-src="${photo.link}/tr:q-90,tr:w-450,h-450?cm-pad_resize,bg-F3F3F3" >
-            </div>`).join('')}
-    </div>
+    <div class="UPC-content-grid ${post.photos.length === 3 ? 'three-photos' : ''}" style="${post.photos.length === 0 ? 'display: none;' : ''}">
+                ${post.photos.map(photo => `
+                    <div class="UPC-content ${post.photos.length === 1 ? 'single-photo' : ''}">
+                        <img class="lazy" src="${photo.link}/tr:q-90,tr:w-450,bl-30,q-90,h-450?cm-pad_resize,bg-F3F3F3" data-src="${photo.link}/tr:q-90,tr:w-450,h-450?cm-pad_resize,bg-F3F3F3">
+                    </div>`).join('')}
+            </div>
     <div class="UPC-content-Bottom">
         <div class="UPCB-Caption">
-            <div class="Cap-User">
-                <p>${post.account.firstname}</p>
-            </div>
+            
             <div class="Cap-Caption">
                 <p class="postCaption">${post.caption}</p>
                 <br>

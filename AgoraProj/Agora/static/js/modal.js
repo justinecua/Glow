@@ -5,6 +5,7 @@ import { AcceptFriend } from "./ajax/accept-friend.js";
 <<<<<<< HEAD
 import { sendLike } from "./ajax/send-like.js";
 import { sendUnlike } from "./ajax/send-unlike.js";
+import { count_new_posts } from "./ajax/autofetch_userPost.js"
 
 let Post = document.getElementById('Post-Container');
 let createpost = document.getElementById('create-post');
@@ -382,6 +383,7 @@ function updateMediaObject(caption) {
     return mediaObject;
 }
 
+
 UserPostBtn.addEventListener('click', async () => {
 <<<<<<< HEAD
     UserPostBtn.disabled = true;
@@ -391,13 +393,15 @@ UserPostBtn.addEventListener('click', async () => {
 
     if (mediaObject) {
         SendPost(mediaObject);
-    } else {
+        
+  } else {
         postTextarea.placeholder = placeholderTexts[placeholderIndex];
         placeholderIndex = (placeholderIndex + 1) % placeholderTexts.length;
         UserPostBtn.disabled = false;
     }
 });
 
+count_new_posts();
 
 =======
     let caption = postTextarea.value;
