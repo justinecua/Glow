@@ -134,7 +134,11 @@
 
                     <div class="MM-Bottom">
                         <button type="button" id="User-PostBtn">Post
+<<<<<<< HEAD
                             <div id="loadingIndicator" ><img src="static/images/rolling.gif" alt=""></div>
+=======
+                            <div class="loader2"></div>
+>>>>>>> 5e5a62ed (Profile Update UI2)
                         </button>
                     </div>
                 </div>
@@ -310,10 +314,77 @@
                 </div>
                 <div class="Friends_and_Glow_Container">
                     <div class="FGC_Left">
+<<<<<<< HEAD
                                     
                     </div>
                     <div class="FGC_Right">
                                     
+=======
+                        <div class="FGCL_Left">
+                            {% if randomUserFriends %}
+                            <span id="Prof-FriendCounter"> {{ randomUserFriends.totalfriends }}</span>
+                            <span id="Prof-FriendTitle">friends</span>
+                            {% else %}
+                            
+                            {% endif %}
+                        </div>
+                        <div class="FGCL_Right">
+                          {% if randomUserFriends %}
+                              {% for friends in randomUserFriends.friendsInfo %}
+                                {% if forloop.counter0 < 5 %}
+                                  <div class="RandomProfFriends_Cont">
+                                      <img src="{{ friends.profile_photo }}">
+                                  </div>
+                                {% endif %}
+                                
+                                {% if forloop.last and randomUserFriends.friendsInfo|length > 5%}
+                                  {% with remaining=randomUserFriends.friendsInfo|length|add:-5 %}
+                                      <div class="RandomProfFriends_Cont">
+                                            <span> +{{ remaining }}</span>
+                                      </div>
+                                  {% endwith %}
+                                {% endif %}
+                              {% endfor %}
+
+                          {% else %}
+                          {% endif %}
+                        </div>
+                        
+                                          
+                    </div>
+                    <div class="FGC_Right">
+                          <div class="FGCR_Left">
+                            {% if totalGlows %}
+                              <span id="Prof-FriendCounter"> {{ totalGlows }}</span>
+                              <span id="Prof-FriendTitle">total glows</span>
+                            {% else %}
+                            
+                            {% endif %}
+                          </div> 
+                          <div class="FGCR_Right">
+                              
+                              {% if unique_acc_who_glowed %}
+                                 {% for account_id, info in unique_acc_who_glowed.items %}
+                                    {% if forloop.counter0 < 5 %}
+                                        <div class="RandomProfFriends_Cont">
+                                          <img src="{{ info.2 }}">
+                                        </div>
+                                    {% endif %}
+
+                                    {% if forloop.last and unique_acc_who_glowed|length > 5%}
+                                         {% with remaining=unique_acc_who_glowed|length|add:-5 %}
+                                        <div class="RandomProfFriends_Cont">
+                                            <span> +{{ remaining }}</span>
+                                        </div>
+                                        {% endwith %}
+                                    {% endif %}
+                                  {% endfor %} 
+
+                              {% else %} 
+                              {% endif %}
+                            
+                          </div>
+>>>>>>> 5e5a62ed (Profile Update UI2)
                     </div>
                 </div>
                 <div class="UserProf-Main">

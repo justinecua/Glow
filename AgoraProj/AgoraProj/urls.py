@@ -25,6 +25,10 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html'), name='home'),
     path('account/login/', auth_views.LoginView.as_view(template_name='account/login.html'), name='login'),
     path('account/signup/', TemplateView.as_view(template_name='account/signup.html'), name='signup'),
+<<<<<<< HEAD
     path('account/logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'), 
+=======
+    path('account/logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
+>>>>>>> 5e5a62ed (Profile Update UI2)
     path('account/', include('allauth.urls')),
 ]

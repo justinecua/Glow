@@ -505,6 +505,7 @@ def randomProfile(request, id):
         audience = getAudience(request)
         search = searchResults(request)
         accountInfo = getAccountInfo(request)
+<<<<<<< HEAD
 
         posts_with_photos = {}
         posts = Post.objects.filter(account=otherAccount) 
@@ -512,6 +513,33 @@ def randomProfile(request, id):
             photos = Photo.objects.filter(post=post)
             glows = Glow.objects.filter(post=post)
             comments = Comment.objects.filter(post=post)
+=======
+        randomUserFriends = showRandomUsers_Friends(request, randomAccId)
+        glowCountOfPosts = 0
+        
+        posts_with_photos = {}
+        totalGlows = 0
+        unique_acc_who_glowed = {}
+        posts = Post.objects.filter(account=otherAccount)
+        
+        for post in posts:
+            photos = Photo.objects.filter(post=post)
+            glows = Glow.objects.filter(post=post).order_by('-timestamp')
+            comments = Comment.objects.filter(post=post)
+            totalPostGlows = Glow.objects.filter(post=post).count()
+            
+            totalGlows += totalPostGlows
+            
+            for glow in glows:
+                unique_acc_who_glowed[glow.account.id] = [
+                    glow.account.firstname,
+                    glow.account.lastname,
+                    glow.account.profile_photo,
+                    glow.timestamp,
+                    ]
+                    
+
+>>>>>>> 5e5a62ed (Profile Update UI2)
             posts_with_photos[post] = {
                 'photos': photos,
                 'time_ago': time_ago(post.dateTime),
@@ -532,11 +560,22 @@ def randomProfile(request, id):
             'search_results': search.get('results', []),
             'audienceInfo': audience,    
             'posts': {'posts_with_photos': posts_with_photos},
+<<<<<<< HEAD
         }
 
         return render(request, 'random-profile.html', context)
     else:
         return redirect('login')  
+=======
+            'randomUserFriends': randomUserFriends,
+            'totalGlows': totalGlows,
+            'unique_acc_who_glowed': unique_acc_who_glowed
+        }
+         
+        return render(request, 'random-profile.html', context)
+    else:
+        return redirect('dashboard')  
+>>>>>>> 5e5a62ed (Profile Update UI2)
 
     
 '''
@@ -883,8 +922,14 @@ def showFriends(request):
         try:
             accID = Account.objects.get(auth_user=request.user)
             friends = Friend.objects.filter((Q(friend=accID) | Q(user=accID)) & Q(status="Friends"))
+<<<<<<< HEAD
             #this is a query
             #kung mag query ka need paka mag loop then just append kay d pwde nga sa query ka mo kuha ug info
+=======
+            #Q means "WHERE IN" in SQL
+            #this is a query
+            #kung mag query ka, need paka mag loop, append daun kay d pwde nga sa query ka mo kuha ug info
+>>>>>>> 5e5a62ed (Profile Update UI2)
 
             friendsInfo = []
             for friend in friends:
@@ -912,6 +957,42 @@ def showFriends(request):
     else:
         return None
 
+<<<<<<< HEAD
+=======
+def showRandomUsers_Friends(request, id):
+    if request.user.is_authenticated:
+        try:
+            accID = Account.objects.get(auth_user=id)
+            friends = Friend.objects.filter((Q(friend=accID) | Q(user=accID)) & Q(status="Friends")).order_by('date_became_friends').reverse()[:6]
+            totalfriends = Friend.objects.filter((Q(friend=accID) | Q(user=accID)) & Q(status="Friends")).count()
+
+
+            friendsInfo = []
+            for friend in friends:
+                if friend.user == accID:
+                    friend_account = friend.friend
+                else:
+                    friend_account = friend.user
+
+                friendsInfo.append({
+                    'firstname': friend_account.firstname,
+                    'lastname': friend_account.lastname,
+                    'profile_photo': friend_account.profile_photo,
+                    'date_became_friends': friend.date_became_friends,
+                    'id': friend_account.id
+                })
+            
+            context = {
+                'totalfriends': totalfriends,
+                'friendsInfo': friendsInfo
+            }
+            
+            return context
+        except Account.DoesNotExist:
+            return None
+    else:
+        return None
+>>>>>>> 5e5a62ed (Profile Update UI2)
 
 def showTags(request):
     if request.user.is_authenticated:
