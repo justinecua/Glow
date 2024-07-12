@@ -134,11 +134,7 @@
 
                     <div class="MM-Bottom">
                         <button type="button" id="User-PostBtn">Post
-<<<<<<< HEAD
-                            <div id="loadingIndicator" ><img src="static/images/rolling.gif" alt=""></div>
-=======
                             <div class="loader2"></div>
->>>>>>> 5e5a62ed (Profile Update UI2)
                         </button>
                     </div>
                 </div>
@@ -313,13 +309,8 @@
                                           !-->
                 </div>
                 <div class="Friends_and_Glow_Container">
-                    <div class="FGC_Left">
-<<<<<<< HEAD
-                                    
-                    </div>
+                    
                     <div class="FGC_Right">
-                                    
-=======
                         <div class="FGCL_Left">
                             {% if randomUserFriends %}
                             <span id="Prof-FriendCounter"> {{ randomUserFriends.totalfriends }}</span>
@@ -384,13 +375,14 @@
                               {% endif %}
                             
                           </div>
->>>>>>> 5e5a62ed (Profile Update UI2)
                     </div>
                 </div>
                 <div class="UserProf-Main">
+                    <h2>Photos</h2>
                     <div class="NCenter-content-user">
                             {% if posts.posts_with_photos %}
-                                {% for post, post_info in posts.posts_with_photos.items %}                                    
+                                {% for post, post_info in posts.posts_with_photos.items %}
+                                    {% if forloop.counter0 < 8 %}
                                     <div class="UserProfile-PostContainer">
                                         {% if post_info.photos %}
                                         <div class="UPC-content-grid2 {% if post_info.photos|length > 1 %}three-photos{% endif %}">
@@ -401,7 +393,8 @@
                                             {% endfor %}
                                         </div>
                                         {% else %}
-                                        {% endif %}        
+                                        {% endif %}
+                                    {% endif %}
                                     </div>
                                 {% endfor %}
 
