@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 from decouple import config
+from dotenv import load_dotenv
+load_dotenv()
+
 
 ABLY_API_KEY = os.getenv("ABLY_API_KEY")
 
@@ -178,6 +181,7 @@ SOCIALACCOUNT_LOGIN_ON_GET=True
 
 IMAGEKIT_DEFAULT_CACHEFILE_BACKEND = 'imagekit.cachefiles.backends.Simple'
 IMAGEKIT_CACHEFILE_DIR = 'cache'
+
 
 IMAGEKIT_PUBLIC_KEY = config("IMAGEKIT_PUBLIC_KEY")
 IMAGEKIT_PRIVATE_KEY = config("IMAGEKIT_PRIVATE_KEY")
