@@ -5,13 +5,13 @@
 }
 
 [data-theme="dark"] {
-  --bg-color: #050b15;
+  --bg-color: #000007;
   --color: white;
   --accent-1: #111;
   --accent-2: #999;
   --icon-filter: invert(100%) brightness(200%);
   --link-color: white;
-  --nav-color: #121620;
+  --nav-color: #02060b;
   --border-color: 1px solid #1d2532;
   --input-create-post: #1c212d;
   --glow-color: #0058ca;
@@ -2779,6 +2779,7 @@ body {
 
   .Comment-Container {
     z-index: 5;
+    max-width: 40rem;
     height: 55rem;
     position: fixed;
     display: flex;
@@ -2787,7 +2788,7 @@ body {
     border-radius: 10px;
     background-color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.3s ease-out forwards;
+    transition: all 5s ease-in-out;
   }
 
   .Comment-subCont {
@@ -2933,25 +2934,21 @@ body {
   }
 
   .CCRT-Mid {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+    max-width: 40rem;
     overflow-y: auto;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
     height: 100%;
+
   }
 
-  .Caption-Content {
-    display: flex;
-    align-items: center;
-    height: auto;
-    width: 100%;
-  }
 
   .Post-Caption {
     font-family: "Work Sans", sans-serif;
     font-size: clamp(1rem, 1vw, 1rem);
     padding: 1rem;
-
+    overflow-wrap: break-word;
   }
 
   .Post-FullName {
