@@ -1,6 +1,6 @@
 
 import { SendPost } from './ajax/send-post.js';
-import { SendEditProfile } from './ajax/send-editprofile.js';  
+import { SendEditProfile } from './ajax/send-editprofile.js';
 import { AcceptFriend } from "./ajax/accept-friend.js";
 import { sendLike } from "./ajax/send-like.js";
 import { sendUnlike } from "./ajax/send-unlike.js";
@@ -51,7 +51,7 @@ let hasCalled = false;
 
 Logoutbtn.addEventListener('click', async() =>{
     const { logout } = await import ("./modal/logout.js");
-    logout();   
+    logout();
 })
 
 LCBack.addEventListener('click', async() =>{
@@ -61,13 +61,13 @@ LCBack.addEventListener('click', async() =>{
 
 SearchNav.addEventListener('click', async() =>{
     const { ShowSearch } = await import ("./modal/show-search.js");
-    
+
     ShowSearch();
 })
 
 CreateBtnNav.addEventListener('click', async() =>{
     const { switchModal } = await import ("./modal/switchmodal.js");
-    
+
     switchModal();
 })
 
@@ -86,7 +86,7 @@ ImagesIcon.addEventListener('click', async () => {
         hasCalled = true;
         const { addImagePost } = await import("./modal/add-image-option.js");
         addImagePost();
-        
+
     } else {
         hasCalled = false;
         RPIContainer.style.display = "flex";
@@ -114,7 +114,7 @@ VideosIcon.addEventListener('click', async() =>{
 */
 RemovePostVideo.addEventListener('click', async() =>{
     const { removeVideoPost } = await import ("./modal/remove-video-option.js");
-    
+
     removeVideoPost();
 })
 
@@ -153,14 +153,9 @@ Logoutcontainer.addEventListener('click', function(event) {
 let ImageContainer = document.querySelector('.ImageContainer');
 
 document.addEventListener('click', function(event) {
-    
+
     if (!emojiFloatingDiv.contains(event.target)) {
         HideEmojis();
-    }
-
-    if(!Logoutcontainer.contains(event.target)){
-        LogoutOverlay.style.display = "none";
-        document.body.style.overflowY = "auto";
     }
 
     if (Post) {
@@ -182,7 +177,7 @@ document.addEventListener('click', function(event) {
     if (!customSelect.contains(event.target)) {
         customSelect.classList.remove('open');
     }
-    
+
 });
 
 
@@ -212,20 +207,20 @@ var hashtags = [];
 
 postTextarea.addEventListener('input', function() {
     var userCaption = postTextarea.value;
-    var words = userCaption.split(' '); 
-    
+    var words = userCaption.split(' ');
+
     hashtags = [];
-    var caption = userCaption; 
+    var caption = userCaption;
 
     for (var i = 0; i < words.length; i++) {
         var word = words[i];
         if (word.startsWith('#') && !word.endsWith(' ')) {
-            hashtags.push(word.slice(1)); 
+            hashtags.push(word.slice(1));
             caption = caption.replace(word, '');
         }
     }
 
-    updateMediaObject(caption); 
+    updateMediaObject(caption);
 
 });
 
@@ -280,7 +275,7 @@ let placeholderIndex = 0;
 
 function updateMediaObject(caption) {
     if (!caption.trim() && !photosArray.length >= 1) {
-        return null; 
+        return null;
     }
     let mediaObject = {
         accID: AccountID,
@@ -303,7 +298,7 @@ UserPostBtn.addEventListener('click', async () => {
 
     if (mediaObject) {
         SendPost(mediaObject);
-        
+
   } else {
         postTextarea.placeholder = placeholderTexts[placeholderIndex];
         placeholderIndex = (placeholderIndex + 1) % placeholderTexts.length;
@@ -337,7 +332,7 @@ function updateTotalSize(fileSize) {
         if (UserPostBtn) {
             UserPostBtn.disabled = true;
         }
-        return false; 
+        return false;
     }
 
     ModalBottom2.style.height = "7rem";
@@ -347,12 +342,12 @@ function updateTotalSize(fileSize) {
 
     SizeCounter.innerHTML = formatFileSize(totalUploadedSizeBytes) + "&nbsp;/&nbsp;25 MB";
     console.log(`Total uploaded size: ${formatFileSize(totalUploadedSizeBytes)}`);
-    
-    return true; 
+
+    return true;
 }
 
 
-    
+
     confirmButtons.forEach(function(button) {
         button.addEventListener("click", function() {
             var notifId = button.getAttribute("data-notif-id");
@@ -361,9 +356,9 @@ function updateTotalSize(fileSize) {
             confirmFriendObject ={
                 NotifId: notifId,
                 friend_requestID: friendID,
-            
+
             }
-            
+
             AcceptFriend(confirmFriendObject);
             console.log(confirmFriendObject)
         });
@@ -432,7 +427,7 @@ function handleUnlike(changeGlow) {
     if (!glowButton) {
         glowButton = document.createElement('img');
         glowButton.className = "glow-react";
-        glowButton.src = "static/images/glow4.png"; 
+        glowButton.src = "static/images/glow4.png";
         glowButton.alt = "Glow";
         parentDiv.appendChild(glowButton);
         glowButton.addEventListener('click', function() {
@@ -559,7 +554,7 @@ function updateFriendStatus(userId, activityType) {
 
 socket.onopen = function(event) {
     console.log('WebSocket connected');
-    fetchPosts(); 
+    fetchPosts();
 };
 
 socket.onmessage = function(e) {
@@ -582,19 +577,19 @@ function updatePosts() {
         var postDateTime = postContainer.querySelector('.Post-Photo-Date-Time');
         if (posts[index] && posts[index].dateTime) {
             var postTime = new Date(posts[index].dateTime);
-            
+
             var manilaTime = new Date(postTime.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
-            
+
             var currentTime = new Date();
             var timeDifference = currentTime - manilaTime;
             var timeAgo = '';
 
-            if (timeDifference < 60000) { 
+            if (timeDifference < 60000) {
                 timeAgo = 'Just now';
-            } else if (timeDifference < 3600000) { 
+            } else if (timeDifference < 3600000) {
                 var minutes = Math.floor(timeDifference / 60000);
                 timeAgo = "• " + minutes + ' minute' + (minutes > 1 ? 's' : '') + ' ago';
-            } else if (timeDifference < 86400000) { 
+            } else if (timeDifference < 86400000) {
                 var hours = Math.floor(timeDifference / 3600000);
                 timeAgo = "• " +  hours + ' hour' + (hours > 1 ? 's' : '') + ' ago';
             } else if (timeDifference < 604800000) { // Less than a week
@@ -606,7 +601,7 @@ function updatePosts() {
             } else if (timeDifference < 31536000000) { // Less than a year
                 var months = Math.floor(timeDifference / 2592000000);
                 timeAgo = "• " +  months + ' month' + (months > 1 ? 's' : '') + ' ago';
-            } else { 
+            } else {
                 var years = Math.floor(timeDifference / 31536000000);
                 timeAgo = "• " +  years + ' year' + (years > 1 ? 's' : '') + ' ago';
             }

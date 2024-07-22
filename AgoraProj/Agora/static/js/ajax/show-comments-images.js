@@ -2,7 +2,7 @@ export function getPost(dataPostID, currentPhotoIndex) {
 
     let loadingBar = document.getElementById('loadingIndicator-Comment');
     loadingBar.style.display = 'flex';
-    
+
     let transitionInProgress = false;
 
     let CCLeft1 = document.querySelector('.CC-Left');
@@ -32,7 +32,6 @@ export function getPost(dataPostID, currentPhotoIndex) {
         photos = result.photos;
 
         if (photos.length > 0) {
-
             CCLeft.innerHTML = '';
             CCLeft1.style.display = "flex";
             CCLeft1.style.width = "40rem";
@@ -43,9 +42,9 @@ export function getPost(dataPostID, currentPhotoIndex) {
             photos.forEach(function (photo, index) {
                 var img = document.createElement('img');
                 img.className = "lazy";
-                img.src = photo.url + "/tr:q-100,tr:w-600,h:500,bl-30,q-90";
-                img.dataset.src = photo.url + "/tr:q-100,tr:w-600,h:500";
-                img.style.display = index === currentPhotoIndex ? 'block' : 'none'; 
+                img.src = photo.url;
+                img.dataset.src = photo.url;
+                img.style.display = index === currentPhotoIndex ? 'block' : 'none';
                 CCLeft.appendChild(img);
             });
             LazyLoading(".lazy");
@@ -61,19 +60,27 @@ export function getPost(dataPostID, currentPhotoIndex) {
             prevButton.style.display = "none";
             CCLeft1.style.display = "none";
             CCRight1.style.borderRadius = "10px";
-            document.body.style.overflowY = "none";
-            
+            CCRight1.style.width = "40rem";
         }
 
         let account = result.accountInfo;
         PostFullName.innerHTML = account.firstname + " " + account.lastname;
-        PostProfilePic.src = account.profile_photo;
 
-        PostCaption.innerHTML = result.post.caption;
+        let DefaultAvatar = '../static/images/default-avatar-profile-picture-male-icon.png';
+
+        if (account.profile_photo === DefaultAvatar) {
+            PostProfilePic.src = DefaultAvatar;
+        } else {
+            PostProfilePic.src = account.profile_photo + '/tr:q-100,tr:w-42,h-42';
+        }
+
+
+        PostCaption.innerText = result.post.caption;
     })
     .catch(error => {
         console.error('Error fetching data:', error);
     });
+
 
     function showNextPhoto() {
         if (!transitionInProgress && currentPhotoIndex < photos.length - 1) {
@@ -82,7 +89,7 @@ export function getPost(dataPostID, currentPhotoIndex) {
             updateImageDisplay();
             setTimeout(() => {
                 transitionInProgress = false;
-            }, 500); 
+            }, 500);
         }
     }
 
@@ -93,7 +100,7 @@ export function getPost(dataPostID, currentPhotoIndex) {
             updateImageDisplay();
             setTimeout(() => {
                 transitionInProgress = false;
-            }, 500); 
+            }, 500);
         }
     }
 

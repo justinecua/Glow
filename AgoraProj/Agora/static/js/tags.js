@@ -1,4 +1,4 @@
- 
+
 
 import { AcceptFriend } from "./ajax/accept-friend.js";
 import { getPost } from "./ajax/show-comments-images.js";
@@ -24,12 +24,12 @@ let Heart = document.querySelector('.Heart');
                 friend_requestID: friendID,
                 dateTime: manilaTime,
             }
-            
+
             AcceptFriend(confirmFriendObject);
             console.log(confirmFriendObject)
         });
     });
- 
+
 const commentOverlay = document.getElementById('Comment-Overlay');
 const commentBtnShow = document.querySelectorAll('.Comment-Btn-Show');
 const commentContainer = document.querySelector('.Comment-Container');
@@ -44,19 +44,20 @@ const commentInput = document.getElementById('Comment-input');
 const sendComment = document.getElementById('Send-Comment');
 let CommentInput = document.getElementById('Comment-input');
 let CommentObject = '';
-let SendComment = document.getElementById('Send-Comment'); 
+let SendComment = document.getElementById('Send-Comment');
 
-let dataPostIDForSend = ''; 
+let dataPostIDForSend = '';
 
 
 commentBtnShow.forEach(commentBtn => {
     commentBtn.addEventListener('click', () => {
+
         commentOverlay.style.display = "flex";
         commentContainer.style.display = "flex";
         dataPostID = commentBtn.getAttribute("data-PostID");
-        getPost(dataPostID, 0); 
+        getPost(dataPostID, 0);
         getComments(dataPostID);
-        overlayOpened = true; 
+        overlayOpened = true;
         console.log(dataPostID);
 
         dataPostIDForSend = dataPostID;
@@ -77,12 +78,12 @@ closeComment.addEventListener('click', () => {
 });
 
 commentInput.addEventListener('change', (event) => {
-    const newComment = event.target.value; 
+    const newComment = event.target.value;
     updateComment(newComment);
 });
 
 
-function updateComment(comment) { 
+function updateComment(comment) {
     CommentObject = {
         accID: AccountID,
         postID: dataPostID,
@@ -103,7 +104,7 @@ let glowReact = document.querySelectorAll('.glow-react');
 
 glowReact.forEach(function(glow_button) {
     glow_button.addEventListener('click', function() {
-        const dataPostID = glow_button.parentNode.getAttribute("data-PostIDD"); 
+        const dataPostID = glow_button.parentNode.getAttribute("data-PostIDD");
         glow_button.style.display = "none";
         let ChangeGlow = document.createElement('span');
         ChangeGlow.className = "ChangeGlow";
@@ -115,7 +116,7 @@ glowReact.forEach(function(glow_button) {
 
         glow_button.parentNode.appendChild(ChangeGlow);
 
-    
+
         ChangeGlow.classList.add('animate-heart');
 
         console.log("Like");
@@ -126,14 +127,14 @@ glowReact.forEach(function(glow_button) {
             if (!glowimage) {
                 glowimage = document.createElement('img');
                 glowimage.className = "glow-react";
-                glowimage.src = "static/images/glow4.png"; 
+                glowimage.src = "static/images/glow4.png";
                 glowimage.alt = "Glow";
                 glow_button.parentNode.appendChild(glowimage);
                 // Trigger the animation
                 glowimage.offsetWidth = glowimage.offsetWidth;
             } else {
                 glowimage.style.display = "block";
-                const dataPostID = glow_button.parentNode.getAttribute("data-PostIDD"); 
+                const dataPostID = glow_button.parentNode.getAttribute("data-PostIDD");
                 console.log("Unlike");
                 console.log(dataPostID);
             }

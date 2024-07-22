@@ -1,6 +1,4 @@
 
-
-
     <div id="Comment-Overlay">
 
         <div class="Comment-Container">
@@ -12,14 +10,14 @@
                     <div class="CC-Left-Images">
 
                     </div>
-                    
+
                     <div class="Comment-btn-cont">
                         <button class="prev-button"><img src="static/images/arrow.png" alt=""></button>
                         <button class="next-button"><img src="static/images/right-arrow.png" alt=""></button>
                     </div>
-                    
+
                 </div>
-            
+
                 <div class="CC-Right">
                     <div class="CCR-Main1">
                         <div class="CCR-Top">
@@ -31,7 +29,7 @@
                                     <p class="Post-FullName"></p>
                                 </div>
                             </div>
-                            
+
                             <div>
                                 <button class="Close-Comment">x</button>
                             </div>
@@ -42,12 +40,12 @@
                                 <p class="Post-Caption"></p>
                             </div>
                             <div class="Comments-Section">
-                                
+
                             </div>
                         </div>
                     </div>
-                
-                
+
+
                     <div class="CCR-Main2">
                         <div class="User-Comment-Cont">
                             {% if accountInfo %}
@@ -55,11 +53,11 @@
                                 <img src="{{ accountInfo.profile_photo }}" alt="">
                             </div>
                             {% endif %}
-                            
-                            <input id="Comment-input" type="text" placeholder="Add a comment.."> 
+
+                            <input id="Comment-input" type="text" placeholder="Add a comment..">
                             <button id="Send-Comment">Send</button>
                         </div>
-                    
+
                     </div>
                 </div>
             </div>

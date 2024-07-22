@@ -20,6 +20,9 @@
   --glow-button: #0058ca;
   --top-nav-color: #081224;
 }
+.overflow-hidden {
+  overflow-y: hidden;
+}
 
 .loading-bar {
   width: 0%;
@@ -84,6 +87,7 @@ body {
   color: var(--color);
   background-color: var(--bg-color);
   overflow-x: hidden;
+
 }
 
 #Logo-Overlay {
@@ -2070,6 +2074,8 @@ body {
     display: flex;
     width: 100%;
     padding-left: 1rem;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .UPCB-Tags {
@@ -2775,11 +2781,13 @@ body {
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(2px);
+    overflow: hidden;
+
   }
+
 
   .Comment-Container {
     z-index: 5;
-    max-width: 40rem;
     height: 55rem;
     position: fixed;
     display: flex;
@@ -2788,7 +2796,7 @@ body {
     border-radius: 10px;
     background-color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 5s ease-in-out;
+    transition: opacity 0.3s, transform 0.3s;
   }
 
   .Comment-subCont {
@@ -2802,6 +2810,8 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
+    width: 40rem;
+    max-width: 40rem;
   }
 
   .CC-Left img {
@@ -2824,7 +2834,10 @@ body {
     height: 100%;
     background-color: var(--nav-color);
   }
-
+  .CC-Left,
+  .CC-Right {
+    transition: width 0.5s ease;
+  }
   .CCR-Main2 {
     display: flex;
     align-items: center;
@@ -2935,20 +2948,41 @@ body {
 
   .CCRT-Mid {
     max-width: 40rem;
-    overflow-y: auto;
-    overflow-x: hidden;
+    max-height: 47rem;
+    overflow: hidden;
     overflow-wrap: break-word;
     word-wrap: break-word;
-    height: 100%;
-
   }
 
+  .ReadMore{
+    font-weight: 600;
+    font-family: "Work Sans", sans-serif;
+    cursor: pointer;
+  }
 
   .Post-Caption {
     font-family: "Work Sans", sans-serif;
     font-size: clamp(1rem, 1vw, 1rem);
     padding: 1rem;
     overflow-wrap: break-word;
+    max-height: 20rem;
+    overflow-y: auto;
+  }
+
+  .Post-Caption::-webkit-scrollbar {
+    width: 5px;
+    height: 8px;
+  }
+
+
+  .Post-Caption::-webkit-scrollbar-thumb {
+    background: #a5c1e6;
+  }
+
+  .noCommentsMessage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .Post-FullName {
@@ -3048,13 +3082,14 @@ body {
 
   }
 
-  .Comments-Section {
+  .Comments-Section{
     overflow-y: auto;
-    max-height: 33rem;
+    overflow-x: hidden;
     width: 100%;
     font-family: "Work Sans", sans-serif;
     font-size: clamp(0.9rem, 1vw, 0.9rem);
     padding: 10px;
+    max-height: 25rem;
   }
 
 
@@ -3113,21 +3148,19 @@ body {
     width: 100%;
     padding: 1rem;
     border-bottom: 1px solid #bccbe0;
+    overflow-y: auto;
   }
 
   .NRightMid-content {
     width: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
     height: 20rem;
     max-height: 20rem;
   }
 
 
-  .NRightMid-content::-webkit-scrollbar {
+  .NRightMid::-webkit-scrollbar {
     width: 5px;
     height: 8px;
-    background-color: #ffffff;
   }
 
 

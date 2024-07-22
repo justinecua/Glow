@@ -31,7 +31,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'justine014.pythonanywhere.com', '.glowph.tech', '128.199.131.246']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'glowph.tech', 'www.glowph.tech']
 
 SITE_ID = 1
 # Application definition
