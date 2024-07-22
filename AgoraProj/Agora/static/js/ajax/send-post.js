@@ -23,7 +23,7 @@ export function SendPost(mediaObject){
     let NewPostId = document.getElementById("NewPost_Id");
 >>>>>>> v1
 
-    xhr.open('POST', '/handle_media/'); 
+    xhr.open('POST', '/handle_media/');
     xhr.setRequestHeader("Content-Type", "application/json");
 
 <<<<<<< HEAD
@@ -34,8 +34,12 @@ export function SendPost(mediaObject){
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
+<<<<<<< HEAD
             
 <<<<<<< HEAD
+=======
+
+>>>>>>> v1
             loader2.style.display = 'none';
             UserPostBtn.disabled = false;
 =======
@@ -55,13 +59,13 @@ export function SendPost(mediaObject){
 
                     fadeBox.style.display = 'flex';
                     setTimeout(function () {
-                        fadeBox.style.opacity = '1'; 
+                        fadeBox.style.opacity = '1';
                     }, 100)
 
                     setTimeout(function () {
-                        fadeBox.style.opacity = '0'; 
+                        fadeBox.style.opacity = '0';
                     }, 3000);
-                    
+
                     initializeButtons();
                     const commentOverlay = document.getElementById('Comment-Overlay');
                     const commentBtnShow = document.querySelectorAll('.Comment-Btn-Show');
@@ -88,7 +92,7 @@ export function SendPost(mediaObject){
                             getPost(dataPostID, 0);
                             getComments(dataPostID);
                             overlayOpened = true;
-                            
+
 
                             dataPostIDForSend = dataPostID;
                         });
@@ -134,11 +138,11 @@ export function SendPost(mediaObject){
                     console.error("Post failed: " + response.message);
                 }
             } else {
-                console.error('Request failed. Returned status of ' + xhr.status);  
+                console.error('Request failed. Returned status of ' + xhr.status);
             }
         }
     };
-    
+
     xhr.send(JSON.stringify(mediaObject));
 }
 <<<<<<< HEAD
@@ -175,10 +179,10 @@ function createAndAppendPost(response) {
                         </div>
                     </div>
                     <div class="UPCCT-Right">
-                      
+
                     </div>
                 </div>
-                <div class="UPC-content-grid ${response.photos && response.photos.length === 3 ? 'three-photos' : ''}">
+                 <div class="UPC-content-grid ${response.photos.length === 3 ? 'three-photos' : ''}" style="${response.photos.length === 0 ? 'display: none;' : ''}">
                     ${response.photos && response.photos.map(photo => `
                         <div class="UPC-content ${response.photos.length === 1 ? 'single-photo' : ''}">
                             <img class="lazy" src="${response.photos.link}/tr:q-90,tr:w-450,bl-30,q-90,h-450?cm-pad_resize,bg-F3F3F3" data-src="${photo.link}/tr:q-90,tr:w-450,h-450?cm-pad_resize,bg-F3F3F3" >
@@ -186,13 +190,7 @@ function createAndAppendPost(response) {
                 </div>
                 <div class="UPC-content-Bottom">
                     <div class="UPCB-Caption">
-                        <div class="Cap-User">
-                            <p>${response.firstname}</p>
-                        </div>
-                        <div class="Cap-Caption">
-                            <p class="postCaption">${response.caption}</p>
-                            <br>
-                        </div>
+
                     </div>
                     <div class="UPCB-Tags">
                         ${response.tags && response.tags.map(tag => `
@@ -220,8 +218,20 @@ function createAndAppendPost(response) {
                 </div>
             </div>
         `;
-        
+
         NCenterContent.insertBefore(postContainer, NCenterContent.firstChild);
+
+        let CapCaption = document.createElement('div');
+        let postCaption = document.createElement('p');
+        let UPCBCaption = postContainer.querySelector('.UPCB-Caption');
+
+        postCaption.innerText = response.caption;
+        postCaption.className = "postCaption";
+        CapCaption.className = "Cap-Caption";
+        CapCaption.appendChild(postCaption);
+        UPCBCaption.append(CapCaption);
+
+        LazyLoading(".lazy");
 };
 
 
@@ -288,7 +298,7 @@ function handleUnlike(changeGlow) {
     if (!glowButton) {
         glowButton = document.createElement('img');
         glowButton.className = "glow-react";
-        glowButton.src = "static/images/glow4.png"; 
+        glowButton.src = "static/images/glow4.png";
         glowButton.alt = "Glow";
         parentDiv.appendChild(glowButton);
         glowButton.addEventListener('click', function() {

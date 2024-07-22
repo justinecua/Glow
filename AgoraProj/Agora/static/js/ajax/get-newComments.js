@@ -1,26 +1,24 @@
 let CommentsSection = document.querySelector('.Comments-Section');
 
-export async function getComments(postId) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', `/FetchCommentsAsync/${postId}/`);
-    xhr.setRequestHeader("Content-Type", "application/json");
+export function getComments(postId) {
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                if (response.status === "success") {
-                    renderComments(response.comments);
-                } else {
-                    console.error('Failed to fetch comments');
-                }
-            } else {
-                console.error('Failed to fetch comments');
-            }
+
+    fetch(`/FetchComments/${postId}/`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
         }
-    };
-
-    xhr.send();
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(result => {
+        if (result.status === "success") {
+            renderComments(result.comments);
+        } else {
+            console.error('Failed to fetch comments');
+        }
+    })
 }
 
 function renderComments(comments) {

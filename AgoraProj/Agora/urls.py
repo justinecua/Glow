@@ -26,8 +26,12 @@ urlpatterns = [
 >>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 =======
     path('dashboard', views.dashboard, name='dashboard'),
+<<<<<<< HEAD
 >>>>>>> v1
     path('dashboard/uploadprofile', views.UploadProfile, name='uploadprofile'), 
+=======
+    path('dashboard/uploadprofile', views.UploadProfile, name='uploadprofile'),
+>>>>>>> v1
     path('handle_media/', views.handle_media, name='handle_media'),
     path('dashboard/profile', views.UserProfile, name='UserProfile'),
     path('profile/<int:id>', views.randomProfile, name='profile'),
@@ -35,7 +39,7 @@ urlpatterns = [
     path('confirm_friend/', views.ConfirmFriend, name='confirm_friend'),
     path('getCommentPost/<int:id>/', views.getCommentPost, name='getCommentPost'),
     path('sendComment/', views.sendComment, name='sendComment'),
-    path('FetchCommentsAsync/<int:postId>/', views.FetchCommentsAsync, name='FetchCommentsAsync'),
+    path('FetchComments/<int:postId>/', views.FetchComments, name='FetchComments'),
     path('tags/<int:id>', views.randomTags, name='tags'),
     path('post/<int:id>', views.randomPosts, name='post'),
     path('sendLike/', views.sendLike, name='sendLike'),

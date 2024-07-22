@@ -18,7 +18,7 @@ let Bottomloadingposts = document.getElementById('Bottom-loading-posts');
 let fetchedPostIds = new Set();
 export let loading = false;
 
-let page = 1; 
+let page = 1;
 
 function displayLoading() {
     CenterTop3.style.display = "flex";
@@ -27,7 +27,7 @@ function displayLoading() {
 function hideLoading() {
     CenterTop3.style.display = "none";
 }
-    
+
     export function fetchForYou() {
     if (loading) return;
     loading = true;
@@ -37,22 +37,23 @@ function hideLoading() {
         headers: {
             'Content-Type': 'application/json'
         }
-        
+
     })
-    
+
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
-            
+
         }
         hideLoading();
         return response.json();
     })
     .then(response => {
+
         loading = false;
         PostContainer.style.display = "flex";
         CenterTop3.style.display = "none";
-        
+
         if (response.status === "success") {
             if (response.posts.length === 0) {
                 console.log("No more posts to load");
@@ -87,30 +88,32 @@ function hideLoading() {
             let SendComment = document.getElementById('Send-Comment');
 
             let dataPostIDForSend = '';
+            let scrollTop = 0;
 
             commentBtnShow.forEach(commentBtn => {
                 commentBtn.addEventListener('click', () => {
+                    document.body.style.overflowY = "hidden";
                     commentOverlay.style.display = "flex";
                     commentContainer.style.display = "flex";
                     dataPostID = commentBtn.getAttribute("data-PostID");
                     getPost(dataPostID, 0);
                     getComments(dataPostID);
                     overlayOpened = true;
-                    
 
                     dataPostIDForSend = dataPostID;
                 });
             });
 
-            sendComment.addEventListener('click', () => {
-                SendCommentToDB(CommentObject, dataPostIDForSend);
-            });
-
             closeComment.addEventListener('click', () => {
+                document.body.style.overflowY = "auto";
                 commentOverlay.style.display = "none";
                 commentContainer.style.display = "none";
                 overlayOpened = false;
                 ccLeftImages.innerHTML = '';
+            });
+
+            sendComment.addEventListener('click', () => {
+                SendCommentToDB(CommentObject, dataPostIDForSend);
             });
 
             commentInput.addEventListener('change', (event) => {
@@ -131,18 +134,15 @@ function hideLoading() {
                 return CommentObject;
             }
 
-            commentBtnShow.forEach(commentBtn => {
-                const dataPostID2 = commentBtn.getAttribute("data-PostID");
-                getComments(dataPostID2);
-            });
+
         }
     })
     .catch(error => {
         console.error('Error fetching data:', error);
     })
     .finally(() => {
-        loading = false; 
-        hideLoading(); 
+        loading = false;
+        hideLoading();
         Bottomloadingposts.style.display = "none";
     });
 }
@@ -153,9 +153,9 @@ function createPostElement(post) {
     let UPCcontentgrid = document.querySelector('.UPC-content-grid');
 
     postContainer.classList.add('MUser-Post-Container');
-    
+
     let DynamicProf;
-    
+
     if(post.account.profile_photo == '../static/images/default-avatar-profile-picture-male-icon.png'){
         DynamicProf = post.account.profile_photo;
     }
@@ -164,7 +164,7 @@ function createPostElement(post) {
     }
 
     postContainer.innerHTML = `
-                            
+
     <div class="User-Post-Container">
     <div class="UPC-content-Top">
         <div class="UPCCT-Left">
@@ -194,11 +194,7 @@ function createPostElement(post) {
             </div>
     <div class="UPC-content-Bottom">
         <div class="UPCB-Caption">
-            
-            <div class="Cap-Caption">
-                <p class="postCaption">${post.caption}</p>
-                <br>
-            </div>
+
         </div>
         <div class="UPCB-Tags">
             ${post.tags.map(tag => `
@@ -225,6 +221,40 @@ function createPostElement(post) {
         </div>
     </div>
 </div>`;
+
+let CapCaption = document.createElement('div');
+let postCaption = document.createElement('p');
+let ReadMore = document.createElement('span');
+let UPCBCaption = postContainer.querySelector('.UPCB-Caption');
+
+postCaption.className = "postCaption";
+CapCaption.className = "Cap-Caption";
+ReadMore.className = "ReadMore";
+ReadMore.innerText = "Read More";
+
+function toggleText() {
+    if (ReadMore.innerText === "Read More") {
+        postCaption.innerText = post.caption;
+        ReadMore.innerText = " Read Less";
+    } else {
+        postCaption.innerText = post.caption.slice(0, 400) + "...";
+        ReadMore.innerText = "Read More";
+    }
+    postCaption.appendChild(ReadMore);
+    postContainer.scrollIntoView({ behavior: 'auto', block: 'start' });
+}
+
+if (post.caption.length > 400) {
+    postCaption.innerText = post.caption.slice(0, 400) + "...";
+    postCaption.appendChild(ReadMore);
+    ReadMore.addEventListener('click', toggleText);
+} else {
+    postCaption.innerText = post.caption;
+}
+
+CapCaption.appendChild(postCaption);
+UPCBCaption.append(CapCaption);
+
 
     LazyLoading(".lazy")
 
@@ -292,7 +322,7 @@ function handleUnlike(changeGlow) {
     if (!glowButton) {
         glowButton = document.createElement('img');
         glowButton.className = "glow-react";
-        glowButton.src = "static/images/glow4.png"; 
+        glowButton.src = "static/images/glow4.png";
         glowButton.alt = "Glow";
         parentDiv.appendChild(glowButton);
         glowButton.addEventListener('click', function() {

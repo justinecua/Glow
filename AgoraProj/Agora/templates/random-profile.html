@@ -134,7 +134,7 @@
 
                     <div class="MM-Bottom">
                         <button type="button" id="User-PostBtn">Post
-                            <div id="loadingIndicator" ><img src="static/images/rolling.gif" alt=""></div>
+                            <div class="loader2"></div>
                         </button>
                     </div>
                 </div>
@@ -309,17 +309,80 @@
                                           !-->
                 </div>
                 <div class="Friends_and_Glow_Container">
-                    <div class="FGC_Left">
-                                    
+                    
+                    <div class="FGC_Right">
+                        <div class="FGCL_Left">
+                            {% if randomUserFriends %}
+                            <span id="Prof-FriendCounter"> {{ randomUserFriends.totalfriends }}</span>
+                            <span id="Prof-FriendTitle">friends</span>
+                            {% else %}
+                            
+                            {% endif %}
+                        </div>
+                        <div class="FGCL_Right">
+                          {% if randomUserFriends %}
+                              {% for friends in randomUserFriends.friendsInfo %}
+                                {% if forloop.counter0 < 5 %}
+                                  <div class="RandomProfFriends_Cont">
+                                      <img src="{{ friends.profile_photo }}">
+                                  </div>
+                                {% endif %}
+                                
+                                {% if forloop.last and randomUserFriends.friendsInfo|length > 5%}
+                                  {% with remaining=randomUserFriends.friendsInfo|length|add:-5 %}
+                                      <div class="RandomProfFriends_Cont">
+                                            <span> +{{ remaining }}</span>
+                                      </div>
+                                  {% endwith %}
+                                {% endif %}
+                              {% endfor %}
+
+                          {% else %}
+                          {% endif %}
+                        </div>
+                        
+                                          
                     </div>
                     <div class="FGC_Right">
-                                    
+                          <div class="FGCR_Left">
+                            {% if totalGlows %}
+                              <span id="Prof-FriendCounter"> {{ totalGlows }}</span>
+                              <span id="Prof-FriendTitle">total glows</span>
+                            {% else %}
+                            
+                            {% endif %}
+                          </div> 
+                          <div class="FGCR_Right">
+                              
+                              {% if unique_acc_who_glowed %}
+                                 {% for account_id, info in unique_acc_who_glowed.items %}
+                                    {% if forloop.counter0 < 5 %}
+                                        <div class="RandomProfFriends_Cont">
+                                          <img src="{{ info.2 }}">
+                                        </div>
+                                    {% endif %}
+
+                                    {% if forloop.last and unique_acc_who_glowed|length > 5%}
+                                         {% with remaining=unique_acc_who_glowed|length|add:-5 %}
+                                        <div class="RandomProfFriends_Cont">
+                                            <span> +{{ remaining }}</span>
+                                        </div>
+                                        {% endwith %}
+                                    {% endif %}
+                                  {% endfor %} 
+
+                              {% else %} 
+                              {% endif %}
+                            
+                          </div>
                     </div>
                 </div>
                 <div class="UserProf-Main">
+                    <h2>Photos</h2>
                     <div class="NCenter-content-user">
                             {% if posts.posts_with_photos %}
-                                {% for post, post_info in posts.posts_with_photos.items %}                                    
+                                {% for post, post_info in posts.posts_with_photos.items %}
+                                    {% if forloop.counter0 < 8 %}
                                     <div class="UserProfile-PostContainer">
                                         {% if post_info.photos %}
                                         <div class="UPC-content-grid2 {% if post_info.photos|length > 1 %}three-photos{% endif %}">
@@ -330,7 +393,8 @@
                                             {% endfor %}
                                         </div>
                                         {% else %}
-                                        {% endif %}        
+                                        {% endif %}
+                                    {% endif %}
                                     </div>
                                 {% endfor %}
 
