@@ -805,12 +805,26 @@ def getCommentPost(request, id):
             post = Post.objects.get(id=id)
             photos = Photo.objects.filter(post=post)
             accountInfo = post.account
+            comments = Comment.objects.filter(post=post)
+
+            comments_data = []
 
             post_data = {
                 'id': post.id,
                 'caption': post.caption,
                 'dateTime': post.dateTime
             }
+
+            for comment in comments:
+                dateTime = time_ago(comment.dateTime)
+                comments_data.append({
+                    'postID': comment.post.id,
+                    'content': comment.content,
+                    'dateTime':  dateTime,
+                    'profile_photo': comment.account.profile_photo,
+                    'firstname': comment.account.firstname,
+                    'lastname': comment.account.lastname
+                })
 
             account_data = {
                 'firstname': accountInfo.firstname,
@@ -829,7 +843,41 @@ def getCommentPost(request, id):
                 'message': 'Successful',
                 'post': post_data,
                 'photos': photo_data,
-                'accountInfo': account_data
+                'accountInfo': account_data,
+                'comments': comments_data,
+            }
+
+            return JsonResponse(response_data, encoder=DjangoJSONEncoder)
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)})
+    else:
+        return JsonResponse({"status": "error", "message": "User is not authenticated"})
+
+
+@csrf_exempt
+def FetchComments(request, postId):
+    if request.user.is_authenticated:
+        accID = Account.objects.filter(auth_user=request.user)
+        try:
+            posts = Post.objects.get(id=postId)
+            comments = Comment.objects.filter(post=posts)
+
+            comments_data = []
+            for comment in comments:
+                dateTime = time_ago(comment.dateTime)
+                comments_data.append({
+                    'postID': comment.post.id,
+                    'content': comment.content,
+                    'dateTime':  dateTime,
+                    'profile_photo': comment.account.profile_photo,
+                    'firstname': comment.account.firstname,
+                    'lastname': comment.account.lastname
+                })
+
+            response_data = {
+                'status': 'success',
+                'message': 'Successful',
+                'comments': comments_data,
             }
 
             return JsonResponse(response_data, encoder=DjangoJSONEncoder)
@@ -875,37 +923,6 @@ def sendComment(request):
     else:
         return JsonResponse({"status": "error", "message": "User is not authenticated"})
 
-@csrf_exempt
-def FetchComments(request, postId):
-    if request.user.is_authenticated:
-        accID = Account.objects.filter(auth_user=request.user)
-        try:
-            posts = Post.objects.get(id=postId)
-            comments = Comment.objects.filter(post=posts)
-
-            comments_data = []
-            for comment in comments:
-                dateTime = time_ago(comment.dateTime)
-                comments_data.append({
-                    'postID': comment.post.id,
-                    'content': comment.content,
-                    'dateTime':  dateTime,
-                    'profile_photo': comment.account.profile_photo,
-                    'firstname': comment.account.firstname,
-                    'lastname': comment.account.lastname
-                })
-
-            response_data = {
-                'status': 'success',
-                'message': 'Successful',
-                'comments': comments_data,
-            }
-
-            return JsonResponse(response_data, encoder=DjangoJSONEncoder)
-        except Exception as e:
-            return JsonResponse({"status": "error", "message": str(e)})
-    else:
-        return JsonResponse({"status": "error", "message": "User is not authenticated"})
 
 
 def showFriends(request):

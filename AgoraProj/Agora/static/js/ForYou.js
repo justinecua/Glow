@@ -14,23 +14,23 @@ let friendPostsFetched = false;
 function allPostsInView() {
     const posts = document.querySelectorAll('.User-Post-Container');
     if (posts.length === 0) {
-        return false; 
+        return false;
     }
     const lastPost = posts[posts.length - 1];
     const lastPostRect = lastPost.getBoundingClientRect();
     return lastPostRect.bottom <= window.innerHeight;
 }
 
-    //fetchNewPosts();
-    document.addEventListener('DOMContentLoaded', function() {
-        fetchForYou();
-        ForYou.classList.add('active');
-        Following.classList.remove('active');
-        ForYou.addEventListener('click', handleForYouClick);
-        Following.addEventListener('click', handleFollowingClick);
-        window.addEventListener('scroll', handleScroll);
+//fetchNewPosts();
+document.addEventListener('DOMContentLoaded', function() {
+    fetchForYou();
+    ForYou.classList.add('active');
+    Following.classList.remove('active');
+    ForYou.addEventListener('click', handleForYouClick);
+    Following.addEventListener('click', handleFollowingClick);
+    window.addEventListener('scroll', handleScroll);
 
-    });
+});
 
 function handleForYouClick() {
     NCenterContent.style.display = "flex";

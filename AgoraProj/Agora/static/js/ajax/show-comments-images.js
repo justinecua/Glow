@@ -15,6 +15,8 @@ export function getPost(dataPostID, currentPhotoIndex) {
     let PostCaption = document.querySelector('.Post-Caption');
     let Commentbtncont = document.querySelector('.Comment-btn-cont');
     let CaptionContent = document.querySelector('.Caption-Content');
+    let CommentsSection = document.querySelector('.Comments-Section');
+
     let photos = [];
 
     fetch(`/getCommentPost/${dataPostID}/`, {
@@ -74,8 +76,44 @@ export function getPost(dataPostID, currentPhotoIndex) {
             PostProfilePic.src = account.profile_photo + '/tr:q-100,tr:w-42,h-42';
         }
 
-
         PostCaption.innerText = result.post.caption;
+
+        CommentsSection.innerHTML = '';
+        if (result.comments.length > 0) {
+            result.comments.forEach(comment => {
+                var commentDiv = document.createElement('div');
+                commentDiv.className = "commentDiv";
+
+                var commentContent = document.createElement('p');
+                commentContent.className = "commentContent";
+                commentContent.textContent = comment.content;
+
+                var commentName = document.createElement('p');
+                commentName.className = "commentName";
+                commentName.textContent = comment.firstname + " " + comment.lastname;
+
+                var commentProf = document.createElement('img');
+                commentProf.className = "commentProf";
+                commentProf.src = comment.profile_photo;
+
+                var commentDivRight = document.createElement('div');
+                commentDivRight.className = "commentDivRight";
+                commentDivRight.appendChild(commentName);
+                commentDivRight.appendChild(commentContent);
+
+                commentDiv.appendChild(commentProf);
+                commentDiv.appendChild(commentDivRight);
+                CommentsSection.appendChild(commentDiv);
+            });
+        } else {
+            var noCommentsMessage = document.createElement('p');
+            noCommentsMessage.className = "noCommentsMessage";
+            noCommentsMessage.style.display = "flex";
+            noCommentsMessage.style.height = "3rem";
+            noCommentsMessage.style.justifyContent = "center";
+            noCommentsMessage.textContent = "No comments";
+            CommentsSection.appendChild(noCommentsMessage);
+        }
     })
     .catch(error => {
         console.error('Error fetching data:', error);
