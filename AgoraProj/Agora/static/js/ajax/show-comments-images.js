@@ -35,7 +35,6 @@ export function getPost(dataPostID, currentPhotoIndex) {
 
         if (photos.length > 0) {
             CCLeft.innerHTML = '';
-            CCLeft1.style.display = "flex";
             CCLeft1.style.width = "40rem";
             CCLeft.style.borderRadius = "10px";
             CCRight1.style.borderRadius = "10px";
@@ -60,7 +59,6 @@ export function getPost(dataPostID, currentPhotoIndex) {
         } else {
             nextButton.style.display = "none";
             prevButton.style.display = "none";
-            CCLeft1.style.display = "none";
             CCRight1.style.borderRadius = "10px";
             CCRight1.style.width = "40rem";
         }

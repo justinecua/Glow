@@ -510,31 +510,35 @@ def randomProfile(request, id):
 
         posts_with_photos = {}
         totalGlows = 0
+        total_photos_count = 0
         unique_acc_who_glowed = {}
         posts = Post.objects.filter(account=otherAccount).order_by('-dateTime')
 
         for post in posts:
             photos = Photo.objects.filter(post=post)
-            glows = Glow.objects.filter(post=post).order_by('-timestamp')
-            comments = Comment.objects.filter(post=post)
-            totalPostGlows = Glow.objects.filter(post=post).count()
+            if photos.exists():
+                countphotos = photos.count()
+                total_photos_count += countphotos
+                glows = Glow.objects.filter(post=post).order_by('-timestamp')
+                comments = Comment.objects.filter(post=post)
+                totalPostGlows = Glow.objects.filter(post=post).count()
 
-            totalGlows += totalPostGlows
+                totalGlows += totalPostGlows
 
-            for glow in glows:
-                unique_acc_who_glowed[glow.account.id] = [
-                    glow.account.firstname,
-                    glow.account.lastname,
-                    glow.account.profile_photo,
-                    glow.timestamp,
+                for glow in glows:
+                    unique_acc_who_glowed[glow.account.id] = [
+                        glow.account.firstname,
+                        glow.account.lastname,
+                        glow.account.profile_photo,
+                        glow.timestamp,
                     ]
 
-            posts_with_photos[post] = {
-                'photos': photos,
-                'totalPhotos': photos.count(),
-                'time_ago': time_ago(post.dateTime),
-                'glows_count': glows.count(),
-                'comments_count': comments.count(),
+                posts_with_photos[post] = {
+                    'photos': photos,
+                    'totalPhotos': countphotos,
+                    'time_ago': time_ago(post.dateTime),
+                    'glows_count': glows.count(),
+                    'comments_count': comments.count(),
                 }
 
         context = {
@@ -552,7 +556,8 @@ def randomProfile(request, id):
             'posts': {'posts_with_photos': posts_with_photos},
             'randomUserFriends': randomUserFriends,
             'totalGlows': totalGlows,
-            'unique_acc_who_glowed': unique_acc_who_glowed
+            'total_photos_count': total_photos_count,
+            'unique_acc_who_glowed': unique_acc_who_glowed,
         }
 
         return render(request, 'random-profile.html', context)

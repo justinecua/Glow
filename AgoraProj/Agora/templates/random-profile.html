@@ -7,7 +7,7 @@
     <script type="module" src="{% static 'js/friend.js' %}"></script>
     <script type="module" src="{% static 'js/toggle.js' %}"></script>
     <script type="module" src="{% static 'js/show-search.js' %}"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -26,7 +26,7 @@
                         <div class="CProf-Container">
                             <img id="CP-Prof" src="{{ accountInfo.profile_photo }}" alt="">
                         </div>
-    
+
                         <div class="CProf-Right">
                             <p>{{ accountInfo.firstname | capfirst }} {{ accountInfo.lastname | capfirst }}</p>
                             <input id="accountID" type="text" value="{{accountInfo.id}}"  style="display:none" ;>
@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="Modal-Mid">
-                    
+
                     <textarea name="" id="post-textarea" placeholder="Tell your friends about your thoughts"></textarea>
                     <div id="Photo-upload-container2">
                         <div class="Photo-Upload-Top">
@@ -67,7 +67,7 @@
                             </div>
                             <input id="Image-Post" type="file" name="Image-Post" multiple style="display:none" ;>
                             <p id="Post-P">Add Photos</p>
-                        
+
                             <P>(Media files limited to 25MB)</p>
                         </div>
                         <div id="PUC-ImageCont">
@@ -106,7 +106,7 @@
                         <div id="Videos-Icon" class="option-icon">
                             <img src="../static/images/vid.png" alt="">
                         </div>
-                        
+
                         <div class="option-icon">
                             <img src="../static/images/label.png" alt="">
                         </div>
@@ -139,7 +139,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>
@@ -148,12 +148,12 @@
 
 <div id="root">
     {% if request.user.is_authenticated %}
-    <!-- 
+    <!--
             <h1> Welcome, {{ request.user.username }}!</h1>
             <a href="{% url 'account_logout' %}">Sign Out</a>
-        
+
         -->
-        
+
 <script type="module" src="{% static 'js/nav.js' %}"></script>
 
 {% include "nav.html" %}
@@ -167,7 +167,7 @@
         </div>
     </div>
     <div class="Search-Results-Container">
-        
+
     </div>
     <style>
         .Search-Results-Container{
@@ -196,9 +196,9 @@
                             </div>
                         </div>
                     </a>
-                
+
                     {% endfor %}
-                    
+
                 {% endif %}
             </div>
         </div>
@@ -219,7 +219,7 @@
                 {% endif %}
             </div>
         </div>
-    
+
     </div>
 
 </div>
@@ -228,9 +228,9 @@
 
         <div class="NCenter">
                 <div class="Profile-Container">
-                    
+
                     <div class="PPC-Cover-Container">
-                        
+
                         {% if randomaccount.cover_photo %}
                             <img id="UserCoverPhoto" src="{{ randomaccount.cover_photo }}">
                         {% else %}
@@ -242,18 +242,18 @@
                             <div class="PPC-My-Profile">
                                 <img src="{{ randomaccount.profile_photo }}">
                             </div>
-                            
+
                                 <div class="PPC-Buttons">
                                     <div class="PPCB-Top">
-                                    
+
                                         <input type="text" id="user_ID" name="user_ID" value="{{ request.user.id }}" style="display:none">
                                         <input type="text" id="visited_profile_ID" name="visited_profile_ID" value="{{ randomaccount.id }}" style="display:none">
                                         <input type="text" id="currentTime-Prof" name="currentTime-Prof" style="display:none">
                                     </div>
                                     <div class="PPCB-Bottom">
-                                        
+
                                         {% if friendship_is_pending %}
-                                            
+
                                             {% if accountInfo.bio %}
                                             <div class="Bio-Div"><p>" {{ randomaccount.bio }} "</p></div>
                                             {% else %}
@@ -279,14 +279,14 @@
                                         {% endif %}
                                         <button id="Message-Btn">Message</button>
                                     </div>
-                                
+
                                 </div>
                         </div>
-                    
+
                     </div>
 
                     <div class="OnePurpose-Container"></div>
-                    
+
                     <div class="PPC-ProfInfo-Cont">
                         <div class="PPC-Info-Left"></div>
                         <div class="PPC-Info-Mid">
@@ -297,26 +297,26 @@
                             <p>Joined {{ randomaccount.auth_user.date_joined|date:"F j, Y" }}</p>
                         </div>
                     </div>
-                    
-                    
+
+
                     <!--
                     <div class="MyProfile-Nav">
                         <ul>
                             <li>About</li>
                         </ul>
                     </div>
-                    
+
                                           !-->
                 </div>
                 <div class="Friends_and_Glow_Container">
-                    
+
                     <div class="FGC_Right">
                         <div class="FGCL_Left">
                             {% if randomUserFriends %}
                             <span id="Prof-FriendCounter"> {{ randomUserFriends.totalfriends }}</span>
                             <span id="Prof-FriendTitle">friends</span>
                             {% else %}
-                            
+
                             {% endif %}
                         </div>
                         <div class="FGCL_Right">
@@ -327,7 +327,7 @@
                                       <img src="{{ friends.profile_photo }}">
                                   </div>
                                 {% endif %}
-                                
+
                                 {% if forloop.last and randomUserFriends.friendsInfo|length > 5%}
                                   {% with remaining=randomUserFriends.friendsInfo|length|add:-5 %}
                                       <div class="RandomProfFriends_Cont">
@@ -340,8 +340,8 @@
                           {% else %}
                           {% endif %}
                         </div>
-                        
-                                          
+
+
                     </div>
                     <div class="FGC_Right">
                           <div class="FGCR_Left">
@@ -349,11 +349,11 @@
                               <span id="Prof-FriendCounter"> {{ totalGlows }}</span>
                               <span id="Prof-FriendTitle">total glows</span>
                             {% else %}
-                            
+
                             {% endif %}
-                          </div> 
+                          </div>
                           <div class="FGCR_Right">
-                              
+
                               {% if unique_acc_who_glowed %}
                                  {% for account_id, info in unique_acc_who_glowed.items %}
                                     {% if forloop.counter0 < 5 %}
@@ -369,25 +369,32 @@
                                         </div>
                                         {% endwith %}
                                     {% endif %}
-                                  {% endfor %} 
+                                  {% endfor %}
 
-                              {% else %} 
+                              {% else %}
                               {% endif %}
-                            
+
                           </div>
                     </div>
                 </div>
                 <div class="UserProf-Main">
-                    <h2>Photos</h2>
+                    {% if total_photos_count %}
+                        <div class="RP-PhotosTitle">
+                            <h2>Photos {{ total_photos_count }}</h2>
+                            <span>See all</span>
+                        </div>
+
+                    {% endif %}
+
                     <div class="NCenter-content-user">
                             {% if posts.posts_with_photos %}
                                 {% for post, post_info in posts.posts_with_photos.items %}
-                                    {% if forloop.counter0 < 8 %}
+                                    {% if forloop.counter0 < 20 %}
                                     <div class="UserProfile-PostContainer">
                                         {% if post_info.photos %}
-                                        <div class="UPC-content-grid2 {% if post_info.photos|length > 1 %}three-photos{% endif %}">
+                                        <div class="UPC-content-grid2">
                                             {% for photo in post_info.photos %}
-                                                <div class="UPC-content2 {% if post_info.photos|length == 1 %}single-photo{% endif %}">
+                                                <div class="UPC-content2">
                                                   <img class="lazy" src="{{ photo.link|add:'/tr:q-90,tr:w-450,bl-30,q-90,h-450?cm-pad_resize,bg-F3F3F3' }}" data-src="{{ photo.link | add:'/tr:q-90,tr:w-450,h-450?cm-pad_resize,bg-F3F3F3 '}}">
                                                 </div>
                                             {% endfor %}
@@ -399,22 +406,22 @@
                                 {% endfor %}
 
                                 {% else %}
-                                    
+
                                 <style>
                                 .UserProf-Main{
-                                    height: 45vh;      
+                                    height: 45vh;
                                 }
                                 </style>
 
                                 <p id="Posts-Message">No posts yet</p>
-                                {% endif %}
+                            {% endif %}
                     </div>
-                
+
 
         </div>
-                
+
       {% endif %}
-    
+
 </div>
 
 <script>
@@ -423,14 +430,14 @@
         var cursorPos = textarea.selectionStart;
         var textBeforeCursor = textarea.value.substring(0, cursorPos);
         var textAfterCursor = textarea.value.substring(cursorPos);
-    
+
         textarea.value = textBeforeCursor + emoji + textAfterCursor;
         textarea.selectionStart = textarea.selectionEnd = cursorPos + emoji.length;
-        
+
         let Caption = textarea.value;
         return Caption;
     }
-    
+
     function LazyLoading(selector) {
     let lazyimages = document.querySelectorAll(selector);
 
