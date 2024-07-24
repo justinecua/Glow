@@ -1,5 +1,4 @@
 import { SendCommentToDB } from "./send-comment.js";
-import { getComments } from "./get-newComments.js";
 import { sendLike } from "./send-like.js";
 import { sendUnlike } from "./send-unlike.js";
 import { getPost } from "./show-comments-images.js";
@@ -19,10 +18,10 @@ export function fetchFriendPosts() {
                 if (response.status === "success") {
                     NCenterContent.innerHTML = '';
                     response.posts.forEach(post => {
-                    
-    
+
+
                         let postHtml = `
-                            
+
                             <div class="User-Post-Container">
                                 <div class="UPC-content-Top">
                                     <div class="UPCCT-Left">
@@ -93,28 +92,28 @@ export function fetchFriendPosts() {
                     function initializeButtons() {
                         let glowReactButtons = document.querySelectorAll('.glow-react');
                         let changeGlowButtons = document.querySelectorAll('.ChangeGlow');
-                    
+
                         glowReactButtons.forEach(glow_button => {
                             glow_button.addEventListener('click', function() {
                                 handleLike(glow_button);
                             });
                         });
-                    
+
                         changeGlowButtons.forEach(changeGlow => {
                             changeGlow.addEventListener('click', function() {
                                 handleUnlike(changeGlow);
                             });
                         });
                     }
-                    
+
                     function handleLike(glow_button) {
                         const parentDiv = glow_button.parentNode;
                         const dataPost_ID = parentDiv.getAttribute("data-PostIDD");
                         const dataAcc_ID = parentDiv.getAttribute("data-AccID");
-                    
+
                         glow_button.style.display = "none";
                         let ChangeGlow = parentDiv.querySelector('.ChangeGlow');
-                    
+
                         if (!ChangeGlow) {
                             ChangeGlow = document.createElement('span');
                             ChangeGlow.className = "ChangeGlow";
@@ -129,28 +128,28 @@ export function fetchFriendPosts() {
                         } else {
                             ChangeGlow.style.display = "inline";
                         }
-                    
+
                         let LikeObject = {
                             accID: dataAcc_ID,
                             postID: dataPost_ID,
                         };
-                    
+
                         sendLike(LikeObject, dataPost_ID);
                         console.log("Like");
-                    
+
                         ChangeGlow.classList.add('animate-heart');
                     }
-                    
+
                     function handleUnlike(changeGlow) {
                         const parentDiv = changeGlow.parentNode;
                         const dataPost_ID = parentDiv.getAttribute("data-PostIDD");
-                    
+
                         changeGlow.style.display = "none";
                         let glowButton = parentDiv.querySelector('.glow-react');
                         if (!glowButton) {
                             glowButton = document.createElement('img');
                             glowButton.className = "glow-react";
-                            glowButton.src = "static/images/glow4.png"; 
+                            glowButton.src = "static/images/glow4.png";
                             glowButton.alt = "Glow";
                             parentDiv.appendChild(glowButton);
                             glowButton.addEventListener('click', function() {
@@ -159,16 +158,16 @@ export function fetchFriendPosts() {
                         } else {
                             glowButton.style.display = "block";
                         }
-                    
+
                         let LikeObject = {
                             postID: dataPost_ID,
                         };
-                    
+
                         sendUnlike(LikeObject, dataPost_ID);
                         console.log("Unlike");
                         console.log(dataPost_ID);
                     }
-                    
+
                         const commentOverlay = document.getElementById('Comment-Overlay');
                         const commentBtnShow = document.querySelectorAll('.Comment-Btn-Show');
                         const commentContainer = document.querySelector('.Comment-Container');
@@ -183,9 +182,9 @@ export function fetchFriendPosts() {
                         const sendComment = document.getElementById('Send-Comment');
                         let CommentInput = document.getElementById('Comment-input');
                         let CommentObject = '';
-                        let SendComment = document.getElementById('Send-Comment'); 
+                        let SendComment = document.getElementById('Send-Comment');
 
-                        let dataPostIDForSend = ''; 
+                        let dataPostIDForSend = '';
 
 
                         commentBtnShow.forEach(commentBtn => {
@@ -193,9 +192,9 @@ export function fetchFriendPosts() {
                                 commentOverlay.style.display = "flex";
                                 commentContainer.style.display = "flex";
                                 dataPostID = commentBtn.getAttribute("data-PostID");
-                                getPost(dataPostID, 0); 
+                                getPost(dataPostID, 0);
                                 getComments(dataPostID);
-                                overlayOpened = true; 
+                                overlayOpened = true;
                                 console.log(dataPostID);
 
                                 dataPostIDForSend = dataPostID;
@@ -216,14 +215,14 @@ export function fetchFriendPosts() {
                         });
 
                         commentInput.addEventListener('change', (event) => {
-                            const newComment = event.target.value; 
+                            const newComment = event.target.value;
                             updateComment(newComment);
                         });
 
                         let accountID = document.getElementById('accountID');
                         let AccountID = accountID.value;
-                        
-                        function updateComment(comment) { 
+
+                        function updateComment(comment) {
                             CommentObject = {
                                 accID: AccountID,
                                 postID: dataPostID,

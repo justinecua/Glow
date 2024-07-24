@@ -4,6 +4,7 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
+
     <script type="module" src="{% static 'js/friend.js' %}"></script>
     <script type="module" src="{% static 'js/toggle.js' %}"></script>
     <script type="module" src="{% static 'js/show-search.js' %}"></script>
@@ -325,6 +326,7 @@
                                 {% if forloop.counter0 < 5 %}
                                   <div class="RandomProfFriends_Cont">
                                       <img src="{{ friends.profile_photo }}">
+                                        <span class="tooltiptext">{{ friends.firstname }} {{ friends.lastname }}</span>
                                   </div>
                                 {% endif %}
 
@@ -359,6 +361,7 @@
                                     {% if forloop.counter0 < 5 %}
                                         <div class="RandomProfFriends_Cont">
                                           <img src="{{ info.2 }}">
+                                          <span class="tooltiptext">{{ info.0 }} {{ info.1 }}</span>
                                         </div>
                                     {% endif %}
 
@@ -377,10 +380,11 @@
                           </div>
                     </div>
                 </div>
+
                 <div class="UserProf-Main">
                     {% if total_photos_count %}
                         <div class="RP-PhotosTitle">
-                            <h2>Photos {{ total_photos_count }}</h2>
+                            <p>Photos ({{ total_photos_count }})</p>
                             <span>See all</span>
                         </div>
 
@@ -389,20 +393,18 @@
                     <div class="NCenter-content-user">
                             {% if posts.posts_with_photos %}
                                 {% for post, post_info in posts.posts_with_photos.items %}
-                                    {% if forloop.counter0 < 20 %}
-                                    <div class="UserProfile-PostContainer">
+                                    {% if forloop.counter0 < 8 %}
                                         {% if post_info.photos %}
-                                        <div class="UPC-content-grid2">
                                             {% for photo in post_info.photos %}
                                                 <div class="UPC-content2">
                                                   <img class="lazy" src="{{ photo.link|add:'/tr:q-90,tr:w-450,bl-30,q-90,h-450?cm-pad_resize,bg-F3F3F3' }}" data-src="{{ photo.link | add:'/tr:q-90,tr:w-450,h-450?cm-pad_resize,bg-F3F3F3 '}}">
                                                 </div>
                                             {% endfor %}
-                                        </div>
+
                                         {% else %}
                                         {% endif %}
                                     {% endif %}
-                                    </div>
+
                                 {% endfor %}
 
                                 {% else %}
@@ -416,27 +418,114 @@
                                 <p id="Posts-Message">No posts yet</p>
                             {% endif %}
                     </div>
-
-
         </div>
+            <div class="RP-PostContainer">
+                <div class="RP-PostContainerList">
 
+                    {% if posts.posts_with_photos %}
+                    {% for post, post_info in posts.posts_with_photos.items %}
+                        <div class="User-Post-Container2">
+                            <div class="UPC-content-Top">
+                                <div class="UPCCT-Left">
+                                    <a href="profile/{{ post.account.id }}">
+                                        <div class="Post-Prof-Cont">
+                                            <img src="{{ post.account.profile_photo }}">
+                                        </div>
+                                    </a>
+                                    <div class="Post-Prof-Cont2">
+                                        <div id="Post-Prof-Cont-Name1" class="Post-Prof-Cont-Name">
+                                            <a href="profile/{{ post.account.id }}">
+                                                <p class="Photo-Post-username">{{ post.account.firstname }}</p>
+                                            </a>
+                                            <p class="Post-Photo-Date-Time">{{ post_info.time_ago }}</p>
+                                        </div>
+                                        <div class="Post-Prof-Cont-Username">
+                                            <p>@{{ post.account.auth_user.username }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="UPCCT-Right">
+                                </div>
+                            </div>
+
+                            {% if post_info.photos %}
+                            <div class="UPC-content-grid {% if post_info.photos|length == 3 %}three-photos{% endif %}">
+                                {% for photo in post_info.photos %}
+                                    <div class="UPC-content {% if post_info.photos|length == 1 %}single-photo{% endif %}">
+                                        <img src="{{ photo.link|add:'?cm-pad_resize,bg-F3F3F3' }}" alt="">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            <div class="UPCB-Tags" style="height: 2rem"></div>
+                            {% endif %}
+
+                            <div class="UPC-content-Bottom">
+                                <div class="UPCB-Caption">
+                                    <div class="Cap-Caption">
+                                        <p class="postCaption">{{ post.caption }}</p>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="UPCB-Tags">
+                                    {% for tag in post.tags.all %}
+                                        <a href="/tags/{{ tag.id }}"><div><span class="hashtags">#{{ tag.tag }}</span></div></a>
+                                    {% endfor %}
+                                </div>
+                                <div class="UPCB-Reacts">
+                                    <div class="Reacts">
+                                        <div class="GlowReact-Div" data-PostIDD="{{ post.id }}" data-AccID="{{ post.account.id }}">
+                                            {% if post.has_liked %}
+                                                <span class="ChangeGlow">&#10022;</span>
+                                            {% else %}
+                                                <img class="glow-react" src="../static/images/glow4.png" alt="Glow">
+                                            {% endif %}
+                                        </div>
+                                        <div class="React-Div Comment-Btn-Show" data-PostID="{{ post.id }}">
+                                            <img src="../static/images/chat (2).png" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="React-Counts">
+                                        <div class="glow-count">
+                                            {% if post_info.glows_count > 1 %}
+                                                <p>{{ post_info.glows_count }} glows</p>
+                                            {% else %}
+                                                <p>{{ post_info.glows_count }} glow</p>
+                                            {% endif %}
+                                        </div>
+                                        <div class="Comments">
+                                            {% if post_info.comments_count > 1 %}
+                                                <p>{{ post_info.comments_count }} comments</p>
+                                            {% else %}
+                                                <p>{{ post_info.comments_count }} comment</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                {% else %}
+
+                    <style>
+                    .UserProf-Main{
+                        height: 45vh;
+                    }
+                    </style>
+
+                    <p id="Posts-Message">No posts yet</p>
+                {% endif %}
+
+                </div>
+
+            </div>
+        </div>
       {% endif %}
 
 </div>
 
 <script>
-    function insertEmoji(emoji) {
-        var textarea = document.getElementById("post-textarea");
-        var cursorPos = textarea.selectionStart;
-        var textBeforeCursor = textarea.value.substring(0, cursorPos);
-        var textAfterCursor = textarea.value.substring(cursorPos);
-
-        textarea.value = textBeforeCursor + emoji + textAfterCursor;
-        textarea.selectionStart = textarea.selectionEnd = cursorPos + emoji.length;
-
-        let Caption = textarea.value;
-        return Caption;
-    }
 
     function LazyLoading(selector) {
     let lazyimages = document.querySelectorAll(selector);
@@ -456,9 +545,15 @@
         lazyimages.forEach((lazyimage) => {
             observer.observe(lazyimage);
         });
+        }
     }
-}
 
-LazyLoading(".lazy");
+    LazyLoading(".lazy");
+
+
 </script>
+
+
+
+
 {% endblock %}

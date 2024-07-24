@@ -16,7 +16,6 @@ export function getPost(dataPostID, currentPhotoIndex) {
     let Commentbtncont = document.querySelector('.Comment-btn-cont');
     let CaptionContent = document.querySelector('.Caption-Content');
     let CommentsSection = document.querySelector('.Comments-Section');
-
     let photos = [];
 
     fetch(`/getCommentPost/${dataPostID}/`, {
@@ -36,6 +35,8 @@ export function getPost(dataPostID, currentPhotoIndex) {
         if (photos.length > 0) {
             CCLeft.innerHTML = '';
             CCLeft1.style.width = "40rem";
+            CCLeft.style.width = "100%";
+            CCLeft.style.height = "";
             CCLeft.style.borderRadius = "10px";
             CCRight1.style.borderRadius = "10px";
             CCRight1.style.width = "40rem";
@@ -57,6 +58,18 @@ export function getPost(dataPostID, currentPhotoIndex) {
             prevButton.addEventListener('click', showPrevPhoto);
 
         } else {
+            let NoImage = document.createElement('img');
+            NoImage.className= "NoImage";
+            NoImage.src = "https://ik.imagekit.io/b9bdd5j68/thinking-39.png";
+
+            CCLeft.style.width = "50%";
+            CCLeft.style.height = "50%";
+
+            let NoImageText = document.createElement('span');
+            NoImageText.innerHTML = "No images found";
+            NoImageText.className= "NoImageText";
+            CCLeft.appendChild(NoImage);
+            CCLeft.appendChild(NoImageText);
             nextButton.style.display = "none";
             prevButton.style.display = "none";
             CCRight1.style.borderRadius = "10px";

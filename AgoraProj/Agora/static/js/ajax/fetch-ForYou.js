@@ -1,5 +1,4 @@
 import { SendCommentToDB } from "./send-comment.js";
-import { getComments } from "./get-newComments.js";
 import { sendLike } from "./send-like.js";
 import { sendUnlike } from "./send-unlike.js";
 import { getPost } from "./show-comments-images.js";
@@ -250,26 +249,83 @@ function createPostElement(post) {
 }
 
 function initializeButtons() {
-    const glowReactDivs = document.querySelectorAll('.GlowReact-Div');
+    let glowReactButtons = document.querySelectorAll('.glow-react');
+    let changeGlowButtons = document.querySelectorAll('.ChangeGlow');
 
-    glowReactDivs.forEach(div => {
-        div.addEventListener('click', function() {
-            const postID = div.getAttribute('data-PostIDD');
-            const accID = div.getAttribute('data-AccID');
-            const spanElement = div.querySelector('span');
-            const imgElement = div.querySelector('img');
-
-            if (spanElement) {
-                sendUnlike(postID, accID);
-                spanElement.remove();
-                div.innerHTML = '<img class="glow-react" src="static/images/glow4.png" alt="Glow">';
-            } else if (imgElement) {
-                sendLike(postID, accID);
-                imgElement.remove();
-                div.innerHTML = '<span class="ChangeGlow">&#10022;</span>';
-            }
+    glowReactButtons.forEach(glow_button => {
+        glow_button.addEventListener('click', function() {
+            handleLike(glow_button);
         });
     });
+
+    changeGlowButtons.forEach(changeGlow => {
+        changeGlow.addEventListener('click', function() {
+            handleUnlike(changeGlow);
+        });
+    });
+}
+
+
+function handleLike(glow_button) {
+    const parentDiv = glow_button.parentNode;
+    const dataPost_ID = parentDiv.getAttribute("data-PostIDD");
+    const dataAcc_ID = parentDiv.getAttribute("data-AccID");
+
+    glow_button.style.display = "none";
+    let ChangeGlow = parentDiv.querySelector('.ChangeGlow');
+
+    if (!ChangeGlow) {
+        ChangeGlow = document.createElement('span');
+        ChangeGlow.className = "ChangeGlow";
+        ChangeGlow.innerHTML = "&#10022;";
+        ChangeGlow.style.width = "2.5rem";
+        ChangeGlow.style.height = "2.4rem";
+        ChangeGlow.style.userSelect = "none";
+        parentDiv.appendChild(ChangeGlow);
+        ChangeGlow.addEventListener('click', function() {
+            handleUnlike(ChangeGlow);
+        });
+    } else {
+        ChangeGlow.style.display = "inline";
+    }
+
+    let LikeObject = {
+        accID: dataAcc_ID,
+        postID: dataPost_ID,
+    };
+
+    sendLike(LikeObject, dataPost_ID);
+    console.log("Like");
+
+    ChangeGlow.classList.add('animate-heart');
+}
+
+function handleUnlike(changeGlow) {
+    const parentDiv = changeGlow.parentNode;
+    const dataPost_ID = parentDiv.getAttribute("data-PostIDD");
+
+    changeGlow.style.display = "none";
+    let glowButton = parentDiv.querySelector('.glow-react');
+    if (!glowButton) {
+        glowButton = document.createElement('img');
+        glowButton.className = "glow-react";
+        glowButton.src = "static/images/glow4.png";
+        glowButton.alt = "Glow";
+        parentDiv.appendChild(glowButton);
+        glowButton.addEventListener('click', function() {
+            handleLike(glowButton);
+        });
+    } else {
+        glowButton.style.display = "block";
+    }
+
+    let LikeObject = {
+        postID: dataPost_ID,
+    };
+
+    sendUnlike(LikeObject, dataPost_ID);
+    console.log("Unlike");
+    console.log(dataPost_ID);
 }
 
 export function LazyLoading(selector) {

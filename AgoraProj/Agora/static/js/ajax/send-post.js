@@ -1,6 +1,5 @@
 
 import { SendCommentToDB } from "./send-comment.js";
-import { getComments } from "./get-newComments.js";
 import { sendLike } from "./send-like.js";
 import { sendUnlike } from "./send-unlike.js";
 import { getPost } from "./show-comments-images.js";

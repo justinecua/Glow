@@ -5,20 +5,23 @@
 }
 
 [data-theme="dark"] {
-  --bg-color: #000007;
+  --bg-color: #0D0D0F;
   --color: white;
   --accent-1: #111;
   --accent-2: #999;
-  --icon-filter: invert(100%) brightness(200%);
+  --icon-filter: brightness(0) invert(1);
   --link-color: white;
-  --nav-color: #02060b;
+  --nav-color: #15161A;
   --border-color: 1px solid #1d2532;
-  --input-create-post: #1c212d;
+  --input-create-post: #1C1E29;
   --glow-color: #0058ca;
   --audience-arrow-color: 5px solid#ffff;
-  --hover-elements: #1a212d;
+  --hover-elements: #bfc6d719;
   --glow-button: #0058ca;
-  --top-nav-color: #081224;
+  --top-nav-color: #1C1E29;
+  --text-color: #BABABA;
+  --tool-tip-bgcolor: #6961FF;
+  --tool-tip-color: #ffff;
 }
 .overflow-hidden {
   overflow-y: hidden;
@@ -84,6 +87,9 @@ body {
   --hover-elements: #ebebeb;
   --glow-button: #0058ca;
   --top-nav-color: #edf3fc;
+  --text-color: #373131;
+  --tool-tip-bgcolor: #6961FF;
+  --tool-tip-color: #ffff;
   color: var(--color);
   background-color: var(--bg-color);
   overflow-x: hidden;
@@ -225,10 +231,12 @@ body {
     padding-left: 1rem;
     margin-bottom: 2%;
     border-radius: 10px;
+
   }
 
   .NLeft li:hover {
     background-color: var(--hover-elements);
+
   }
 
   .NLeft a {
@@ -243,6 +251,7 @@ body {
     object-fit: cover;
     margin-right: 5%;
     filter: var(--icon-filter);
+    opacity: 1;
   }
 
   .NCenter ul {
@@ -402,14 +411,31 @@ body {
     font-size: clamp(1.1rem, 0.9vw, 1.1rem);
   }
 
+  .RPContent{
+    width: 100%;
+    display: flex;
+  }
+
+  .RP-PostsList{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+  }
+
+
   .UserProf-Main {
     margin-top: 2%;
     border-radius: 15px;
     background-color: var(--nav-color);
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    width: 100%;
+    padding: 1.2rem;
     margin-left: -0.7%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
 
   .UserProf-Main h2 {
@@ -421,10 +447,25 @@ body {
   }
 
   .RP-PhotosTitle{
-    padding: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-bottom: 0.5rem;
     display: flex;
     width: 100%;
     justify-content: space-between;
+    font-family: "Work Sans", sans-serif;
+  }
+
+  .RP-PhotosTitle p{
+    font-size: clamp(0.9rem, 0.9vw, 0.9rem);
+    color: #0a0909;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .RP-PhotosTitle span{
+    font-size: clamp(0.9rem, 0.9vw, 0.9rem);
+    color: #898789;
   }
 
   .NCenter-content2 {
@@ -1705,7 +1746,7 @@ body {
   .User-Post-Container {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    padding: 0.5rem;
     width: 100%;
     border: var(--border-color);
     display: flex;
@@ -1757,11 +1798,10 @@ body {
   }
 
   .User-Post-Container2 {
-    margin-top: 2%;
     display: flex;
     flex-direction: column;
     padding: 1rem;
-    width: 90%;
+    width: 97%;
     max-height: 51rem;
     border: var(--border-color);
     display: flex;
@@ -1770,6 +1810,7 @@ body {
     border-radius: 10px;
     background-color: var(--nav-color);
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
   }
 
   .User-Post-Container2 img {
@@ -1825,10 +1866,11 @@ body {
 
 
   .NCenter-content-user {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    display: flex;
     width: 100%;
+    height: 100%;
   }
+
 
   .UPC-content.single-photo {
     grid-column: 1 / -1;
@@ -1844,25 +1886,21 @@ body {
     height: 0;
   }
 
-  .UPC-content-grid2 {
-    display: flex;
-    gap: 2%;
-    width: 90%;
-    height: 90%;
-  }
 
   .UPC-content2 {
-    display: block;
-    background-color: #f1f1f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 5px;
     overflow: hidden;
-    margin-bottom: 10px; /* add some margin between photos */
-}
+    height: 8rem;
+  }
 
   .UPC-content2 img {
-    width: 100%;
-    height: 10rem;
+    width: 95%;
+    height: 100%;
     object-fit: cover;
+    border-radius: 5px;
   }
 
 
@@ -1978,14 +2016,14 @@ body {
     align-items: center;
     width: 30%;
     height: 100%;
+    padding-left: 0.5rem;
   }
 
   .React-Counts {
     display: flex;
     align-items: center;
-    width: 40%;
+    width: 45%;
     height: 100%;
-    padding-right: 5%;
   }
 
   .React-Counts div {
@@ -2003,21 +2041,19 @@ body {
     justify-content: center;
     align-items: center;
     font-family: "Work Sans", sans-serif;
-
+    filter: var(--icon-filter);
   }
 
   .React-Div:hover {
     background-color: var(--hover-elements);
     border-radius: 10px;
     cursor: pointer;
-    filter: var(--icon-filter);
   }
 
   .GlowReact-Div:hover {
     background-color: var(--hover-elements);
     border-radius: 10px;
     cursor: pointer;
-    filter: var(--icon-filter);
   }
 
   .GlowReact-Div {
@@ -2063,7 +2099,7 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 1rem;
+    padding: 0.8rem;
   }
 
   .UPCB-Caption {
@@ -2119,6 +2155,7 @@ body {
 
   .postCaption {
     width: 95%;
+    color: var(--text-color);
   }
 
   .hashtags {
@@ -2165,8 +2202,7 @@ body {
     justify-content: center;
     align-items: center;
     position: absolute;
-    background-color: white;
-    z-index: 8;
+    background-color: var(--nav-color);
   }
 
   #loadingIndicator-Comment div {
@@ -2184,7 +2220,7 @@ body {
     width: 100%;
     border-radius: 15px;
     margin-left: -0.7%;
-    padding: 2rem;
+    padding: 1rem;
     background-color: var(--nav-color);
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
   }
@@ -2224,7 +2260,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border: 5px solid #f6f6f9;
+    border: 5px solid var(--nav-color);
   }
 
   .PPC-Buttons {
@@ -2373,7 +2409,7 @@ body {
     position: relative;
     height: 100%;
     border-radius: 50%;
-    border: 3px solid white;
+    border: 3px solid var(--top-nav-color);
   }
 
   .RandomProfFriends_Cont span {
@@ -2384,8 +2420,8 @@ body {
     padding: 0.6rem;
     font-family: "Work Sans", sans-serif;
     border-radius: 50%;
-    border: 3px solid white;
-    background-color: #e2e2e2;
+    border: 3px solid var(--top-nav-color);
+    background-color: var(--nav-color);
   }
 
   #Prof-FriendCounter {
@@ -2445,7 +2481,7 @@ body {
   }
 
   #Add-Friend-Btn {
-    width: 45%;
+    width: 35%;
     height: 50%;
     border: none;
     border-radius: 5px;
@@ -2790,7 +2826,7 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    background-color: white;
+    background-color: var(--nav-color);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     animation: fadeIn 0.5s ease-out forwards;
 }
@@ -2809,17 +2845,21 @@ body {
     position: relative;
     width: 40rem;
     max-width: 40rem;
+    background-color: var(--bg-color);
+    border-top-left-radius: 10px;
+    border-top-left-radius: 10px;
   }
 
-  .CC-Left img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+  .NoImage{
+    margin-top: -8rem;
   }
 
+  .NoImageText{
+    font-family: "Work Sans", sans-serif;
+    color: #898789;
+    margin-top: -3rem;
+  }
 
   .CC-Right {
     display: flex;
@@ -2859,9 +2899,20 @@ body {
 
   .CC-Left-Images {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .CC-Left-Images img{
+    width: 100%;
     height: 100%;
-    background-color: var(--bg-color);
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
   }
 
   .next-button img {
@@ -2934,6 +2985,7 @@ body {
     display: flex;
     align-items: center;
     width: 100%;
+    padding: 1rem;
   }
 
   .Post-ProfilePic {
@@ -2984,7 +3036,7 @@ body {
 
   .Post-FullName {
     width: 100%;
-    margin-left: 10%;
+    margin-left: 1rem;
   }
 
 
@@ -3682,13 +3734,14 @@ body {
   .PPCB-Bottom {
     display: flex;
     align-items: center;
+    justify-content: end;
     width: 90%;
     height: 50%;
     gap: 3%;
   }
 
   #Message-Btn {
-    width: 50%;
+    width: 35%;
     height: 50%;
     border: none;
     border-radius: 5px;
@@ -3774,7 +3827,56 @@ body {
   #Following:hover {
     background-color: var(--top-nav-color);
   }
+  .RandomProfFriends_Cont {
+    position: relative;
+    cursor: pointer;
+  }
 
+  .RandomProfFriends_Cont .tooltiptext {
+    visibility: hidden;
+    bottom: 110%;
+    width: 9rem;
+    text-align: center;
+    border-radius: 10px;
+    padding: 0.6rem;
+    color: var(--tool-tip-color);
+    position: absolute;
+    background-color: var(--tool-tip-bgcolor);
+    z-index: 1;
+    font-size: 0.7rem;
+    font-family: "Work Sans", sans-serif;
+  }
+
+  .RandomProfFriends_Cont .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--tool-tip-bgcolor) transparent transparent transparent;
+  }
+
+  .RandomProfFriends_Cont:hover .tooltiptext {
+    visibility: visible;
+  }
+
+  .RP-PostContainer{
+    margin-top: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+  }
+
+
+  .RP-PostContainerList{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
 @media(max-width: 1825px) {

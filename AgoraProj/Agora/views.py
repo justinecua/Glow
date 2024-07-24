@@ -29,6 +29,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def home(request):
     return render(request, 'index.html')
 
+def loader(request):
+    return render (request, 'loaderio-bf3ddf451e2ba17db18608ca395e3df9.html')
+
 def dashboard(request):
     is_new_user = check_user(request)
     accountInfo = getAccountInfo(request)
@@ -289,8 +292,6 @@ def handle_media(request):
 
         currentTime = datetime.now()
         postDate = new_post.dateTime
-        print("current Time:", currentTime)
-        print("post Date:", postDate)
 
         asyncio.run(count_new_posts(new_post.id, request.user.id))
 
@@ -920,7 +921,6 @@ def sendComment(request):
                 'post': newComment.post.id,
                 'account': newComment.account.id
             }
-            print(response)
 
             return JsonResponse(response, encoder=DjangoJSONEncoder)
         except Exception as e:
