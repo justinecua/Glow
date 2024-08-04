@@ -10,24 +10,6 @@ html {
 }
 
 [data-theme="dark"] {
-<<<<<<< HEAD
-    --bg-color: #050b15;
-    --color: white;
-    --accent-1: #111;
-    --accent-2: #999;
-    --icon-filter: invert(100%) brightness(200%);
-    --link-color: white;
-    --nav-color: #121620;
-    --border-color: 1px solid #1d2532;
-    --input-create-post: #1c212d;
-    --glow-color: #0058ca;
-    --audience-arrow-color: 5px solid#ffff;
-    --hover-elements: #1a212d;
-    --glow-button: #0058ca;
-<<<<<<< HEAD
-    --top-nav-color: #081224;
-=======
-  --bg-color: #000007;
   --bg-color: #0D0D0F;
   --color: white;
   --accent-1: #111;
@@ -78,7 +60,6 @@ html {
 
 .overflow-hidden {
   overflow-y: hidden;
->>>>>>> v1
 }
 
 .loading-bar {
@@ -153,48 +134,6 @@ html {
 }
 
 @keyframes spin {
-<<<<<<< HEAD
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-=======
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
-}
-
-body {
-    --bg-color: #f6f6f9;
-    --color: black;
-    --accent-1: #EAEAEA;
-    --accent-2: #333;
-    --icon-filter: none;
-    --link-color: black;
-    --nav-color: #ffff;
-    --border-color: 1px solid #e5e4e4;
-    --input-create-post: #ececec;
-    --glow-color: #0058ca;
-    --audience-arrow-color: 5px solid black;
-    --hover-elements: #ebebeb;
-    --glow-button: #0058ca;
-<<<<<<< HEAD
-    --top-nav-color: #edf3fc;
-=======
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
-    color: var(--color);
-    background-color: var(--bg-color);
-    overflow-x: hidden;
-}
-
-<<<<<<< HEAD
-#Logo-Overlay{
-    display: none;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    z-index: 8;
-    height: 100vh;
-    background-color: var(--nav-color);
-    position: fixed;
-    overflow: hidden;
-=======
   0% {
     transform: rotate(0deg);
   }
@@ -222,7 +161,6 @@ body {
   background-color: var(--nav-color);
   position: fixed;
   overflow: hidden;
->>>>>>> v1
 }
 
 
@@ -232,19 +170,10 @@ body {
   object-fit: cover;
 }
 
-<<<<<<< HEAD
-=======
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
-#root{
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-=======
 #root {
   display: flex;
   width: 100vw;
   height: 100vh;
->>>>>>> v1
 }
 
 .pace {
@@ -269,22 +198,6 @@ body {
   height: 0.2rem;
 }
 
-<<<<<<< HEAD
-.responsive{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    max-width: 1980px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-<<<<<<< HEAD
-=======
-
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
-=======
 .responsive {
   display: flex;
   height: 100%;
@@ -329,7 +242,6 @@ body {
   }
 
   .NavLogo {
->>>>>>> v1
     width: 100%;
     height: 5rem;
     padding: 0.5rem;
@@ -3601,629 +3513,6 @@ body {
       transform: scale(1);
     }
 
-<<<<<<< HEAD
-=======
-    }
-
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
-    .NRightMid p{
-        font-family: "Work Sans", sans-serif;
-        font-weight: 600;
-        font-size: clamp(1rem, 1vw, 1rem);
-        padding-left: 1rem;
-        padding-top: 1rem;
-        margin-bottom: 4%;
-    }
-
-    .HashTagsCont{
-        width: 100%;
-    }
-
-    .HashTagsCont a{
-        text-decoration: none;
-        color: #2e78d9;
-        width: 100%;
-        font-family: "Work Sans", sans-serif;
-        font-size: clamp(1rem, 1vw, 1rem);
-        font-weight: 600;
-    }
-
-    .hashtags-div:hover{
-        background-color: var(--hover-elements);
-        cursor: pointer;
-    }
-
-    .hashtags-div{
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-radius: 5px;
-    }
-
-    .hashtag-span{
-        color: var(--color);
-        font-weight: 400;
-        font-size: clamp(0.9rem, 1vw, 0.9rem);
-        width: 20%;
-    }
-
-    .hashtag-a{
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        padding-left: 1rem;
-        width: 70%;
-        word-wrap: break-word;
-    }
-
-    .TagFinder-Cont{
-        padding: 2rem;
-        margin-top: 2%;
-        width: 80%;
-        background-color: var(--nav-color);
-        height: 5rem;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .TagFinder-Cont p{
-        font-size: clamp(1.1rem, 1.1vw, 1.1rem);
-        font-family: "Work Sans", sans-serif;
-
-    }
-
-    .TFC-Left{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-    }
-
-    .TFC-Left a{
-        text-decoration: none;
-        color: #026dfb;
-    }
-
-    .TFC-Left a:hover{
-        color: #0058ca;
-    }
-
-    .TFC-Left span{
-        font-weight: 700;
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.2); }
-        100% { transform: scale(1); }
-    }
-
-    .glow-react {
-        animation: pulse 0.5s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    @keyframes heartBeat {
-        0% { transform: scale(1); }
-        25% { transform: scale(1.3); }
-        50% { transform: scale(1); }
-        75% { transform: scale(1.3); }
-        100% { transform: scale(1); }
-    }
-
-    .ChangeGlow {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        animation: heartBeat 0.5s ease;
-        margin-top: -4%;
-
-    }
-
-    .custom-select-wrapper {
-        position: relative;
-        display: inline-block;
-        user-select: none;
-    }
-
-    .custom-select {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        cursor: pointer;
-        width: 6.5rem;
-        font-size: clamp(0.8rem, 1.1vw, 0.8rem);
-        font-family: "Work Sans", sans-serif;
-        font-weight: 500;
-
-    }
-
-    .custom-select-trigger {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: var(--nav-color);
-        border: var(--border-color);
-        padding: 0.2rem 1rem;
-    }
-
-    .custom-options {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: var(--nav-color);
-        border: var(--border-color);
-        border-radius: 5px;
-        display: none;
-        flex-direction: column;
-        z-index: 4;
-    }
-
-    .custom-option {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        width: 6.5rem;
-        padding: 0.6rem;
-    }
-
-    .custom-option img.option-img {
-        max-width: 0.8rem;
-        max-height:  0.8rem;
-        margin-right: 5px;
-        filter: var(--icon-filter);
-    }
-
-    .custom-option:hover {
-        background: var(--hover-elements);
-    }
-
-    .custom-select.open .custom-options {
-        display: flex;
-    }
-
-    .arrow {
-        margin-left: 10px;
-        width: 0;
-        height: 0;
-        border-left: 5px solid transparent;
-        border-right: 5px solid transparent;
-        border-top: var(--audience-arrow-color);
-    }
-
-    #Share-Overlay{
-        width: 100vw;
-        height: 100vh;
-        background-color: #24262aa7;
-        z-index: 5;
-        position: fixed;
-        display: none;
-<<<<<<< HEAD
-        backdrop-filter: blur(2px);
-=======
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
-    }
-
-    #Share-Container{
-        display: flex;
-        margin: auto;
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-        width: 25%;
-        background-color: var(--nav-color);
-        border-radius: 10px;
-    }
-
-    .EP-ProfilePhoto{
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    #EditProfile-Overlay{
-        width: 100vw;
-        height: 100vh;
-        background-color: #24262aa7;
-        z-index: 5;
-        position: fixed;
-        display: none;
-<<<<<<< HEAD
-        backdrop-filter: blur(2px);
-=======
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
-    }
-
-    #EditProfile-Container{
-        display: flex;
-        margin: auto;
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-        width: 27%;
-        background-color: var(--nav-color);
-        border-radius: 10px;
-    }
-
-    .EPModal-Top{
-        height: 3rem;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        font-family: "Work Sans", sans-serif;
-        font-size: clamp(0.7rem, 0.7vw, 0.7rem);
-        border-bottom: var(--border-color);
-    }
-
-    .EP-Content{
-        display: flex;
-        flex-direction: column;
-        width: 50rem;
-        padding: 1.5rem;
-    }
-
-    .EP-MainContent{
-        display: flex;
-        flex-direction: column;
-        position: relative;
-    }
-
-    .EP-Content2{
-        position: relative;
-        width: 100%;
-        margin-bottom: 13%;
-    }
-
-    .EPModal-Top h1{
-        font-size: 1.2rem;
-    }
-
-    .EP-CoverPhoto{
-        width: 100%;
-        height: 8rem;
-        border-radius: 5px;
-        border: var(--border-color);
-        background-color: var(--input-create-post);
-    }
-
-    .EPPP-Container{
-        width: 100%;
-        height: 6rem;
-        position: absolute;
-        top: 60%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .EP-UserInfo{
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .EP-UserInfo label{
-        font-family: "Work Sans", sans-serif;
-        font-size: clamp(0.9rem, 0.9vw, 0.9rem);
-        margin-bottom: 2%;
-    }
-
-    .EP-UserInfo input{
-        font-family: "Work Sans", sans-serif;
-        font-size: clamp(0.9rem, 0.9vw, 0.9rem);
-        border: var(--border-color);
-        background-color: var(--input-create-post);
-        height: 2.3rem;
-        padding: 1rem;
-        border-radius: 5px;
-        margin-bottom: 3%;
-    }
-
-    .EP-UserInfo input:focus{
-        outline: none;
-    }
-
-    .EPPP-Camera{
-        width: 6rem;
-        height: 6rem;
-        object-fit: cover;
-        border-radius: 50%;
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 4;
-        border: 4px solid #f6f6f9;
-    }
-
-    .EPPP-Camera img{
-        position: absolute;
-        width: 2rem;
-        height: 2rem;
-        padding: 0.4rem;
-        z-index: 4;
-        border-radius: 50%;
-        opacity: 100%;
-    }
-
-    .EPPP-Camera2{
-        width: 6rem;
-        height: 6rem;
-        object-fit: cover;
-        border-radius: 50%;
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #8a8a8a;
-        opacity: 30%;
-        z-index: 4;
-    }
-
-    #EP-ImageProf{
-        width: 6rem;
-        height: 6rem;
-        object-fit: cover;
-        border-radius: 50%;
-        display: flex;
-    }
-
-    .EP-SaveUserInfo{
-        width: 100%;
-        height: 2.3rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 2%;
-    }
-
-    .EP-SaveUserInfo button{
-        width: 100%;
-        height: 100%;
-        background-color: #0058ca;
-        color: white;
-        border: none;
-        border-radius: 5px;
-    }
-
-    .EP-SaveUserInfo button:hover{
-        background-color: #026dfb;
-        cursor: pointer;
-    }
-
-    .EPCP-PhotoCont{
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .EPCP-PhotoCont:hover{
-        background-color: #e1e7e9;
-        cursor: pointer;
-    }
-
-    #Selected-CoverPhoto {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: none;
-        position: absolute;
-        border-radius: 5px;
-    }
-
-    #Selected-ProfilePhoto{
-        width: 6rem;
-        height: 6rem;
-        object-fit: cover;
-        border-radius: 50%;
-        display: none;
-    }
-
-    .EPCP-PhotoCont img{
-        object-fit: cover;
-        width: 1.2rem;
-        height: 1.2rem;
-    }
-
-    .EPCP-ProfCont{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        width: 0.8rem;
-        height: 0.8rem;
-        padding: 1.2rem;
-        z-index: 2;
-        opacity: 100%;
-    }
-
-    .Result-Search{
-        display: flex;
-        align-items: center;
-        width: 100%;
-<<<<<<< HEAD
-=======
-        height: 3.5rem;
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
-        gap: 2%;
-        padding: 0.5rem;
-        border-radius: 5px;
-    }
-
-    .Result-Search:hover{
-        cursor: pointer;
-        background-color: var(--hover-elements);
-    }
-
-    .ResultProf{
-        width: 3.5rem;
-        height: 2.5rem;
-        max-width: 2.5rem;
-        object-fit: cover;
-        border-radius: 50%;
-        margin-right: 2%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .ResultProfP{
-        width: 2.5rem;
-        height: 2.5rem;
-        border-radius: 50%;
-        margin-right: 2%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.3rem;
-    }
-
-
-
-    #No-Results{
-        display: flex;
-        width: 100%;
-        height: 2rem;
-    }
-
-    .ResultRight{
-        width: 90%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-    }
-
-
-    .PPCB-Top{
-        width: 20%;
-        height: 50%;
-        display: flex;
-
-    }
-
-    .PPCB-Bottom{
-        display: flex;
-        align-items: center;
-        width: 90%;
-        height: 50%;
-        gap: 3%;
-    }
-
-    #Message-Btn{
-        width: 50%;
-        height: 50%;
-        border: none;
-        border-radius: 5px;
-        color: #0e5dc4;
-        font-family: "Work Sans", sans-serif;
-        font-weight: 500;
-        border: 1px solid #2e78d9;
-    }
-
-    #Message-Btn:hover{
-        background-color: #e1e8f2;
-        cursor: pointer;
-    }
-
-    .Friends-Btn{
-        width: 50%;
-        height: 50%;
-        border: none;
-        border-radius: 5px;
-        background-color: #2e78d9;
-        color: white;
-        font-family: "Work Sans", sans-serif;
-        font-weight: 500;
-        border: 1px solid #2e78d9;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .Friends-Btn img{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-right: 5%;
-        width: 1.3rem;
-        height: 1.3rem;
-        object-fit: cover;
-    }
-
-    .Bio-Div{
-        display: flex;
-        justify-content: end;
-        align-items: center;
-        font-family: "Work Sans", sans-serif;
-        height: 100%;
-        width: 100%;
-        font-style: italic;
-        margin-right: 5%;
-    }
-
-    .Bio-Title{
-        background-color: #333;
-        color: white;
-        padding: 0.4rem 0.8rem;
-        border-radius: 10px;
-        font-size:0.8rem;
-        margin-right: 10%;
-        font-weight: 500;
-    }
-
-
-    .active {
-<<<<<<< HEAD
-        background-color: var(--top-nav-color);
-        color: #007bff;
-        border: none;
-        border-radius: 5px;
-=======
-        background-color: #eaeef7;
-        color: #007bff;
-        border: none;
-        border-radius: 5px;
-
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
-    }
-
-    #For-You,
-    #Following {
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-<<<<<<< HEAD
-=======
-        transition: background-color 0.3s ease;
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
-    }
-
-    #For-You p,
-    #Following p {
-        padding: 1rem;
-    }
-
-
-    #For-You:hover,
-    #Following:hover {
-<<<<<<< HEAD
-        background-color: var(--top-nav-color);
-    }
-=======
-        background-color: #f0f0f0;
-    }
-
-
-
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
-=======
     50% {
       transform: scale(1.2);
     }
@@ -5194,7 +4483,6 @@ body {
   .NRight {
     display: none;
   }
->>>>>>> v1
 
   .Notification-Container {
     margin-left: 5rem;
@@ -5395,24 +4683,12 @@ body {
     */
 
 
-<<<<<<< HEAD
-    .EP-Content{
-        width: 60rem;
-    }
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
-=======
   .EP-Content {
     width: 60rem;
   }
 
 
 
->>>>>>> v1
 }
 
 
@@ -6902,4 +6178,3 @@ body {
       background-color: var(--button-hover);
       cursor: pointer;
   }
-
