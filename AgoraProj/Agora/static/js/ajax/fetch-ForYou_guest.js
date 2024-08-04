@@ -160,10 +160,7 @@ function createPostElement(post) {
 
     let DynamicProf;
 
-    if(post.account.profile_photo == '../static/images/default-avatar-profile-picture-male-icon.png'){
-        DynamicProf = post.account.profile_photo;
-    }
-    else if(post.account.profile_photo.indexOf("static")){
+    if(post.account.profile_photo.indexOf("static")){
         DynamicProf = post.account.profile_photo;
     }
     else{
