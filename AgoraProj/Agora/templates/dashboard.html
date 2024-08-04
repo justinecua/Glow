@@ -6,13 +6,16 @@
     <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
     <script type="module" src="{% static 'js/ForYou.js' %}"></script>
     <script type="module" src="{% static 'js/toggle.js' %}"></script>
+<<<<<<< HEAD
     <script type="module" src="{% static 'js/search.js' %}"></script>
+    <script src="https://cdn.ably.io/lib/ably.min-1.js"></script>
+=======
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
     <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 {% endblock %}
 
 {% block content %}
+<<<<<<< HEAD
     {% include "modal/create-post.html" %}
     {% include "modal/create-comment.html" %}
     {% include "modal/create-share.html" %}
@@ -25,10 +28,20 @@
             }
 
         </style>
+=======
+    {% if is_new_user %}
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
         {% include "modal/new-user.html" %}
         <script type="module" src="{% static 'js/main-new-user.js' %}"></script>
     {% else %}
         <script type="module" src="{% static 'js/modal.js' %}"></script>
+<<<<<<< HEAD
+=======
+        {% include "modal/create-post.html" %}
+        {% include "modal/create-comment.html" %}
+        {% include "modal/create-share.html" %}
+        {% include "modal/edit-userprofile.html" %}
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
     {% endif %}
 
     <div class="Top-Options">
@@ -37,6 +50,7 @@
             <div id="Following"><p>Following</p></div>
         </div>
     </div>
+<<<<<<< HEAD
 
     <div id="Logo-Overlay">
         <img src="https://ik.imagekit.io/b9bdd5j68/glow%20logo5.png/tr:q-100,tr:w-200,h-200" alt="">
@@ -54,16 +68,36 @@
             <div class="Center-Top3">
                 <div class="loader"></div>
             </div>
+=======
+<div id="root">
+        {% if request.user.is_authenticated %}
+        <!--
+            <h1> Welcome, {{ request.user.username }}!</h1>
+            <a href="{% url 'account_logout' %}">Sign Out</a>
+        -->
+
+        {% include "nav.html" %}
+
+        <div class="responsive">
+        <div class="NCenter">
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
             <div class="NCenter-cont">
                 <div class="Center-Top2">
 
                 </div>
+<<<<<<< HEAD
                 <input id="accountID" type="text" value="{{accountInfo.id}}"  style="display:none" ;>
+=======
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
                 <div class="Post-Container">
                     <div class="PC-Left">
                         <div class="PCL-Top">
                             {% if is_new_user %}
+<<<<<<< HEAD
                                 <img src="../static/images/default-avatar-profile-picture-male-icon.png" alt="{{ request.user.username }}">
+=======
+                                <img src="../static/images/default-profile2.jpg" alt="{{ request.user.username }}">
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
                             {% else %}
                                 <img src="{{ accountInfo.profile_photo }}">
                             {% endif %}
@@ -72,7 +106,11 @@
                     <p id="currentUserId" data-userId="{{ accountInfo.id }}"></p>
                     <div class="PC-Right">
                         <div class="PCR-Top">
+<<<<<<< HEAD
                             <input type="text" id="create-post" readonly placeholder="Tell your friends about your thoughts">
+=======
+                            <input type="text" id="create-post" placeholder="Tell your friends about your thoughts">
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
                         </div>
 
                     </div>
@@ -80,9 +118,18 @@
             </div>
 
             <div class="NCenter-content">
+<<<<<<< HEAD
             </div>
 
             <div class="NCenter-content2">
+=======
+
+
+            </div>
+
+            <div class="NCenter-content2">
+
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
             </div>
         </div>
         {% include "nav-right.html" %}

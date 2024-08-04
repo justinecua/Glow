@@ -6,8 +6,17 @@
     <nav class="NLeft">
         <ul>
             <div class="NavLogo">
+<<<<<<< HEAD
                 <img src="https://ik.imagekit.io/b9bdd5j68/glow%20logo22.png/tr:q-100,tr:w-200,h-200" alt="">
                 <h1>glow</h1>
+=======
+                <h1>Glow</h1>
+<<<<<<< HEAD
+                <img src="https://ik.imagekit.io/b9bdd5j68/glow%20logo5.png/tr:q-100,tr:w-200,h-200" alt="">
+=======
+                <img src="../static/images/glow logo5.png" alt="">
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
+>>>>>>> ffbf4342142aebec24bbf93a73b4e367b8bd457e
             </div>
             <a href="{% url 'dashboard' %}"><li><img src="../static/images/home2.png" alt=""><p>Home</p></li></a>
             <li id="SearchNav"><img src="../static/images/search.png" alt=""><p>Search</p></li>
@@ -26,12 +35,22 @@
                 <p>Appearance</p>
             </li>
             <li id="Create-Btn-Nav" ><img src="../static/images/create.png" alt=""><p>Create</p></li>
+<<<<<<< HEAD
             <li id="Logout-btn"><img src="../static/images/logout.png" alt=""><p>Logout</p></li>
+<<<<<<< HEAD
 
 
+=======
+=======
+            <a href="{% url 'account_logout' %}"><li><img src="../static/images/logout.png" alt=""><p>Logout</p></li></a>
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
+        
+    
+>>>>>>> ffbf4342142aebec24bbf93a73b4e367b8bd457e
         <div id="UserProf-Div">
             <a href="{% url 'UserProfile' %}">
                 <div class="Profile-Nav">
+<<<<<<< HEAD
                 {% if is_new_user %}
                     <img src="../static/images/default-avatar-profile-picture-male-icon.png" alt="">
                     <p>Unknown User</p>
@@ -39,6 +58,11 @@
                     <img src="{{ accountInfo.profile_photo }}">
                     <p>{{ accountInfo.firstname }} {{ accountInfo.lastname }}</p>
                 {% endif %}
+=======
+                
+                    <img src="{{ accountInfo.profile_photo }}">
+                    <p>{{ accountInfo.firstname }} {{ accountInfo.lastname }}</p>
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
                 </div>
             </a>
         </div>
@@ -86,7 +110,79 @@
 
     </div>
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+    
+=======
+    <div class="Search-Container">
+        <div class="NRightTop">
+            <div class="input-icon">
+                <img src="../static/images/search.png" alt="icon">
+                <input id="GlobalSearch" type="text" placeholder="Search">
+                <span id="ClearButton" class="clear-button">&times;</span>
+            </div>
+        </div>
+        <div class="Search-Results-Container">
+            
+        </div>
+        <style>
+            .Search-Results-Container{
+                display:none;
+            }
+        </style>
+        <div class="NRightMid">
+            <div class="NRightMid-content">
+                <div class="NRightMid-title">
+                    <p>Latest Tags</p>
+                </div>
+                <div class="HashTagsCont">
+                    {% if hashtags %}
+                        {% for tags in hashtags %}
+                        <a href="/tags/{{ tags.tag_object.id }}">
+                            <div class="hashtags-div">
+                                <div class="hashtag-a">
+                                    <span>#{{ tags.tag_object.tag }} </span>
+                                </div>
+                                <div class="hashtag-span">
+                                    {% if tags.post_count > 1 %}
+                                    <span>{{ tags.post_count }} posts</span>
+                                    {% else %}
+                                    <span>{{ tags.post_count }} post</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </a>
+                    
+                        {% endfor %}
+                        
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    
+        <div class="NRightBottom">
+            <div class="NRightBottom-content">
+                <div class="NRBC-title">
+                    <p>Friends</p>
+                </div>
+                <div class="NRBC-Friends">
+                    {% if friends %}
+                        {% for friend in friends.friendsInfo %}
+                        <a href="/profile/{{ friend.id }}"><div class="UserFriends-Cont"> <img src="{{ friend.profile_photo }}" alt="">{{ friend.firstname }} {{ friend.lastname }}</div></a>
+                        {% endfor %}
+                        {%else%}
+                        <p>No Friends</p>
+                    {% endif %}
+                </div>
+            </div>
+        
+        </div>
+
+    </div>
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
+>>>>>>> ffbf4342142aebec24bbf93a73b4e367b8bd457e
 </div>
 
 

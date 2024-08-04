@@ -2,6 +2,7 @@
 import { SendPost } from './ajax/send-post.js';
 import { SendEditProfile } from './ajax/send-editprofile.js';
 import { AcceptFriend } from "./ajax/accept-friend.js";
+<<<<<<< HEAD
 import { sendLike } from "./ajax/send-like.js";
 import { sendUnlike } from "./ajax/send-unlike.js";
 import { count_new_posts } from "./ajax/autofetch_userPost.js"
@@ -10,6 +11,22 @@ let Post = document.getElementById('Post-Container');
 let createpost = document.getElementById('create-post');
 let ImagesIcon = document.getElementById('Images-Icon');
 let RemovePostImage = document.getElementById('Remove-Post-Image');
+=======
+import { getPost } from "./ajax/show-comments-images.js";
+import { SendCommentToDB } from "./ajax/send-comment.js";
+import { getComments } from "./ajax/get-newComments.js";
+import { sendLike } from "./ajax/send-like.js";
+import { sendUnlike } from "./ajax/send-unlike.js";
+import { getLikes } from "./ajax/get-like.js";
+
+let Post = document.getElementById('Post-Container');
+let Schedule = document.getElementById('Schedule-Container');
+let Modal1Button = document.getElementById('Modal1-Button');
+let createpost = document.getElementById('create-post');
+let ImagesIcon = document.getElementById('Images-Icon');
+let RemovePostImage = document.getElementById('Remove-Post-Image');
+let PhotoUploadContainer = document.getElementById('Photo-upload-container');
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 let RemovePostImage2 = document.getElementById('Remove-Post-Image2');
 let RPIContainer = document.getElementById('RPI-container');
 let VideoPost = document.getElementById('Video-Post');
@@ -21,10 +38,16 @@ let ModalBottom2 = document.querySelector('.Modal-Bottom2');
 let MMBottom = document.querySelector('.MM-Bottom');
 let EmojiIcon = document.getElementById('Emoji-Icon');
 let emojiFloatingDiv = document.querySelector('.emoji-floating-div');
+<<<<<<< HEAD
 let UserPostBtn = document.getElementById("User-PostBtn");
 let postTextarea = document.getElementById('post-textarea');
 let confirmFriendObject = '';
 var confirmButtons = document.querySelectorAll(".Confirm-friend");
+=======
+let AddEmojiComment = document.getElementById('Add-Emoji-Comment');
+let UserPostBtn = document.getElementById("User-PostBtn");
+let postTextarea = document.getElementById('post-textarea');
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 
 let audienceSelect = document.getElementById('audience-select');
 let audienceSelect2 = document.getElementById('audience-select2');
@@ -40,6 +63,7 @@ let ShareBtn = document.querySelectorAll('.Share-btn');
 let ShareOverlay = document.getElementById('Share-Overlay');
 let ShareContainer = document.getElementById('Share-Container');
 let CreateBtnNav = document.getElementById('Create-Btn-Nav');
+<<<<<<< HEAD
 let hiddenSelect = document.getElementById('audience-select')
 let Logoutbtn = document.getElementById('Logout-btn');
 let LogoutOverlay = document.getElementById('Logout-Overlay');
@@ -57,6 +81,13 @@ LCBack.addEventListener('click', async() =>{
     LogoutOverlay.style.display = "none";
     document.body.style.overflowY = "auto";
 })
+=======
+let SearchNav = document.getElementById('SearchNav');
+let SearchContainer = document.querySelector('.Search-Container');
+
+let hasCalled = false;
+
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 
 SearchNav.addEventListener('click', async() =>{
     const { ShowSearch } = await import ("./modal/show-search.js");
@@ -64,6 +95,11 @@ SearchNav.addEventListener('click', async() =>{
     ShowSearch();
 })
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 CreateBtnNav.addEventListener('click', async() =>{
     const { switchModal } = await import ("./modal/switchmodal.js");
 
@@ -72,10 +108,16 @@ CreateBtnNav.addEventListener('click', async() =>{
 
 
 createpost.addEventListener('click', async() =>{
+<<<<<<< HEAD
     const { switchModal, getEmoji } = await import ("./modal/switchmodal.js");
 
     switchModal();
     getEmoji();
+=======
+    const { switchModal } = await import ("./modal/switchmodal.js");
+    
+    switchModal();
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 })
 
 
@@ -145,6 +187,7 @@ ShareContainer.addEventListener('click', function(event) {
     event.stopPropagation();
 });
 
+<<<<<<< HEAD
 Logoutcontainer.addEventListener('click', function(event) {
     event.stopPropagation();
 });
@@ -152,12 +195,27 @@ Logoutcontainer.addEventListener('click', function(event) {
 
 let ImageContainer = document.querySelector('.ImageContainer');
 
+=======
+SearchContainer.addEventListener('click', function(event) {
+    event.stopPropagation();
+});
+
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 document.addEventListener('click', function(event) {
 
     if (!emojiFloatingDiv.contains(event.target)) {
         HideEmojis();
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    if(!Logoutcontainer.contains(event.target)){
+        LogoutOverlay.style.display = "none";
+        document.body.style.overflowY = "auto";
+    }
+
+=======
+>>>>>>> v1
     if (Post) {
         if (!Post.contains(event.target)) {
             ModalOverlay.style.display = "none";
@@ -168,6 +226,10 @@ document.addEventListener('click', function(event) {
         if (!ImageContainer.contains(event.target)) {
             ModalOverlay.style.display = "none";
         }
+=======
+    if(!Post.contains(event.target)){
+        ModalOverlay.style.display = "none";
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
     }
 
     if(!ShareContainer.contains(event.target)){
@@ -177,7 +239,17 @@ document.addEventListener('click', function(event) {
     if (!customSelect.contains(event.target)) {
         customSelect.classList.remove('open');
     }
+<<<<<<< HEAD
+    
+<<<<<<< HEAD
+=======
+    if (!SearchContainer.contains(event.target)) {
+        SearchContainer.style.display = "none";
+    }
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
+=======
 
+>>>>>>> v1
 });
 
 
@@ -185,7 +257,19 @@ function HideEmojis(){
     emojiFloatingDiv.style.display = "none";
 }
 
+<<<<<<< HEAD
 
+=======
+function formatFileSize(bytes) {
+    if (bytes < 1024) {
+        return bytes + ' bytes';
+    } else if (bytes < 1024 * 1024) {
+        return (bytes / 1024).toFixed(2) + ' KB';
+    } else {
+        return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+}
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 
 const { PostPhotos, getPhotos} = await import ("./modal/add-photos.js");
 PostPhotos(updateTotalSize);
@@ -220,8 +304,15 @@ postTextarea.addEventListener('input', function() {
         }
     }
 
+<<<<<<< HEAD
+    updateMediaObject(caption); 
+<<<<<<< HEAD
+=======
     updateMediaObject(caption);
+>>>>>>> v1
 
+=======
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 });
 
 accountID.addEventListener('change', function() {
@@ -262,6 +353,7 @@ if (customOptions.length > 0) {
 
 /*------------------------------------------------------------------------------*/
 
+<<<<<<< HEAD
 const placeholderTexts = [
     "Enter your glowing caption here...",
     "Share your glowing thoughts...",
@@ -278,19 +370,33 @@ function updateMediaObject(caption) {
         return null;
     }
     let mediaObject = {
+=======
+function updateMediaObject(caption) { 
+
+    mediaObject = {
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
         accID: AccountID,
         audience: hiddenSelect.value,
         photos: photosArray,
         videos: VideosArray,
+<<<<<<< HEAD
         caption: caption,
         tags: hashtags,
     };
     console.log(mediaObject);
+=======
+        caption: caption, 
+        tags: hashtags,
+    };
+    console.log(mediaObject);
+
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
     return mediaObject;
 }
 
 
 UserPostBtn.addEventListener('click', async () => {
+<<<<<<< HEAD
     UserPostBtn.disabled = true;
     let caption = postTextarea.value;
     caption = removeHashtags(caption);
@@ -308,6 +414,15 @@ UserPostBtn.addEventListener('click', async () => {
 
 count_new_posts();
 
+=======
+    let caption = postTextarea.value;
+    
+    caption = removeHashtags(caption);
+    updateMediaObject(caption);
+    SendPost(mediaObject);
+});
+
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 function removeHashtags(caption) {
     const words = caption.split(' ');
     const filteredWords = words.filter(word => !word.startsWith('#'));
@@ -315,6 +430,7 @@ function removeHashtags(caption) {
     return newCaption;
 }
 
+<<<<<<< HEAD
 function formatFileSize(bytes) {
     if (bytes < 1024) {
         return bytes + ' bytes';
@@ -335,6 +451,9 @@ function updateTotalSize(fileSize) {
         return false;
     }
 
+=======
+function updateTotalSize(fileSize) {
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
     ModalBottom2.style.height = "7rem";
     MMBottom.style.height = "50%";
     MMTop.style.display = "flex";
@@ -342,12 +461,30 @@ function updateTotalSize(fileSize) {
 
     SizeCounter.innerHTML = formatFileSize(totalUploadedSizeBytes) + "&nbsp;/&nbsp;25 MB";
     console.log(`Total uploaded size: ${formatFileSize(totalUploadedSizeBytes)}`);
+<<<<<<< HEAD
+<<<<<<< HEAD
+    
+    return true; 
+}
+
+
+    
+=======
+    console.log(mediaObject);
+}
+
+    let confirmFriendObject = '';
+    var confirmButtons = document.querySelectorAll(".Confirm-friend");
+
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
+=======
 
     return true;
 }
 
 
 
+>>>>>>> v1
     confirmButtons.forEach(function(button) {
         button.addEventListener("click", function() {
             var notifId = button.getAttribute("data-notif-id");
@@ -504,7 +641,42 @@ SaveEditProfile.addEventListener('click', function(){
 })
 
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+/* --------------------------- Search Functionality ------------------------------*/
+let GlobalSearch = document.getElementById('GlobalSearch');
+let SearchResultsContainer = document.querySelector('.Search-Results-Container');
+let ClearButton = document.getElementById('ClearButton');
+
+import { SearchResults } from './ajax/search.js';
+
+GlobalSearch.addEventListener('input', function(){
+    let searchInfo = GlobalSearch.value;
+    if(GlobalSearch.value.length >= 2){
+        SearchResultsContainer.style.display = "flex";
+        ClearButton.style.display = "flex";
+        SearchResults(searchInfo); 
+    }
+    else{
+        SearchResultsContainer.style.display = "none";
+        ClearButton.style.display = "none";
+        SearchResultsContainer.innerHTML = '';
+    }
+});
+
+ClearButton.addEventListener('click', function(){
+    GlobalSearch.value = ''; 
+    SearchResultsContainer.style.display = "none"; 
+    ClearButton.style.display = "none";
+    SearchResultsContainer.innerHTML = '';
+});
+
+
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
+>>>>>>> ffbf4342142aebec24bbf93a73b4e367b8bd457e
 /*----------------------------Share-btn-Functionality----------------------------*/
 
 

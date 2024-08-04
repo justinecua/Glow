@@ -5,6 +5,7 @@ let PUCImageCont = document.getElementById('PUC-ImageCont');
 let RemovePostImage = document.getElementById('Remove-Post-Image');
 let RemovePostImage2 = document.getElementById('Remove-Post-Image2');
 let posttextarea = document.getElementById('post-textarea');
+<<<<<<< HEAD
 let UserPostBtn = document.getElementById("User-PostBtn");
 let ModalBottom3 = document.querySelector('.Modal-Bottom3');
 
@@ -12,6 +13,12 @@ let ModalBottom3 = document.querySelector('.Modal-Bottom3');
 let Photos = [];
 
 export function PostPhotos(updateSizeCallback) {
+=======
+
+let Photos = [];
+
+export function PostPhotos(updateSizeCallback){
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
     PhotoUploadContainer.addEventListener('click', function() {
         ImagePost.click();
     });
@@ -19,6 +26,7 @@ export function PostPhotos(updateSizeCallback) {
     ImagePost.addEventListener('change', showPic); 
     
     function showPic() {
+<<<<<<< HEAD
         let totalSizeForNewFiles = 0;
 
         for (let i = 0; i < ImagePost.files.length; i++) {
@@ -39,6 +47,14 @@ export function PostPhotos(updateSizeCallback) {
             let selectedFileStudPic = ImagePost.files[i];
             let fileName = selectedFileStudPic.name;
 
+=======
+        for (let i = 0; i < ImagePost.files.length; i++) {
+            let selectedFileStudPic = ImagePost.files[i];
+            let fileName = selectedFileStudPic.name;
+            
+            updateSizeCallback(selectedFileStudPic.size);
+            
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
             if (!Photos.some(photo => photo.name === fileName)) {
                 let reader = new FileReader();
                 reader.onload = function(event) {
@@ -86,10 +102,16 @@ export function PostPhotos(updateSizeCallback) {
                         DelImage.innerHTML = "&times";
                         DelImageCont.className = "DelImageCont";
                         DelImage.className = "DelImage";
+<<<<<<< HEAD
                         DelImage.addEventListener('click', function(event) {
                             event.stopPropagation();
                             let index = Photos.findIndex(photo => photo.name === fileName);
 
+=======
+                        DelImage.addEventListener('click', function() {
+                            let index = Photos.findIndex(photo => photo.name === fileName);
+                            
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
                             updateSizeCallback(-Photos[index].size);
                             Photos.splice(index, 1);
                             ImageContainer.remove();
@@ -99,11 +121,18 @@ export function PostPhotos(updateSizeCallback) {
                                 PUCImageCont.style.display = "none";
                                 PhotoUploadContainer2.style.display = "none";
                                 posttextarea.style.height = "12rem";
+<<<<<<< HEAD
                                 ModalBottom3.style.display = "none";
                             }
                         });
 
                         ModalBottom3.style.display = "flex";
+=======
+                            }
+                        
+
+                        });
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
                         CoverImage.className = "CPPhotos";
                         CoverImage.src = fileURL;
 
@@ -118,8 +147,15 @@ export function PostPhotos(updateSizeCallback) {
                         PUCImageCont.insertBefore(ImageContainer, PUCImageCont.firstChild);
                     };
                     img.src = event.target.result;
+<<<<<<< HEAD
                 };
                 reader.readAsDataURL(selectedFileStudPic);
+=======
+                
+                };
+                reader.readAsDataURL(selectedFileStudPic);
+            
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
             }
         }
     }
@@ -140,4 +176,8 @@ export function insertEmoji(emoji) {
     
     let Caption = textarea.value;
     return Caption;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17

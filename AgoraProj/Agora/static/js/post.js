@@ -7,6 +7,11 @@ import { sendLike } from "./ajax/send-like.js";
 import { sendUnlike } from "./ajax/send-unlike.js";
 import { getLikes } from "./ajax/get-like.js";
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 const commentOverlay = document.getElementById('Comment-Overlay');
 const commentBtnShow = document.querySelectorAll('.Comment-Btn-Show');
 const commentContainer = document.querySelector('.Comment-Container');
@@ -159,7 +164,11 @@ function handleUnlike(changeGlow) {
 initializeButtons();
 
 
+<<<<<<< HEAD
 /* --------------------------- Search Functionality ------------------------------
+=======
+/* --------------------------- Search Functionality ------------------------------*/
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 let GlobalSearch = document.getElementById('GlobalSearch');
 let SearchResultsContainer = document.querySelector('.Search-Results-Container');
 let ClearButton = document.getElementById('ClearButton');
@@ -187,7 +196,11 @@ ClearButton.addEventListener('click', function(){
     SearchResultsContainer.innerHTML = '';
 });
 
+<<<<<<< HEAD
 */
+=======
+
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 
 /*----------------------------Share-btn-Functionality----------------------------*/
 

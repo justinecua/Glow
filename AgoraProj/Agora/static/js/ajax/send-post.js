@@ -7,22 +7,44 @@ import { getPost } from "./show-comments-images.js";
 export function SendPost(mediaObject){
     var xhr = new XMLHttpRequest();
     var sendButton = document.getElementById('sendButton');
+<<<<<<< HEAD
     var loader2 = document.querySelector('.loader2');
     let ModalOverlay = document.getElementById('Modal-Overlay');
     var fadeBox = document.getElementById('messages');
     let UserPostBtn = document.getElementById("User-PostBtn");
+<<<<<<< HEAD
+=======
+    var loadingIndicator = document.getElementById('loadingIndicator');
+    let ModalOverlay = document.getElementById('Modal-Overlay');
+    var fadeBox = document.getElementById('messages');
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
+=======
     let NewPostId = document.getElementById("NewPost_Id");
+>>>>>>> v1
 
     xhr.open('POST', '/handle_media/');
     xhr.setRequestHeader("Content-Type", "application/json");
 
+<<<<<<< HEAD
     loader2.style.display = 'flex';
+=======
+    loadingIndicator.style.display = 'flex';
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
+<<<<<<< HEAD
+            
+<<<<<<< HEAD
+=======
 
+>>>>>>> v1
             loader2.style.display = 'none';
             UserPostBtn.disabled = false;
+=======
+            loadingIndicator.style.display = 'none';
+            loadingIndicator.classList.remove('loading');
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 
             if (xhr.status === 200) {
                 var response = JSON.parse(xhr.responseText);
@@ -122,7 +144,12 @@ export function SendPost(mediaObject){
 
     xhr.send(JSON.stringify(mediaObject));
 }
+<<<<<<< HEAD
 
+<<<<<<< HEAD
+=======
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
+=======
 
 function createAndAppendPost(response) {
         let NCenterContent = document.querySelector('.NCenter-content');
@@ -310,3 +337,4 @@ export function LazyLoading(selector) {
     }
 }
 
+>>>>>>> v1

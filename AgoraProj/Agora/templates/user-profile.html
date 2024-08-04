@@ -5,12 +5,21 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
     <script type="module" src="{% static 'js/toggle.js' %}"></script>
+<<<<<<< HEAD
     <script type="module" src="{% static 'js/post.js' %}"></script>
+<<<<<<< HEAD
     <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+=======
+=======
+    <script type="module" src="{% static 'js/search.js' %}"></script>
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">  
+>>>>>>> ffbf4342142aebec24bbf93a73b4e367b8bd457e
 {% endblock %}
 
 {% block content %}
 {% include "modal/edit-userprofile.html" %}
+<<<<<<< HEAD
 {% include "nav-right.html" %}
 
 
@@ -76,6 +85,9 @@
     </div>
 </div>
 
+=======
+    
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 <div id="root">
         {% if request.user.is_authenticated %}
     <!--
@@ -150,6 +162,7 @@
                         <div class="NCenter-content-user">
 
                             {% if posts.posts_with_photos %}
+<<<<<<< HEAD
                             {% for post, post_info in posts.posts_with_photos.items %}
                                 <div class="User-Post-Container2">
                                     <div class="UPC-content-Top">
@@ -229,10 +242,93 @@
                                                     {% else %}
                                                         <p>{{ post_info.comments_count }} comment</p>
                                                     {% endif %}
+=======
+                                {% for post, photos in posts.posts_with_photos.items %}
+                                    <div class="User-Post-Container2">
+                                        <div class="UPC-content-Top">
+                                            <div class="UPCCT-Left">
+                                                <a href="profile/{{ post.account.id }}">
+                                                    <div class="Post-Prof-Cont">
+                                                        <img src="{{ post.account.profile_photo }}">
+                                                    </div>
+                                                </a>
+                                                <div class="Post-Prof-Cont2">
+                                                    <div id="Post-Prof-Cont-Name1" class="Post-Prof-Cont-Name">
+                                                        <a href="profile/{{ post.account.id }}">
+                                                            <p class="Photo-Post-username">{{ post.account.firstname }}</p>
+                                                        </a>
+                                                        <p class="Post-Photo-Date-Time">{{ post.time_ago }}</p>
+                                                    </div>
+                                                    <div class="Post-Prof-Cont-Username">
+                                                        <p>@{{ post.account.auth_user.username }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="UPCCT-Right">
+                                            </div>
+                                        </div>
+                    
+                                        {% if photos %}
+                                        <div class="UPC-content-grid {% if photos|length == 3 %}three-photos{% endif %}">
+                                            {% for photo in photos %}
+                                                <div class="UPC-content {% if photos|length == 1 %}single-photo{% endif %}">
+                                                    <img src="{{ photo.link|add:'?cm-pad_resize,bg-F3F3F3' }}" alt="">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        <div class="UPCB-Tags" style="height: 2rem"></div>
+                                        {% endif %}
+                    
+                                        <div class="UPC-content-Bottom">
+                                            <div class="UPCB-Caption">
+                                                <div class="Cap-User">
+                                                    <p>{{ post.account.firstname }}</p>
+                                                </div>
+                                                <div class="Cap-Caption">
+                                                    <p class="postCaption">{{ post.caption }}</p>
+                                                    <br>
+                                                </div>
+                                            </div>
+                                            <div class="UPCB-Tags">
+                                                {% for tag in post.tags.all %}
+                                                    <a href="/tags/{{ tag.id }}"><div><span class="hashtags">#{{ tag.tag }}</span></div></a>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="UPCB-Reacts">
+                                                <div class="Reacts">
+                                                    <div class="GlowReact-Div" data-PostIDD="{{ post.id }}" data-AccID="{{ post.account.id }}">
+                                                        {% if post.has_liked %}
+                                                            <span class="ChangeGlow">&#10022;</span>
+                                                        {% else %}
+                                                            <img class="glow-react" src="../static/images/glow4.png" alt="Glow">
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="React-Div Comment-Btn-Show" data-PostID="{{ post.id }}">
+                                                        <img src="../static/images/chat (2).png" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="React-Counts">
+                                                    <div class="glow-count">
+                                                        {% if post.glows_count > 1 %}
+                                                            <p>{{ post.glows_count }} glows</p>
+                                                        {% else %}
+                                                            <p>{{ post.glows_count }} glow</p>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="Comments">
+                                                        {% if post.comment_count > 1 %}
+                                                            <p>{{ post.comment_count }} comments</p>
+                                                        {% else %}
+                                                            <p>{{ post.comment_count }} comment</p>
+                                                        {% endif %}
+                                                    </div>
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+<<<<<<< HEAD
                                 </div>
                             {% endfor %}
 
@@ -246,7 +342,18 @@
 
                             <p id="Posts-Message">No posts yet</p>
                         {% endif %}
+<<<<<<< HEAD
 
+=======
+                        
+=======
+                                {% endfor %}
+
+                                {% else %}
+                                <p> No posts yet</p>
+                            {% endif %}
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
+>>>>>>> ffbf4342142aebec24bbf93a73b4e367b8bd457e
                         </div>
 
                     </div>
@@ -255,8 +362,17 @@
                 </div>
         </div>
 
+<<<<<<< HEAD
 
 
+=======
+<<<<<<< HEAD
+        
+=======
+        {% include "nav-right.html" %}
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
+        
+>>>>>>> ffbf4342142aebec24bbf93a73b4e367b8bd457e
         <div id="messages"></div>
     {% endif %}
 </div>
@@ -279,5 +395,8 @@
 
 </script>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 {% endblock %}

@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 
     /* --------------------------- Search Functionality ------------------------------*/
     let GlobalSearch = document.querySelector('.GlobalSearch');
+=======
+   
+    /* --------------------------- Search Functionality ------------------------------*/
+    let GlobalSearch = document.getElementById('GlobalSearch');
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
     let SearchResultsContainer = document.querySelector('.Search-Results-Container');
     let ClearButton = document.getElementById('ClearButton');
     
@@ -26,8 +32,13 @@
         ClearButton.style.display = "none";
         SearchResultsContainer.innerHTML = '';
     });
+<<<<<<< HEAD
 
 /*
+=======
+    
+    /*-------------------------------Edit Profile ------------------------------------------*/
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 let accountID = document.getElementById('accountID');
 let EPCoverPhoto = document.querySelector('.EP-CoverPhoto');
 let EPFirstname = document.getElementById('EP-Firstname');
@@ -81,4 +92,7 @@ SaveEditProfile.addEventListener('click', function(){
     UpdateEditObject();
     SendEditProfile(EditProfileObject, AccountID);
 })
+<<<<<<< HEAD
 */
+=======
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17

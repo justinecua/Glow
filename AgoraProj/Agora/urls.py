@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+<<<<<<< HEAD
 from .views import (
     CustomPasswordResetView,
     CustomPasswordResetDoneView,
@@ -16,8 +17,25 @@ urlpatterns = [
     path('loaderio-bf3ddf451e2ba17db18608ca395e3df9/', views.loader, name="loader"),
     path('account/login/validate/', views.validatelogin, name='validatelogin'),
     path('account/signup/', views.signup, name='signup'),
+<<<<<<< HEAD
+    #path('stream/', PostStreamView.as_view(), name = 'stream'),
+    path('dashboard', views.dashboard, name='dashboard'), 
+    path('publish_to_ably/', views.publish_to_ably, name='publish_to_ably'),
+=======
+
+urlpatterns = [
+    path('', views.home, name="home"),
+    path('accounts/login/validate/', views.validatelogin, name='validatelogin'),
+    path('dashboard', views.dashboard, name='dashboard'), 
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
+=======
     path('dashboard', views.dashboard, name='dashboard'),
+<<<<<<< HEAD
+>>>>>>> v1
+    path('dashboard/uploadprofile', views.UploadProfile, name='uploadprofile'), 
+=======
     path('dashboard/uploadprofile', views.UploadProfile, name='uploadprofile'),
+>>>>>>> v1
     path('handle_media/', views.handle_media, name='handle_media'),
     path('dashboard/profile', views.UserProfile, name='UserProfile'),
     path('profile/<int:id>', views.randomProfile, name='profile'),
@@ -34,6 +52,7 @@ urlpatterns = [
     path('editProfile/<int:id>', views.editProfile, name='editProfile'),
     path('searchResults/', views.searchResults, name='searchResults'),
     path('FetchForYou/', views.FetchForYou, name='FetchForYou'),
+<<<<<<< HEAD
     path('account/password/reset/', CustomPasswordResetView.as_view(), name='account_reset_password'),
     path('account/password/reset/done/', CustomPasswordResetDoneView.as_view(), name='account_reset_done_password'),
     path('account/password/reset/key/<uidb64>/<key>/', CustomPasswordResetFromKeyView.as_view(), name='account_reset_from_key'),
@@ -44,3 +63,7 @@ urlpatterns = [
     path('count_new_posts/', views.count_new_posts, name='count_new_posts'),
     #path('FetchFriendsPosts/', views.FetchFriendsPosts, name='FetchFriendsPosts'),
 ]
+=======
+    path('FetchFriendsPosts/', views.FetchFriendsPosts, name='FetchFriendsPosts'),
+]
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17

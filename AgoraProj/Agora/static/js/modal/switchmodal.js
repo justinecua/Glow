@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 export function switchModal(){
     let ModalOverlay = document.getElementById('Modal-Overlay');
@@ -53,3 +54,11 @@ function insertEmoji(emoji) {
     let Caption = textarea.value;
     return Caption;
 }
+=======
+export function switchModal(){
+    let ModalOverlay = document.getElementById('Modal-Overlay');
+    ModalOverlay.style.display = "flex";
+
+
+}
+>>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
