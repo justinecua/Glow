@@ -149,6 +149,9 @@ function createPostElement(post) {
     if(post.account.profile_photo == '../static/images/default-avatar-profile-picture-male-icon.png'){
         DynamicProf = post.account.profile_photo;
     }
+    else if(post.account.profile_photo.indexOf("static")){
+        DynamicProf = post.account.profile_photo;
+    }
     else{
         DynamicProf = post.account.profile_photo + "/tr:w-42,h-42";
     }
