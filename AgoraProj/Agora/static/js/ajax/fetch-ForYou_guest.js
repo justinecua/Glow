@@ -156,12 +156,14 @@ export function fetchForYou() {
 function createPostElement(post) {
     let postContainer = document.createElement('div');
     let UPCcontentgrid = document.querySelector('.UPC-content-grid');
-
     postContainer.classList.add('MUser-Post-Container');
 
     let DynamicProf;
 
     if(post.account.profile_photo == '../static/images/default-avatar-profile-picture-male-icon.png'){
+        DynamicProf = post.account.profile_photo;
+    }
+    else if(post.account.profile_photo.indexOf("static")){
         DynamicProf = post.account.profile_photo;
     }
     else{
