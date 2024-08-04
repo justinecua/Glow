@@ -46,7 +46,6 @@ let LogoutOverlay = document.getElementById('Logout-Overlay');
 let Logoutcontainer = document.getElementById('Logout-container');
 let LCBack = document.getElementById('LC-Back');
 
-
 let hasCalled = false;
 
 Logoutbtn.addEventListener('click', async() =>{
@@ -78,6 +77,7 @@ createpost.addEventListener('click', async() =>{
     switchModal();
     getEmoji();
 })
+
 
 ImagesIcon.addEventListener('click', async () => {
     const inputValue = document.getElementById("Image-Post").value;
@@ -502,6 +502,7 @@ SaveEditProfile.addEventListener('click', function(){
     UpdateEditObject();
     SendEditProfile(EditProfileObject, AccountID);
 })
+
 
 
 /*----------------------------Share-btn-Functionality----------------------------*/

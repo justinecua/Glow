@@ -25,8 +25,15 @@ from datetime import datetime
 import pytz
 from django.db.models import Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from allauth.account.views import PasswordResetView, PasswordResetDoneView, PasswordResetFromKeyView, PasswordResetFromKeyDoneView
+from django.contrib.auth import get_user_model
+from django.contrib import messages
 
-def home(request):
+
+def homepage(request):
+    return render(request, 'homepage.html')
+
+def about(request):
     return render(request, 'index.html')
 
 def loader(request):
@@ -64,19 +71,20 @@ def emojis(request):
 
     return JsonResponse(data)
 
-
+@csrf_exempt
 def validatelogin(request):
     if request.method == 'POST':
-        email = request.POST.get('login')
-        password = request.POST.get('password')
-        user = authenticate(request, username=email, password=password)
+        data = json.loads(request.body)
+        email = data.get('email')
+        password = data.get('password')
+
+        user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
-            return redirect('dashboard')
+            return JsonResponse({"status": "success", "message": "Login successfully", "redirect": "/dashboard"})
         else:
-            messages.error(request, 'Incorrect email or password')
-            return redirect('login')
-    return render(request, 'account/login.html')
+            return JsonResponse({"status": "error", "message": "Incorrect email or password"})
+    return JsonResponse({"status": "error", "message": "Invalid request method"})
 
 def check_user(request):
     if request.user.is_authenticated:
@@ -88,12 +96,14 @@ def check_user(request):
     else:
         return False
 
+@csrf_exempt
 def signup(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password1 = request.POST.get('password1')
-        password2 = request.POST.get('password2')
+        data = json.loads(request.body)
+        username = data.get('username')
+        email = data.get('email')
+        password1 = data.get('pass')
+        password2 = data.get('pass2')
 
         if password1 == password2:
             if not User.objects.filter(username=username).exists():
@@ -106,23 +116,25 @@ def signup(request):
                     user = authenticate(username=username, password=password1)
                     if user is not None:
                         login(request, user)
-                        return redirect('dashboard')
+                        return JsonResponse({"status": "success", "message": "Signup successfully", "redirect": "/dashboard"})
                     else:
-                        messages.error(request, "Authentication failed.")
+                        return JsonResponse({"status": "error", "message": "Authentication failed"})
                 else:
-                    messages.error(request, "Email is already in use.")
+                    return JsonResponse({"status": "error", "message": "Email is already in use"})
             else:
-                messages.error(request, "Username is already taken.")
+                return JsonResponse({"status": "error", "message": "Username is already taken"})
         else:
-            messages.error(request, "Passwords do not match. Please type again.")
+            return JsonResponse({"status": "error", "message": "Passwords do not match. Please type again"})
 
-    return render(request, 'account/signup.html')
+    return JsonResponse({"status": "error", "message": "Invalid request method"})
+
 
 @csrf_exempt
 def UploadProfile(request):
     if request.method == 'POST':
         form_data = json.loads(request.POST['data'])
-        profile = request.FILES.get('default_profile_url')
+        profile = request.POST.get('profile_url')
+        uploaded_file = request.FILES.get('profile_url')
 
         firstname = form_data.get('firstname')
         lastname = form_data.get('lastname')
@@ -131,12 +143,14 @@ def UploadProfile(request):
 
         auth_user_id = request.user.id
 
-        if profile and profile.name != '../static/images/default-avatar-profile-picture-male-icon.png':
-            imgkit = ImagekitClient(profile)
+        if uploaded_file:
+            imgkit = ImagekitClient(uploaded_file)
             result = imgkit.upload_media_file()
             profile_url = result["url"]
+        elif profile and profile != '../static/images/Upstream-1.png':
+            profile_url = profile
         else:
-            profile_url = '../static/images/default-avatar-profile-picture-male-icon.png'
+            profile_url = '../static/images/Upstream-1.png'
 
         Account.objects.create(
             firstname=firstname,
@@ -146,10 +160,10 @@ def UploadProfile(request):
             Birthday=birthday,
             auth_user_id=auth_user_id
         )
-
-        return JsonResponse({"status": "success", "message": "Profile Updated successfully"})
+        return JsonResponse({"status": "success", "message": "Profile Updated successfully", "redirect": "/dashboard"})
     else:
         return JsonResponse({"status": "error", "message": "Only POST requests are allowed."})
+
 
 
 def getAccountInfo(request):
@@ -370,7 +384,54 @@ def FetchForYou(request):
             print(f"Error fetching posts: {e}")
             return JsonResponse({'status': 'error', 'message': str(e)})
     else:
-        return JsonResponse({'status': 'error', 'message': 'User not authenticated'})
+        try:
+            accounts = Account.objects.all()
+            posts_with_accounts = []
+
+            for account in accounts:
+                posts = Post.objects.filter(account=account)
+                posts_with_accounts.extend(posts)
+
+            posts_with_accounts.sort(key=lambda x: x.dateTime, reverse=True)
+
+            paginator = Paginator(posts_with_accounts, 5)
+            page_number = request.GET.get('page')
+            try:
+                posts_with_accounts = paginator.page(page_number)
+            except PageNotAnInteger:
+                posts_with_accounts = paginator.page(1)
+            except EmptyPage:
+                posts_with_accounts = paginator.page(paginator.num_pages)
+
+            posts_data = []
+            for post in posts_with_accounts:
+                tags = list(Tag.objects.filter(post=post).values('id', 'tag'))
+                comment_count = Comment.objects.filter(post=post).count()
+                glows_count = Glow.objects.filter(post=post).count()
+                photos = list(Photo.objects.filter(post=post).values())
+                post_data = {
+                    'id': post.id,
+                    'account': {
+                        'id': post.account.id,
+                        'firstname': post.account.firstname,
+                        'profile_photo': post.account.profile_photo,
+                        'username': post.account.auth_user.username
+                    },
+                    'caption': post.caption,
+                    'dateTime': post.dateTime.isoformat(),
+                    'time_ago': time_ago(post.dateTime),
+                    'tags': tags,
+                    'comment_count': comment_count,
+                    'glows_count': glows_count,
+                    'photos': photos
+                }
+                posts_data.append(post_data)
+
+            return JsonResponse({'status': 'success', 'posts': posts_data})
+        except Exception as e:
+            print(f"Error fetching posts: {e}")
+            return JsonResponse({'status': 'error', 'message': str(e)})
+
 
 
 def time_ago(post_datetime):
@@ -805,59 +866,55 @@ def ConfirmFriend(request):
 
 
 def getCommentPost(request, id):
-    if request.user.is_authenticated:
-        accID = Account.objects.get(auth_user=request.user)
-        try:
-            post = Post.objects.get(id=id)
-            photos = Photo.objects.filter(post=post)
-            accountInfo = post.account
-            comments = Comment.objects.filter(post=post)
+    try:
+        post = Post.objects.get(id=id)
+        photos = Photo.objects.filter(post=post)
+        accountInfo = post.account
+        comments = Comment.objects.filter(post=post)
 
-            comments_data = []
+        comments_data = []
 
-            post_data = {
-                'id': post.id,
-                'caption': post.caption,
-                'dateTime': post.dateTime
-            }
+        post_data = {
+            'id': post.id,
+            'caption': post.caption,
+            'dateTime': post.dateTime
+        }
 
-            for comment in comments:
-                dateTime = time_ago(comment.dateTime)
-                comments_data.append({
-                    'postID': comment.post.id,
-                    'content': comment.content,
-                    'dateTime':  dateTime,
-                    'profile_photo': comment.account.profile_photo,
-                    'firstname': comment.account.firstname,
-                    'lastname': comment.account.lastname
-                })
+        for comment in comments:
+            dateTime = time_ago(comment.dateTime)
+            comments_data.append({
+                'postID': comment.post.id,
+                'content': comment.content,
+                'dateTime':  dateTime,
+                'profile_photo': comment.account.profile_photo,
+                'firstname': comment.account.firstname,
+                'lastname': comment.account.lastname
+            })
 
-            account_data = {
-                'firstname': accountInfo.firstname,
-                'lastname': accountInfo.lastname,
-                'profile_photo': accountInfo.profile_photo
-            }
+        account_data = {
+            'firstname': accountInfo.firstname,
+            'lastname': accountInfo.lastname,
+            'profile_photo': accountInfo.profile_photo
+        }
 
-            photo_data = [{
-                'id': photo.id,
-                'url': photo.link,
+        photo_data = [{
+            'id': photo.id,
+            'url': photo.link,
 
-            } for photo in photos]
+        } for photo in photos]
 
-            response_data = {
-                'status': 'success',
-                'message': 'Successful',
-                'post': post_data,
-                'photos': photo_data,
-                'accountInfo': account_data,
-                'comments': comments_data,
-            }
+        response_data = {
+            'status': 'success',
+            'message': 'Successful',
+            'post': post_data,
+            'photos': photo_data,
+            'accountInfo': account_data,
+            'comments': comments_data,
+        }
 
-            return JsonResponse(response_data, encoder=DjangoJSONEncoder)
-        except Exception as e:
-            return JsonResponse({"status": "error", "message": str(e)})
-    else:
-        return JsonResponse({"status": "error", "message": "User is not authenticated"})
+        return JsonResponse(response_data, encoder=DjangoJSONEncoder)
+    except Exception as e:
+        return JsonResponse({"status": "error", "message": str(e)})
 
 
 @csrf_exempt
@@ -1283,10 +1340,7 @@ def searchResults(request):
         response_data = {"status": "error", "message": "No query provided"}
         return JsonResponse(response_data)
 
-from allauth.account.views import PasswordResetView, PasswordResetDoneView, PasswordResetFromKeyView, PasswordResetFromKeyDoneView
 
-from django.contrib.auth import get_user_model
-from django.contrib import messages
 
 class CustomPasswordResetView(PasswordResetView):
     template_name = 'account/password_reset.html'

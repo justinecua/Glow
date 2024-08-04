@@ -9,7 +9,10 @@ from .views import (
 
 
 urlpatterns = [
-    path('', views.home, name="home"),
+    path('', views.homepage, name="home"),
+    path('About', views.about, name="About"),
+    path('validatelogin/', views.validatelogin, name="validatelogin"),
+    path('signup/', views.signup, name="signup"),
     path('loaderio-bf3ddf451e2ba17db18608ca395e3df9/', views.loader, name="loader"),
     path('account/login/validate/', views.validatelogin, name='validatelogin'),
     path('account/signup/', views.signup, name='signup'),

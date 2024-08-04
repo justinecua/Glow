@@ -1,0 +1,43 @@
+{% load socialaccount %}
+{% load static %}
+
+<div class="NRight">
+  <div class="NRight-Contents-parent">
+    <div class="NRight-Contents">
+      <div class="NRG_Top">
+          <h3> First time here? 👋</h3>
+          <p> Sign up right now to create your own profile and join the community</p>
+          <div class="NRGT_Buttons">
+            <a href="{% provider_login_url 'google' %}">
+              <button>
+                <img src="../../static/images/google.png" alt="">
+                Sign up with Google
+              </button>
+            </a>
+            <button id="NRG_Register">Sign up with Email</button>
+          </div>
+          <p> Already have an account? <span id="LoginOverlay-btn">Login</span></p>
+      </div>
+
+      <div class="NRG_Mid">
+        <h3>New on Glow</h3>
+      </div>
+    </div>
+
+    <div class="NRG_Bottom">
+      <div class="NRGB1">
+        <a href="{% url 'About' %}"><p>About</p> </a><span>&nbsp·&nbsp</span><p>Terms of Service</p>
+      </div>
+      <div class="NRGB2">
+        <p>Privacy Policy</p><span>&nbsp·&nbsp</span><p>Cookie Policy</p>
+      </div>
+      <div class="NRGB3">
+        <p>© 2024 Glow by Justine Cua</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+</script>

@@ -36,13 +36,35 @@
 
                             <div class="Prof-Container1">
                                 <div class="ProfSub-Cont">
-                                    <img id="default-profile" src="static/images/default-avatar-profile-picture-male-icon.png" alt="">
+                                    <img id="default-profile" src="static/images/Upstream-1.png" alt="">
                                     <div id="camera-prof"> <img src="static/images/camera6.png" alt=""></div>
                                 </div>
                             </div>
                         </div>
+                        <div class="PopUp-Avatars">
+                            <p>or</p>
+                            <h3> Select Avatars</h3>
+                            <div class="swiper mySwiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Upstream-1.png" alt=""></div>
+                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Delivery boy-2.png" alt=""></div>
+                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/No gravity-2.png" alt=""></div>
+                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Guacamole.png" alt=""></div>
+                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Cranks-2.png" alt=""></div>
+                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/No gravity-3.png" alt=""></div>
+                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Upstream-8.png" alt=""></div>
+                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Guacamole-2.png" alt=""></div>
+                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Delivery boy-5.png" alt=""></div>
+                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Cranks.png" alt=""></div>
+                                    <div class="swiper-slide"></div>
+                                </div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+
+                        </div>
+
                         <div class="PopUp-Bottom">
-                            
+
                             <input type="file" id="nw-profilepic" name="default_profile_url" style="display:none">
                             <input type="text" placeholder="First Name" name="firstname" id="nw-fname">
                             <input type="text" placeholder="Last Name" name="lastname" id="nw-lname">
@@ -60,10 +82,12 @@
                             </select>
                         </div>
                         <div id="message">
-                            <p id="message-box"></p> 
+                            <p id="message-box"></p>
                         </div>
                         <div class="PopUp-Bottom2">
-                            <button id="nw-submit">Submit</button>
+                            <button id="nw-submit">Submit
+                                <div class="loader5"></div>
+                            </button>
                         </div>
                     </div>
             </div>
@@ -90,5 +114,5 @@
             </div>
 
         </div>
-    
+
 {% endblock %}

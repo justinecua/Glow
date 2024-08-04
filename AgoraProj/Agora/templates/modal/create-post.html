@@ -16,7 +16,7 @@
                         <div class="CProf-Container">
                             <img id="CP-Prof" src="{{ accountInfo.profile_photo }}" alt="">
                         </div>
-    
+
                         <div class="CProf-Right">
                             <p>{{ accountInfo.firstname | capfirst }} {{ accountInfo.lastname | capfirst }}</p>
                             <input id="accountID" type="text" value="{{accountInfo.id}}"  style="display:none" ;>
@@ -37,13 +37,12 @@
                                 </div>
                             </div>
                             <input type="hidden" name="audience-select" id="audience-select">
-                             
                         </div>
                     {% endif %}
                 </div>
 
                 <div class="Modal-Mid">
-                    
+
                     <textarea name="" id="post-textarea" placeholder="Tell your friends about your thoughts"></textarea>
                     <div id="Photo-upload-container2">
                         <div class="Photo-Upload-Top">
@@ -58,7 +57,7 @@
                             </div>
                             <input id="Image-Post" type="file" name="Image-Post" multiple style="display:none" ;>
                             <p id="Post-P">Add Photos</p>
-                        
+
                             <P>(Media files limited to 25MB)</p>
                         </div>
                         <div id="PUC-ImageCont">
@@ -89,7 +88,7 @@
                             <span>Total Media Size:&nbsp;</span>
                             <span id="SizeCounter"></span>
                         </p>
-                        
+
                     </div>
                 </div>
                 <div class="Modal-Bottom">
@@ -102,7 +101,7 @@
                         <div id="Videos-Icon" class="option-icon">
                             <img src="../static/images/vid.png" alt="">
                         </div>
-                        
+
                         <div class="option-icon">
                             <img src="../static/images/label.png" alt="">
                         </div>
@@ -124,9 +123,9 @@
                     </div>
                 </div>
 
-                
+
             </div>
-            
+
         </div>
     </div>
 </div>

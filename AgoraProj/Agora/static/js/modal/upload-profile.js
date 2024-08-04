@@ -5,18 +5,18 @@ let messagebox = document.getElementById('message-box');
 
 export function UploadProf() {
     Profilefile.click();
-    Profilefile.addEventListener('change', showEvCPic); 
+    Profilefile.addEventListener('change', showEvCPic);
 
     function showEvCPic() {
         if (!Profilefile.files || Profilefile.files.length === 0) {
-            defaultProfile.src  = '../static/images/default-avatar-profile-picture-male-icon.png';
+            defaultProfile.src  = '../static/images/Upstream-1.png';
         }
 
         let selectedFile = Profilefile.files[0];
 
-        if (selectedFile.size > 5 * 1024 * 1024) { 
+        if (selectedFile.size > 5 * 1024 * 1024) {
             messagebox.textContent = "File size exceeds 5MB. Please choose a smaller file.";
-            Profilefile.value = ''; 
+            Profilefile.value = '';
             return;
         }
 
@@ -50,14 +50,14 @@ export function UploadProf() {
 
                 defaultProfile.src = canvas.toDataURL('image/jpeg');
                 file = defaultProfile.src;
-            
+
             };
-            img.src = event.target.result; 
+            img.src = event.target.result;
         };
-        reader.readAsDataURL(selectedFile); 
+        reader.readAsDataURL(selectedFile);
     }
 }
 
 export function Profile_URL() {
-    return Profilefile.files[0]; 
+    return Profilefile.files[0];
 }

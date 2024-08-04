@@ -4,10 +4,7 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
-
-    <script type="module" src="{% static 'js/friend.js' %}"></script>
     <script type="module" src="{% static 'js/toggle.js' %}"></script>
-    <script type="module" src="{% static 'js/show-search.js' %}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
 {% endblock %}
 
@@ -159,315 +156,324 @@
 
 
         <div class="NCenter">
-            <div class="Profile_Title_Container">
-                <img src="../static/images/Line-Arrow-Left-1--Streamline-Flex.png" alt="">
-                <p>Go Back </p>
-            </div>
 
-                <div class="Profile-Container">
+            <div class="RandomProf_MainCont">
+                <div class="Profile_Title_Container">
+                    <a href="{% url 'dashboard' %}">
+                        <div class="PTC-Left">
+                            <img src="../static/images/back.png" alt="">
+                            <p>Go Back</p>
+                        </div>
+                    </a>
+                    <div class="PTC-Right">
+                    </div>
 
-                    <div class="PPC-Cover-Container">
+                </div>
 
-                        {% if randomaccount.cover_photo %}
-                            <img id="UserCoverPhoto" src="{{ randomaccount.cover_photo }}">
-                        {% else %}
-                            <img class="lazy" id="UserCoverPhoto" src="https://ik.imagekit.io/mygh9x3hg/pexels-blitzboy-1144176.jpg/tr:q-90,tr:w-1500,bl-30,q-90,h-720" data-src="https://ik.imagekit.io/mygh9x3hg/pexels-blitzboy-1144176.jpg/tr:q-90,tr:w-1500,q-90,h-720">
+                    <div class="Profile-Container">
+
+                        <div class="PPC-Cover-Container">
+
+                            {% if randomaccount.cover_photo %}
+                                <img id="UserCoverPhoto" src="{{ randomaccount.cover_photo }}">
+                            {% else %}
+                                <img class="lazy" id="UserCoverPhoto" src="https://ik.imagekit.io/mygh9x3hg/pexels-blitzboy-1144176.jpg/tr:q-90,tr:w-1500,bl-30,q-90,h-720" data-src="https://ik.imagekit.io/mygh9x3hg/pexels-blitzboy-1144176.jpg/tr:q-90,tr:w-1500,q-90,h-720">
+
+                            {% endif %}
+
+                            <div class="PPC-Profile-Cont">
+                                <div class="PPC-My-Profile">
+                                    <img src="{{ randomaccount.profile_photo }}">
+                                </div>
+
+                                    <div class="PPC-Buttons">
+                                        <div class="PPCB-Top">
+
+                                            <input type="text" id="user_ID" name="user_ID" value="{{ request.user.id }}" style="display:none">
+                                            <input type="text" id="visited_profile_ID" name="visited_profile_ID" value="{{ randomaccount.id }}" style="display:none">
+                                            <input type="text" id="currentTime-Prof" name="currentTime-Prof" style="display:none">
+                                        </div>
+                                        <div class="PPCB-Bottom">
+
+                                            {% if friendship_is_pending %}
+
+                                                {% if accountInfo.bio %}
+                                                <div class="Bio-Div"><p>" {{ randomaccount.bio }} "</p></div>
+                                                {% else %}
+                                                <div class="Bio-Div"><p></p></div>
+                                                {% endif %}
+                                                <button id="Cancel-ReqFriend-Btn"> <div id="loadingIndicator2"><img src="../static/images/rolling.gif"></div>Cancel Request</button>
+                                            {% elif friendship_is_friends %}
+                                                {% if randomaccount.bio %}
+                                                <div class="Bio-Div"><p>" {{ randomaccount.bio }} "</p></div>
+                                                {% else %}
+                                                <div class="Bio-Div"><p></p></div>
+                                                {% endif %}
+                                                <button class="Friends-Btn"><img src="../static/images/friends_check.png">Friends</button>
+
+                                            {% else %}
+                                            <style>
+                                                .PPCB-Bottom{
+                                                    width: 50%;
+                                                }
+                                            </style>
+                                                <button id="Cancel-ReqFriend-Btn"  style="display:none"> <div id="loadingIndicator2"><img src="../static/images/rolling.gif"></div>Cancel Request</button>
+                                                <button id="Add-Friend-Btn"> <div id="loadingIndicator2"><img src="../static/images/rolling.gif"></div>Add Friend</button>
+                                            {% endif %}
+                                            <button id="Message-Btn">Message</button>
+                                        </div>
+
+                                    </div>
+                            </div>
+
+                        </div>
+
+                        <div class="OnePurpose-Container"></div>
+
+                        <div class="PPC-ProfInfo-Cont">
+                            <div class="PPC-Info-Left"></div>
+                            <div class="PPC-Info-Mid">
+                                {% if randomaccount %}
+                                <h2>{{ randomaccount.firstname }} {{ randomaccount.lastname }}</h2>
+                                {% endif %}
+                                <p>@{{ randomaccount.auth_user.username }}</p>
+                                <p>Joined {{ randomaccount.auth_user.date_joined|date:"F j, Y" }}</p>
+                            </div>
+                        </div>
+
+
+                        <!--
+                        <div class="MyProfile-Nav">
+                            <ul>
+                                <li>About</li>
+                            </ul>
+                        </div>
+
+                                            !-->
+                    </div>
+                    <div class="Friends_and_Glow_Container">
+
+                        <div class="FGC_Right">
+                            <div class="FGCL_Left">
+                                {% if randomUserFriends %}
+                                <span id="Prof-FriendCounter"> {{ randomUserFriends.totalfriends }}</span>
+                                <span id="Prof-FriendTitle">friends</span>
+                                {% else %}
+
+                                {% endif %}
+                            </div>
+                            <div class="FGCL_Right">
+                            {% if randomUserFriends %}
+                                {% for friends in randomUserFriends.friendsInfo %}
+                                    {% if forloop.counter0 < 5 %}
+                                    <div class="RandomProfFriends_Cont">
+                                        <img src="{{ friends.profile_photo }}">
+                                            <span class="tooltiptext">{{ friends.firstname }} {{ friends.lastname }}</span>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if forloop.last and randomUserFriends.friendsInfo|length > 5%}
+                                    {% with remaining=randomUserFriends.friendsInfo|length|add:-5 %}
+                                        <div class="RandomProfFriends_Cont">
+                                                <span> +{{ remaining }}</span>
+                                        </div>
+                                    {% endwith %}
+                                    {% endif %}
+                                {% endfor %}
+
+                            {% else %}
+                            {% endif %}
+                            </div>
+
+
+                        </div>
+                        <div class="FGC_Right">
+                            <div class="FGCR_Left">
+                                {% if totalGlows %}
+                                <span id="Prof-FriendCounter"> {{ totalGlows }}</span>
+                                <span id="Prof-FriendTitle">total glows</span>
+                                {% else %}
+
+                                {% endif %}
+                            </div>
+                            <div class="FGCR_Right">
+
+                                {% if unique_acc_who_glowed %}
+                                    {% for account_id, info in unique_acc_who_glowed.items %}
+                                        {% if forloop.counter0 < 5 %}
+                                            <div class="RandomProfFriends_Cont">
+                                            <img src="{{ info.2 }}">
+                                            <span class="tooltiptext">{{ info.0 }} {{ info.1 }}</span>
+                                            </div>
+                                        {% endif %}
+
+                                        {% if forloop.last and unique_acc_who_glowed|length > 5%}
+                                            {% with remaining=unique_acc_who_glowed|length|add:-5 %}
+                                            <div class="RandomProfFriends_Cont">
+                                                <span> +{{ remaining }}</span>
+                                            </div>
+                                            {% endwith %}
+                                        {% endif %}
+                                    {% endfor %}
+
+                                {% else %}
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="User_Title_Container">
+                        <p>Photos</p>
+                    </div>
+
+                    <div class="UserProf-Main">
+                        {% if total_photos_count %}
+                            <div class="RP-PhotosTitle">
+                                {% if randomaccount %}
+                                    <p>{{ total_photos_count }} Recent Photos</p>
+                                    <span>See all</span>
+                                {% endif %}
+                            </div>
 
                         {% endif %}
 
-                        <div class="PPC-Profile-Cont">
-                            <div class="PPC-My-Profile">
-                                <img src="{{ randomaccount.profile_photo }}">
-                            </div>
+                        <div class="NCenter-content-user">
+                                {% if posts.posts_with_photos %}
+                                    {% for post, post_info in posts.posts_with_photos.items %}
+                                        {% if forloop.counter0 < 8 %}
+                                            {% if post_info.photos %}
+                                                {% for photo in post_info.photos %}
+                                                    <div class="UPC-content2">
+                                                    <img class="lazy" src="{{ photo.link|add:'/tr:q-90,tr:w-450,bl-30,q-90,h-450?cm-pad_resize,bg-F3F3F3' }}" data-src="{{ photo.link | add:'/tr:q-90,tr:w-450,h-450?cm-pad_resize,bg-F3F3F3 '}}">
+                                                    </div>
+                                                {% endfor %}
 
-                                <div class="PPC-Buttons">
-                                    <div class="PPCB-Top">
-
-                                        <input type="text" id="user_ID" name="user_ID" value="{{ request.user.id }}" style="display:none">
-                                        <input type="text" id="visited_profile_ID" name="visited_profile_ID" value="{{ randomaccount.id }}" style="display:none">
-                                        <input type="text" id="currentTime-Prof" name="currentTime-Prof" style="display:none">
-                                    </div>
-                                    <div class="PPCB-Bottom">
-
-                                        {% if friendship_is_pending %}
-
-                                            {% if accountInfo.bio %}
-                                            <div class="Bio-Div"><p>" {{ randomaccount.bio }} "</p></div>
                                             {% else %}
-                                            <div class="Bio-Div"><p></p></div>
                                             {% endif %}
-                                            <button id="Cancel-ReqFriend-Btn"> <div id="loadingIndicator2"><img src="../static/images/rolling.gif"></div>Cancel Request</button>
-                                        {% elif friendship_is_friends %}
-                                            {% if randomaccount.bio %}
-                                            <div class="Bio-Div"><p>" {{ randomaccount.bio }} "</p></div>
-                                            {% else %}
-                                            <div class="Bio-Div"><p></p></div>
-                                            {% endif %}
-                                            <button class="Friends-Btn"><img src="../static/images/friends_check.png">Friends</button>
-
-                                        {% else %}
-                                        <style>
-                                            .PPCB-Bottom{
-                                                width: 50%;
-                                            }
-                                        </style>
-                                            <button id="Cancel-ReqFriend-Btn"  style="display:none"> <div id="loadingIndicator2"><img src="../static/images/rolling.gif"></div>Cancel Request</button>
-                                            <button id="Add-Friend-Btn"> <div id="loadingIndicator2"><img src="../static/images/rolling.gif"></div>Add Friend</button>
                                         {% endif %}
-                                        <button id="Message-Btn">Message</button>
-                                    </div>
 
-                                </div>
-                        </div>
+                                    {% endfor %}
 
-                    </div>
+                                    {% else %}
 
-                    <div class="OnePurpose-Container"></div>
+                                    <style>
+                                    .UserProf-Main{
+                                        height: 45vh;
+                                    }
+                                    </style>
 
-                    <div class="PPC-ProfInfo-Cont">
-                        <div class="PPC-Info-Left"></div>
-                        <div class="PPC-Info-Mid">
-                            {% if randomaccount %}
-                            <h2>{{ randomaccount.firstname }} {{ randomaccount.lastname }}</h2>
-                            {% endif %}
-                            <p>@{{ randomaccount.auth_user.username }}</p>
-                            <p>Joined {{ randomaccount.auth_user.date_joined|date:"F j, Y" }}</p>
-                        </div>
-                    </div>
-
-
-                    <!--
-                    <div class="MyProfile-Nav">
-                        <ul>
-                            <li>About</li>
-                        </ul>
-                    </div>
-
-                                          !-->
-                </div>
-                <div class="Friends_and_Glow_Container">
-
-                    <div class="FGC_Right">
-                        <div class="FGCL_Left">
-                            {% if randomUserFriends %}
-                            <span id="Prof-FriendCounter"> {{ randomUserFriends.totalfriends }}</span>
-                            <span id="Prof-FriendTitle">friends</span>
-                            {% else %}
-
-                            {% endif %}
-                        </div>
-                        <div class="FGCL_Right">
-                          {% if randomUserFriends %}
-                              {% for friends in randomUserFriends.friendsInfo %}
-                                {% if forloop.counter0 < 5 %}
-                                  <div class="RandomProfFriends_Cont">
-                                      <img src="{{ friends.profile_photo }}">
-                                        <span class="tooltiptext">{{ friends.firstname }} {{ friends.lastname }}</span>
-                                  </div>
+                                    <p id="Posts-Message">No posts yet</p>
                                 {% endif %}
-
-                                {% if forloop.last and randomUserFriends.friendsInfo|length > 5%}
-                                  {% with remaining=randomUserFriends.friendsInfo|length|add:-5 %}
-                                      <div class="RandomProfFriends_Cont">
-                                            <span> +{{ remaining }}</span>
-                                      </div>
-                                  {% endwith %}
-                                {% endif %}
-                              {% endfor %}
-
-                          {% else %}
-                          {% endif %}
                         </div>
-
-
                     </div>
-                    <div class="FGC_Right">
-                          <div class="FGCR_Left">
-                            {% if totalGlows %}
-                              <span id="Prof-FriendCounter"> {{ totalGlows }}</span>
-                              <span id="Prof-FriendTitle">total glows</span>
-                            {% else %}
-
-                            {% endif %}
-                          </div>
-                          <div class="FGCR_Right">
-
-                              {% if unique_acc_who_glowed %}
-                                 {% for account_id, info in unique_acc_who_glowed.items %}
-                                    {% if forloop.counter0 < 5 %}
-                                        <div class="RandomProfFriends_Cont">
-                                          <img src="{{ info.2 }}">
-                                          <span class="tooltiptext">{{ info.0 }} {{ info.1 }}</span>
-                                        </div>
-                                    {% endif %}
-
-                                    {% if forloop.last and unique_acc_who_glowed|length > 5%}
-                                         {% with remaining=unique_acc_who_glowed|length|add:-5 %}
-                                        <div class="RandomProfFriends_Cont">
-                                            <span> +{{ remaining }}</span>
-                                        </div>
-                                        {% endwith %}
-                                    {% endif %}
-                                  {% endfor %}
-
-                              {% else %}
-                              {% endif %}
-
-                          </div>
+                    <div class="User_Title_Container">
+                        <p>Posts</p>
                     </div>
-                </div>
+                <div class="RP-PostContainer">
+                    <div class="RP-PostContainerList">
 
-                <div class="User_Title_Container">
-                    <p>Photos</p>
-                </div>
-
-                <div class="UserProf-Main">
-                    {% if total_photos_count %}
-                        <div class="RP-PhotosTitle">
-                            {% if randomaccount %}
-                                <p>{{ total_photos_count }} Recent Photos</p>
-                                <span>See all</span>
-                            {% endif %}
-                        </div>
-
-                    {% endif %}
-
-                    <div class="NCenter-content-user">
-                            {% if posts.posts_with_photos %}
-                                {% for post, post_info in posts.posts_with_photos.items %}
-                                    {% if forloop.counter0 < 8 %}
-                                        {% if post_info.photos %}
-                                            {% for photo in post_info.photos %}
-                                                <div class="UPC-content2">
-                                                  <img class="lazy" src="{{ photo.link|add:'/tr:q-90,tr:w-450,bl-30,q-90,h-450?cm-pad_resize,bg-F3F3F3' }}" data-src="{{ photo.link | add:'/tr:q-90,tr:w-450,h-450?cm-pad_resize,bg-F3F3F3 '}}">
-                                                </div>
-                                            {% endfor %}
-
-                                        {% else %}
-                                        {% endif %}
-                                    {% endif %}
-
-                                {% endfor %}
-
-                                {% else %}
-
-                                <style>
-                                .UserProf-Main{
-                                    height: 45vh;
-                                }
-                                </style>
-
-                                <p id="Posts-Message">No posts yet</p>
-                            {% endif %}
-                    </div>
-                </div>
-                <div class="User_Title_Container">
-                    <p>Posts</p>
-                </div>
-            <div class="RP-PostContainer">
-                <div class="RP-PostContainerList">
-
-                    {% if posts.posts_with_photos %}
-                    {% for post, post_info in posts.posts_with_photos.items %}
-                        <div class="User-Post-Container2">
-                            <div class="UPC-content-Top">
-                                <div class="UPCCT-Left">
-                                    <a href="profile/{{ post.account.id }}">
-                                        <div class="Post-Prof-Cont">
-                                            <img src="{{ post.account.profile_photo }}">
-                                        </div>
-                                    </a>
-                                    <div class="Post-Prof-Cont2">
-                                        <div id="Post-Prof-Cont-Name1" class="Post-Prof-Cont-Name">
-                                            <a href="profile/{{ post.account.id }}">
-                                                <p class="Photo-Post-username">{{ post.account.firstname }}</p>
-                                            </a>
-                                            <p class="Post-Photo-Date-Time">{{ post_info.time_ago }}</p>
-                                        </div>
-                                        <div class="Post-Prof-Cont-Username">
-                                            <p>@{{ post.account.auth_user.username }}</p>
+                        {% if posts.posts_with_photos %}
+                        {% for post, post_info in posts.posts_with_photos.items %}
+                            <div class="User-Post-Container2">
+                                <div class="UPC-content-Top">
+                                    <div class="UPCCT-Left">
+                                        <a href="profile/{{ post.account.id }}">
+                                            <div class="Post-Prof-Cont">
+                                                <img src="{{ post.account.profile_photo }}">
+                                            </div>
+                                        </a>
+                                        <div class="Post-Prof-Cont2">
+                                            <div id="Post-Prof-Cont-Name1" class="Post-Prof-Cont-Name">
+                                                <a href="profile/{{ post.account.id }}">
+                                                    <p class="Photo-Post-username">{{ post.account.firstname }}</p>
+                                                </a>
+                                                <p class="Post-Photo-Date-Time">{{ post_info.time_ago }}</p>
+                                            </div>
+                                            <div class="Post-Prof-Cont-Username">
+                                                <p>@{{ post.account.auth_user.username }}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="UPCCT-Right">
-                                </div>
-                            </div>
-
-                            {% if post_info.photos %}
-                            <div class="UPC-content-grid {% if post_info.photos|length == 3 %}three-photos{% endif %}">
-                                {% for photo in post_info.photos %}
-                                    <div class="UPC-content {% if post_info.photos|length == 1 %}single-photo{% endif %}">
-                                        <img src="{{ photo.link|add:'?cm-pad_resize,bg-F3F3F3' }}" alt="">
-                                    </div>
-                                {% endfor %}
-                            </div>
-                            {% else %}
-                            <div class="UPCB-Tags" style="height: 2rem"></div>
-                            {% endif %}
-
-                            <div class="UPC-content-Bottom">
-                                <div class="UPCB-Caption">
-                                    <div class="Cap-Caption">
-                                        <p class="postCaption">{{ post.caption }}</p>
-                                        <br>
+                                    <div class="UPCCT-Right">
                                     </div>
                                 </div>
-                                <div class="UPCB-Tags">
-                                    {% for tag in post.tags.all %}
-                                        <a href="/tags/{{ tag.id }}"><div><span class="hashtags">#{{ tag.tag }}</span></div></a>
+
+                                {% if post_info.photos %}
+                                <div class="UPC-content-grid {% if post_info.photos|length == 3 %}three-photos{% endif %}">
+                                    {% for photo in post_info.photos %}
+                                        <div class="UPC-content {% if post_info.photos|length == 1 %}single-photo{% endif %}">
+                                            <img src="{{ photo.link|add:'?cm-pad_resize,bg-F3F3F3' }}" alt="">
+                                        </div>
                                     {% endfor %}
                                 </div>
-                                <div class="UPCB-Reacts">
-                                    <div class="Reacts">
-                                        <div class="GlowReact-Div" data-PostIDD="{{ post.id }}" data-AccID="{{ post.account.id }}">
-                                            {% if post.has_liked %}
-                                                <span class="ChangeGlow">&#10022;</span>
-                                            {% else %}
-                                                <img class="glow-react" src="../static/images/glow4.png" alt="Glow">
-                                            {% endif %}
-                                        </div>
-                                        <div class="React-Div Comment-Btn-Show" data-PostID="{{ post.id }}">
-                                            <img src="../static/images/chat (2).png" alt="">
+                                {% else %}
+                                <div class="UPCB-Tags" style="height: 2rem"></div>
+                                {% endif %}
+
+                                <div class="UPC-content-Bottom">
+                                    <div class="UPCB-Caption">
+                                        <div class="Cap-Caption">
+                                            <p class="postCaption">{{ post.caption }}</p>
+                                            <br>
                                         </div>
                                     </div>
-                                    <div class="React-Counts">
-                                        <div class="glow-count">
-                                            {% if post_info.glows_count > 1 %}
-                                                <p>{{ post_info.glows_count }} glows</p>
-                                            {% else %}
-                                                <p>{{ post_info.glows_count }} glow</p>
-                                            {% endif %}
+                                    <div class="UPCB-Tags">
+                                        {% for tag in post.tags.all %}
+                                            <a href="/tags/{{ tag.id }}"><div><span class="hashtags">#{{ tag.tag }}</span></div></a>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="UPCB-Reacts">
+                                        <div class="Reacts">
+                                            <div class="GlowReact-Div" data-PostIDD="{{ post.id }}" data-AccID="{{ post.account.id }}">
+                                                {% if post.has_liked %}
+                                                    <span class="ChangeGlow">&#10022;</span>
+                                                {% else %}
+                                                    <img class="glow-react" src="../static/images/glow4.png" alt="Glow">
+                                                {% endif %}
+                                            </div>
+                                            <div class="React-Div Comment-Btn-Show" data-PostID="{{ post.id }}">
+                                                <img src="../static/images/chat (2).png" alt="">
+                                            </div>
                                         </div>
-                                        <div class="Comments">
-                                            {% if post_info.comments_count > 1 %}
-                                                <p>{{ post_info.comments_count }} comments</p>
-                                            {% else %}
-                                                <p>{{ post_info.comments_count }} comment</p>
-                                            {% endif %}
+                                        <div class="React-Counts">
+                                            <div class="glow-count">
+                                                {% if post_info.glows_count > 1 %}
+                                                    <p>{{ post_info.glows_count }} glows</p>
+                                                {% else %}
+                                                    <p>{{ post_info.glows_count }} glow</p>
+                                                {% endif %}
+                                            </div>
+                                            <div class="Comments">
+                                                {% if post_info.comments_count > 1 %}
+                                                    <p>{{ post_info.comments_count }} comments</p>
+                                                {% else %}
+                                                    <p>{{ post_info.comments_count }} comment</p>
+                                                {% endif %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
 
-                {% else %}
+                    {% else %}
 
-                    <style>
-                    .UserProf-Main{
-                        height: 45vh;
-                    }
-                    </style>
+                        <style>
+                        .UserProf-Main{
+                            height: 45vh;
+                        }
+                        </style>
 
-                    <p id="Posts-Message">No posts yet</p>
-                {% endif %}
+                        <p id="Posts-Message">No posts yet</p>
+                    {% endif %}
+
+                    </div>
 
                 </div>
-
             </div>
-        </div>
       {% endif %}
-
+    </div>
 </div>
 
 <script>

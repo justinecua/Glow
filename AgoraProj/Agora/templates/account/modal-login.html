@@ -1,0 +1,71 @@
+{% load static %}
+{% load socialaccount %}
+
+<div id="Login-Overlay">
+    <div id="Login-Container">
+        <div class="container glass2">
+        <div class="container-content">
+            <div class="CC-Top1">
+                <img src="https://ik.imagekit.io/b9bdd5j68/glow%20logo22.png/tr:q-100,tr:w-100,h-100" alt="">
+            </div>
+            <div class="CC-Top">
+                <p>We are excited to have you again</p>
+            </div>
+            <div class="CC-Mid">
+
+                {% csrf_token %}
+                <div>
+                    <span class="input-icon2">
+                        <img src="{% static 'images/mail-3111.svg' %}" alt="icon">
+                        <input type="email" id="email-login" name="login" placeholder="Email address" required>
+                    </span>
+                </div>
+
+                <div>
+                    <span class="input-icon2">
+                        <img src="{% static 'images/padlock-11751.svg' %}" alt="icon">
+                        <input type="password" id="password-login" name="password" placeholder="Password" required>
+                    </span>
+                </div>
+            </div>
+            <div class="CC-Bottom">
+                <div class="CCB-Left">
+                    <div>
+                        <label for="remember" class="">Remember Me</label>
+                        <input type="checkbox" name="remember">
+                        {{ form.remember }}
+                    </div>
+                </div>
+
+                <div class="CCB-Right">
+                    <a href="{% url 'account_reset_password' %}">Forgot Password?</a>
+                </div>
+            </div>
+
+            <div class="CC-Footer">
+                <button id="submit-login" type="submit">Login
+                    <div class="loader3"></div>
+                </button>
+            </div>
+
+            <div id="message">
+            </div>
+
+            <div class="CC-Footer2">
+                <div class="border"></div>
+                <p>OR</p>
+                <div class="border"></div>
+            </div>
+            <div class="CC-Footer3">
+                <a href="{% provider_login_url 'google' %}">
+                    <button class="google-login-link"> <img src="../../static/images/google.png" alt="">Sign in with Google </button>
+                </a>
+            </div>
+
+            <div class="CC-Footer4">
+                <p>Dont have an account? <span id="signUp-redirect">Sign Up</span></p>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

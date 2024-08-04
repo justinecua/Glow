@@ -7,8 +7,9 @@
     <script type="module" src="{% static 'js/ForYou.js' %}"></script>
     <script type="module" src="{% static 'js/toggle.js' %}"></script>
     <script type="module" src="{% static 'js/search.js' %}"></script>
-    <script src="https://cdn.ably.io/lib/ably.min-1.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -22,7 +23,7 @@
             body{
                 overflow-y: hidden;
             }
-            
+
         </style>
         {% include "modal/new-user.html" %}
         <script type="module" src="{% static 'js/main-new-user.js' %}"></script>
@@ -44,18 +45,18 @@
         {% if request.user.is_authenticated %}
         {% include "account/logout.html" %}
         {% include "nav.html" %}
-        
+        <div id="Bottom-loading-posts">
+            <p>Please Wait...</p>
+        </div>
         <div class="responsive">
-            <div id="Bottom-loading-posts">
-                <p>Please Wait...</p>
-            </div>
+
         <div class="NCenter">
             <div class="Center-Top3">
                 <div class="loader"></div>
             </div>
             <div class="NCenter-cont">
                 <div class="Center-Top2">
-                    
+
                 </div>
                 <input id="accountID" type="text" value="{{accountInfo.id}}"  style="display:none" ;>
                 <div class="Post-Container">
@@ -73,7 +74,7 @@
                         <div class="PCR-Top">
                             <input type="text" id="create-post" readonly placeholder="Tell your friends about your thoughts">
                         </div>
-                    
+
                     </div>
                 </div>
             </div>
@@ -85,11 +86,21 @@
             </div>
         </div>
         {% include "nav-right.html" %}
-        
+
         <div id="messages"></div>
     {% endif %}
     </div>
 </div>
 
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 6,
+        spaceBetween: 30,
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+    });
+</script>
 
 {% endblock %}

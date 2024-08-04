@@ -26,7 +26,10 @@
 	height: 0.2rem;
 }
 
-
+html {
+    visibility: visible;
+    opacity: 1;
+  }
 
 body {
     background: url("https://ik.imagekit.io/b9bdd5j68/tr:w-1280,h-720/32998500_890684131445%20(1).jpg");
@@ -74,9 +77,9 @@ body {
 }
 
 .CC-Mid input,
-.CC-Bottom, 
+.CC-Bottom,
 .CC-Footer button,
-.CC-Footer2 p, 
+.CC-Footer2 p,
 .CC-Footer3 button,
 .CC-Footer4 p{
     font-size: clamp(0.7rem, 0.9vw, 0.8rem);
@@ -138,15 +141,17 @@ nav ul {
 }
 
 .MC-Left img{
-    width: 2rem;
-    height: 2rem;
+    width: 2.8rem;
+    height: 2.8rem;
     object-fit: cover;
 }
 
 .MC-Left h1{
     font-family: "Croissant One", serif;
-    color: #0058ca;
-    margin-left: 2%;
+    color: #ffffff;
+    margin-left: 10%;
+    display: flex;
+    align-items: center;
     font-size: clamp(1.6rem, 1vw, 1.5rem);
 }
 
@@ -166,11 +171,12 @@ nav ul {
 .MC-Right{
     align-items: center;
     display: flex;
-    justify-content: end;
+    justify-content: center;
     width: 30%;
     height: 100%;
     gap: 2%;
 }
+
 
 
 .MC-Right li{
@@ -197,12 +203,16 @@ nav ul {
 }
 
 #MC-SignUp{
-    background-color: #101b2f;
-    border-radius: 10px;
-    width: 5.5rem;
+    background: linear-gradient(195deg, #1c1884, rgba(75, 60, 214, 0));
+    backdrop-filter: blur(1px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     display: flex;
+    border-radius: 5px;
     align-items: center;
     justify-content: center;
+    color: white;
+    padding: 0.8rem 1.5rem;
+
 }
 
 #MC-SignUp:hover{
@@ -212,7 +222,7 @@ nav ul {
 
 
 @media (max-width: 1980px) {
-    
+
     .responsive{
         max-width: 1536px;
     }
@@ -226,7 +236,7 @@ nav ul {
 
     .background{
         display: flex;
-        flex-direction: column;    
+        flex-direction: column;
         width: 100vw;
         max-width: 100%;
         height: 100vh;
@@ -240,7 +250,7 @@ nav ul {
         justify-content: center;
         align-items: center;
     }
-    
+
     .container {
         display: flex;
         flex-direction: column;
@@ -248,10 +258,10 @@ nav ul {
         align-items: center;
         border-radius: 10px;
         width: 30%;
-        max-width: 70%; 
+        max-width: 70%;
         padding: 2rem;
     }
-    
+
     .CC-Top{
         width: 80%;
         display: flex;
@@ -272,14 +282,14 @@ nav ul {
         width: fit-content;
         font-size: 2rem;
     }
-    
+
     .CC-Top p{
         font-weight: 400;
         color: #e3e3e3;
         width: fit-content;
     }
-    
-    
+
+
     .CC-TopR{
         width: 80%;
         display: flex;
@@ -297,7 +307,7 @@ nav ul {
         object-fit: cover;
         margin-bottom: 0.2rem;
     }
-    
+
     .CC-TopR h2{
         line-height: 2rem;
         font-family: "Work Sans", sans-serif;
@@ -309,7 +319,7 @@ nav ul {
         font-size: 2rem;
         font-size: clamp(1.9rem, 1vw,2rem);
     }
-    
+
     .CC-TopR p{
         font-weight: 400;
         color: #e3e3e3;
@@ -334,7 +344,7 @@ nav ul {
         height: 4rem;
         object-fit: cover;
     }
-    
+
     .CC-TopP h2{
         font-family: "Work Sans", sans-serif;
         font-weight: 600;
@@ -345,7 +355,7 @@ nav ul {
         font-size: 2rem;
         font-size: clamp(1.8rem, 1vw,2rem);
     }
-    
+
     .CC-TopP p{
         font-weight: 400;
         color: #e3e3e3;
@@ -353,7 +363,7 @@ nav ul {
         font-size: clamp(0.8rem, 1vw, 0.6rem);
         width: 90%;
     }
-    
+
     .CC-TopP a{
         color: #89a4ff;
         text-decoration: none;
@@ -397,7 +407,7 @@ nav ul {
         object-fit: cover;
         margin-bottom: 0.5rem;
     }
-    
+
     .CC-TopPR h2{
         font-family: "Work Sans", sans-serif;
         font-weight: 600;
@@ -408,7 +418,7 @@ nav ul {
         font-size: 2rem;
         font-size: clamp(1.8rem, 1vw,2rem);
     }
-    
+
     .CC-TopPR p{
         font-weight: 400;
         color: #e3e3e3;
@@ -424,8 +434,8 @@ nav ul {
         text-align: center;
         width: 90%;
     }
-    
-    
+
+
     .CC-Mid input {
         margin-bottom: 3%;
         width: 95%;
@@ -437,11 +447,11 @@ nav ul {
         border-radius: 5px;
         outline: none;
     }
-    
+
     .CC-Mid input::placeholder{
         color: #fbfbfbaf;
     }
-    
+
     .SCC-Mid{
         display: flex;
         flex-direction: column;
@@ -450,8 +460,8 @@ nav ul {
         width: 90%;
         height: 14rem;
     }
-    
-    
+
+
     .SCC-Mid input {
         margin-bottom: 3%;
         width: 95%;
@@ -471,16 +481,16 @@ nav ul {
     .input-icon {
         position: relative;
     }
-    
+
     .input-icon img {
         position: absolute;
         left: 15px;
         top: 50%;
         transform: translateY(-50%);
-        width: 1.2rem; 
+        width: 1.2rem;
         height: auto;
     }
-    
+
     .CC-Bottom{
         width: 85%;
         margin-top: 1rem;
@@ -488,23 +498,23 @@ nav ul {
         display: flex;
         font-family: "Work Sans", sans-serif;
     }
-    
+
     .CCB-Left{
         display: flex;
         justify-content: space-between;
         width: 50%;
     }
-    
+
     .CCB-Right{
         justify-content: end;
         width: 50%;
     }
-    
+
     .CCB-Right a{
         color: white;
         text-decoration: none;
     }
-    
+
     .CCB-Right a:hover{
         color: #2e78d9;
     }
@@ -512,23 +522,23 @@ nav ul {
     .CCB-Left div{
         width: 100%;
     }
-    
+
     .CCB-Left div label{
         margin-right: 5% ;
     }
-    
+
     .CC-Bottom div{
         display: flex;
         align-items: center;
     }
-    
+
     .CC-Footer{
         display: flex;
         justify-content: center;
         align-items: center;
         width: 90%;
     }
-    
+
     .CC-Footer button:not(#ResetPassBtn){
         width: 95%;
         height: 2.5rem;
@@ -538,19 +548,19 @@ nav ul {
         border: none;
         border-radius: 5px;
     }
-    
+
     .CC-Footer button:hover{
         background: rgb(28, 28, 171);
         cursor: pointer;
     }
-    
+
     .CC-FooterPR{
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
     }
-    
+
     .CC-FooterPR button:not(#ResetPassBtn){
         width: 95%;
         height: 2.5rem;
@@ -560,7 +570,7 @@ nav ul {
         border: none;
         border-radius: 5px;
     }
-    
+
     .CC-FooterPR button:hover{
         background: rgb(28, 28, 171);
         cursor: pointer;
@@ -580,8 +590,8 @@ nav ul {
     .CC-Footer3{
         width: 90%;
     }
-    
-    
+
+
     .CC-Footer3 a{
         display: flex;
         justify-content: center;
@@ -589,10 +599,10 @@ nav ul {
         width: 100%;
         height: 100%;
         color: #fbfbfb;
-        text-decoration: none;   
-        
+        text-decoration: none;
+
     }
-    
+
     .CC-Footer3 button{
         border-radius: 5px;
         width: 95%;
@@ -606,14 +616,14 @@ nav ul {
         justify-content: center;
         align-items: center;
     }
-    
+
     .CC-Footer3 img{
         width: 8%;
         height: 70%;
         object-fit: cover;
         margin-right: 4%;
     }
-    
+
     .CC-Footer2{
         width: 100%;
         display: flex;
@@ -622,7 +632,7 @@ nav ul {
         font-family: "Work Sans", sans-serif;
         margin-bottom: 2rem;
     }
-    
+
     .CC-Footer2 p{
         color: #fbfbfba7;
     }
@@ -630,7 +640,7 @@ nav ul {
     .CC-Footer2 a{
         text-decoration: none;
     }
-    
+
     .CC-Footer2 a:hover{
         color: #2e78d9;
     }
@@ -647,12 +657,12 @@ nav ul {
         margin-top: 1rem;
         margin-bottom: 1rem;
     }
-    
+
     .CC-Footer4 a {
         color: #89a4ff;
         text-decoration: none;
     }
-    
+
     .CC-Footer4 a :hover{
         color: #0058ca;
     }
@@ -664,10 +674,10 @@ nav ul {
         width: 30%;
         border-bottom: 1px solid #fbfbfb37;
     }
-    
+
     .glass{
         background: linear-gradient(135deg, rgba(4, 2, 35, 0.389), rgba(3, 7, 47, 0.292));
-        backdrop-filter: blur(60px);
+        backdrop-filter: blur(40px);
         -webkit-backdrop-filter: blur(10px);
         border:1px solid rgba(255, 255, 255, 0.18);
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
@@ -681,7 +691,7 @@ nav ul {
         border:1px solid rgba(255, 255, 255, 0.18);
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     }
-    
+
     .google-login-link:hover{
         background-color: #04035354;
         cursor: pointer;
@@ -700,7 +710,7 @@ nav ul {
 
     .container {
         width: 36%;
-        max-width: 70%; 
+        max-width: 70%;
     }
 
     .Menu{
@@ -714,7 +724,7 @@ nav ul {
 }
 
 @media (max-width: 1280px) {
-    
+
     .responsive{
         max-width: 1024px;
     }
@@ -738,8 +748,8 @@ nav ul {
 
     .container {
         width: 45%;
-        max-width: 70%; 
-        
+        max-width: 70%;
+
     }
 }
 
@@ -754,7 +764,7 @@ nav ul {
 
     .container {
         width: 61%;
-        max-width: 70%; 
+        max-width: 70%;
     }
 
     .MC-Cont a{
@@ -813,7 +823,7 @@ nav ul {
 
     .container {
         width: 100%;
-        max-width: 70%; 
+        max-width: 70%;
     }
 
     .Down-Menu{
@@ -828,7 +838,7 @@ nav ul {
 
     .container {
         width: 89%;
-        max-width: 100%; 
+        max-width: 100%;
     }
 }
 
@@ -839,6 +849,6 @@ nav ul {
 
     .container {
         width:  100%;
-        max-width: 100%; 
+        max-width: 100%;
     }
 }

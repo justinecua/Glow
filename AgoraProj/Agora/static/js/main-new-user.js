@@ -1,5 +1,5 @@
 import { sendNewUserProf } from './ajax/send-new-userprofile.js';
-import { UploadProf, Profile_URL } from './modal/upload-profile.js'; 
+import { UploadProf, Profile_URL } from './modal/upload-profile.js';
 
 let Modal1 = document.getElementById('PopUp-Container1');
 let Modal2 = document.getElementById('PopUp-Container2');
@@ -20,14 +20,16 @@ let firstname = nwfname.value.trim();
 let lastname = nwlname.value.trim();
 let birthday = nwbirthday.value.trim();
 let gender = nwgender.value.trim();
-let Profile_url = ''; 
+let Profile_url = '';
+let ProfAvatars = document.querySelectorAll('.ProfAvatars');
+let defaultProfile = document.getElementById('default-profile');
 let Modals = [Modal1, Modal2, Modal3];
 
 
 PopUpOverlay.style.display = "flex";
 
 cameraprof.addEventListener('click', async () => {
-    UploadProf(); 
+    UploadProf();
 });
 
 Modal1Button.addEventListener('click', async () => {
@@ -37,18 +39,18 @@ Modal1Button.addEventListener('click', async () => {
 
 
 nwfname.addEventListener('input', function () {
-    firstname = nwfname.value; 
+    firstname = nwfname.value;
 });
 
 nwbirthday.addEventListener('input', function () {
-    birthday = nwbirthday.value; 
+    birthday = nwbirthday.value;
 });
 nwlname.addEventListener('input', function () {
     lastname = nwlname.value;
 });
 
 nwgender.addEventListener('change', function () {
-    gender = nwgender.value; 
+    gender = nwgender.value;
 });
 
 function calculateAge(birthday) {
@@ -69,17 +71,27 @@ nwbirthday.addEventListener('input', function () {
         const age = calculateAge(birthday);
         if (age < 13) {
             messagebox.textContent = "You must be at least 13 years old to create an account.";
-            nwbirthday.value = ''; 
+            nwbirthday.value = '';
             return;
         }
     }
 });
 
+
+ProfAvatars.forEach(avatars =>{
+    avatars.addEventListener('click', function(){
+        defaultProfile.src = avatars.src;
+        Profile_url = avatars.src;
+        console.log(defaultProfile.src);
+    });
+})
+
+
 nwsubmit.addEventListener('click', async () => {
 
     if (firstname === '') {
         messagebox.textContent = "First name is required";
-        return; 
+        return;
     }
     if (lastname === '') {
         messagebox.textContent = "Last name is required";
@@ -87,11 +99,11 @@ nwsubmit.addEventListener('click', async () => {
     }
     if (birthday === '') {
         messagebox.textContent = "Birthday is required";
-        return; 
+        return;
     }
     if (gender === '') {
         messagebox.textContent = "Gender is required";
-        return; 
+        return;
     }
 
     const age = calculateAge(birthday);
@@ -100,17 +112,17 @@ nwsubmit.addEventListener('click', async () => {
         return;
     }
 
-    Profile_url = Profile_URL(); 
-    
+    Profile_url = Profile_URL();
+
     let nwObject = {
         firstname: firstname,
         lastname: lastname,
         gender: gender,
-        profile: Profile_url || '../static/images/default-avatar-profile-picture-male-icon.png',
+        profile: Profile_url || defaultProfile.src,
         birthday: birthday,
     };
 
     console.log(nwObject);
     sendNewUserProf(nwObject);
-    
+
 });

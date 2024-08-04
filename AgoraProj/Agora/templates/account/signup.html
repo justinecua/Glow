@@ -6,7 +6,7 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'home/login.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
-    <script type="module" src="{% static 'js/index.js' %}"></script>  
+    <script type="module" src="{% static 'js/index.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -31,7 +31,7 @@
                 <a href="/#About-Section"><li>About</li></a>
                 <a href="/#Contact-Section"><li>Contact</li></a>
             </div>
-            
+
             <div class="MC-Right">
                 <a href="{% url 'login' %}"><li id="MC-Login">Login</li></a>
                 <a href="{% url 'signup' %}"><li id="MC-SignUp">Signup</li></a>
@@ -40,7 +40,7 @@
                     <img src="https://ik.imagekit.io/b9bdd5j68/tr:w-300,h-300//glow%20logo5.png" alt="">
                 </div>
             </div>
-            
+
         </ul>
         <div class="Down-Menu">
             <a href="{% url 'login' %}"><li>Login</li></a>
@@ -76,7 +76,7 @@
                                 <input type="email" name="email" placeholder="Your valid email" required>
                             </span>
                         </div>
-            
+
                         <div>
                             <span class="input-icon">
                                 <img src="{% static 'images/padlock-11751.svg' %}" alt="icon">
@@ -91,7 +91,7 @@
                             </span>
                         </div>
                 </div>
-                
+
 
                 <div class="CC-Footer">
                     <button type="submit">Sign Up</button>

@@ -8,6 +8,11 @@ body {
     overflow-x: hidden;
 }
 
+html {
+    visibility: visible;
+    opacity: 1;
+}
+
 .responsive{
     display: flex;
     flex-direction: column;
@@ -28,7 +33,7 @@ body {
         display: none;
     }
 
-    
+
     .Down-Menu{
         display: none;
     }
@@ -83,15 +88,17 @@ body {
     }
 
     .MC-Left img{
-        width: 2rem;
-        height: 2rem;
+        width: 2.8rem;
+        height: 2.8rem;
         object-fit: cover;
     }
 
     .MC-Left h1{
         font-family: "Croissant One", serif;
-        color: #0058ca;
-        margin-left: 2%;
+        color: #ffffff;
+        margin-left: 10%;
+        display: flex;
+        align-items: center;
         font-size: clamp(1.6rem, 1vw, 1.5rem);
     }
 
@@ -111,7 +118,7 @@ body {
     .MC-Right{
         align-items: center;
         display: flex;
-        justify-content: end;
+        justify-content: center;
         width: 30%;
         height: 100%;
         gap: 2%;
@@ -156,7 +163,7 @@ body {
         background-repeat: no-repeat;
         background-size: cover;
         color: white;
-        display: flex;  
+        display: flex;
         align-items: center;
         justify-content: center;
         height: 100vh;
@@ -204,12 +211,15 @@ body {
     }
 
     #MC-SignUp{
-        background-color: #101b2f;
-        border-radius: 10px;
-        width: 3.5rem;
+        background: linear-gradient(195deg, #1c1884, rgba(75, 60, 214, 0));
+        backdrop-filter: blur(1px);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         display: flex;
+        border-radius: 5px;
         align-items: center;
         justify-content: center;
+        color: white;
+        padding: 0.8rem 1.5rem;
     }
 
     #MC-SignUp:hover{
@@ -352,7 +362,7 @@ body {
         width: 80%;
         color: #969eab;
         font-size: clamp(1.2rem, 1vw, 1rem);
-        
+
     }
 
     .AS-Center{
@@ -413,7 +423,7 @@ body {
     }
 
     .ASC-Right p{
-    
+
         text-align: justify;
         color: #969eab;
         padding-top: 2%;
@@ -454,7 +464,7 @@ body {
         width: 50rem;
     }
 
-        
+
     .form-group{
         display: flex;
         justify-content: center;
@@ -539,7 +549,7 @@ body {
         height: 1.5rem;
     }
 
-    
+
     #Get-Started{
         margin-top: 20%;
         padding: 0.8rem 2.2rem;
@@ -653,7 +663,7 @@ body {
     .CS-content{
         width: 70%;
     }
-    
+
     .MC-Cont a{
         display: none;
     }
@@ -710,7 +720,7 @@ body {
         height: 30rem;
         object-fit: cover;
     }
-    
+
     footer{
         width: 100%;
         height: none;

@@ -1,5 +1,6 @@
 export function getPost(dataPostID, currentPhotoIndex) {
 
+
     let loadingBar = document.getElementById('loadingIndicator-Comment');
     loadingBar.style.display = 'flex';
 
@@ -16,7 +17,26 @@ export function getPost(dataPostID, currentPhotoIndex) {
     let Commentbtncont = document.querySelector('.Comment-btn-cont');
     let CaptionContent = document.querySelector('.Caption-Content');
     let CommentsSection = document.querySelector('.Comments-Section');
+    let commentContainer = document.querySelectorAll('.Comment-Container');
     let photos = [];
+
+    //Necessary to clear previous comments in the commentContainer
+    commentContainer.forEach(comments =>{
+        comments.style.visibility = "visible";
+    })
+
+    CCLeft.innerHTML = '';
+    CCRight1.style.width = "";
+    CCRight1.style.borderRadius = "";
+    PostFullName.innerHTML = "";
+    PostProfilePic.src = "";
+    PostCaption.innerText = "";
+    CommentsSection.innerHTML = "";
+    nextButton.style.display = "none";
+    prevButton.style.display = "none";
+    Commentbtncont.style.justifyContent = "space-between";
+
+
 
     fetch(`/getCommentPost/${dataPostID}/`, {
         method: 'GET',
@@ -31,7 +51,6 @@ export function getPost(dataPostID, currentPhotoIndex) {
         loadingBar.style.display = 'none';
 
         photos = result.photos;
-
         if (photos.length > 0) {
             CCLeft.innerHTML = '';
             CCLeft1.style.width = "40rem";
@@ -62,8 +81,8 @@ export function getPost(dataPostID, currentPhotoIndex) {
             NoImage.className= "NoImage";
             NoImage.src = "https://ik.imagekit.io/b9bdd5j68/thinking-39.png";
 
-            CCLeft.style.width = "50%";
-            CCLeft.style.height = "50%";
+            CCLeft.style.width = "60%";
+            CCLeft.style.height = "60%";
 
             let NoImageText = document.createElement('span');
             NoImageText.innerHTML = "No images found";
