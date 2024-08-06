@@ -37,7 +37,6 @@ export function getPost(dataPostID, currentPhotoIndex) {
     Commentbtncont.style.justifyContent = "space-between";
 
 
-
     fetch(`/getCommentPost/${dataPostID}/`, {
         method: 'GET',
         headers: {
@@ -58,7 +57,6 @@ export function getPost(dataPostID, currentPhotoIndex) {
             CCLeft.style.height = "";
             CCLeft.style.borderRadius = "10px";
             CCRight1.style.borderRadius = "10px";
-            CCRight1.style.width = "40rem";
 
             photos.forEach(function (photo, index) {
                 var img = document.createElement('img');
@@ -92,17 +90,17 @@ export function getPost(dataPostID, currentPhotoIndex) {
             nextButton.style.display = "none";
             prevButton.style.display = "none";
             CCRight1.style.borderRadius = "10px";
-            CCRight1.style.width = "40rem";
+
         }
 
         let account = result.accountInfo;
         PostFullName.innerHTML = account.firstname + " " + account.lastname;
 
-        let DefaultAvatar = '../static/images/default-avatar-profile-picture-male-icon.png';
 
-        if (account.profile_photo === DefaultAvatar) {
-            PostProfilePic.src = DefaultAvatar;
-        } else {
+        if(account.profile_photo.indexOf("static")){
+            PostProfilePic.src = account.profile_photo;
+        }
+        else {
             PostProfilePic.src = account.profile_photo + '/tr:q-100,tr:w-42,h-42';
         }
 

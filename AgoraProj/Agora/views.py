@@ -624,7 +624,61 @@ def randomProfile(request, id):
 
         return render(request, 'random-profile.html', context)
     else:
-        return redirect('dashboard')
+        otherAccount = Account.objects.get(id=id)
+
+        showfriends = showFriends(request)
+        hashtags = showTags(request)
+        audience = getAudience(request)
+        accountInfo = getAccountInfo(request)
+        glowCountOfPosts = 0
+
+        posts_with_photos = {}
+        totalGlows = 0
+        total_photos_count = 0
+        unique_acc_who_glowed = {}
+        posts = Post.objects.filter(account=otherAccount).order_by('-dateTime')
+
+        for post in posts:
+            photos = Photo.objects.filter(post=post)
+            if photos.exists():
+                countphotos = photos.count()
+                total_photos_count += countphotos
+                glows = Glow.objects.filter(post=post).order_by('-timestamp')
+                comments = Comment.objects.filter(post=post)
+                totalPostGlows = Glow.objects.filter(post=post).count()
+
+                totalGlows += totalPostGlows
+
+                for glow in glows:
+                    unique_acc_who_glowed[glow.account.id] = [
+                        glow.account.firstname,
+                        glow.account.lastname,
+                        glow.account.profile_photo,
+                        glow.timestamp,
+                    ]
+
+                posts_with_photos[post] = {
+                    'photos': photos,
+                    'totalPhotos': countphotos,
+                    'time_ago': time_ago(post.dateTime),
+                    'glows_count': glows.count(),
+                    'comments_count': comments.count(),
+                }
+
+        context = {
+            'randomaccount': otherAccount,
+            'accountInfo': accountInfo,
+            'friends': showfriends,
+            'hashtags': hashtags,
+            'audienceInfo': audience,
+            'posts': {'posts_with_photos': posts_with_photos},
+            'totalGlows': totalGlows,
+            'total_photos_count': total_photos_count,
+            'unique_acc_who_glowed': unique_acc_who_glowed,
+        }
+
+        return render(request, 'random-profile_guest.html', context)
+
 
 
 '''

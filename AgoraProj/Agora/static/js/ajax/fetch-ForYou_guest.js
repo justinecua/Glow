@@ -1,6 +1,4 @@
 import { SendCommentToDB } from "./send-comment.js";
-import { sendLike } from "./send-like.js";
-import { sendUnlike } from "./send-unlike.js";
 import { getPost } from "./show-comments-images.js";
 
 let NCenterContent = document.querySelector('.NCenter-content');

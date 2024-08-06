@@ -147,7 +147,6 @@ body {
   color: var(--color);
   background-color: var(--bg-color);
   overflow-x: hidden;
-
 }
 
 
@@ -2360,7 +2359,7 @@ body {
   /*---------------------------------My profile -------------------------------------------------*/
 
   .Profile-Container {
-    width: 100%;
+    width: 50%;
     border-radius: 15px;
     padding: 1rem;
     background-color: var(--nav-color);
@@ -3002,8 +3001,6 @@ body {
     padding: 1rem;
   }
 
-
-
   #Comment-Overlay {
     width: 100vw;
     height: 100vh;
@@ -3015,7 +3012,6 @@ body {
     align-items: center;
     backdrop-filter: blur(2px);
     overflow: hidden;
-
   }
 
 
@@ -3044,11 +3040,10 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
+    background-color: var(--nav-color);
+    border-top-left-radius: 10px;
+    border-top-left-radius: 10px;
     width: 40rem;
-    max-width: 40rem;
-    background-color: var(--bg-color);
-    border-top-left-radius: 10px;
-    border-top-left-radius: 10px;
   }
 
 
@@ -3071,6 +3066,7 @@ body {
     border-left: var(--border-color);
     height: 100%;
     background-color: var(--nav-color);
+    width: 40rem;
   }
   .CC-Left,
   .CC-Right {
@@ -3104,7 +3100,6 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
-
   }
 
   .CC-Left-Images img{
@@ -3212,7 +3207,7 @@ body {
 
   .Post-Caption {
     font-family: "Work Sans", sans-serif;
-    font-size: clamp(1rem, 1vw, 1rem);
+    font-size: clamp(0.7rem, 1vw, 1rem);
     padding: 1rem;
     overflow-wrap: break-word;
     max-height: 20rem;
@@ -3338,7 +3333,7 @@ body {
     overflow-x: hidden;
     width: 100%;
     font-family: "Work Sans", sans-serif;
-    font-size: clamp(0.9rem, 1vw, 0.9rem);
+    font-size: clamp(0.8rem, 1vw, 1rem);
     padding: 10px;
     max-height: 25rem;
   }
@@ -4489,13 +4484,14 @@ body {
   }
 
   .Comment-Container {
+    width: 20rem;
     height: 45rem;
   }
 
   .CC-Left {
     width: 30rem;
-
   }
+
 
   #loginNav{
     display: flex;
@@ -4512,6 +4508,7 @@ body {
   .CC-Right {
     width: 30rem;
   }
+
 
   .next-button img {
     width: 1rem;
@@ -4577,9 +4574,7 @@ body {
   .responsive {
     max-width: 770px;
   }
- .Comment-Container {
-    width: 20rem;
-  }
+
   #SearchNav {
     display: flex;
   }
@@ -4616,17 +4611,19 @@ body {
   }
 
   .Comment-Container {
-
     height: 45rem;
   }
 
   .CC-Left {
-    width: 30rem;
-
+    width: 25rem;
   }
 
   .CC-Right {
-    width: 30rem;
+    width: 25rem;
+  }
+
+  .NoImageText{
+    margin-top: -1.5rem;
   }
 
   .next-button img {
@@ -5556,7 +5553,7 @@ body {
 }
 
 .CC-Top p{
-  font-size: clamp(0.8rem, 0.9vw, 0.8rem);
+  font-size: clamp(0.9rem, 0.9vw, 0.9rem);
   color: var(--text-color);
   font-weight: 600;
   margin-top: -0.7rem;
@@ -5581,7 +5578,7 @@ body {
 .CC-Footer2 p,
 .CC-Footer3 button,
 .CC-Footer4 p{
-  font-size: clamp(0.7rem, 0.9vw, 0.8rem);
+  font-size: clamp(0.8rem, 0.9vw, 0.8rem);
 
 }
 
@@ -5984,6 +5981,7 @@ body {
   .CC-Bottom div{
       display: flex;
       align-items: center;
+      font-size: clamp(0.8rem, 1vw, 0.8rem);
   }
 
   .CC-Footer{
@@ -6141,7 +6139,6 @@ body {
       padding: 0.4rem;
       font-family: "Work Sans", sans-serif;
       font-optical-sizing: auto;
-      font-size: 0.8rem;
       margin-top: 1rem;
       margin-bottom: 1rem;
   }
