@@ -1,5 +1,6 @@
 import { validatelogin } from "./ajax/validatelogin.js"
 import { signup } from "./ajax/signup.js"
+import { fetchNewUsers } from "./ajax/newOnGlow.js"
 
 let LoginOverlaybtn = document.getElementById('LoginOverlay-btn');
 let LoginOverlay = document.getElementById('Login-Overlay');
@@ -20,6 +21,8 @@ let pass2signup = document.getElementById('pass2-signup');
 let signUp_redirect = document.getElementById('signUp-redirect');
 let login_redirect = document.getElementById('login-redirect');
 let loginNav = document.getElementById('loginNav');
+
+fetchNewUsers();
 
 signUp_redirect.addEventListener('click', async() =>{
   LoginOverlay.style.display = "none";

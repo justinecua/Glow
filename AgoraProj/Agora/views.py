@@ -432,6 +432,21 @@ def FetchForYou(request):
             print(f"Error fetching posts: {e}")
             return JsonResponse({'status': 'error', 'message': str(e)})
 
+def fetchNewUsers(request):
+    try:   
+        date_joined_gt = timezone.make_aware(timezone.datetime(2024, 5, 15)) #make_aware is required if you filter date without a timezone
+        users = User.objects.filter(date_joined__gt=date_joined_gt).select_related('account').order_by('-date_joined').values(
+            'account__profile_photo',
+            'username',
+            'account__firstname',
+            'account__lastname',
+        )[:25]
+
+        accounts = list(users)
+            
+        return JsonResponse({'status': 'success', 'accounts': accounts})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)})
 
 
 def time_ago(post_datetime):
