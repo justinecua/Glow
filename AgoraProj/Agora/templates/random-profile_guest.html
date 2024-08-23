@@ -4,7 +4,7 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
-    <script type="module" src="{% static 'js/toggle.js' %}"></script>
+    <script type="module" src="{% static 'js/toggle.js' %}"></script> 
     <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
 {% endblock %}
 
@@ -150,10 +150,7 @@
             <h1> Welcome, {{ request.user.username }}!</h1>
             <a href="{% url 'account_logout' %}">Sign Out</a>
 
-        -->
-
-<script type="module" src="{% static 'js/nav.js' %}"></script>
-
+    -->
 
         <div class="NCenter">
 
@@ -183,7 +180,13 @@
 
                             <div class="PPC-Profile-Cont">
                                 <div class="PPC-My-Profile">
-                                    <img src="{{ randomaccount.profile_photo }}">
+                                 {% with dynamicProf=randomaccount.profile_photo %}
+                                    {% if 'static' in dynamicProf %}
+                                        <img class="lazy" src="{{ dynamicProf }}" data-src="{{ dynamicProf }}">
+                                    {% else %}
+                                        <img class="lazy" src="{{ dynamicProf|add:'/tr:w-250,h-250,q-90,bl-30' }}" data-src="{{ dynamicProf|add:'/tr:w-400,h-400,q-90' }}">
+                                    {% endif %}
+                                {% endwith %}
                                 </div>
 
                                     <div class="PPC-Buttons">
@@ -218,9 +221,8 @@
                                                 }
                                             </style>
                                                 <button id="Cancel-ReqFriend-Btn"  style="display:none"> <div id="loadingIndicator2"><img src="../static/images/rolling.gif"></div>Cancel Request</button>
-                                                <button id="Add-Friend-Btn"> <div id="loadingIndicator2"><img src="../static/images/rolling.gif"></div>Add Friend</button>
-                                            {% endif %}
-                                            <button id="Message-Btn">Message</button>
+                                                {% endif %}
+                                            
                                         </div>
 
                                     </div>
@@ -293,31 +295,32 @@
                                 <span id="Prof-FriendCounter"> {{ totalGlows }}</span>
                                 <span id="Prof-FriendTitle">total glows</span>
                                 {% else %}
+                                <span id="Prof-FriendCounter"> {{ totalGlows }}</span>
+                                 <span id="Prof-FriendTitle">total glows</span>
 
                                 {% endif %}
                             </div>
                             <div class="FGCR_Right">
 
-                                {% if unique_acc_who_glowed %}
-                                    {% for account_id, info in unique_acc_who_glowed.items %}
-                                        {% if forloop.counter0 < 5 %}
-                                            <div class="RandomProfFriends_Cont">
-                                            <img src="{{ info.2 }}">
-                                            <span class="tooltiptext">{{ info.0 }} {{ info.1 }}</span>
-                                            </div>
-                                        {% endif %}
+                               {% if unique_acc_who_glowed %}
+                                  {% for account_id, info in unique_acc_who_glowed.items %}
+                                      {% if forloop.counter <= 5 %}
+                                          <div class="RandomProfFriends_Cont">
+                                              <img src="{{ info.2 }}">
+                                              <span class="tooltiptext">{{ info.0 }} {{ info.1 }}</span>
+                                          </div>
+                                      {% endif %}
+                                  {% endfor %}
 
-                                        {% if forloop.last and unique_acc_who_glowed|length > 5%}
-                                            {% with remaining=unique_acc_who_glowed|length|add:-5 %}
-                                            <div class="RandomProfFriends_Cont">
-                                                <span> +{{ remaining }}</span>
-                                            </div>
-                                            {% endwith %}
-                                        {% endif %}
-                                    {% endfor %}
-
-                                {% else %}
-                                {% endif %}
+                                  {% if unique_acc_who_glowed|length > 5 %}
+                                      {% with remaining=unique_acc_who_glowed|length|add:-5 %}
+                                          <div class="RandomProfFriends_Cont">
+                                              <span> +{{ remaining }}</span>
+                                          </div>
+                                      {% endwith %}
+                                  {% endif %}
+                              {% else %}
+                              {% endif %}
 
                             </div>
                         </div>
@@ -345,7 +348,7 @@
                                             {% if post_info.photos %}
                                                 {% for photo in post_info.photos %}
                                                     <div class="UPC-content2">
-                                                    <img class="lazy" src="{{ photo.link|add:'/tr:q-90,tr:w-450,bl-30,q-90,h-450?cm-pad_resize,bg-F3F3F3' }}" data-src="{{ photo.link | add:'/tr:q-90,tr:w-450,h-450?cm-pad_resize,bg-F3F3F3 '}}">
+                                                    <img class="lazy" src="{{ photo.link|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50?cm-pad_resize,bg-F3F3F3' }}" data-src="{{ photo.link | add:'/tr:q-90,tr:w-150,h-150?cm-pad_resize,bg-F3F3F3 '}}">
                                                     </div>
                                                 {% endfor %}
 
@@ -355,123 +358,184 @@
 
                                     {% endfor %}
 
-                                    {% else %}
-
-                                    <style>
-                                    .UserProf-Main{
-                                        height: 45vh;
-                                    }
-                                    </style>
-
-                                    <p id="Posts-Message">No posts yet</p>
+                                {% else %}
+                                  <div class="NCU-NoPhotos">
+                                    <img src="../static/images/No-Product--Streamline-Tokyo (1).png" alt="">
+                                     {% if randomaccount %}
+                                    <span>{{ randomaccount.firstname }} has no photos</span>
+                                    {% endif %}
+                                  </div>
                                 {% endif %}
                         </div>
                     </div>
                     <div class="User_Title_Container">
-                        <p>Posts</p>
+                        <p>Written Posts</p>
                     </div>
-                <div class="RP-PostContainer">
-                    <div class="RP-PostContainerList">
+          <div class="RP-PostContainer">
+            <div class="RP-PostContainerList">
+                {% if posts.posts_without_photos %}
+                    {% for post, post_info in posts.posts_without_photos.items %}
+                        <div class="User-Post-Container2">
+                            <div class="UPC-content-Top">
+                                <div class="UPCCT-Left">
+                                    <a href="profile/{{ post.account.id }}">
+                                        <div class="Post-Prof-Cont">
+                                          {% with dynamicProf=post.account.profile_photo %}
+                                                {% if 'static' in dynamicProf %}
+                                                    <img class="lazy" src="{{ dynamicProf }}" data-src="{{ dynamicProf }}">
+                                                {% else %}
+                                                    <img class="lazy" src="{{ dynamicProf|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50' }}" data-src="{{ post.account.profile_photo | add:'/tr:q-90,tr:w-150,h-150?'}}">                                                {% endif %}
+                                            {% endwith %}
 
-                        {% if posts.posts_with_photos %}
-                        {% for post, post_info in posts.posts_with_photos.items %}
-                            <div class="User-Post-Container2">
-                                <div class="UPC-content-Top">
-                                    <div class="UPCCT-Left">
-                                        <a href="profile/{{ post.account.id }}">
-                                            <div class="Post-Prof-Cont">
-                                                <img src="{{ post.account.profile_photo }}">
-                                            </div>
-                                        </a>
-                                        <div class="Post-Prof-Cont2">
-                                            <div id="Post-Prof-Cont-Name1" class="Post-Prof-Cont-Name">
-                                                <a href="profile/{{ post.account.id }}">
-                                                    <p class="Photo-Post-username">{{ post.account.firstname }}</p>
-                                                </a>
-                                                <p class="Post-Photo-Date-Time">{{ post_info.time_ago }}</p>
-                                            </div>
-                                            <div class="Post-Prof-Cont-Username">
-                                                <p>@{{ post.account.auth_user.username }}</p>
-                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="UPCCT-Right">
+                                    </a>
+                                    <div class="Post-Prof-Cont2">
+                                        <div id="Post-Prof-Cont-Name1" class="Post-Prof-Cont-Name">
+                                            <a href="profile/{{ post.account.id }}">
+                                                <p class="Photo-Post-username">{{ post.account.firstname }}</p>
+                                            </a>
+                                            <p class="Post-Photo-Date-Time">{{ post_info.time_ago }}</p>
+                                        </div>
+                                        <div class="Post-Prof-Cont-Username">
+                                            <p>@{{ post.account.auth_user.username }}</p>
+                                        </div>
                                     </div>
                                 </div>
-
-                                {% if post_info.photos %}
-                                <div class="UPC-content-grid {% if post_info.photos|length == 3 %}three-photos{% endif %}">
-                                    {% for photo in post_info.photos %}
-                                        <div class="UPC-content {% if post_info.photos|length == 1 %}single-photo{% endif %}">
-                                            <img src="{{ photo.link|add:'?cm-pad_resize,bg-F3F3F3' }}" alt="">
-                                        </div>
+                                <div class="UPCCT-Right">
+                                </div>
+                            </div>
+                            <div class="UPC-content-Bottom">
+                                <div class="UPCB-Caption">
+                                    <div class="Cap-Caption">
+                                        <p class="postCaption">{{ post.caption }}</p>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="UPCB-Tags">
+                                    {% for tag in post.tags.all %}
+                                        <a href="/tags/{{ tag.id }}"><div><span class="hashtags">#{{ tag.tag }}</span></div></a>
                                     {% endfor %}
                                 </div>
-                                {% else %}
-                                <div class="UPCB-Tags" style="height: 2rem"></div>
-                                {% endif %}
-
-                                <div class="UPC-content-Bottom">
-                                    <div class="UPCB-Caption">
-                                        <div class="Cap-Caption">
-                                            <p class="postCaption">{{ post.caption }}</p>
-                                            <br>
+                                <div class="UPCB-Reacts">
+                                    <div class="RM_Reacts">
+                                        <div class="RGlowReact-Div" data-PostIDD="{{ post.id }}" data-AccID="{{ post.account.id }}">
+                                            {% if post.has_liked %}
+                                                <span class="ChangeGlow">&#10022;</span>
+                                            {% else %}
+                                                <img class="glow-react" src="../static/images/glow4.png" alt="Glow">
+                                            {% endif %}
+                                            
                                         </div>
-                                    </div>
-                                    <div class="UPCB-Tags">
-                                        {% for tag in post.tags.all %}
-                                            <a href="/tags/{{ tag.id }}"><div><span class="hashtags">#{{ tag.tag }}</span></div></a>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="UPCB-Reacts">
-                                        <div class="Reacts">
-                                            <div class="GlowReact-Div" data-PostIDD="{{ post.id }}" data-AccID="{{ post.account.id }}">
-                                                {% if post.has_liked %}
-                                                    <span class="ChangeGlow">&#10022;</span>
-                                                {% else %}
-                                                    <img class="glow-react" src="../static/images/glow4.png" alt="Glow">
-                                                {% endif %}
+                                        <div class="RM_glowCount">
+                                              {% if post_info.glows_count > 1 %}
+                                                <p>{{ post_info.glows_count }}</p>
+                                              {% endif %} 
                                             </div>
-                                            <div class="React-Div Comment-Btn-Show" data-PostID="{{ post.id }}">
-                                                <img src="../static/images/chat (2).png" alt="">
-                                            </div>
+                                        <div class="RReact-Div Comment-Btn-Show" data-PostID="{{ post.id }}">
+                                            <img src="../static/images/chat (2).png" alt="Chat">
                                         </div>
-                                        <div class="React-Counts">
-                                            <div class="glow-count">
-                                                {% if post_info.glows_count > 1 %}
-                                                    <p>{{ post_info.glows_count }} glows</p>
-                                                {% else %}
-                                                    <p>{{ post_info.glows_count }} glow</p>
-                                                {% endif %}
-                                            </div>
-                                            <div class="Comments">
-                                                {% if post_info.comments_count > 1 %}
-                                                    <p>{{ post_info.comments_count }} comments</p>
-                                                {% else %}
-                                                    <p>{{ post_info.comments_count }} comment</p>
-                                                {% endif %}
-                                            </div>
-                                        </div>
+                                        <div class="RM_commentCount">
+                                        {% if post_info.comments_count > 1 %}
+                                          <p>{{ post_info.comments_count }}</p> 
+                                        {% endif %}
+                                        </div>                                    
                                     </div>
                                 </div>
                             </div>
-                        {% endfor %}
-
-                    {% else %}
-
-                        <style>
-                        .UserProf-Main{
-                            height: 45vh;
-                        }
-                        </style>
-
-                        <p id="Posts-Message">No posts yet</p>
-                    {% endif %}
-
-                    </div>
-
+                        </div>
+                    {% endfor %}
+                {% endif %}
                 </div>
+              </div>
+
+            <div class="User_Title_Container_Image">
+                <p>Image Posts</p>
             </div>
+            <div class="RP-PostContainer">
+        <div class="RP-PostContainerList">
+
+            {% if posts.posts_with_photos %}
+                {% for post, post_info in posts.posts_with_photos.items %}
+                    <div class="User-Post-Container2">
+                        <div class="UPC-content-Top">
+                            <div class="UPCCT-Left">
+                                <a href="profile/{{ post.account.id }}">
+                                    <div class="Post-Prof-Cont">
+                                        <img class="lazy" src="{{ post.account.profile_photo|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50' }}" data-src="{{ post.account.profile_photo | add:'/tr:q-90,tr:w-150,h-150?'}}">
+                                    </div>
+                                </a>
+                                <div class="Post-Prof-Cont2">
+                                    <div id="Post-Prof-Cont-Name1" class="Post-Prof-Cont-Name">
+                                        <a href="profile/{{ post.account.id }}">
+                                            <p class="Photo-Post-username">{{ post.account.firstname }}</p>
+                                        </a>
+                                        <p class="Post-Photo-Date-Time">{{ post_info.time_ago }}</p>
+                                    </div>
+                                    <div class="Post-Prof-Cont-Username">
+                                        <p>@{{ post.account.auth_user.username }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="UPCCT-Right">
+                            </div>
+                        </div>
+
+                        {% if post_info.photos %}
+                        <div class="UPC-content-grid {% if post_info.photos|length >= 2 %}three-photos{% endif %}">
+                            {% for photo in post_info.photos %}
+                                <div class="UPC-content {% if post_info.photos|length == 1 %}single-photo{% endif %}">
+                                    <img class="lazy" src="{{ photo.link|add:'/tr:q-90,tr:w-150,bl-30,q-90,h-150?cm-pad_resize,bg-F3F3F3' }}" data-src="{{ photo.link|add:'/tr:q-90,tr:w-350,h-350' }}"alt="">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="UPCB-Tags" style="height: 2rem"></div>
+                        {% endif %}
+
+                        <div class="UPC-content-Bottom">
+                            <div class="UPCB-Caption">
+                                <div class="Cap-Caption">
+                                    <p class="postCaption">{{ post.caption }}</p>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="UPCB-Tags">
+                                {% for tag in post.tags.all %}
+                                    <a href="/tags/{{ tag.id }}"><div><span class="hashtags">#{{ tag.tag }}</span></div></a>
+                                {% endfor %}
+                            </div>
+                            <div class="UPCB-Reacts">
+                                <div class="RM_Reacts">
+                                    <div class="RGlowReact-Div" data-PostIDD="{{ post.id }}" data-AccID="{{ post.account.id }}">
+                                        {% if post.has_liked %}
+                                            <span class="ChangeGlow">&#10022;</span>
+                                        {% else %}
+                                            <img class="glow-react" src="../static/images/glow4.png" alt="Glow">
+                                        {% endif %}
+                                        
+                                    </div>
+                                    <div class="RM_glowCount">
+                                          {% if post_info.glows_count > 1 %}
+                                            <p>{{ post_info.glows_count }}</p>
+                                          {% endif %} 
+                                        </div>
+                                    <div class="RReact-Div Comment-Btn-Show" data-PostID="{{ post.id }}">
+                                        <img src="../static/images/chat (2).png" alt="Chat">
+                                    </div>
+                                     <div class="RM_commentCount">
+                                        {% if post_info.comments_count > 1 %}
+                                          <p>{{ post_info.comments_count }}</p> 
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+        </div>
+    </div>
 
     </div>
 </div>

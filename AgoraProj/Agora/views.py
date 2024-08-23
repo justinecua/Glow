@@ -585,38 +585,44 @@ def randomProfile(request, id):
         randomUserFriends = showRandomUsers_Friends(request, randomAccId)
         glowCountOfPosts = 0
 
+        posts = Post.objects.filter(account=otherAccount).order_by('-dateTime')
         posts_with_photos = {}
+        posts_without_photos = {}
         totalGlows = 0
         total_photos_count = 0
         unique_acc_who_glowed = {}
-        posts = Post.objects.filter(account=otherAccount).order_by('-dateTime')
 
         for post in posts:
             photos = Photo.objects.filter(post=post)
+            glows = Glow.objects.filter(post=post).order_by('-timestamp')
+            comments = Comment.objects.filter(post=post)
+            totalPostGlows = Glow.objects.filter(post=post).count()
+
+            totalGlows += totalPostGlows
+
+            for glow in glows:
+                unique_acc_who_glowed[glow.account.id] = [
+                    glow.account.firstname,
+                    glow.account.lastname,
+                    glow.account.profile_photo,
+                    glow.timestamp,
+                ]
+
+            post_info = {
+                'totalPhotos': photos.count(),
+                'time_ago': time_ago(post.dateTime),
+                'glows_count': glows.count(),
+                'comments_count': comments.count(),
+            }
+
             if photos.exists():
-                countphotos = photos.count()
-                total_photos_count += countphotos
-                glows = Glow.objects.filter(post=post).order_by('-timestamp')
-                comments = Comment.objects.filter(post=post)
-                totalPostGlows = Glow.objects.filter(post=post).count()
-
-                totalGlows += totalPostGlows
-
-                for glow in glows:
-                    unique_acc_who_glowed[glow.account.id] = [
-                        glow.account.firstname,
-                        glow.account.lastname,
-                        glow.account.profile_photo,
-                        glow.timestamp,
-                    ]
-
+                total_photos_count += photos.count()
                 posts_with_photos[post] = {
+                    **post_info,
                     'photos': photos,
-                    'totalPhotos': countphotos,
-                    'time_ago': time_ago(post.dateTime),
-                    'glows_count': glows.count(),
-                    'comments_count': comments.count(),
                 }
+            else:
+                posts_without_photos[post] = post_info
 
         context = {
             'randomaccount': otherAccount,
@@ -630,7 +636,10 @@ def randomProfile(request, id):
             'hashtags': hashtags,
             'search_results': search.get('results', []),
             'audienceInfo': audience,
-            'posts': {'posts_with_photos': posts_with_photos},
+            'posts': {
+                'posts_with_photos': posts_with_photos,
+                'posts_without_photos': posts_without_photos,
+            },
             'randomUserFriends': randomUserFriends,
             'totalGlows': totalGlows,
             'total_photos_count': total_photos_count,
@@ -639,46 +648,55 @@ def randomProfile(request, id):
 
         return render(request, 'random-profile.html', context)
     else:
+        # Similar changes for the guest case
         otherAccount = Account.objects.get(id=id)
+        randomAccId = User.objects.get(id=otherAccount.auth_user.id)
 
         showfriends = showFriends(request)
         hashtags = showTags(request)
         audience = getAudience(request)
         accountInfo = getAccountInfo(request)
+        randomUserFriends = showRandomUsers_Friends(request, randomAccId)
         glowCountOfPosts = 0
 
+        posts = Post.objects.filter(account=otherAccount).order_by('-dateTime')
         posts_with_photos = {}
+        posts_without_photos = {}
         totalGlows = 0
         total_photos_count = 0
         unique_acc_who_glowed = {}
-        posts = Post.objects.filter(account=otherAccount).order_by('-dateTime')
 
         for post in posts:
             photos = Photo.objects.filter(post=post)
+            glows = Glow.objects.filter(post=post).order_by('-timestamp')
+            comments = Comment.objects.filter(post=post)
+            totalPostGlows = Glow.objects.filter(post=post).count()
+
+            totalGlows += totalPostGlows
+
+            for glow in glows:
+                unique_acc_who_glowed[glow.account.id] = [
+                    glow.account.firstname,
+                    glow.account.lastname,
+                    glow.account.profile_photo,
+                    glow.timestamp,
+                ]
+
+            post_info = {
+                'totalPhotos': photos.count(),
+                'time_ago': time_ago(post.dateTime),
+                'glows_count': glows.count(),
+                'comments_count': comments.count(),
+            }
+
             if photos.exists():
-                countphotos = photos.count()
-                total_photos_count += countphotos
-                glows = Glow.objects.filter(post=post).order_by('-timestamp')
-                comments = Comment.objects.filter(post=post)
-                totalPostGlows = Glow.objects.filter(post=post).count()
-
-                totalGlows += totalPostGlows
-
-                for glow in glows:
-                    unique_acc_who_glowed[glow.account.id] = [
-                        glow.account.firstname,
-                        glow.account.lastname,
-                        glow.account.profile_photo,
-                        glow.timestamp,
-                    ]
-
+                total_photos_count += photos.count()
                 posts_with_photos[post] = {
+                    **post_info, #copiees all key value pairs of post_info from above
                     'photos': photos,
-                    'totalPhotos': countphotos,
-                    'time_ago': time_ago(post.dateTime),
-                    'glows_count': glows.count(),
-                    'comments_count': comments.count(),
                 }
+            else:
+                posts_without_photos[post] = post_info
 
         context = {
             'randomaccount': otherAccount,
@@ -686,13 +704,18 @@ def randomProfile(request, id):
             'friends': showfriends,
             'hashtags': hashtags,
             'audienceInfo': audience,
-            'posts': {'posts_with_photos': posts_with_photos},
+            'posts': {
+                'posts_with_photos': posts_with_photos,
+                'posts_without_photos': posts_without_photos,
+            },
             'totalGlows': totalGlows,
             'total_photos_count': total_photos_count,
+            'randomUserFriends': randomUserFriends,
             'unique_acc_who_glowed': unique_acc_who_glowed,
         }
 
         return render(request, 'random-profile_guest.html', context)
+
 
 
 
@@ -1126,7 +1149,32 @@ def showRandomUsers_Friends(request, id):
         except Account.DoesNotExist:
             return None
     else:
-        return None
+        accID = Account.objects.get(auth_user=id)
+        friends = Friend.objects.filter((Q(friend=accID) | Q(user=accID)) & Q(status="Friends")).order_by('date_became_friends').reverse()[:6]
+        totalfriends = Friend.objects.filter((Q(friend=accID) | Q(user=accID)) & Q(status="Friends")).count()
+
+        friendsInfo = []
+        for friend in friends:
+            if friend.user == accID:
+                friend_account = friend.friend
+            else:
+                friend_account = friend.user
+
+            friendsInfo.append({
+                'firstname': friend_account.firstname,
+                'lastname': friend_account.lastname,
+                'profile_photo': friend_account.profile_photo,
+                'date_became_friends': friend.date_became_friends,
+                'id': friend_account.id
+            })
+
+        context = {
+            'totalfriends': totalfriends,
+            'friendsInfo': friendsInfo
+        }
+        return context
+          
+ 
 
 def showTags(request):
     if request.user.is_authenticated:
