@@ -1,0 +1,48 @@
+<!-- game_list.html -->
+{% extends "master.html" %}
+{% load static %}
+{% load account %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
+    <script type="module" src="{% static 'js/toggle.js' %}"></script>
+    <script type="module" src="{% static 'js/post.js' %}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+{% include "modal/edit-userprofile.html" %}
+{% include "nav-right.html" %}
+
+<style>
+    .game-item {
+        margin-bottom: 20px;
+    }
+    .game-item img {
+        width: 200px; /* Adjust as needed */
+        height: auto;
+    }
+    .game-item button {
+        margin-top: 10px;
+    }
+</style>
+
+<div id="root">
+    {% if request.user.is_authenticated %}
+        {% include "nav.html" %}
+
+        <div class="NCenter">
+            <h1>Available Games</h1>
+            {% for game in games %}
+                <div class="game-item">
+                    <img src="{% static game.image %}" alt="{{ game.name }}">
+                    <h2>{{ game.name }}</h2>
+                    <a href="{% url 'game_launch' %}?game_id={{ game.id }}" class="play-button">Play</a>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div id="messages"></div>
+    {% endif %}
+</div>
+{% endblock %}

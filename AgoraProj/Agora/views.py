@@ -13,6 +13,7 @@ import requests
 import base64
 import json
 import html
+import secrets
 import datetime
 from ably import AblyRealtime
 import asyncio
@@ -1480,3 +1481,71 @@ class CustomPasswordResetFromKeyView(PasswordResetFromKeyView):
 
 class CustomPasswordResetFromKeyDoneView(PasswordResetFromKeyDoneView):
     template_name = 'account/password_reset_from_key_done.html'
+
+
+def generate_session_id():
+    return secrets.token_hex(16)
+
+
+def game_list(request):
+
+    games = [
+        {"id": "1215", "name": "DG Club", "image": "images/games/DGM_DG_CLUB.jpg"},
+        {"id": "1192", "name": "Shinobi Wars", "image": "images/games/DGM_SHINOBI_WARS.jpg"},
+        {"id": "1193", "name": "Saiyan Warriors", "image": "images/games/DGM_SAIYAN_WARRIORS.jpg"},
+    ]
+    return render(request, 'game_list.html', {'games': games})
+
+
+
+def game_launch(request):
+    if request.method == 'GET':
+
+        api_key = request.GET.get('api_key', 'rMrNJRwYKow1ot13')
+        session_id = generate_session_id()
+        provider = request.GET.get('provider', 'dragongaming')
+        game_type = request.GET.get('game_type', 'slots')
+        game_id = request.GET.get('game_id')
+        platform = request.GET.get('platform', 'desktop')
+        language = request.GET.get('language', 'en')
+        amount_type = request.GET.get('amount_type', 'fun')
+        lobby_url = request.GET.get('lobby_url', '')
+        deposit_url = request.GET.get('deposit_url', '')
+        
+        context = {
+            "id": request.GET.get('context_id', '0'),
+            "username": request.GET.get('context_username', 'fun_player'),
+            "country": request.GET.get('context_country', 'PH'),
+            "currency": request.GET.get('context_currency', 'USD')
+        }
+        
+        api_url = "https://staging-api.dragongaming.com/v1/games/game-launch/"
+        
+        headers = {
+            "Content-Type": "application/json"
+        }
+        
+        payload = {
+            "api_key": api_key,
+            "session_id": session_id,
+            "provider": provider,
+            "game_type": game_type,
+            "game_id": game_id,
+            "platform": platform,
+            "language": language,
+            "amount_type": amount_type,
+            "lobby_url": lobby_url,
+            "deposit_url": deposit_url,
+            "context": context
+        }
+
+        response = requests.post(api_url, headers=headers, json=payload)
+        print(f"API Response Status Code: {response.status_code}")
+        response_data = response.json()
+        print(f"API Response Data: {response_data}")
+        
+        launch_url = response_data.get("result", {}).get("launch_url", "")
+        
+        return render(request, 'game_launch.html', {'launch_url': launch_url})
+    
+    return JsonResponse({"error": "Method not allowed"}, status=405)

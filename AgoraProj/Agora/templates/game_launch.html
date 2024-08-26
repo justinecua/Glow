@@ -1,0 +1,145 @@
+{% extends "master.html" %}
+{% load static %}
+{% load account %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
+    <script type="module" src="{% static 'js/toggle.js' %}"></script>
+    <script type="module" src="{% static 'js/post.js' %}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+{% include "modal/edit-userprofile.html" %}
+{% include "nav-right.html" %}
+
+<style>
+    .dot_online {
+  height: 14px;
+  width: 14px;
+  background-color: rgb(14, 27, 214);
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot_offline {
+  height: 14px;
+  width: 14px;
+  background-color: rgb(65, 65, 71);
+  border-radius: 50%;
+  display: inline-block;
+}
+iframe {
+            width: 100%;
+            height: 600px; /* Adjust height as needed */
+            border: none;
+        }
+</style>
+
+<div id="Comment-Overlay">
+
+    <div class="Comment-Container">
+        <div class="Comment-subCont">
+            <div class="CC-Left">
+                <div class="CC-Left-Images">
+
+                </div>
+
+                <div class="Comment-btn-cont">
+                    <button class="prev-button"><img src="../static/images/arrow.png" alt=""></button>
+                    <button class="next-button"><img src="../static/images/right-arrow.png" alt=""></button>
+                </div>
+
+            </div>
+
+            <div class="CC-Right">
+                <div class="CCR-Main1">
+                    <div class="CCR-Top">
+                        <div class="CCRT-Sub">
+                            <div class="CCRT-Left">
+                                <img class="Post-ProfilePic" src="">
+                            </div>
+                            <div class="CCRT-Right">
+                                <p class="Post-FullName"></p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button class="Close-Comment">x</button>
+                        </div>
+                    </div>
+
+                    <div class="CCRT-Mid">
+                        <div class="Caption-Content">
+                            <p class="Post-Caption"></p>
+                        </div>
+                        <div class="Comments-Section">
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="CCR-Main2">
+                    <div class="User-Comment-Cont">
+                        {% if accountInfo %}
+                        <div id="UserProf-Comment">
+                            <img src="{{ accountInfo.profile_photo }}" alt="">
+                        </div>
+                        {% endif %}
+
+                        <input id="Comment-input" type="text" placeholder="Add a comment..">
+                        <button id="Send-Comment">Send</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="root">
+        {% if request.user.is_authenticated %}
+    <!--
+            <h1> Welcome, {{ request.user.username }}!</h1>
+            <a href="{% url 'account_logout' %}">Sign Out</a>
+
+        -->
+        {% include "nav.html" %}
+
+        <div class="NCenter">
+            <br>
+            <h1>Game Launch</h1>
+            {% if launch_url %}
+                <iframe src="{{ launch_url }}" allowfullscreen></iframe>
+            {% else %}
+                <p>No game URL available.</p>
+            {% endif %}
+                </div>
+        </div>
+
+
+
+        <div id="messages"></div>
+    {% endif %}
+</div>
+<script>
+    let EditMyProfile = document.getElementById('Edit-MyProfile');
+    let EditProfileOverlay = document.getElementById('EditProfile-Overlay');
+    let EditProfileContainer = document.getElementById('EditProfile-Container');
+
+    EditMyProfile.addEventListener('click', function(){
+        EditProfileOverlay.style.display = "flex";
+        event.stopPropagation();
+    })
+
+    document.addEventListener('click', function(event) {
+        if(!EditProfileContainer.contains(event.target)){
+            EditProfileOverlay.style.display = "none";
+        }
+
+    });
+
+</script>
+
+
+{% endblock %}

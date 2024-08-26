@@ -43,6 +43,8 @@ urlpatterns = [
     #path('stream/', PostStreamView.as_view(), name = 'stream'),
     path('count_new_posts/', views.count_new_posts, name='count_new_posts'),
     #path('FetchFriendsPosts/', views.FetchFriendsPosts, name='FetchFriendsPosts'),
-    path('fetchNewUsers/', views.fetchNewUsers, name="fetchNewUsers")
+    path('fetchNewUsers/', views.fetchNewUsers, name="fetchNewUsers"),
+    path('games/', views.game_list, name='game_list'),
+    path('games/launch/', views.game_launch, name='game_launch'),
 ]
 
