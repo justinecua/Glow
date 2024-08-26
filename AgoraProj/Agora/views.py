@@ -1488,11 +1488,15 @@ def generate_session_id():
 
 
 def game_list(request):
-
     games = [
-        {"id": "1215", "name": "DG Club", "image": "images/games/DGM_DG_CLUB.jpg"},
-        {"id": "1192", "name": "Shinobi Wars", "image": "images/games/DGM_SHINOBI_WARS.jpg"},
-        {"id": "1193", "name": "Saiyan Warriors", "image": "images/games/DGM_SAIYAN_WARRIORS.jpg"},
+        {"id": "1215", "name": "DG Club", "image": "images/games/DGM_DG_CLUB.jpg", "game_type": "slots", "provider": "1"},
+        {"id": "1192", "name": "Shinobi Wars", "image": "images/games/DGM_SHINOBI_WARS.jpg", "game_type": "slots", "provider": "1"},
+        {"id": "1193", "name": "Saiyan Warriors", "image": "images/games/DGM_SAIYAN_WARRIORS.jpg", "game_type": "slots", "provider": "1"},
+        {"id": "1234", "name": "Demon Train Scratch Card", "image": "images/games/DGM_DEMON_TRAIN_SCRATCH_CARD.jpg", "game_type": "table_games", "provider": "1"},
+        {"id": "1121", "name": "Mines 88", "image": "images/games/1121.jpg", "game_type": "", "provider": "2"},
+        {"id": "1328", "name": "Hi-Lo 98", "image": "images/games/HSG_HI_LO_98.jpg", "game_type": "", "provider": "2"},
+        {"id": "1067", "name": "Wanted Dead or a Wild 96", "image": "images/games/1067.jpg", "game_type": "", "provider": "2"},
+        {"id": "1001", "name": "SCRATCH! Platinum", "image": "images/games/1001.jpg", "game_type": "", "provider": "2"},
     ]
     return render(request, 'game_list.html', {'games': games})
 
@@ -1500,10 +1504,9 @@ def game_list(request):
 
 def game_launch(request):
     if request.method == 'GET':
-
         api_key = request.GET.get('api_key', 'rMrNJRwYKow1ot13')
         session_id = generate_session_id()
-        provider = request.GET.get('provider', 'dragongaming')
+        provider = request.GET.get('provider')  # This might be None
         game_type = request.GET.get('game_type', 'slots')
         game_id = request.GET.get('game_id')
         platform = request.GET.get('platform', 'desktop')
@@ -1511,41 +1514,57 @@ def game_launch(request):
         amount_type = request.GET.get('amount_type', 'fun')
         lobby_url = request.GET.get('lobby_url', '')
         deposit_url = request.GET.get('deposit_url', '')
-        
+        game_name = request.GET.get('game_name')
+
         context = {
             "id": request.GET.get('context_id', '0'),
             "username": request.GET.get('context_username', 'fun_player'),
             "country": request.GET.get('context_country', 'PH'),
-            "currency": request.GET.get('context_currency', 'USD')
+            "currency": request.GET.get('context_currency', 'PHP')
         }
-        
-        api_url = "https://staging-api.dragongaming.com/v1/games/game-launch/"
-        
+
         headers = {
             "Content-Type": "application/json"
         }
         
-        payload = {
-            "api_key": api_key,
-            "session_id": session_id,
-            "provider": provider,
-            "game_type": game_type,
-            "game_id": game_id,
-            "platform": platform,
-            "language": language,
-            "amount_type": amount_type,
-            "lobby_url": lobby_url,
-            "deposit_url": deposit_url,
-            "context": context
-        }
+        api_url = ""
+        payload = {}
+        launch_url = ""  # Initialize launch_url to avoid UnboundLocalError
+        if provider == "1":
+            api_url = "https://staging-api.dragongaming.com/v1/games/game-launch/"
+            payload = {
+                "api_key": api_key,
+                "session_id": session_id,
+                "provider": "dragongaming",
+                "game_type": game_type,
+                "game_id": game_id,
+                "platform": platform,
+                "language": language,
+                "amount_type": amount_type,
+                "lobby_url": lobby_url,
+                "deposit_url": deposit_url,
+                "context": context
+            }
+            response = requests.post(api_url, headers=headers, json=payload)
+            response_data = response.json()
+            launch_url = response_data.get("result", {}).get("launch_url", "")
+            print(f"Provider 1 Response Data: {response_data}")
+        
+        # Handle Provider 2
+        elif provider == "2":
+            api_url = "https://static-stg.hacksawgaming.com/launcher/static-launcher.html?"
+            partner = "tigergames_stagev2"
+            launch_url = api_url + "language=" + language + "&channel=" + platform + "&gameid=" + game_id + "&mode=demo&token=" + session_id + "&lobbyurl=" + lobby_url + "&currency=PHP"  + "&partner=" + partner
+            print(f"Provider 2 URL: {launch_url, game_name}")
 
-        response = requests.post(api_url, headers=headers, json=payload)
-        print(f"API Response Status Code: {response.status_code}")
-        response_data = response.json()
-        print(f"API Response Data: {response_data}")
-        
-        launch_url = response_data.get("result", {}).get("launch_url", "")
-        
-        return render(request, 'game_launch.html', {'launch_url': launch_url})
-    
+        # Handle Invalid Provider
+        else:
+            return JsonResponse({"error": "Invalid provider"}, status=404)
+
+        print(f"Final launch_url: {launch_url}")  # Print after assignment
+        return render(request, 'game_launch.html', {'launch_url': launch_url, 'game_name' : game_name})
+
     return JsonResponse({"error": "Method not allowed"}, status=405)
+
+
+

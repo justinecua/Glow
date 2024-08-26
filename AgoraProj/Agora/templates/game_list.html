@@ -1,4 +1,3 @@
-<!-- game_list.html -->
 {% extends "master.html" %}
 {% load static %}
 {% load account %}
@@ -6,129 +5,108 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
     <script type="module" src="{% static 'js/toggle.js' %}"></script>
-    <script type="module" src="{% static 'js/post.js' %}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
 {% endblock %}
 
-
 {% block content %}
-{% include "modal/edit-userprofile.html" %}
-{% include "nav-right.html" %}
+
 <style>
-    .NCenter {
-        text-align: center;
-        margin: 0 auto;
-        padding: 20px;
-        max-width: 1200px;
-    }
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-gap: 120px;
+    /* width: 10px; */
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
 
-    .NCenter h1 {
-        font-family: 'Croissant One', cursive;
-        font-size: 2.5em;
-        color: #333;
-        margin-bottom: 30px;
-    }
+.item, h2, h1 {
+    text-align: center;
+    font-family: 'Croissant One', cursive;
+}
 
-    .game-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center; /* Centers the items horizontally */
-        gap: 20px; /* Adds space between the game items */
-    }
+.item img {
+    width: 250px;
+    height: 250px;
+}
 
-    .game-item {
-        width: calc(33.33% - 40px); /* Allows 3 items per row with space between them */
-        margin-bottom: 20px;
-        padding: 10px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        background-color: #f9f9f9;
-        transition: transform 0.3s, box-shadow 0.3s;
-        text-align: center; /* Centers the content inside each game item */
-    }
+.item h2 {
+    font-size: 20px;
+    margin: 20px 0;
+}
 
-    @media (max-width: 768px) {
-        .game-item {
-            width: calc(50% - 20px); /* Adjust to 2 items per row on smaller screens */
-        }
-    }
+.play-button {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
-    @media (max-width: 480px) {
-        .game-item {
-            width: 100%; /* Full width on very small screens */
-        }
-    }
-
-    .game-item:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
-
-    .game-item img {
-        width: 100%;
-        height: auto;
-        border-radius: 5px;
-    }
-
-    .game-item h2 {
-        font-size: 1.5em;
-        color: #555;
-        margin: 15px 0 10px 0;
-    }
-    .play-button {
-        display: inline-block;
-        padding: 10px 15px;
-        font-size: 1em;
-        color: white;
-        background-color: #007bff;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-    }
-
-    .play-button:hover {
-        background-color: #0056b3;
-    }
+.play-button:hover {
+    background-color: darkblue;
+}
 </style>
+    </style>
+    <div id="root">
 
-<div id="root">
-    {% if request.user.is_authenticated %}
-        {% include "nav.html" %}
+    <div class="NCenter">
 
-        <div class="NCenter">
-          
+                  <div class="RandomProf_MainCont">
+                <div class="Profile_Title_Container">
+                    <a href="{% url 'dashboard' %}">
+                        <div class="PTC-Left">
+                            <img src="../static/images/back.png" alt="">
+                            <p>Go Back</p>
+                        </div>
+                    </a>
+                    <div class="PTC-Right">
+                    </div>
+
+                </div>
+            
+
             <h1>Available Games</h1>
-            {% for game in games %}
-                <div class="game-item">
+    
+            <div class="container" >
+                {% for game in games %}
+                <div class="item">
                     <img src="{% static game.image %}" alt="{{ game.name }}">
                     <h2>{{ game.name }}</h2>
-                    <a href="{% url 'game_launch' %}?game_id={{ game.id }}" class="play-button">Play</a>
+                    <a href="{% url 'game_launch' %}?game_id={{ game.id }}&game_type={{ game.game_type }}&game_name={{ game.name }}&provider={{ game.provider }}" class="play-button">Play</a>
                 </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
+            
+            
+                </div>
+                
+            
         </div>
-    </div>
 
-<div id="messages"></div>
-{% endif %}
 </div>
-<script>
-let EditMyProfile = document.getElementById('Edit-MyProfile');
-let EditProfileOverlay = document.getElementById('EditProfile-Overlay');
-let EditProfileContainer = document.getElementById('EditProfile-Container');
-
-EditMyProfile.addEventListener('click', function(){
-    EditProfileOverlay.style.display = "flex";
-    event.stopPropagation();
-})
-
-document.addEventListener('click', function(event) {
-    if(!EditProfileContainer.contains(event.target)){
-        EditProfileOverlay.style.display = "none";
-    }
-
-});
-
-</script>
-
-
-{% endblock %}
+    
+    <div id="messages"></div>
+    
+    <script>
+    let EditMyProfile = document.getElementById('Edit-MyProfile');
+    let EditProfileOverlay = document.getElementById('EditProfile-Overlay');
+    let EditProfileContainer = document.getElementById('EditProfile-Container');
+    
+    EditMyProfile.addEventListener('click', function(event) {
+        EditProfileOverlay.style.display = "flex";
+        event.stopPropagation();
+    });
+    
+    document.addEventListener('click', function(event) {
+        if (!EditProfileContainer.contains(event.target)) {
+            EditProfileOverlay.style.display = "none";
+        }
+    });
+    </script>
+    
+    {% endblock %}
