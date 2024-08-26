@@ -4,8 +4,7 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
-    <script type="module" src="{% static 'js/toggle.js' %}"></script> 
-    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -380,7 +379,7 @@
                                 <div class="UPCCT-Left">
                                     <a href="profile/{{ post.account.id }}">
                                         <div class="Post-Prof-Cont">
-                                          {% with dynamicProf=post.account.profile_photo %}
+                                            {% with dynamicProf=post.account.profile_photo %}
                                                 {% if 'static' in dynamicProf %}
                                                     <img class="lazy" src="{{ dynamicProf }}" data-src="{{ dynamicProf }}">
                                                 {% else %}
@@ -407,7 +406,7 @@
                             <div class="UPC-content-Bottom">
                                 <div class="UPCB-Caption">
                                     <div class="Cap-Caption">
-                                        <p class="postCaption">{{ post.caption }}</p>
+                                      <p class="postCaption">{{ post.caption|safe|truncatewords:"40"}}</p>
                                         <br>
                                     </div>
                                 </div>
@@ -495,8 +494,8 @@
                         <div class="UPC-content-Bottom">
                             <div class="UPCB-Caption">
                                 <div class="Cap-Caption">
-                                    <p class="postCaption">{{ post.caption }}</p>
-                                    <br>
+                                <p class="postCaption">{{ post.caption }}</p>
+                                <br>
                                 </div>
                             </div>
                             <div class="UPCB-Tags">
@@ -562,6 +561,19 @@
         });
         }
     }
+    
+        const readMoreLinks = document.querySelectorAll('.read-more');
+
+    readMoreLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            const captionElement = link.previousElementSibling;
+            const fullText = captionElement.getAttribute('data-full-text');
+
+            captionElement.innerHTML = fullText;
+            link.style.display = 'none';
+        });
+    });
+
 
     LazyLoading(".lazy");
 

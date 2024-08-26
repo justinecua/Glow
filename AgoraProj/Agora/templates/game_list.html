@@ -92,21 +92,6 @@
     
     <div id="messages"></div>
     
-    <script>
-    let EditMyProfile = document.getElementById('Edit-MyProfile');
-    let EditProfileOverlay = document.getElementById('EditProfile-Overlay');
-    let EditProfileContainer = document.getElementById('EditProfile-Container');
-    
-    EditMyProfile.addEventListener('click', function(event) {
-        EditProfileOverlay.style.display = "flex";
-        event.stopPropagation();
-    });
-    
-    document.addEventListener('click', function(event) {
-        if (!EditProfileContainer.contains(event.target)) {
-            EditProfileOverlay.style.display = "none";
-        }
-    });
-    </script>
+ 
     
     {% endblock %}
