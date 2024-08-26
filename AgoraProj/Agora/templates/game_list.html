@@ -10,20 +10,84 @@
     <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
 {% endblock %}
 
+
 {% block content %}
 {% include "modal/edit-userprofile.html" %}
 {% include "nav-right.html" %}
-
 <style>
+    .NCenter {
+        text-align: center;
+        margin: 0 auto;
+        padding: 20px;
+        max-width: 1200px;
+    }
+
+    .NCenter h1 {
+        font-family: 'Croissant One', cursive;
+        font-size: 2.5em;
+        color: #333;
+        margin-bottom: 30px;
+    }
+
+    .game-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; /* Centers the items horizontally */
+        gap: 20px; /* Adds space between the game items */
+    }
+
     .game-item {
+        width: calc(33.33% - 40px); /* Allows 3 items per row with space between them */
         margin-bottom: 20px;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+        transition: transform 0.3s, box-shadow 0.3s;
+        text-align: center; /* Centers the content inside each game item */
     }
+
+    @media (max-width: 768px) {
+        .game-item {
+            width: calc(50% - 20px); /* Adjust to 2 items per row on smaller screens */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .game-item {
+            width: 100%; /* Full width on very small screens */
+        }
+    }
+
+    .game-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
     .game-item img {
-        width: 200px; /* Adjust as needed */
+        width: 100%;
         height: auto;
+        border-radius: 5px;
     }
-    .game-item button {
-        margin-top: 10px;
+
+    .game-item h2 {
+        font-size: 1.5em;
+        color: #555;
+        margin: 15px 0 10px 0;
+    }
+    .play-button {
+        display: inline-block;
+        padding: 10px 15px;
+        font-size: 1em;
+        color: white;
+        background-color: #007bff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .play-button:hover {
+        background-color: #0056b3;
     }
 </style>
 
@@ -32,6 +96,7 @@
         {% include "nav.html" %}
 
         <div class="NCenter">
+          
             <h1>Available Games</h1>
             {% for game in games %}
                 <div class="game-item">
@@ -41,8 +106,29 @@
                 </div>
             {% endfor %}
         </div>
+    </div>
 
-        <div id="messages"></div>
-    {% endif %}
+<div id="messages"></div>
+{% endif %}
 </div>
+<script>
+let EditMyProfile = document.getElementById('Edit-MyProfile');
+let EditProfileOverlay = document.getElementById('EditProfile-Overlay');
+let EditProfileContainer = document.getElementById('EditProfile-Container');
+
+EditMyProfile.addEventListener('click', function(){
+    EditProfileOverlay.style.display = "flex";
+    event.stopPropagation();
+})
+
+document.addEventListener('click', function(event) {
+    if(!EditProfileContainer.contains(event.target)){
+        EditProfileOverlay.style.display = "none";
+    }
+
+});
+
+</script>
+
+
 {% endblock %}
