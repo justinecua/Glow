@@ -1490,6 +1490,7 @@ def generate_session_id():
 def game_list(request):
     games = [
         {"id": "1215", "name": "DG Club", "image": "images/games/DGM_DG_CLUB.jpg", "game_type": "slots", "provider": "1"},
+        {"id": "1358", "name": "Eggsplosion", "image": "images/games/DGM_EGGSPLOSION.jpg", "game_type": "slots", "provider": "1"},
         {"id": "1192", "name": "Shinobi Wars", "image": "images/games/DGM_SHINOBI_WARS.jpg", "game_type": "slots", "provider": "1"},
         {"id": "1193", "name": "Saiyan Warriors", "image": "images/games/DGM_SAIYAN_WARRIORS.jpg", "game_type": "slots", "provider": "1"},
         {"id": "1234", "name": "Demon Train Scratch Card", "image": "images/games/DGM_DEMON_TRAIN_SCRATCH_CARD.jpg", "game_type": "table_games", "provider": "1"},
@@ -1497,6 +1498,8 @@ def game_list(request):
         {"id": "1328", "name": "Hi-Lo 98", "image": "images/games/HSG_HI_LO_98.jpg", "game_type": "", "provider": "2"},
         {"id": "1067", "name": "Wanted Dead or a Wild 96", "image": "images/games/1067.jpg", "game_type": "", "provider": "2"},
         {"id": "1001", "name": "SCRATCH! Platinum", "image": "images/games/1001.jpg", "game_type": "", "provider": "2"},
+        {"id": "1321", "name": "Wheel 99", "image": "images/games/HSG_WHEEL_99.jpg", "game_type": "", "provider": "2"},
+        {"id": "1446", "name": "Baccarat 98", "image": "images/games/HSG_BACCARAT_98.jpg", "game_type": "", "provider": "2"},
     ]
     return render(request, 'game_list.html', {'games': games})
 
