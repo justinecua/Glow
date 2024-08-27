@@ -1,0 +1,113 @@
+[data-theme="dark"] {
+  --bg-color: #0D0D0F;
+  --color: white;
+  --accent-1: #111;
+  --accent-2: #999;
+  --icon-filter: brightness(0) invert(1);
+  --link-color: white;
+  --nav-color: #15161A;
+  --border-color: 1px solid #1d2532;
+  --input-create-post: #1C1E29;
+  --glow-color: #0058ca;
+  --audience-arrow-color: 5px solid#ffff;
+  --hover-elements: #bfc6d719;
+  --glow-button: #0058ca;
+  --top-nav-color: #1C1E29;
+  --text-color: #BABABA;
+  --tool-tip-bgcolor: #6961FF;
+  --tool-tip-color: #ffff;
+  --login-border-color: #545a63;
+  --button-hover: #1c1f32;
+  --input-signup-icon-filter: invert(0);
+  --button-hover2: #247aeb;
+  --friend-title: #898789;
+}
+
+[data-theme="light"] {
+  --bg-color: #f6f6f9;
+  --color: black;
+  --accent-1: #EAEAEA;
+  --accent-2: #333;
+  --icon-filter: none;
+  --link-color: black;
+  --nav-color: #ffff;
+  --border-color: 1px solid #e5e4e4;
+  --input-create-post: #ececec;
+  --glow-color: #0058ca;
+  --audience-arrow-color: 5px solid black;
+  --hover-elements: #ebebeb;
+  --glow-button: #0058ca;
+  --top-nav-color: #edf3fc;
+  --text-color: #373131;
+  --tool-tip-bgcolor: #6961FF;
+  --tool-tip-color: #ffff;
+  --login-border-color: #7c7c7c;
+  --button-hover: #e5e7ea;
+  --input-signup-icon-filter: invert(1);
+  --button-hover2: #247aeb;
+  --friend-title: #898789;
+}
+
+.container2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.NCenter h1 {
+  text-align: center;
+  font-family: "Work Sans", sans-serif;
+  font-size: clamp(1.2rem, 1vw, 1rem);
+  margin-bottom: 2rem;
+  color: var(--color);
+}
+
+
+.item {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  max-width: 25rem;
+  border: var(--border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: var(--nav-color);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  overflow-wrap: break-word;
+
+}
+
+.item a {
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+}
+
+.item img {
+  width: 250px;
+  height: 250px;
+}
+
+.game-name {
+  font-family: "Work Sans", sans-serif;
+  font-size: clamp(1rem, 1vw, 1rem);
+  padding: 1rem;
+}
+
+.play-button {
+  font-family: "Work Sans", sans-serif;
+  padding: 0.7rem 1rem;
+  font-size: clamp(0.9rem, 1vw, 0.9rem);
+  background-color: var(--glow-button);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.play-button:hover {
+  background-color: var(--button-hover2);
+}
