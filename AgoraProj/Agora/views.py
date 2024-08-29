@@ -29,6 +29,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from allauth.account.views import PasswordResetView, PasswordResetDoneView, PasswordResetFromKeyView, PasswordResetFromKeyDoneView
 from django.contrib.auth import get_user_model
 from django.contrib import messages
+import os
+
 
 
 def homepage(request):
@@ -1568,6 +1570,51 @@ def game_launch(request):
         return render(request, 'game_launch.html', {'launch_url': launch_url, 'game_name' : game_name})
 
     return JsonResponse({"error": "Method not allowed"}, status=405)
+    
+def chat_page(request):
+    return render(request, 'chat.html')
 
 
 
+
+@csrf_exempt
+def chat_with_gemini(request):
+    if request.method == "POST":
+        user_message = request.POST.get('message', '')
+
+        if not user_message:
+            return JsonResponse({'error': 'No message provided'}, status=400)
+
+
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyAjDzsgtZTFb-Lf-UqYAyD7v3VYeWsOx6A"
+        headers = {
+            'Content-Type': 'application/json'
+        }
+
+        payload = {
+            "contents": [
+                {
+                    "parts": [
+                        {"text": user_message}
+                    ]
+                }
+            ]
+        }
+
+        try:
+            
+            response = requests.post(url, json=payload, headers=headers)
+            response_data = response.json()
+            gemini_response = (
+                response_data.get('candidates', [{}])[0]
+                .get('content', {})
+                .get('parts', [{}])[0]
+                .get('text', 'Sorry, Please Contact Glow Developer.')
+            )
+
+            return JsonResponse({'message': gemini_response})
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=400)

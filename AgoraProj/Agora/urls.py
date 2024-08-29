@@ -46,5 +46,8 @@ urlpatterns = [
     path('fetchNewUsers/', views.fetchNewUsers, name="fetchNewUsers"),
     path('games/', views.game_list, name='game_list'),
     path('games/launch/', views.game_launch, name='game_launch'),
+    path('chat_page', views.chat_page, name='chat_page'),  # Serve chat.html
+    path('chat_with_gemini/', views.chat_with_gemini, name='chat_with_gemini'),
+
 ]
 
