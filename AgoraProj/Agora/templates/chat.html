@@ -2,138 +2,144 @@
 {% load static %}
 {% load account %}
 {% block css %}
-    <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
-    <script type="module" src="{% static 'js/toggle.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'home/games.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
+<script type="module" src="{% static 'js/toggle.js' %}"></script>
+<link rel="stylesheet" href="{% static 'home/games.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block js %}
-    <script type="module" src="{% static 'js/toggle.js' %}"></script>
+<script type="module" src="{% static 'js/toggle.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-   
-    <style>
-        body {
-            font-family: Monospace;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
 
+<style>
+    body {
+        font-family: Monospace;
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .chat-container {
+        width: 100%;
+        height: 80vh;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .chat-header {
+        background-color: #247aeb;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        font-size: 1.2rem;
+    }
+
+    .chat-messages {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .message {
+        max-width: 70%;
+        padding: 10px;
+        border-radius: 15px;
+        line-height: 1.4;
+        word-wrap: break-word;
+    }
+
+    .message.user {
+        align-self: flex-end;
+        background-color: #7c7c7c;
+    }
+
+    .message.gemini {
+        align-self: flex-start;
+        background-color: #e4e6eb;
+    }
+
+    .chat-input-container {
+        display: flex;
+        padding: 10px;
+        background-color: #f1f1f1;
+        border-top: 1px solid #ddd;
+    }
+
+    .chat-input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        font-size: 1rem;
+    }
+
+    .send-button {
+        background-color: #247aeb;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        margin-left: 10px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .send-button:hover {
+        background-color: #247aeb;
+    }
+
+    .send-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    @media screen and (max-width: 768px) {
         .chat-container {
-            width: 100%;
-            height: 80vh;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .chat-header {
-            background-color: #247aeb;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            font-size: 1.2rem;
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .message {
-            max-width: 70%;
-            padding: 10px;
-            border-radius: 15px;
-            line-height: 1.4;
-            word-wrap: break-word;
-        }
-
-        .message.user {
-            align-self: flex-end;
-            background-color: #7c7c7c;
-        }
-
-        .message.gemini {
-            align-self: flex-start;
-            background-color: #e4e6eb;
+            height: 90vh;
         }
 
         .chat-input-container {
-            display: flex;
-            padding: 10px;
-            background-color: #f1f1f1;
-            border-top: 1px solid #ddd;
-        }
-
-        .chat-input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            font-size: 1rem;
+            flex-direction: column;
+            align-items: stretch;
         }
 
         .send-button {
-            background-color: #247aeb;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            margin-left: 10px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
+            margin-left: 0;
+            margin-top: 10px;
+            width: 100%;
         }
+    }
 
-        .send-button:hover {
-            background-color: #247aeb;
-        }
-
-        .send-button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-        @media screen and (max-width: 768px) {
-            .chat-container {
-                height: 90vh;
-            }
-
-            .chat-input-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .send-button {
-                margin-left: 0;
-                margin-top: 10px;
-                width: 100%;
-            }
-        }
-        .info-message {
-    color: #FF9800; /* Orange color for information */
-    font-weight: bold;
-    padding: 10px;
-    background-color: #FFF3CD; /* Light yellow background for warning */
-    border-left: 4px solid #FF9800; /* Left border for emphasis */
-    border-radius: 4px; /* Rounded corners for a modern look */
-}
-
-    </style>
+    .info-message {
+        color: #FF9800;
+        /* Orange color for information */
+        font-weight: bold;
+        padding: 10px;
+        background-color: #FFF3CD;
+        /* Light yellow background for warning */
+        border-left: 4px solid #FF9800;
+        /* Left border for emphasis */
+        border-radius: 4px;
+        /* Rounded corners for a modern look */
+    }
+</style>
 </head>
+
 <body>
     <div id="root">
         <div class="NCenter">
@@ -148,77 +154,79 @@
                     <div class="PTC-Right"></div>
                 </div>
 
-<div class="chat-container">
-    <div class="chat-header">
-        Chat with Glow AI
-    </div>
-    <p class="info-message">Important: Your messages will not be saved.</p>
-    <div class="chat-messages" id="chat-messages">
-        <!-- Chat messages will be dynamically inserted here -->
-    </div>
+                <div class="chat-container">
+                    <div class="chat-header">
+                        Chat with Glow AI
+                    </div>
+                    <p class="info-message">Important: Your messages will not be saved.</p>
+                    <div class="chat-messages" id="chat-messages">
+                        <!-- Chat messages will be dynamically inserted here -->
+                    </div>
 
-    <div class="chat-input-container">
-        <input type="text" id="message-input" class="chat-input" placeholder="Type your message..." onkeydown="handleKeyDown(event)">
-        <button class="send-button" onclick="sendMessage()">Send</button>
-    </div>
-</div>
+                    <div class="chat-input-container">
+                        <input type="text" id="message-input" class="chat-input" placeholder="Type your message..."
+                            onkeydown="handleKeyDown(event)">
+                        <button class="send-button" onclick="sendMessage()">Send</button>
+                    </div>
+                </div>
 
-<script>
-    function addMessageToChat(message, sender) {
-        const messageContainer = document.createElement('div');
-        messageContainer.classList.add('message', sender);
-        messageContainer.textContent = message;
+                <script>
+                    function addMessageToChat(message, sender) {
+                        const messageContainer = document.createElement('div');
+                        messageContainer.classList.add('message', sender);
+                        messageContainer.textContent = message;
 
-        const chatMessages = document.getElementById('chat-messages');
-        chatMessages.appendChild(messageContainer);
+                        const chatMessages = document.getElementById('chat-messages');
+                        chatMessages.appendChild(messageContainer);
 
-        // Auto scroll to the bottom of the chat
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
+                        // Auto scroll to the bottom of the chat
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }
 
-    function sendMessage() {
-        const messageInput = document.getElementById('message-input');
-        const message = messageInput.value.trim();
+                    function sendMessage() {
+                        const messageInput = document.getElementById('message-input');
+                        const message = messageInput.value.trim();
 
-        if (message === '') return;
+                        if (message === '') return;
 
-        // Display the user's message
-        addMessageToChat(message, 'user');
+                        // Display the user's message
+                        addMessageToChat(message, 'user');
 
-        // Send the message to the server
-        fetch('/chat_with_gemini/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: new URLSearchParams({
-                'message': message
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message) {
-                addMessageToChat(data.message, 'gemini');
-            } else {
-                addMessageToChat('Sorry, somethin went wrong!', 'gemini');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            addMessageToChat('Error connecting to the server.', 'gemini');
-        });
-        messageInput.value = '';
-    }
+                        // Send the message to the server
+                        fetch('/chat_with_gemini/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            },
+                            body: new URLSearchParams({
+                                'message': message
+                            })
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.message) {
+                                    addMessageToChat(data.message, 'gemini');
+                                } else {
+                                    addMessageToChat('Sorry, somethin went wrong!', 'gemini');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                addMessageToChat('Error connecting to the server.', 'gemini');
+                            });
+                        messageInput.value = '';
+                    }
 
-    function handleKeyDown(event) {
-        if (event.key === 'Enter') {
-            sendMessage();
-        }
-    }
-</script>
+                    function handleKeyDown(event) {
+                        if (event.key === 'Enter') {
+                            sendMessage();
+                        }
+                    }
+                </script>
 
 </body>
+
 </html>
 
 

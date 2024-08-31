@@ -4,6 +4,7 @@
 *.pyc
 AgoraProj/AgoraProj/__pycache__/
 AgoraProj/.env
+AgoraProj/AgoraProj/settings.py
 AgoraProj/db.sqlite3
 .vscode/
 vercel.json

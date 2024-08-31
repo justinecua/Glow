@@ -1,9 +1,9 @@
 {% extends "master.html" %}
 {% load static %}
 {% block css %}
-    <link rel="stylesheet" href="{% static './home/index.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
-    <script type="module" src="{% static 'js/index.js' %}"></script>
+<link rel="stylesheet" href="{% static './home/index.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+<script type="module" src="{% static 'js/index.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -22,18 +22,27 @@
                 <ul id="navbar">
                     <div class="MC-Left">
                         <a href="{% url 'About' %}">
-                            <img src="https://ik.imagekit.io/b9bdd5j68/glow%20logo22.png/tr:q-100,tr:w-200,h-200" alt="">
+                            <img src="https://ik.imagekit.io/b9bdd5j68/glow%20logo22.png/tr:q-100,tr:w-200,h-200"
+                                alt="">
                             <h1>glow</h1>
                         </a>
                     </div>
                     <div class="MC-Cont">
-                        <a href="About#FeaturesSection"><li>Features</li></a>
-                        <a href="About#About-Section"><li>About</li></a>
-                        <a href="About#Contact-Section"><li>Contact</li></a>
+                        <a href="About#FeaturesSection">
+                            <li>Features</li>
+                        </a>
+                        <a href="About#About-Section">
+                            <li>About</li>
+                        </a>
+                        <a href="About#Contact-Section">
+                            <li>Contact</li>
+                        </a>
                     </div>
 
                     <div class="MC-Right">
-                        <a href="{% url 'home' %}"><li id="MC-SignUp">Back to home</li></a>
+                        <a href="{% url 'home' %}">
+                            <li id="MC-SignUp">Back to home</li>
+                        </a>
 
                         <div class="Menu">
                             <img src="../static/images/menu2.png" alt="">
@@ -42,26 +51,36 @@
 
                 </ul>
                 <div class="Down-Menu">
-                    <a href="{% url 'login' %}"><li>Login</li></a>
-                    <a href="{% url 'signup' %}"><li>Signup</li></a>
-                    <a href="#FeaturesSection"><li>Features</li></a>
-                    <a href="#About-Section"><li>About</li></a>
-                    <a href="#Contact-Section"><li>Contact</li></a>
+                    <a href="{% url 'login' %}">
+                        <li>Login</li>
+                    </a>
+                    <a href="{% url 'signup' %}">
+                        <li>Signup</li>
+                    </a>
+                    <a href="#FeaturesSection">
+                        <li>Features</li>
+                    </a>
+                    <a href="#About-Section">
+                        <li>About</li>
+                    </a>
+                    <a href="#Contact-Section">
+                        <li>Contact</li>
+                    </a>
                 </div>
             </nav>
         </div>
 
         <section id="coverSection" class="">
             <div class="background glass">
-            <div class="CS-content">
-                <h1>Embrace the Future of Staying Connected!</h1>
-                <p>Never miss out on what`s happening. Follow your favorite people</p>
-                <a id="Get-Started-Parent" href="{% url 'signup' %}">
-                    <button id="Get-Started">Get Started
-                    </button>
-                </a>
+                <div class="CS-content">
+                    <h1>Embrace the Future of Staying Connected!</h1>
+                    <p>Never miss out on what`s happening. Follow your favorite people</p>
+                    <a id="Get-Started-Parent" href="{% url 'signup' %}">
+                        <button id="Get-Started">Get Started
+                        </button>
+                    </a>
+                </div>
             </div>
-        </div>
         </section>
 
         <section id="FeaturesSection">
@@ -195,7 +214,8 @@
                             <h1>Dark/Light Mode</h1>
                         </div>
                         <div class="FCR-Bottom">
-                            <p>Customize your viewing experience with the option to switch between dark and light modes</p>
+                            <p>Customize your viewing experience with the option to switch between dark and light modes
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -211,12 +231,18 @@
 
             <div class="AS-Center">
                 <div class="ASC-Left">
-                    <div class="ASC-Left-Image"><img src="../static/images/User-Network-3--Streamline-Brooklyn (3).png" alt=""></div>
+                    <div class="ASC-Left-Image"><img src="../static/images/User-Network-3--Streamline-Brooklyn (3).png"
+                            alt=""></div>
                 </div>
 
                 <div class="ASC-Right">
                     <h2>Where Connections Thrive</h2>
-                    <p>At Glow, we're dedicated to fostering genuine connections in a vibrant and inclusive community. Our platform provides a space where individuals can come together, share their passions, and forge meaningful relationships. Glow is more than just a social media platform; it's a hub for genuine interactions and authentic connections. Our mission is to create a welcoming environment where people can express themselves, discover new interests, and connect with others who share their passions.</p>
+                    <p>At Glow, we're dedicated to fostering genuine connections in a vibrant and inclusive community.
+                        Our platform provides a space where individuals can come together, share their passions, and
+                        forge meaningful relationships. Glow is more than just a social media platform; it's a hub for
+                        genuine interactions and authentic connections. Our mission is to create a welcoming environment
+                        where people can express themselves, discover new interests, and connect with others who share
+                        their passions.</p>
                 </div>
             </div>
         </section>

@@ -1,118 +1,124 @@
-
 {% block modal %}
-        <div id="PopUp-Overlay">
-            <div id="PopUp-Container1">
+<div id="PopUp-Overlay">
+    <div id="PopUp-Container1">
 
-                <div class="PopUp-Content">
-                    <div class="PUC-Top">
-                        <a href="https://www.freepik.com/free-vector/hand-drawn-community-spirit-illustration_38477294.htm" target="_blank">Image by freepik</a>
-                        <div class="Pop-Cover">
-                            <img src="../static/images/new-user-welcome.jpg" alt="">
-                        </div>
-                    </div>
-
-                    <div class="PUC-Mid">
-                        {% if request.user.is_authenticated %}
-                            <h1> Welcome, {{ request.user.username | capfirst }}!</h1>
-                            <p>Your feed awaits. Let's spread some positivity!</p>
-                        {% endif %}
-                    </div>
-
-                    <div class="PUC-Bottom">
-                        <button id="Modal1-Button">Continue</button>
-                    </div>
+        <div class="PopUp-Content">
+            <div class="PUC-Top">
+                <a href="https://www.freepik.com/free-vector/hand-drawn-community-spirit-illustration_38477294.htm"
+                    target="_blank">Image by freepik</a>
+                <div class="Pop-Cover">
+                    <img src="../static/images/new-user-welcome.jpg" alt="">
                 </div>
             </div>
 
-            <div id="PopUp-Container2">
-                    {% csrf_token %}
-                    <div class="PopUp-Content">
-
-                        <div class="PopUp-Top">
-                            <h2>Upload Profile</h2>
-                            <p>Click camera to choose profile</p>
-                        </div>
-                        <div class="PopUp-Mid">
-
-                            <div class="Prof-Container1">
-                                <div class="ProfSub-Cont">
-                                    <img id="default-profile" src="static/images/Upstream-1.png" alt="">
-                                    <div id="camera-prof"> <img src="static/images/camera6.png" alt=""></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="PopUp-Avatars">
-                            <p>or</p>
-                            <h3> Select Avatars</h3>
-                            <div class="swiper mySwiper">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Upstream-1.png" alt=""></div>
-                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Delivery boy-2.png" alt=""></div>
-                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/No gravity-2.png" alt=""></div>
-                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Guacamole.png" alt=""></div>
-                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Cranks-2.png" alt=""></div>
-                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/No gravity-3.png" alt=""></div>
-                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Upstream-8.png" alt=""></div>
-                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Guacamole-2.png" alt=""></div>
-                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Delivery boy-5.png" alt=""></div>
-                                    <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Cranks.png" alt=""></div>
-                                    <div class="swiper-slide"></div>
-                                </div>
-                                <div class="swiper-pagination"></div>
-                            </div>
-
-                        </div>
-
-                        <div class="PopUp-Bottom">
-
-                            <input type="file" id="nw-profilepic" name="default_profile_url" style="display:none">
-                            <input type="text" placeholder="First Name" name="firstname" id="nw-fname">
-                            <input type="text" placeholder="Last Name" name="lastname" id="nw-lname">
-                            <input type="text" name="birthday" id="nw-birthday" placeholder="Birthday" placeholder="Date"
-                            class="textbox-n"
-                            type="text"
-                            onfocus="(this.type='date')"
-                            onblur="(this.type='text')"
-                            id="date" />
-
-                            <select name="gender" id="nw-gender">
-                                <option value="">Choose Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                        </div>
-                        <div id="message">
-                            <p id="message-box"></p>
-                        </div>
-                        <div class="PopUp-Bottom2">
-                            <button id="nw-submit">Submit
-                                <div class="loader5"></div>
-                            </button>
-                        </div>
-                    </div>
+            <div class="PUC-Mid">
+                {% if request.user.is_authenticated %}
+                <h1> Welcome, {{ request.user.username | capfirst }}!</h1>
+                <p>Your feed awaits. Let's spread some positivity!</p>
+                {% endif %}
             </div>
 
-            <div id="PopUp-Container3">
-                <div class="PopUp-Content">
-                    <div class="PUC-Top">
-                        <a href="https://www.freepik.com/free-vector/hand-drawn-flat-design-people-jumping_17803583.htm#fromView=search&page=6&position=15&uuid=06dec58b-e76b-464a-90ed-851247aeb76a" target="_blank">Image by freepik</a>
-                        <div class="Pop-Cover">
-                            <img src="../static/images/17803583_5891188.jpg" alt="">
-                        </div>
-                    </div>
-
-                    <div class="PUC-Mid">
-                        {% if request.user.is_authenticated %}
-                            <h1>Setup Completed!</h1>
-                            <p>Please refresh to view changes</p>
-                        {% endif %}
-                    </div>
-
-                    <div class="PUC-Bottom2">
-                    </div>
-                </div>
+            <div class="PUC-Bottom">
+                <button id="Modal1-Button">Continue</button>
             </div>
-
         </div>
+    </div>
+
+    <div id="PopUp-Container2">
+        {% csrf_token %}
+        <div class="PopUp-Content">
+
+            <div class="PopUp-Top">
+                <h2>Upload Profile</h2>
+                <p>Click camera to choose profile</p>
+            </div>
+            <div class="PopUp-Mid">
+
+                <div class="Prof-Container1">
+                    <div class="ProfSub-Cont">
+                        <img id="default-profile" src="static/images/Upstream-1.png" alt="">
+                        <div id="camera-prof"> <img src="static/images/camera6.png" alt=""></div>
+                    </div>
+                </div>
+            </div>
+            <div class="PopUp-Avatars">
+                <p>or</p>
+                <h3> Select Avatars</h3>
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Upstream-1.png" alt="">
+                        </div>
+                        <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Delivery boy-2.png"
+                                alt=""></div>
+                        <div class="swiper-slide"><img class="ProfAvatars" src="static/images/No gravity-2.png" alt="">
+                        </div>
+                        <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Guacamole.png" alt="">
+                        </div>
+                        <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Cranks-2.png" alt="">
+                        </div>
+                        <div class="swiper-slide"><img class="ProfAvatars" src="static/images/No gravity-3.png" alt="">
+                        </div>
+                        <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Upstream-8.png" alt="">
+                        </div>
+                        <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Guacamole-2.png" alt="">
+                        </div>
+                        <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Delivery boy-5.png"
+                                alt=""></div>
+                        <div class="swiper-slide"><img class="ProfAvatars" src="static/images/Cranks.png" alt=""></div>
+                        <div class="swiper-slide"></div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+
+            </div>
+
+            <div class="PopUp-Bottom">
+
+                <input type="file" id="nw-profilepic" name="default_profile_url" style="display:none">
+                <input type="text" placeholder="First Name" name="firstname" id="nw-fname">
+                <input type="text" placeholder="Last Name" name="lastname" id="nw-lname">
+                <input type="text" name="birthday" id="nw-birthday" placeholder="Birthday" placeholder="Date"
+                    class="textbox-n" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" />
+
+                <select name="gender" id="nw-gender">
+                    <option value="">Choose Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div id="message">
+                <p id="message-box"></p>
+            </div>
+            <div class="PopUp-Bottom2">
+                <button id="nw-submit">Submit
+                    <div class="loader5"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="PopUp-Container3">
+        <div class="PopUp-Content">
+            <div class="PUC-Top">
+                <a href="https://www.freepik.com/free-vector/hand-drawn-flat-design-people-jumping_17803583.htm#fromView=search&page=6&position=15&uuid=06dec58b-e76b-464a-90ed-851247aeb76a"
+                    target="_blank">Image by freepik</a>
+                <div class="Pop-Cover">
+                    <img src="../static/images/17803583_5891188.jpg" alt="">
+                </div>
+            </div>
+
+            <div class="PUC-Mid">
+                {% if request.user.is_authenticated %}
+                <h1>Setup Completed!</h1>
+                <p>Please refresh to view changes</p>
+                {% endif %}
+            </div>
+
+            <div class="PUC-Bottom2">
+            </div>
+        </div>
+    </div>
+
+</div>
 
 {% endblock %}

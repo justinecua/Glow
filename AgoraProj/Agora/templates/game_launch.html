@@ -3,18 +3,18 @@
 {% load account %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
-    <link rel="stylesheet" href="{% static 'home/games.css' %}">
-    <script type="module" src="{% static 'js/toggle.js' %}"></script>
-    <script type="module" src="{% static 'js/post.js' %}"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'home/games.css' %}">
+<script type="module" src="{% static 'js/toggle.js' %}"></script>
+<script type="module" src="{% static 'js/post.js' %}"></script>
+<link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 <style>
     iframe {
         width: 100%;
-        height: 40rem; 
+        height: 40rem;
         border: none;
     }
 </style>
@@ -32,12 +32,12 @@
                 <div class="PTC-Right"></div>
             </div>
             <br>
-            <h1>Game Launch: ( {{ game_name }}  )</h1>
+            <h1>Game Launch: ( {{ game_name }} )</h1>
             {% if launch_url %}
-                <iframe src="{{ launch_url }}" allowfullscreen></iframe>
+            <iframe src="{{ launch_url }}" allowfullscreen></iframe>
             {% else %}
-                <p>No game URL available.</p>
+            <p>No game URL available.</p>
             {% endif %}
         </div>
     </div>
-{% endblock %}
+    {% endblock %}

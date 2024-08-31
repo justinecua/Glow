@@ -59,7 +59,6 @@ html {
   --friend-title: #898789;
 }
 
-
 .overflow-hidden {
   overflow-y: hidden;
 }
@@ -3338,9 +3337,10 @@ body {
     border-radius: 20px;
     padding: 0.7rem 1rem;
     max-width: 95%;
-    padding-left: 2.8rem;
+    padding-left: 1.2rem;
     background: none;
     border: 1.5px solid #bccbe0;
+    color: var(--text-color);
   }
 
   #UserProf-Comment {
@@ -3834,6 +3834,7 @@ body {
     padding: 1rem;
     border-radius: 5px;
     margin-bottom: 3%;
+    color: var(--text-color);
   }
 
   .EP-UserInfo input:focus {
@@ -4171,6 +4172,7 @@ body {
     background-color: var(--bg-color);
     width: 75rem;
     height: 100%;
+
   }
 
   footer {

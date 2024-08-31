@@ -3,11 +3,11 @@
 {% load account %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
-    <script type="module" src="{% static 'js/ForYou_guest.js' %}"></script>
-    <script type="module" src="{% static 'js/toggle.js' %}"></script>
-    <script type="module" src="{% static 'js/authentication-modal.js' %}"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
+<script type="module" src="{% static 'js/ForYou_guest.js' %}"></script>
+<script type="module" src="{% static 'js/toggle.js' %}"></script>
+<script type="module" src="{% static 'js/authentication-modal.js' %}"></script>
+<link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -17,24 +17,28 @@
 {% include "account/modal-login.html" %}
 {% include "account/modal-signup.html" %}
 
-    <div class="Top-Options">
-        <div class="Center-Top">
-            <div id="For-You"><p>For You</p></div>
-            <div id="Following"><p>Following</p></div>
+<div class="Top-Options">
+    <div class="Center-Top">
+        <div id="For-You">
+            <p>For You</p>
+        </div>
+        <div id="Following">
+            <p>Following</p>
         </div>
     </div>
+</div>
 
-    <div id="Logo-Overlay">
-        <img src="https://ik.imagekit.io/b9bdd5j68/glow%20logo5.png/tr:q-100,tr:w-200,h-200" alt="">
-    </div>
+<div id="Logo-Overlay">
+    <img src="https://ik.imagekit.io/b9bdd5j68/glow%20logo5.png/tr:q-100,tr:w-200,h-200" alt="">
+</div>
 <div id="root">
 
-        {% include "account/logout.html" %}
-        {% include "nav_guest.html" %}
-        <div class="responsive">
-            <div id="Bottom-loading-posts">
-                <p>Please Wait...</p>
-            </div>
+    {% include "account/logout.html" %}
+    {% include "nav_guest.html" %}
+    <div class="responsive">
+        <div id="Bottom-loading-posts">
+            <p>Please Wait...</p>
+        </div>
         <div class="NCenter">
             <div class="Center-Top3">
                 <div class="loader"></div>
@@ -43,7 +47,7 @@
                 <div class="Center-Top2">
 
                 </div>
-                <input id="accountID" type="text" value="{{accountInfo.id}}"  style="display:none" ;>
+                <input id="accountID" type="text" value="{{accountInfo.id}}" style="display:none" ;>
 
             </div>
 

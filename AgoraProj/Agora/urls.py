@@ -1,4 +1,5 @@
 from django.urls import path, re_path
+
 from . import views
 from .views import (
     CustomPasswordResetView,
@@ -18,7 +19,7 @@ urlpatterns = [
     path('dashboard', views.dashboard, name='dashboard'),
     path('dashboard/uploadprofile', views.UploadProfile, name='uploadprofile'),
     path('handle_media/', views.handle_media, name='handle_media'),
-    path('dashboard/profile', views.UserProfile, name='UserProfile'),
+    path('myprofile/<int:id>', views.UserProfile, name='myprofile'),
     path('profile/<int:id>', views.randomProfile, name='profile'),
     path('add_friend/', views.AddFriend, name='add_friend'),
     path('confirm_friend/', views.ConfirmFriend, name='confirm_friend'),
@@ -48,5 +49,7 @@ urlpatterns = [
     path('chat_page', views.chat_page, name='chat_page'),  # Serve chat.html
     path('chat_with_gemini/', views.chat_with_gemini, name='chat_with_gemini'),
     re_path(r'^settings/$', views.settingsPage, name='settings'),
+    re_path(r'^test-500/$', views.page_not_found, name='page_not_found'),
 ]
+
 

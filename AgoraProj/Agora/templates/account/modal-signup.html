@@ -2,74 +2,78 @@
 {% load socialaccount %}
 
 <div id="SignUp-Overlay">
-  <div id="Signup-Container">
-      <div class="container glass2">
-        <div class="container-content">
-            <div class="CC-Top1">
-                <img src="https://ik.imagekit.io/b9bdd5j68/glow%20logo22.png/tr:q-100,tr:w-100,h-100" alt="">
-            </div>
-            <div class="CC-Top">
-                <p>Your Next Social Stop, Register Now!</p>
-            </div>
-            <div class="SCC-Mid">
-                <form id="signup_form" action="{% url 'account_signup' %}" method="POST">
-                    {% csrf_token %}
+    <div id="Signup-Container">
+        <div class="container glass2">
+            <div class="container-content">
+                <div class="CC-Top1">
+                    <img src="https://ik.imagekit.io/b9bdd5j68/glow%20logo22.png/tr:q-100,tr:w-100,h-100" alt="">
+                </div>
+                <div class="CC-Top">
+                    <p>Your Next Social Stop, Register Now!</p>
+                </div>
+                <div class="SCC-Mid">
+                    <form id="signup_form" action="{% url 'account_signup' %}" method="POST">
+                        {% csrf_token %}
 
-                    <div>
-                        <span class="input-icon2">
-                            <img src="{% static 'images/user_1_line.svg' %}" alt="icon">
-                            <input id="username-signup" type="text" name="username" placeholder="Username" required>
-                        </span>
-                    </div>
+                        <div>
+                            <span class="input-icon2">
+                                <img src="{% static 'images/user_1_line.svg' %}" alt="icon">
+                                <input id="username-signup" type="text" name="username" placeholder="Username" required>
+                            </span>
+                        </div>
 
-                    <div>
-                        <span class="input-icon2">
-                            <img src="{% static 'images/mail-3111.svg' %}" alt="icon">
-                            <input id="email-signup" type="email" name="email" placeholder="Your valid email" required>
-                        </span>
-                    </div>
+                        <div>
+                            <span class="input-icon2">
+                                <img src="{% static 'images/mail-3111.svg' %}" alt="icon">
+                                <input id="email-signup" type="email" name="email" placeholder="Your valid email"
+                                    required>
+                            </span>
+                        </div>
 
-                    <div>
-                        <span class="input-icon2">
-                            <img src="{% static 'images/padlock-11751.svg' %}" alt="icon">
-                            <input id="pass-signup" type="password" name="password1" placeholder="Create a 6 + digit password" required>
-                        </span>
-                    </div>
+                        <div>
+                            <span class="input-icon2">
+                                <img src="{% static 'images/padlock-11751.svg' %}" alt="icon">
+                                <input id="pass-signup" type="password" name="password1"
+                                    placeholder="Create a 6 + digit password" required>
+                            </span>
+                        </div>
 
-                    <div>
-                        <span class="input-icon2">
-                            <img src="{% static 'images/padlock-11751.svg' %}" alt="icon">
-                            <input id="pass2-signup" type="password" name="password2" placeholder="Confirm your password" required>
-                        </span>
-                    </div>
-            </div>
+                        <div>
+                            <span class="input-icon2">
+                                <img src="{% static 'images/padlock-11751.svg' %}" alt="icon">
+                                <input id="pass2-signup" type="password" name="password2"
+                                    placeholder="Confirm your password" required>
+                            </span>
+                        </div>
+                </div>
 
 
-            <div class="CC-Footer-Signup">
-                <button id="submit-signup" type="submit">Sign Up
-                    <div class="loader4"></div>
-                </button>
-            </div>
+                <div class="CC-Footer-Signup">
+                    <button id="submit-signup" type="submit">Sign Up
+                        <div class="loader4"></div>
+                    </button>
+                </div>
 
-            <div id="message-signup">
+                <div id="message-signup">
 
-            </div>
-        </form>
-            <div class="CC-Footer2">
-                <div class="border"></div>
-                <p>OR</p>
-                <div class="border"></div>
-            </div>
-            <div class="CC-Footer3">
-                <a href="{% provider_login_url 'google' %}">
-                    <button  class="google-login-link"> <img src="../../static/images/google.png" alt="">Sign in with Google </button>
-                </a>
-            </div>
+                </div>
+                </form>
+                <div class="CC-Footer2">
+                    <div class="border"></div>
+                    <p>OR</p>
+                    <div class="border"></div>
+                </div>
+                <div class="CC-Footer3">
+                    <a href="{% provider_login_url 'google' %}">
+                        <button class="google-login-link"> <img src="../../static/images/google.png" alt="">Sign in with
+                            Google </button>
+                    </a>
+                </div>
 
-            <div class="CC-Footer4">
-                <p>Have an account? <span id="login-redirect">Login</span></p>
+                <div class="CC-Footer4">
+                    <p>Have an account? <span id="login-redirect">Login</span></p>
+                </div>
             </div>
         </div>
     </div>
-  </div>
 </div>

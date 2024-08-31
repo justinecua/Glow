@@ -1,4 +1,3 @@
-
 {% load static %}
 <script type="module" src="{% static 'js/nav.js' %}"></script>
 
@@ -9,8 +8,14 @@
                 <img src="https://ik.imagekit.io/b9bdd5j68/glow%20logo22.png/tr:q-100,tr:w-200,h-200" alt="">
                 <h1>glow</h1>
             </div>
-            <a href="{% url 'dashboard' %}"><li><img src="../static/images/home2.png" alt=""><p>Home</p></li></a>
-            <li id="SearchNav"><img src="../static/images/search.png" alt=""><p>Search</p></li>
+            <a href="{% url 'dashboard' %}">
+                <li><img src="../static/images/home2.png" alt="">
+                    <p>Home</p>
+                </li>
+            </a>
+            <li id="SearchNav"><img src="../static/images/search.png" alt="">
+                <p>Search</p>
+            </li>
             <!--<li><img src="../static/images/chat.png" alt=""><p>Messages</p></li>-->
             <li id="Notification-Tab">
                 <div class="NT-Tab">
@@ -26,28 +31,47 @@
                 <p>Appearance</p>
             </li>
 
-            <a href="{% url 'game_list' %}"><li id=""><img src="../static/images/Controller-1--Streamline-Core-Remix.png" alt=""><p>Games</p></li></a>
-            <a href="{% url 'settings' %}"><li id=""><img src="../static/images/Setting--Streamline-Unicons.png" alt=""><p>Settings</p></li></a>
-            <a href="{% url 'chat_page' %}"><li id=""><img src="../static/images/Messages-Bubble-Typing-Alternate-1--Streamline-Ultimate.png" alt=""><p>Glow Chat</p></li></a>
-
-            <li id="Create-Btn-Nav" ><img src="../static/images/create.png" alt=""><p>Create</p></li>
-            <li id="Logout-btn"><img src="../static/images/logout.png" alt=""><p>Logout</p></li>
-
-
-        <div id="UserProf-Div">
-            <a href="{% url 'UserProfile' %}">
-                <div class="Profile-Nav">
-                {% if is_new_user %}
-                    <img src="../static/images/default-avatar-profile-picture-male-icon.png" alt="">
-                    <p>Unknown User</p>
-                {% else %}
-                    <img src="{{ accountInfo.profile_photo }}">
-                    <p>{{ accountInfo.firstname }} {{ accountInfo.lastname }}</p>
-                {% endif %}
-                </div>
+            <a href="{% url 'game_list' %}">
+                <li id=""><img src="../static/images/Controller-1--Streamline-Core-Remix.png" alt="">
+                    <p>Games</p>
+                </li>
             </a>
-        </div>
-    </ul>
+            <a href="{% url 'settings' %}">
+                <li id=""><img src="../static/images/Setting--Streamline-Unicons.png" alt="">
+                    <p>Settings</p>
+                </li>
+            </a>
+            <a href="{% url 'chat_page' %}">
+                <li id=""><img src="../static/images/Messages-Bubble-Typing-Alternate-1--Streamline-Ultimate.png"
+                        alt="">
+                    <p>Glow Chat</p>
+                </li>
+            </a>
+
+            <li id="Create-Btn-Nav"><img src="../static/images/create.png" alt="">
+                <p>Create</p>
+            </li>
+            <li id="Logout-btn"><img src="../static/images/logout.png" alt="">
+                <p>Logout</p>
+            </li>
+
+
+            <div id="UserProf-Div">
+
+                <a href="/myprofile/{{ accountInfo.id }}">
+
+                    <div class="Profile-Nav">
+                        {% if is_new_user %}
+                        <img src="../static/images/default-avatar-profile-picture-male-icon.png" alt="">
+                        <p>Unknown User</p>
+                        {% else %}
+                        <img src="{{ accountInfo.profile_photo }}">
+                        <p>{{ accountInfo.firstname }} {{ accountInfo.lastname }}</p>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+        </ul>
     </nav>
 
 
@@ -56,42 +80,40 @@
 
         <div class="Notif-content">
             {% if notifications %}
-                {% for notifID, notification, date, friendID, friend_status, profile_photo in notifications %}
-                    <div class="UserNotifs">
-                        <div class="UN-Top">
-                            <div class="UN-Left">
-                                <img src="{{ profile_photo }}">
-                            </div>
-                            <div class="UN-Right">
-                                <span>{{ notification }}</span>
-                            </div>
-                        </div>
-                        <div class="UN-Bottom">
-                            <div class="UNB-Left"></div>
-                            <div class="UNB-Right">
-                                <span>{{ date }}</span>
-                            </div>
-                        </div>
-                        {% if friend_status == "pending" %}
-                            <div class="UN-Buttons">
-                                <div class="UNBT-Left"></div>
-                                <div class="UNBT-Right">
-                                    <button class="Confirm-friend" data-notif-id="{{ notifID }}" friendrequestID="{{ friendID }}">Confirm</button>
-                                    <button class="Delete-friend" data-notif-id="{{ notifID }}" friendrequestID="{{ friendID }}">Delete</button>
-                                </div>
-                            </div>
-                        {% endif %}
+            {% for notifID, notification, date, friendID, friend_status, profile_photo in notifications %}
+            <div class="UserNotifs">
+                <div class="UN-Top">
+                    <div class="UN-Left">
+                        <img src="{{ profile_photo }}">
                     </div>
-                {% endfor %}
+                    <div class="UN-Right">
+                        <span>{{ notification }}</span>
+                    </div>
+                </div>
+                <div class="UN-Bottom">
+                    <div class="UNB-Left"></div>
+                    <div class="UNB-Right">
+                        <span>{{ date }}</span>
+                    </div>
+                </div>
+                {% if friend_status == "pending" %}
+                <div class="UN-Buttons">
+                    <div class="UNBT-Left"></div>
+                    <div class="UNBT-Right">
+                        <button class="Confirm-friend" data-notif-id="{{ notifID }}"
+                            friendrequestID="{{ friendID }}">Confirm</button>
+                        <button class="Delete-friend" data-notif-id="{{ notifID }}"
+                            friendrequestID="{{ friendID }}">Delete</button>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
             {% else %}
-                <span>No notifications</span>
+            <span>No notifications</span>
             {% endif %}
         </div>
-
-
     </div>
 
 
 </div>
-
-

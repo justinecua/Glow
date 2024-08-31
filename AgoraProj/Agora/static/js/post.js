@@ -1,8 +1,7 @@
 
-import { SendEditProfile } from './ajax/send-editprofile.js';  
+import { SendEditProfile } from './ajax/send-editprofile.js';
 import { getPost } from "./ajax/show-comments-images.js";
 import { SendCommentToDB } from "./ajax/send-comment.js";
-import { getComments } from "./ajax/get-newComments.js";
 import { sendLike } from "./ajax/send-like.js";
 import { sendUnlike } from "./ajax/send-unlike.js";
 import { getLikes } from "./ajax/get-like.js";
@@ -21,9 +20,9 @@ const commentInput = document.getElementById('Comment-input');
 const sendComment = document.getElementById('Send-Comment');
 let CommentInput = document.getElementById('Comment-input');
 let CommentObject = '';
-let SendComment = document.getElementById('Send-Comment'); 
+let SendComment = document.getElementById('Send-Comment');
 
-let dataPostIDForSend = ''; 
+let dataPostIDForSend = '';
 
 
 commentBtnShow.forEach(commentBtn => {
@@ -31,9 +30,9 @@ commentBtnShow.forEach(commentBtn => {
         commentOverlay.style.display = "flex";
         commentContainer.style.display = "flex";
         dataPostID = commentBtn.getAttribute("data-PostID");
-        getPost(dataPostID, 0); 
+        getPost(dataPostID, 0);
         getComments(dataPostID);
-        overlayOpened = true; 
+        overlayOpened = true;
         console.log(dataPostID);
 
         dataPostIDForSend = dataPostID;
@@ -54,12 +53,12 @@ closeComment.addEventListener('click', () => {
 });
 
 commentInput.addEventListener('change', (event) => {
-    const newComment = event.target.value; 
+    const newComment = event.target.value;
     updateComment(newComment);
 });
 
 
-function updateComment(comment) { 
+function updateComment(comment) {
     CommentObject = {
         accID: AccountID,
         postID: dataPostID,
@@ -137,7 +136,7 @@ function handleUnlike(changeGlow) {
     if (!glowButton) {
         glowButton = document.createElement('img');
         glowButton.className = "glow-react";
-        glowButton.src = "static/images/glow4.png"; 
+        glowButton.src = "static/images/glow4.png";
         glowButton.alt = "Glow";
         parentDiv.appendChild(glowButton);
         glowButton.addEventListener('click', function() {
@@ -159,36 +158,6 @@ function handleUnlike(changeGlow) {
 initializeButtons();
 
 
-/* --------------------------- Search Functionality ------------------------------
-let GlobalSearch = document.getElementById('GlobalSearch');
-let SearchResultsContainer = document.querySelector('.Search-Results-Container');
-let ClearButton = document.getElementById('ClearButton');
 
-import { SearchResults } from './ajax/search.js';
-
-GlobalSearch.addEventListener('input', function(){
-    let searchInfo = GlobalSearch.value;
-    if(GlobalSearch.value.length >= 2){
-        SearchResultsContainer.style.display = "flex";
-        ClearButton.style.display = "flex";
-        SearchResults(searchInfo); 
-    }
-    else{
-        SearchResultsContainer.style.display = "none";
-        ClearButton.style.display = "none";
-        SearchResultsContainer.innerHTML = '';
-    }
-});
-
-ClearButton.addEventListener('click', function(){
-    GlobalSearch.value = ''; 
-    SearchResultsContainer.style.display = "none"; 
-    ClearButton.style.display = "none";
-    SearchResultsContainer.innerHTML = '';
-});
-
-*/
-
-/*----------------------------Share-btn-Functionality----------------------------*/
 
 
