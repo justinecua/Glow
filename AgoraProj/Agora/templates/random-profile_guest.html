@@ -221,7 +221,7 @@
                                             </style>
                                                 <button id="Cancel-ReqFriend-Btn"  style="display:none"> <div id="loadingIndicator2"><img src="../static/images/rolling.gif"></div>Cancel Request</button>
                                                 {% endif %}
-                                            
+
                                         </div>
 
                                     </div>
@@ -285,8 +285,6 @@
                             {% else %}
                             {% endif %}
                             </div>
-
-
                         </div>
                         <div class="FGC_Right">
                             <div class="FGCR_Left">
@@ -423,21 +421,21 @@
                                             {% else %}
                                                 <img class="glow-react" src="../static/images/glow4.png" alt="Glow">
                                             {% endif %}
-                                            
+
                                         </div>
                                         <div class="RM_glowCount">
                                               {% if post_info.glows_count > 1 %}
                                                 <p>{{ post_info.glows_count }}</p>
-                                              {% endif %} 
+                                              {% endif %}
                                             </div>
                                         <div class="RReact-Div Comment-Btn-Show" data-PostID="{{ post.id }}">
                                             <img src="../static/images/chat (2).png" alt="Chat">
                                         </div>
                                         <div class="RM_commentCount">
                                         {% if post_info.comments_count > 1 %}
-                                          <p>{{ post_info.comments_count }}</p> 
+                                          <p>{{ post_info.comments_count }}</p>
                                         {% endif %}
-                                        </div>                                    
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -511,19 +509,19 @@
                                         {% else %}
                                             <img class="glow-react" src="../static/images/glow4.png" alt="Glow">
                                         {% endif %}
-                                        
+
                                     </div>
                                     <div class="RM_glowCount">
                                           {% if post_info.glows_count > 1 %}
                                             <p>{{ post_info.glows_count }}</p>
-                                          {% endif %} 
+                                          {% endif %}
                                         </div>
                                     <div class="RReact-Div Comment-Btn-Show" data-PostID="{{ post.id }}">
                                         <img src="../static/images/chat (2).png" alt="Chat">
                                     </div>
                                      <div class="RM_commentCount">
                                         {% if post_info.comments_count > 1 %}
-                                          <p>{{ post_info.comments_count }}</p> 
+                                          <p>{{ post_info.comments_count }}</p>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -532,7 +530,7 @@
                     </div>
                 {% endfor %}
             {% endif %}
-            
+
         </div>
     </div>
 
@@ -561,7 +559,7 @@
         });
         }
     }
-    
+
         const readMoreLinks = document.querySelectorAll('.read-more');
 
     readMoreLinks.forEach(link => {

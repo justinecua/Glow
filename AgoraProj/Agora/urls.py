@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 from .views import (
     CustomPasswordResetView,
@@ -6,7 +6,6 @@ from .views import (
     CustomPasswordResetFromKeyView,
     CustomPasswordResetFromKeyDoneView,
 )
-
 
 urlpatterns = [
     path('', views.homepage, name="home"),
@@ -41,13 +40,13 @@ urlpatterns = [
     path('dashboard/emoji', views.emojis, name='get_emoji'),
     #path('dashboard/fetchUserPosts/<int:postId>/', views.auto_fetch_userPost, name='fetchUserPosts')
     #path('stream/', PostStreamView.as_view(), name = 'stream'),
-    path('count_new_posts/', views.count_new_posts, name='count_new_posts'),
+    #path('count_new_posts/', views.count_new_posts, name='count_new_posts'),
     #path('FetchFriendsPosts/', views.FetchFriendsPosts, name='FetchFriendsPosts'),
     path('fetchNewUsers/', views.fetchNewUsers, name="fetchNewUsers"),
     path('games/', views.game_list, name='game_list'),
     path('games/launch/', views.game_launch, name='game_launch'),
     path('chat_page', views.chat_page, name='chat_page'),  # Serve chat.html
     path('chat_with_gemini/', views.chat_with_gemini, name='chat_with_gemini'),
-
+    re_path(r'^settings/$', views.settingsPage, name='settings'),
 ]
 

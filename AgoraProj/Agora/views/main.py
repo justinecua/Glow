@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Account, Audience, Post, Photo, Video, Tag, Friend, Notification, Comment, Glow
-from .helpers import ImagekitClient
+from ..models import Account, Audience, Post, Photo, Video, Tag, Friend, Notification, Comment, Glow
+from ..helpers import ImagekitClient
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.base import ContentFile
@@ -30,7 +30,6 @@ from allauth.account.views import PasswordResetView, PasswordResetDoneView, Pass
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 import os
-
 
 
 def homepage(request):
@@ -209,29 +208,6 @@ def get_emoji():
         print(f"An Error Occured: {err}")
 
     return []
-
-Counter = 0
-
-async def count_new_posts(post_id, uploader_id):
-    global Counter
-    Counter += 1
-
-    ably = AblyRealtime("ru_QJA.LX6KeA:6pykpDiiF8i68udlvvVQ6_xn6zlL7CLBUfdFZCSbm4k")
-    await ably.connection.once_async('connected')
-    print('Connected')
-
-    channel = ably.channels.get('posts')
-
-    await channel.publish(
-        'post', {
-            'New_Posts': Counter,
-            'Uploader_Id': uploader_id
-        }
-    )
-
-    await ably.close()
-    print('Closed the connection.')
-
 
 
 @csrf_exempt
@@ -436,7 +412,7 @@ def FetchForYou(request):
             return JsonResponse({'status': 'error', 'message': str(e)})
 
 def fetchNewUsers(request):
-    try:   
+    try:
         date_joined_gt = timezone.make_aware(timezone.datetime(2024, 5, 15)) #make_aware is required if you filter date without a timezone
         users = User.objects.filter(date_joined__gt=date_joined_gt).select_related('account').order_by('-date_joined').values(
             'account__profile_photo',
@@ -446,7 +422,7 @@ def fetchNewUsers(request):
         )[:25]
 
         accounts = list(users)
-            
+
         return JsonResponse({'status': 'success', 'accounts': accounts})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
@@ -651,7 +627,6 @@ def randomProfile(request, id):
 
         return render(request, 'random-profile.html', context)
     else:
-        # Similar changes for the guest case
         otherAccount = Account.objects.get(id=id)
         randomAccId = User.objects.get(id=otherAccount.auth_user.id)
 
@@ -1176,8 +1151,8 @@ def showRandomUsers_Friends(request, id):
             'friendsInfo': friendsInfo
         }
         return context
-          
- 
+
+
 
 def showTags(request):
     if request.user.is_authenticated:
@@ -1531,7 +1506,7 @@ def game_launch(request):
         headers = {
             "Content-Type": "application/json"
         }
-        
+
         api_url = ""
         payload = {}
         launch_url = ""  # Initialize launch_url to avoid UnboundLocalError
@@ -1554,7 +1529,7 @@ def game_launch(request):
             response_data = response.json()
             launch_url = response_data.get("result", {}).get("launch_url", "")
             print(f"Provider 1 Response Data: {response_data}")
-        
+
         # Handle Provider 2
         elif provider == "2":
             api_url = "https://static-stg.hacksawgaming.com/launcher/static-launcher.html?"
@@ -1570,7 +1545,7 @@ def game_launch(request):
         return render(request, 'game_launch.html', {'launch_url': launch_url, 'game_name' : game_name})
 
     return JsonResponse({"error": "Method not allowed"}, status=405)
-    
+
 def chat_page(request):
     return render(request, 'chat.html')
 
@@ -1602,7 +1577,7 @@ def chat_with_gemini(request):
         }
 
         try:
-            
+
             response = requests.post(url, json=payload, headers=headers)
             response_data = response.json()
             gemini_response = (

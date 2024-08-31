@@ -284,8 +284,6 @@
                             {% else %}
                             {% endif %}
                             </div>
-
-
                         </div>
                         <div class="FGC_Right">
                             <div class="FGCR_Left">
@@ -345,7 +343,7 @@
                                             {% if post_info.photos %}
                                                 {% for photo in post_info.photos %}
                                                     <div class="UPC-content2">
-                                                    <img class="lazy" src="{{ photo.link|add:'/tr:q-90,tr:w-450,bl-30,q-90,h-450?cm-pad_resize,bg-F3F3F3' }}" data-src="{{ photo.link | add:'/tr:q-90,tr:w-450,h-450?cm-pad_resize,bg-F3F3F3 '}}">
+                                                    <img class="lazy" src="{{ photo.link|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50?cm-pad_resize,bg-F3F3F3' }}" data-src="{{ photo.link | add:'/tr:q-90,tr:w-150,h-150?cm-pad_resize,bg-F3F3F3 '}}">
                                                     </div>
                                                 {% endfor %}
 
@@ -355,20 +353,18 @@
 
                                     {% endfor %}
 
-                                    {% else %}
-
-                                    <style>
-                                    .UserProf-Main{
-                                        height: 45vh;
-                                    }
-                                    </style>
-
-                                    <p id="Posts-Message">No posts yet</p>
+                                {% else %}
+                                  <div class="NCU-NoPhotos">
+                                    <img src="../static/images/No-Product--Streamline-Tokyo (1).png" alt="">
+                                     {% if randomaccount %}
+                                    <span>{{ randomaccount.firstname }} has no photos</span>
+                                    {% endif %}
+                                  </div>
                                 {% endif %}
                         </div>
                     </div>
                     <div class="User_Title_Container">
-                        <p>Posts</p>
+                        <p>Written Posts</p>
                     </div>
                 <div class="RP-PostContainer">
             <div class="RP-PostContainerList">
@@ -423,21 +419,21 @@
                                             {% else %}
                                                 <img class="glow-react" src="../static/images/glow4.png" alt="Glow">
                                             {% endif %}
-                                            
+
                                         </div>
                                         <div class="RM_glowCount">
                                               {% if post_info.glows_count > 1 %}
                                                 <p>{{ post_info.glows_count }}</p>
-                                              {% endif %} 
+                                              {% endif %}
                                             </div>
                                         <div class="RReact-Div Comment-Btn-Show" data-PostID="{{ post.id }}">
                                             <img src="../static/images/chat (2).png" alt="Chat">
                                         </div>
                                         <div class="RM_commentCount">
                                         {% if post_info.comments_count > 1 %}
-                                          <p>{{ post_info.comments_count }}</p> 
+                                          <p>{{ post_info.comments_count }}</p>
                                         {% endif %}
-                                        </div>                                    
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -511,19 +507,19 @@
                                         {% else %}
                                             <img class="glow-react" src="../static/images/glow4.png" alt="Glow">
                                         {% endif %}
-                                        
+
                                     </div>
                                     <div class="RM_glowCount">
                                           {% if post_info.glows_count > 1 %}
                                             <p>{{ post_info.glows_count }}</p>
-                                          {% endif %} 
+                                          {% endif %}
                                         </div>
                                     <div class="RReact-Div Comment-Btn-Show" data-PostID="{{ post.id }}">
                                         <img src="../static/images/chat (2).png" alt="Chat">
                                     </div>
                                      <div class="RM_commentCount">
                                         {% if post_info.comments_count > 1 %}
-                                          <p>{{ post_info.comments_count }}</p> 
+                                          <p>{{ post_info.comments_count }}</p>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -532,7 +528,7 @@
                     </div>
                 {% endfor %}
             {% endif %}
-            
+
         </div>
     </div>
 
