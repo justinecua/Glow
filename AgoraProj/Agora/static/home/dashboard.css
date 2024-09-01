@@ -32,6 +32,7 @@ html {
   --input-signup-icon-filter: invert(0);
   --button-hover2: #247aeb;
   --friend-title: #898789;
+  --TopNavHover: #272a42;
 }
 
 [data-theme="light"] {
@@ -57,6 +58,7 @@ html {
   --input-signup-icon-filter: invert(1);
   --button-hover2: #247aeb;
   --friend-title: #898789;
+  --TopNavHover: #d6d6d6;
 }
 
 .overflow-hidden {
@@ -2663,13 +2665,14 @@ body {
     margin-bottom: 2%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
 
   .Profile_Title_Container p {
     font-family: "Work Sans", sans-serif;
   }
 
-  .Profile_Title_Container img {
+  .PTC-Left img {
     width: 1.5rem;
     height: 1.5rem;
     margin-right: 0.5rem;
@@ -2692,7 +2695,31 @@ body {
   }
 
   .PTC-Right {
-    width: 50%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 17%;
+  }
+
+  .PTC-Right div{
+    padding: 0.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: var(--input-create-post);
+    margin-left: 0.6rem;
+  }
+
+  .PTC-Right img{
+    width: 1rem;
+    height: 1rem;
+    filter: var(--icon-filter);
+  }
+
+  .PTC-Right div:hover{
+    background-color: var(--TopNavHover);
+    cursor: pointer;
   }
 
   .User_Title_Container {
@@ -4459,6 +4486,7 @@ body {
     font-size: 1rem;
     font-family: "Work Sans", sans-serif;
   }
+
 
 }
 

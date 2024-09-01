@@ -481,90 +481,88 @@ def NotifDate(post_datetime):
 
 
 def UserProfile(request, id):
-    if request.user.is_authenticated:
-        otherAccount = Account.objects.get(id=id)
-        accID = Account.objects.get(auth_user=request.user)
-        randomAccId = User.objects.get(id=otherAccount.auth_user.id)
+    otherAccount = Account.objects.get(id=id)
+    accID = Account.objects.get(auth_user=request.user)
+    randomAccId = User.objects.get(id=otherAccount.auth_user.id)
 
-        friendship_is_pending = Friend.objects.filter(user=accID, friend=otherAccount, status='pending').exists() or \
-                                Friend.objects.filter(user=otherAccount, friend=accID, status='pending').exists()
+    friendship_is_pending = Friend.objects.filter(user=accID, friend=otherAccount, status='pending').exists() or \
+                            Friend.objects.filter(user=otherAccount, friend=accID, status='pending').exists()
 
-        friendship_is_friends = Friend.objects.filter(user=accID, friend=otherAccount, status='Friends').exists() or \
-                                Friend.objects.filter(user=otherAccount, friend=accID, status='Friends').exists()
+    friendship_is_friends = Friend.objects.filter(user=accID, friend=otherAccount, status='Friends').exists() or \
+                            Friend.objects.filter(user=otherAccount, friend=accID, status='Friends').exists()
 
-        notif_data, unread_notifications_count = fetchNotif(request)
-        showfriends = showFriends(request)
-        hashtags = showTags(request)
-        audience = getAudience(request)
-        search = searchResults(request)
-        accountInfo = getAccountInfo(request)
-        randomUserFriends = showRandomUsers_Friends(request, randomAccId)
-        glowCountOfPosts = 0
+    notif_data, unread_notifications_count = fetchNotif(request)
+    showfriends = showFriends(request)
+    hashtags = showTags(request)
+    audience = getAudience(request)
+    search = searchResults(request)
+    accountInfo = getAccountInfo(request)
+    randomUserFriends = showRandomUsers_Friends(request, randomAccId)
+    glowCountOfPosts = 0
 
-        posts = Post.objects.filter(account=otherAccount).order_by('-dateTime')
-        posts_with_photos = {}
-        posts_without_photos = {}
-        totalGlows = 0
-        total_photos_count = 0
-        unique_acc_who_glowed = {}
+    posts = Post.objects.filter(account=otherAccount).order_by('-dateTime')
+    posts_with_photos = {}
+    posts_without_photos = {}
+    totalGlows = 0
+    total_photos_count = 0
+    unique_acc_who_glowed = {}
 
-        for post in posts:
-            photos = Photo.objects.filter(post=post)
-            glows = Glow.objects.filter(post=post).order_by('-timestamp')
-            comments = Comment.objects.filter(post=post)
-            totalPostGlows = Glow.objects.filter(post=post).count()
+    for post in posts:
+        photos = Photo.objects.filter(post=post)
+        glows = Glow.objects.filter(post=post).order_by('-timestamp')
+        comments = Comment.objects.filter(post=post)
+        totalPostGlows = Glow.objects.filter(post=post).count()
 
-            totalGlows += totalPostGlows
+        totalGlows += totalPostGlows
 
-            for glow in glows:
-                unique_acc_who_glowed[glow.account.id] = [
-                    glow.account.firstname,
-                    glow.account.lastname,
-                    glow.account.profile_photo,
-                    glow.timestamp,
-                ]
+        for glow in glows:
+            unique_acc_who_glowed[glow.account.id] = [
+                glow.account.firstname,
+                glow.account.lastname,
+                glow.account.profile_photo,
+                glow.timestamp,
+            ]
 
-            post_info = {
-                'totalPhotos': photos.count(),
-                'time_ago': time_ago(post.dateTime),
-                'glows_count': glows.count(),
-                'comments_count': comments.count(),
-            }
-
-            if photos.exists():
-                total_photos_count += photos.count()
-                posts_with_photos[post] = {
-                    **post_info,
-                    'photos': photos,
-                }
-            else:
-                posts_without_photos[post] = post_info
-
-        context = {
-            'randomaccount': otherAccount,
-            'friendship_is_pending': friendship_is_pending,
-            'friendship_is_friends': friendship_is_friends,
-            'unread_count': unread_notifications_count,
-            'notifications': notif_data,
-            'random_accountInfo': randomAccId,
-            'accountInfo': accountInfo,
-            'friends': showfriends,
-            'hashtags': hashtags,
-            'search_results': search.get('results', []),
-            'audienceInfo': audience,
-            'posts': {
-                'posts_with_photos': posts_with_photos,
-                'posts_without_photos': posts_without_photos,
-            },
-            'randomUserFriends': randomUserFriends,
-            'totalGlows': totalGlows,
-            'total_photos_count': total_photos_count,
-            'unique_acc_who_glowed': unique_acc_who_glowed,
+        post_info = {
+            'totalPhotos': photos.count(),
+            'time_ago': time_ago(post.dateTime),
+            'glows_count': glows.count(),
+            'comments_count': comments.count(),
         }
 
-        return render(request, 'user-profile.html', context)
-    else:
-        return None
+        if photos.exists():
+            total_photos_count += photos.count()
+            posts_with_photos[post] = {
+                **post_info,
+                'photos': photos,
+            }
+        else:
+            posts_without_photos[post] = post_info
+
+    context = {
+        'randomaccount': otherAccount,
+        'friendship_is_pending': friendship_is_pending,
+        'friendship_is_friends': friendship_is_friends,
+        'unread_count': unread_notifications_count,
+        'notifications': notif_data,
+        'random_accountInfo': randomAccId,
+        'accountInfo': accountInfo,
+        'friends': showfriends,
+        'hashtags': hashtags,
+        'search_results': search.get('results', []),
+        'audienceInfo': audience,
+        'posts': {
+            'posts_with_photos': posts_with_photos,
+            'posts_without_photos': posts_without_photos,
+        },
+        'randomUserFriends': randomUserFriends,
+        'totalGlows': totalGlows,
+        'total_photos_count': total_photos_count,
+        'unique_acc_who_glowed': unique_acc_who_glowed,
+    }
+
+    return render(request, 'user-profile.html', context)
+
 
 @csrf_exempt
 def AddFriend(request):

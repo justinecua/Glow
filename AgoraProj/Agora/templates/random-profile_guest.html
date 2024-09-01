@@ -4,6 +4,7 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
+<script type="module" src="{% static 'js/toggle.js' %}"></script>
 <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
 {% endblock %}
 
@@ -148,12 +149,6 @@
 
 <div id="root">
 
-    <!--
-            <h1> Welcome, {{ request.user.username }}!</h1>
-            <a href="{% url 'account_logout' %}">Sign Out</a>
-
-    -->
-
     <div class="NCenter">
 
         <div class="RandomProf_MainCont">
@@ -165,6 +160,7 @@
                     </div>
                 </a>
                 <div class="PTC-Right">
+                    <div id="AppearanceNav"><img  src="../static/images/bright.png" alt=""></div>
                 </div>
 
             </div>

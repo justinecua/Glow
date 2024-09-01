@@ -5,11 +5,12 @@
 {% block css %}
 <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
 <script type="module" src="{% static 'js/toggle.js' %}"></script>
+<script type="module" src="{% static 'js/logout.js' %}"></script>
 <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-
+{% include "account/logout.html" %}
 
 <div id="Modal-Overlay">
     <div id="Post-Container">
@@ -166,6 +167,10 @@
                     </div>
                 </a>
                 <div class="PTC-Right">
+                    <div id="AppearanceNav"><img  src="../static/images/bright.png" alt=""></div>
+                    <a href="{% url 'game_list' %}"><div><img src="../static/images/Controller-1--Streamline-Core-Remix.png" alt=""></div></a>
+                    <a href="{% url 'settings' %}"><div><img src="../static/images/Setting--Streamline-Unicons.png" alt=""></div></a>
+                    <div id="Logout-btn"><img src="../static/images/logout.png"></div>
                 </div>
 
             </div>
