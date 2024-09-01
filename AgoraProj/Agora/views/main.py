@@ -286,8 +286,6 @@ def handle_media(request):
         currentTime = datetime.now()
         postDate = new_post.dateTime
 
-        asyncio.run(count_new_posts(new_post.id, request.user.id))
-
         context = {
             'status': 'success',
             'message': 'Successfully posted!',

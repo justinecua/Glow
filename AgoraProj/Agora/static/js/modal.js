@@ -4,7 +4,7 @@ import { SendEditProfile } from './ajax/send-editprofile.js';
 import { AcceptFriend } from "./ajax/accept-friend.js";
 import { sendLike } from "./ajax/send-like.js";
 import { sendUnlike } from "./ajax/send-unlike.js";
-import { count_new_posts } from "./ajax/autofetch_userPost.js"
+
 
 let Post = document.getElementById('Post-Container');
 let createpost = document.getElementById('create-post');
@@ -306,7 +306,6 @@ UserPostBtn.addEventListener('click', async () => {
     }
 });
 
-count_new_posts();
 
 function removeHashtags(caption) {
     const words = caption.split(' ');

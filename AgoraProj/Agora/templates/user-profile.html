@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
 <script type="module" src="{% static 'js/toggle.js' %}"></script>
 <script type="module" src="{% static 'js/logout.js' %}"></script>
+<script type="module" src="{% static 'js/userpost-options.js' %}"></script>
 <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
 {% endblock %}
 
@@ -255,7 +256,11 @@
     <div class="RP-PostContainerList">
         {% if posts.posts_without_photos %}
         {% for post, post_info in posts.posts_without_photos.items %}
-        <div class="User-Post-Container2">
+        <div class="User-Post-Container2" data-postid="{{ post.id }}">
+            <div class="UserPost-Options">
+                <div><img src="../static/images/Hand-Held-Tablet-Writing--Streamline-Micro.png" alt="">Edit</div>
+                <div><img src="../static/images/Delete-Bin-2--Streamline-Micro.png" alt="">Delete</div>
+            </div>
             <div class="UPC-content-Top">
                 <div class="UPCCT-Left">
                     <a href="profile/{{ post.account.id }}">
@@ -283,12 +288,15 @@
                     </div>
                 </div>
                 <div class="UPCCT-Right">
+                    <div class="Post-Options">
+                        <img src="../static/images/Dots-Three-Bold--Streamline-Phosphor.png" alt="">
+                    </div>
                 </div>
             </div>
             <div class="UPC-content-Bottom">
                 <div class="UPCB-Caption">
                     <div class="Cap-Caption">
-                        <p class="postCaption">{{ post.caption|safe|truncatewords:"40"}}</p>
+                        <p class="postCaption">{{ post.caption|truncatechars_html:30 }}</p>
                         <br>
                     </div>
                 </div>
@@ -362,6 +370,7 @@
                     </div>
                 </div>
                 <div class="UPCCT-Right">
+
                 </div>
             </div>
 

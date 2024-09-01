@@ -67,10 +67,8 @@ export function SendPost(mediaObject){
                             commentContainer.style.display = "flex";
                             dataPostID = commentBtn.getAttribute("data-PostID");
                             getPost(dataPostID, 0);
-                            getComments(dataPostID);
+
                             overlayOpened = true;
-
-
                             dataPostIDForSend = dataPostID;
                         });
                     });
@@ -103,13 +101,6 @@ export function SendPost(mediaObject){
                         console.log(CommentObject);
                         return CommentObject;
                     }
-
-                    commentBtnShow.forEach(commentBtn => {
-                        const dataPostID2 = commentBtn.getAttribute("data-PostID");
-                        getComments(dataPostID2);
-                    });
-
-
 
                 } else {
                     console.error("Post failed: " + response.message);
