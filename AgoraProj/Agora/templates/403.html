@@ -1,26 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        html {
-            visibility: hidden;
-            opacity: 0;
-        }
-    </style>
-    <link rel="icon" type="image/x-icon"
-        href="https://ik.imagekit.io/b9bdd5j68/glow%20logo22.png/tr:q-100,tr:w-100,h-100">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
+{% extends "master.html" %}
+{% load static %}
 
-    <title>Bad Request</title>
-</head>
-<body>
-    <h1>403 - Forbidden</h1>
+{% block css %}
+<link rel="stylesheet" href="{% static 'home/error.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="ErrorDiv">
+    <img src="{% static 'images/Hack-4--Streamline-Brooklyn.png' %}" alt="Server Error">
+    <h1>Forbidden</h1>
     <p>You do not have permission to access this page.</p>
-</body>
-</html>
+    <p>Don`t try something funny, I can see you</p>
+</div>
+{% endblock %}
