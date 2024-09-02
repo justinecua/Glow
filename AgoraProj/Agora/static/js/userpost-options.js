@@ -1,5 +1,21 @@
-let PostOptions = document.querySelectorAll('.Post-Options');
+let PostOptions = document.querySelectorAll('.Post-Options2');
 let UserPostOptionsP = document.querySelectorAll('.UserPost-Options');
+let DeletePostOverlay = document.getElementById('DeletePost-Overlay');
+let CloseDeletePost = document.getElementById('Close-DeletePost');
+let DPBack = document.getElementById('DP-Back');
+let DPSubmit = document.querySelector('.DP-Submit');
+
+let postId = null;
+
+function handleDeletePost() {
+  if (postId) {
+    import("./ajax/delete-post.js")
+      .then(module => {
+        module.deletePost(postId);
+      })
+      .catch(error => console.error('Error loading delete-post.js:', error));
+  }
+}
 
 PostOptions.forEach(options => {
   options.addEventListener('click', function(event) {
@@ -10,13 +26,32 @@ PostOptions.forEach(options => {
     });
 
     let postContainer = options.closest('.User-Post-Container2');
-    let postId = postContainer.getAttribute('data-postid');
+    postId = postContainer.getAttribute('data-postid');
     let userPostOptions = postContainer.querySelector('.UserPost-Options');
+    let PostDeleteBtn = postContainer.querySelector('.Post-DeleteBtn');
+
+    PostDeleteBtn.addEventListener('click', function() {
+      DeletePostOverlay.style.display = 'flex';
+      userPostOptions.style.display = "none";
+      console.log(postId);
+    });
 
     userPostOptions.style.display = "flex";
-    console.log(postId);
   });
 });
+
+
+DPSubmit.addEventListener('click', handleDeletePost);
+
+CloseDeletePost.addEventListener('click', function() {
+  DeletePostOverlay.style.display = 'none';
+});
+
+
+DPBack.addEventListener('click', function() {
+  DeletePostOverlay.style.display = 'none';
+});
+
 
 document.addEventListener('click', function(event) {
   let isClickInside = false;

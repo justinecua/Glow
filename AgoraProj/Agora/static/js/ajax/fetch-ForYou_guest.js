@@ -187,10 +187,10 @@ function createPostElement(post) {
             <div class="UPCCT-Right">
             </div>
         </div>
-        <div class="UPC-content-grid ${post.photos.length === 3 ? 'three-photos' : ''}" style="${post.photos.length === 0 ? 'display: none;' : ''}">
+         <div class="UPC-content-grid ${post.photos.length >=2 ? 'three-photos' : ''}" style="${post.photos.length === 0 ? 'display: none;' : ''}">
             ${post.photos.map(photo =>
                 `<div class="UPC-content ${post.photos.length === 1 ? 'single-photo' : ''}">
-                    <img class="lazy" src="${photo.link}/tr:q-90,tr:w-450,bl-30,q-90,h-450?cm-pad_resize,bg-F3F3F3" data-src="${photo.link}/tr:q-90,tr:w-450,h-450?cm-pad_resize,bg-F3F3F3">
+                    <img class="lazy" src="${photo.link}/tr:q-90,tr:w-450,bl-30,q-90,h-450" data-src="${photo.link}/tr:q-90,tr:w-450,h-450">
                 </div>`).join('')}
         </div>
         <div class="UPC-content-Bottom">

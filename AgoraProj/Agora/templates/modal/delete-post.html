@@ -1,0 +1,25 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'home/delete-post.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div id="DeletePost-Overlay">
+  <div id="DeletePost-container">
+    <h2>Delete Post<div id="Close-DeletePost">x</div></h2>
+    <p>Are you certain you want to delete this post?</p>
+    <span>Please note that this action is irreversible. The post and any associated images will be permanently deleted.</span>
+    <div class="DP-Bottom">
+      <button id="DP-Back">No Thanks</button>
+      <button class="DP-Submit" type="submit">Yes, I`m sure
+        <div class="loader6"></div>
+      </button>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

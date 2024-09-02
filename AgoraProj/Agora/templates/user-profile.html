@@ -13,6 +13,8 @@
 {% block content %}
 {% include "modal/edit-userprofile.html" %}
 {% include "account/logout.html" %}
+{% include "modal/delete-post.html" %}
+
 <div id="Comment-Overlay">
 
     <div class="Comment-Container">
@@ -87,9 +89,13 @@
                     </div>
                 </a>
                 <div class="PTC-Right">
-                    <div id="AppearanceNav"><img  src="../static/images/bright.png" alt=""></div>
-                    <a href="{% url 'game_list' %}"><div><img src="../static/images/Controller-1--Streamline-Core-Remix.png" alt=""></div></a>
-                    <a href="{% url 'settings' %}"><div><img src="../static/images/Setting--Streamline-Unicons.png" alt=""></div></a>
+                    <div id="AppearanceNav"><img src="../static/images/bright.png" alt=""></div>
+                    <a href="{% url 'game_list' %}">
+                        <div><img src="../static/images/Controller-1--Streamline-Core-Remix.png" alt=""></div>
+                    </a>
+                    <a href="{% url 'settings' %}">
+                        <div><img src="../static/images/Setting--Streamline-Unicons.png" alt=""></div>
+                    </a>
                     <div id="Logout-btn"><img src="../static/images/logout.png"></div>
                 </div>
             </div>
@@ -225,8 +231,8 @@
         <div class="NCenter-content-user">
             {% if posts.posts_with_photos %}
             {% for post, post_info in posts.posts_with_photos.items %}
-            {% if forloop.counter0 < 8 %} {% if post_info.photos %} {% for photo in post_info.photos %} <div
-                class="UPC-content2">
+            {% if forloop.counter0 < 8 %} {% if post_info.photos %} {% for photo in post_info.photos %}
+            <div class="UPC-content2" data-postid="{{ post.id }}">
                 <img class="lazy" src="{{ photo.link|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50?cm-pad_resize,bg-F3F3F3' }}"
                     data-src="{{ photo.link | add:'/tr:q-90,tr:w-150,h-150?cm-pad_resize,bg-F3F3F3 '}}">
         </div>
@@ -259,7 +265,8 @@
         <div class="User-Post-Container2" data-postid="{{ post.id }}">
             <div class="UserPost-Options">
                 <div><img src="../static/images/Hand-Held-Tablet-Writing--Streamline-Micro.png" alt="">Edit</div>
-                <div><img src="../static/images/Delete-Bin-2--Streamline-Micro.png" alt="">Delete</div>
+                <div class="Post-DeleteBtn"><img src="../static/images/Delete-Bin-2--Streamline-Micro.png" alt="">Delete
+                </div>
             </div>
             <div class="UPC-content-Top">
                 <div class="UPCCT-Left">
@@ -288,7 +295,7 @@
                     </div>
                 </div>
                 <div class="UPCCT-Right">
-                    <div class="Post-Options">
+                    <div class="Post-Options2">
                         <img src="../static/images/Dots-Three-Bold--Streamline-Phosphor.png" alt="">
                     </div>
                 </div>
@@ -347,14 +354,23 @@
 
         {% if posts.posts_with_photos %}
         {% for post, post_info in posts.posts_with_photos.items %}
-        <div class="User-Post-Container2">
+        <div class="User-Post-Container2" data-postid="{{ post.id }}">
+            <div class="UserPost-Options">
+                <div><img src="../static/images/Hand-Held-Tablet-Writing--Streamline-Micro.png" alt="">Edit</div>
+                <div class="Post-DeleteBtn"><img src="../static/images/Delete-Bin-2--Streamline-Micro.png" alt="">Delete
+                </div>
+            </div>
             <div class="UPC-content-Top">
                 <div class="UPCCT-Left">
                     <a href="profile/{{ post.account.id }}">
                         <div class="Post-Prof-Cont">
-                            <img class="lazy"
-                                src="{{ post.account.profile_photo|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50' }}"
-                                data-src="{{ post.account.profile_photo | add:'/tr:q-90,tr:w-150,h-150?'}}">
+                            {% with dynamicProf=post.account.profile_photo %}
+                            {% if 'static' in dynamicProf %}
+                            <img class="lazy" src="{{ dynamicProf }}" data-src="{{ dynamicProf }}">
+                            {% else %}
+                            <img class="lazy" src="{{ dynamicProf|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50' }}"
+                                data-src="{{ post.account.profile_photo | add:'/tr:q-90,tr:w-150,h-150?'}}"> {% endif %}
+                            {% endwith %}
                         </div>
                     </a>
                     <div class="Post-Prof-Cont2">
@@ -370,7 +386,9 @@
                     </div>
                 </div>
                 <div class="UPCCT-Right">
-
+                    <div class="Post-Options2">
+                        <img src="../static/images/Dots-Three-Bold--Streamline-Phosphor.png" alt="">
+                    </div>
                 </div>
             </div>
 
@@ -459,7 +477,28 @@
 
     });
 
+    function LazyLoading(selector) {
+        let lazyimages = document.querySelectorAll(selector);
 
+        if ("IntersectionObserver" in window) {
+            let observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        let lazyimage = entry.target;
+                        lazyimage.src = lazyimage.dataset.src;
+                        lazyimage.classList.remove("lazy");
+                        observer.unobserve(lazyimage);
+                    }
+                });
+            });
+
+            lazyimages.forEach((lazyimage) => {
+                observer.observe(lazyimage);
+            });
+        }
+    }
+
+    LazyLoading(".lazy");
 </script>
 
 

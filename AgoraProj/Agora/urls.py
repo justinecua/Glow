@@ -1,5 +1,6 @@
 from django.urls import path, re_path
 from . import views
+from .views import deletePost
 from .views import (
     CustomPasswordResetView,
     CustomPasswordResetDoneView,
@@ -48,5 +49,6 @@ urlpatterns = [
     path('chat_page', views.chat_page, name='chat_page'),
     path('chat_with_gemini/', views.chat_with_gemini, name='chat_with_gemini'),
     re_path(r'^settings/$', views.settingsPage, name='settings'),
+    re_path(r'^myprofile/deletePost/(?P<id>\d+)/$', deletePost, name='deletePost'),
 ]
 

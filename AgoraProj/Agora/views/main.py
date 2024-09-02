@@ -251,10 +251,12 @@ def handle_media(request):
             imgkit = ImagekitClient(content_file)
             Photoresult = imgkit.upload_media_file()
             photo_link = Photoresult["url"]
+            photo_link_id = Photoresult["fileId"]
 
             Photo.objects.create(
                 link=photo_link,
                 post=new_post,
+                link_id_imagekit=photo_link_id
             )
 
         for vname, base64_data in zip(video_names, video_base64_data):
@@ -306,7 +308,6 @@ def handle_media(request):
 
         return JsonResponse( context, encoder = DjangoJSONEncoder)
     return JsonResponse({"status": "error", "message": "Only POST method is accepted"})
-
 
 
 def FetchForYou(request):
@@ -1600,8 +1601,6 @@ def chat_page(request):
     return render(request, 'chat.html')
 
 
-
-
 @csrf_exempt
 def chat_with_gemini(request):
     if request.method == "POST":
@@ -1638,7 +1637,6 @@ def chat_with_gemini(request):
             )
 
             return JsonResponse({'message': gemini_response})
-
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
 
