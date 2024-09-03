@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>{% block title %}Glow{% endblock %}</title>
     <link rel="icon" type="image/x-icon"
         href="https://ik.imagekit.io/b9bdd5j68/glow%20logo22.png/tr:q-100,tr:w-100,h-100">
@@ -13,24 +12,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
 
-    <!--Top Progress Bar library-->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css">
-    -->
     {% block css %}{% endblock %}
+
+    <style>
+        body {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
 </head>
 
-
 <body>
-
     {% block content %}
-
     {% endblock %}
 
     <script>
         document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+
         document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.visibility = 'visible';
             document.body.style.opacity = 1;
         });
     </script>
