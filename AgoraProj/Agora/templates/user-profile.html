@@ -15,6 +15,7 @@
 {% include "modal/edit-userprofile.html" %}
 {% include "account/logout.html" %}
 {% include "modal/delete-post.html" %}
+{% include "modal/edit-post.html" %}
 
 <div id="Comment-Overlay">
 
@@ -265,7 +266,7 @@
         {% for post, post_info in posts.posts_without_photos.items %}
         <div class="User-Post-Container2" data-postid="{{ post.id }}">
             <div class="UserPost-Options">
-                <div><img src="../static/images/Hand-Held-Tablet-Writing--Streamline-Micro.png" alt="">Edit</div>
+                <div class="Post-EditBtn"><img src="../static/images/Hand-Held-Tablet-Writing--Streamline-Micro.png" alt="">Edit</div>
                 <div class="Post-DeleteBtn"><img src="../static/images/Delete-Bin-2--Streamline-Micro.png" alt="">Delete
                 </div>
             </div>
@@ -357,7 +358,7 @@
         {% for post, post_info in posts.posts_with_photos.items %}
         <div class="User-Post-Container2" data-postid="{{ post.id }}">
             <div class="UserPost-Options">
-                <div><img src="../static/images/Hand-Held-Tablet-Writing--Streamline-Micro.png" alt="">Edit</div>
+                <div class="Post-EditBtn"><img src="../static/images/Hand-Held-Tablet-Writing--Streamline-Micro.png" alt="">Edit</div>
                 <div class="Post-DeleteBtn"><img src="../static/images/Delete-Bin-2--Streamline-Micro.png" alt="">Delete
                 </div>
             </div>
