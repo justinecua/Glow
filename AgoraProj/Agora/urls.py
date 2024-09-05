@@ -34,6 +34,7 @@ urlpatterns = [
     path('editProfile/<int:id>', views.editProfile, name='editProfile'),
     path('searchResults/', views.searchResults, name='searchResults'),
     path('FetchForYou/', views.FetchForYou, name='FetchForYou'),
+    re_path(r'^FetchFriendsPosts/$', views.FetchFollowing, name='FetchFriendsPosts'),
     path('account/password/reset/', CustomPasswordResetView.as_view(), name='account_reset_password'),
     path('account/password/reset/done/', CustomPasswordResetDoneView.as_view(), name='account_reset_done_password'),
     path('account/password/reset/key/<uidb64>/<key>/', CustomPasswordResetFromKeyView.as_view(), name='account_reset_from_key'),
