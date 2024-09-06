@@ -79,56 +79,81 @@
     </div>
 </div>
 
+{% load static %}
+<script type="module" src="{% static 'js/nav.js' %}"></script>
+
 <div class="Nav-Cont">
     <nav class="NLeft">
         <ul>
             <div class="NavLogo">
-                <h1>Glow</h1>
+                <img src="https://ik.imagekit.io/b9bdd5j68/glow%20logo22.png/tr:q-100,tr:w-200,h-200" alt="">
+                <h1>glow</h1>
             </div>
             <a href="{% url 'dashboard' %}">
                 <li><img src="../static/images/home2.png" alt="">
                     <p>Home</p>
                 </li>
             </a>
-            <li><img src="../static/images/chat.png" alt="">
-                <p>Messages</p>
+            <li id="SearchNav"><img src="../static/images/search.png" alt="">
+                <p>Search</p>
             </li>
+            <!--<li><img src="../static/images/chat.png" alt=""><p>Messages</p></li>-->
             <li id="Notification-Tab">
                 <div class="NT-Tab">
                     <img src="../static/images/bell.png" alt="">
                     <p>Notifications</p>
                 </div>
                 {% if unread_count %}
-                <div id="Notif-Counter">
-                    <p>{{ unread_count }}</p>
-                </div>
+                <div id="Notif-Counter"><span>{{ unread_count }}</span> </div>
                 {% endif %}
             </li>
-            <li><img src="../static/images/settings.png" alt="">
-                <p>Settings</p>
-            </li>
-            <li>
+            <li id="AppearanceNav">
                 <img src="../static/images/bright.png" alt="">
                 <p>Appearance</p>
-                <label class="switch">
-                    <input type="checkbox" id="toggleTheme">
-                    <span class="slider round"></span>
-                </label>
             </li>
 
-            <a href="{% url 'account_logout' %}">
-                <li><img src="../static/images/logout.png" alt="">Logout</li>
+            <a href="{% url 'game_list' %}">
+                <li id=""><img src="../static/images/Controller-1--Streamline-Core-Remix.png" alt="">
+                    <p>Games</p>
+                </li>
             </a>
-        </ul>
+            <a href="{% url 'settings' %}">
+                <li id=""><img src="../static/images/Setting--Streamline-Unicons.png" alt="">
+                    <p>Settings</p>
+                </li>
+            </a>
+            <a href="{% url 'chat_page' %}">
+                <li id=""><img src="../static/images/Messages-Bubble-Typing-Alternate-1--Streamline-Ultimate.png"
+                        alt="">
+                    <p>Glow Chat</p>
+                </li>
+            </a>
 
-        <div>
-            <a href="{% url 'UserProfile' %}">
-                <div class="Profile-Nav">
-                    <img src="{{ accountInfo.profile_photo }}">
-                    <p>{{ accountInfo.firstname }} {{ accountInfo.lastname }}</p>
-                </div>
-            </a>
-        </div>
+            <li id="Create-Btn-Nav"><img src="../static/images/create.png" alt="">
+                <p>Create</p>
+            </li>
+            <li id="Logout-btn"><img src="../static/images/logout.png" alt="">
+                <p>Logout</p>
+            </li>
+
+
+            <div id="UserProf-Div">
+
+                <a href="/myprofile/{{ accountInfo.id }}">
+
+                    <div class="Profile-Nav">
+                        {% if is_new_user %}
+                        <img src="../static/images/default-avatar-profile-picture-male-icon.png" alt="">
+                        <p>Unknown User</p>
+                        {% else %}
+                        <div id="UserLoggedInId" data-loggedIn="{accountInfo.id }"></div>
+                        <img src="{{ accountInfo.profile_photo }}">
+                        <p>{{ accountInfo.firstname }} {{ accountInfo.lastname }}</p>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+        </ul>
     </nav>
 
 
@@ -170,9 +195,9 @@
             <span>No notifications</span>
             {% endif %}
         </div>
-
-
     </div>
+
+
 </div>
 
 
@@ -184,11 +209,9 @@
                 <div class="TFC-Left">
                     {% if tag %}
                     {% if posts|length > 1%}
-                    <p>Showing {{ posts|length }} posts related to <a href="/tags/{{ tag.id }}"><span>#{{ tag
-                                }}</span></a></p>
+                    <p>Showing {{ posts|length }} posts related to <a href="/tags/{{ tag.id }}"><span>#{{ tag }}</span></a></p>
                     {% else %}
-                    <p>Showing {{ posts|length }} post related to <a href="/tags/{{ tag.id }}"><span>#{{ tag
-                                }}</span></a></p>
+                    <p>Showing {{ posts|length }} post related to <a href="/tags/{{ tag.id }}"><span>#{{ tag }}</span></a></p>
                     {% endif %}
 
                     {% endif %}

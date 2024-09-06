@@ -5,7 +5,6 @@ import { AcceptFriend } from "./ajax/accept-friend.js";
 import { sendLike } from "./ajax/send-like.js";
 import { sendUnlike } from "./ajax/send-unlike.js";
 
-
 let Post = document.getElementById('Post-Container');
 let createpost = document.getElementById('create-post');
 let ImagesIcon = document.getElementById('Images-Icon');
@@ -21,7 +20,7 @@ let ModalBottom2 = document.querySelector('.Modal-Bottom2');
 let MMBottom = document.querySelector('.MM-Bottom');
 let EmojiIcon = document.getElementById('Emoji-Icon');
 let emojiFloatingDiv = document.querySelector('.emoji-floating-div');
-let UserPostBtn = document.getElementById("User-PostBtn");
+let UserPostBtn = document.getElementById(" ");
 let postTextarea = document.getElementById('post-textarea');
 let confirmFriendObject = '';
 var confirmButtons = document.querySelectorAll(".Confirm-friend");
