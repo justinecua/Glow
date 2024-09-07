@@ -117,11 +117,18 @@
                     <div class="PPC-Profile-Cont">
                         <div class="PPC-My-Profile">
                             <div id="PPC-My-Profile-Container">
-                                <img src="{{ accountInfo.profile_photo }}">
+                                {% with dynamicProf2=accountInfo.profile_photo %}
+                                {% if 'static' in dynamicProf2 %}
+                                <img class="lazy" src="{{ dynamicProf2 }}" data-src="{{ dynamicProf2 }}">
+                                {% else %}
+                                <img class="lazy" src="{{ dynamicProf2|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50' }}"
+                                    data-src="{{ accountInfo.profile_photo | add:'/tr:q-90,tr:w-150,h-150?'}}"> {% endif %}
+                                {% endwith %}
                             </div>
                             <div id="ChangeProf-Icon">
                                 <img src="../static/images/Camera--Streamline-Font-Awesome.png" alt="">
                             </div>
+
                         </div>
                         <div class="PPC-Buttons">
                             <div class="PPCB-Top">
@@ -290,7 +297,8 @@
                             <img class="lazy" src="{{ dynamicProf }}" data-src="{{ dynamicProf }}">
                             {% else %}
                             <img class="lazy" src="{{ dynamicProf|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50' }}"
-                                data-src="{{ post.account.profile_photo | add:'/tr:q-90,tr:w-150,h-150?'}}"> {% endif %}
+                                data-src="{{ post.account.profile_photo | add:'/tr:q-90,tr:w-150,h-150?'}}">
+                            {% endif %}
                             {% endwith %}
 
                         </div>
