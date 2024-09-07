@@ -8,6 +8,8 @@
 <script type="module" src="{% static 'js/logout.js' %}"></script>
 <script type="module" src="{% static 'js/audience.js' %}"></script>
 <script type="module" src="{% static 'js/userpost-options.js' %}"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
 {% endblock %}
 
@@ -17,6 +19,7 @@
 {% include "account/logout.html" %}
 {% include "modal/delete-post.html" %}
 {% include "modal/edit-post.html" %}
+{% include "modal/change-profile.html" %}
 
 <div id="Comment-Overlay">
 
@@ -113,7 +116,12 @@
 
                     <div class="PPC-Profile-Cont">
                         <div class="PPC-My-Profile">
-                            <img src="{{ accountInfo.profile_photo }}">
+                            <div id="PPC-My-Profile-Container">
+                                <img src="{{ accountInfo.profile_photo }}">
+                            </div>
+                            <div id="ChangeProf-Icon">
+                                <img src="../static/images/Camera--Streamline-Font-Awesome.png" alt="">
+                            </div>
                         </div>
                         <div class="PPC-Buttons">
                             <div class="PPCB-Top">
@@ -188,6 +196,8 @@
                     <span id="Prof-FriendCounter"> {{ totalGlows }}</span>
                     <span id="Prof-FriendTitle">total glows</span>
                     {% else %}
+                    <span id="Prof-FriendCounter"> {{ totalGlows }}</span>
+                    <span id="Prof-FriendTitle">total glows</span>
 
                     {% endif %}
                 </div>

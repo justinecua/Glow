@@ -160,7 +160,7 @@
                     </div>
                 </a>
                 <div class="PTC-Right">
-                    <div id="AppearanceNav"><img  src="../static/images/bright.png" alt=""></div>
+                    <div id="AppearanceNav"><img src="../static/images/bright.png" alt=""></div>
                 </div>
 
             </div>
@@ -180,14 +180,16 @@
 
                     <div class="PPC-Profile-Cont">
                         <div class="PPC-My-Profile">
-                            {% with dynamicProf=randomaccount.profile_photo %}
-                            {% if 'static' in dynamicProf %}
-                            <img class="lazy" src="{{ dynamicProf }}" data-src="{{ dynamicProf }}">
-                            {% else %}
-                            <img class="lazy" src="{{ dynamicProf|add:'/tr:w-250,h-250,q-90,bl-30' }}"
-                                data-src="{{ dynamicProf|add:'/tr:w-400,h-400,q-90' }}">
-                            {% endif %}
-                            {% endwith %}
+                            <div id="PPC-My-Profile-Container">
+                                {% with dynamicProf=randomaccount.profile_photo %}
+                                {% if 'static' in dynamicProf %}
+                                <img class="lazy" src="{{ dynamicProf }}" data-src="{{ dynamicProf }}">
+                                {% else %}
+                                <img class="lazy" src="{{ dynamicProf|add:'/tr:w-250,h-250,q-90,bl-30' }}"
+                                    data-src="{{ dynamicProf|add:'/tr:w-400,h-400,q-90' }}">
+                                {% endif %}
+                                {% endwith %}
+                            </div>
                         </div>
 
                         <div class="PPC-Buttons">

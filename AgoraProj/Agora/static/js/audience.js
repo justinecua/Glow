@@ -16,9 +16,9 @@ let emojiFloatingDiv = document.querySelector('.emoji-floating-div');
 let hasCalled = false;
 let postTextarea = document.getElementById('post-textarea');
 let accountID = document.getElementById('accountID');
-let ModalBottom2 = document.querySelector('.Modal-Bottom3');
-let MMBottom = document.querySelector('.MM-Bottom4');
-let MMTop = document.querySelector('.MM-Top');
+let ModalBottom3 = document.querySelector('.Modal-Bottom3');
+let MMBottom4 = document.querySelector('.MM-Bottom4');
+let MMTop = document.querySelectorAll('.MM-Top');
 
 /*-----------------------------------Custom Audience Dropdown --------------------------------------*/
 
@@ -46,6 +46,10 @@ if (customOptions.length > 0) {
 }
 
 document.addEventListener('click', function(event) {
+  if (!emojiFloatingDiv.contains(event.target)) {
+    HideEmojis();
+  }
+
   if (!customSelect.contains(event.target)) {
       customSelect.classList.remove('open');
   }
@@ -66,6 +70,7 @@ ImagesIcon.addEventListener('click', async () => {
       addImagePost();
   }
 });
+
 RemovePostImage.addEventListener('click', async() =>{
   const { removeImagePost } = await import ("./modal/remove-photo-option.js");
   removeImagePost();
@@ -157,9 +162,11 @@ function updateTotalSize(fileSize) {
       return false;
   }
 
-  ModalBottom2.style.height = "7rem";
-  MMBottom.style.height = "50%";
-  MMTop.style.display = "flex";
+  ModalBottom3.style.height = "3rem";
+  MMBottom4.style.height = "100%";
+  MMTop.forEach(top =>{
+    top.style.display = "flex";
+  })
   totalUploadedSizeBytes += fileSize;
 
   SizeCounter.innerHTML = formatFileSize(totalUploadedSizeBytes) + "&nbsp;/&nbsp;25 MB";

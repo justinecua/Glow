@@ -2581,15 +2581,43 @@ input:focus-visible+.slider {
 .PPC-My-Profile {
   width: 9.1rem;
   height: 100%;
-
+  position: relative;
+  display: flex;
+  justify-content: end;
+  align-items: end;
 }
 
-.PPC-My-Profile img {
+
+#PPC-My-Profile-Container img:not(#ChangeProf-Icon){
   border-radius: 50%;
   width: 100%;
   height: 100%;
   object-fit: cover;
   border: 5px solid var(--nav-color);
+}
+
+#ChangeProf-Icon{
+  position: absolute;
+  width: 2.3rem;
+  height: 2.3rem;
+  object-fit: cover;
+  padding: 0.6rem;
+  background-color: var(--input-create-post);
+  border-radius: 50%;
+  bottom: 0.6rem;
+  right: 1rem;
+}
+
+#ChangeProf-Icon img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: var(--icon-filter);
+}
+
+#ChangeProf-Icon:hover{
+  background-color: var(--TopNavHover);
+  cursor: pointer;
 }
 
 .PPC-Buttons {
@@ -2598,7 +2626,6 @@ input:focus-visible+.slider {
   align-items: end;
   width: 70%;
   height: 100%;
-
 }
 
 #Edit-MyProfile {

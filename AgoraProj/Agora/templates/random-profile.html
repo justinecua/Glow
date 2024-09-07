@@ -191,7 +191,16 @@
 
                     <div class="PPC-Profile-Cont">
                         <div class="PPC-My-Profile">
-                            <img src="{{ randomaccount.profile_photo }}">
+                            <div id="PPC-My-Profile-Container">
+                                {% with dynamicProf=randomaccount.profile_photo %}
+                                {% if 'static' in dynamicProf %}
+                                <img class="lazy" src="{{ dynamicProf }}" data-src="{{ dynamicProf }}">
+                                {% else %}
+                                <img class="lazy" src="{{ dynamicProf|add:'/tr:w-250,h-250,q-90,bl-30' }}"
+                                    data-src="{{ dynamicProf|add:'/tr:w-400,h-400,q-90' }}">
+                                {% endif %}
+                                {% endwith %}
+                            </div>
                         </div>
 
                         <div class="PPC-Buttons">
@@ -308,6 +317,8 @@
                     <span id="Prof-FriendCounter"> {{ totalGlows }}</span>
                     <span id="Prof-FriendTitle">total glows</span>
                     {% else %}
+                    <span id="Prof-FriendCounter"> {{ totalGlows }}</span>
+                    <span id="Prof-FriendTitle">total glows</span>
 
                     {% endif %}
                 </div>

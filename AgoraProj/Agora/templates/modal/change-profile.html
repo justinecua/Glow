@@ -1,0 +1,32 @@
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'home/change-profile.css' %}">
+<script type="module" src="{% static 'js/change-profile.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div id="ChangeProfile-Overlay">
+  <div id="ChangeProfile-container">
+    <h3>Profile</h3>
+
+    <input type="file" id="imageInput" accept="image/*">
+    <div>
+      <img id="imageContainer">
+    </div>
+
+    <button id="cropButton">Crop Image</button>
+    <button id="resetButton">Reset Crop</button>
+    <button id="rotateButton">Rotate right</button>
+    <button id="rotateButton2">Rotate left</button>
+    <button id="zoomInButton">Zoom In</button>
+    <button id="zoomOutButton">Zoom Out</button>
+    <button id="ratio4x3">4:3</button>
+    <button id="ratio1x1">1:1</button>
+    <button id="ratioFree">Free</button>
+    <button id="flipHorizontal">Flip Horizontal</button>
+    <button id="flipVertical">Flip Vertical</button>
+  </div>
+</div>
+
+{% endblock %}
