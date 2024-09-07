@@ -56,7 +56,7 @@
   background-color: #24262aa7;
   z-index: 5;
   position: fixed;
-  display: flex;
+  display: none;
   overflow: hidden;
   backdrop-filter: blur(2px);
 }
