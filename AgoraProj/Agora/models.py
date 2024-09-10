@@ -13,6 +13,10 @@ class Account(models.Model):
     profile_photo = models.URLField(verbose_name="File Url")
     auth_user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
 
+    last_activity = models.DateTimeField(null=True, blank=True)
+    is_online = models.BooleanField(default=False)
+
+
     def __str__(self):
         return f"{self.firstname} {self.lastname}"
 

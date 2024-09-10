@@ -50,6 +50,8 @@ def dashboard(request):
     hashtags = showTags(request)
     search = searchResults(request)
 
+    user_id = request.user.id if request.user.is_authenticated else None
+
     context = {
         'is_new_user': is_new_user,
         'accountInfo': accountInfo,
@@ -58,7 +60,8 @@ def dashboard(request):
         'unread_count': unread_notifications_count,
         'friends': showfriends,
         'hashtags': hashtags,
-        'search_results': search.get('results', [])
+        'search_results': search.get('results', []),
+        'user_id': user_id, 
     }
 
     return render(request, 'dashboard.html', context)
@@ -83,6 +86,12 @@ def validatelogin(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
+
+            account, _ = Account.objects.get_or_create(auth_user=user)
+            account.is_online = True
+            account.last_activity = timezone.now()
+            account.save()
+
             return JsonResponse({"status": "success", "message": "Login successfully", "redirect": "/dashboard"})
         else:
             return JsonResponse({"status": "error", "message": "Incorrect email or password"})
@@ -110,6 +119,7 @@ def signup(request):
         if password1 == password2:
             if not User.objects.filter(username=username).exists():
                 if not User.objects.filter(email=email).exists():
+                    
                     user = User.objects.create_user(
                         username=username,
                         email=email,
@@ -118,6 +128,11 @@ def signup(request):
                     user = authenticate(username=username, password=password1)
                     if user is not None:
                         login(request, user)
+                        Account.objects.create(
+                            auth_user=user,
+                            is_online=True,
+                            last_activity=timezone.now()
+                        )
                         return JsonResponse({"status": "success", "message": "Signup successfully", "redirect": "/dashboard"})
                     else:
                         return JsonResponse({"status": "error", "message": "Authentication failed"})

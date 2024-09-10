@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'imagekit',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -51,5 +51,7 @@ urlpatterns = [
     path('chat_with_gemini/', views.chat_with_gemini, name='chat_with_gemini'),
     re_path(r'^settings/$', views.settingsPage, name='settings'),
     re_path(r'^myprofile/deletePost/(?P<id>\d+)/$', deletePost, name='deletePost'),
+    re_path(r'^myprofile/deletePost/(?P<id>\d+)/$', deletePost, name='deletePost'),
+    re_path(r'^capture-event/$', views.capture_event, name='capture-event'),
 ]
 
