@@ -50,7 +50,7 @@
   --TopNavHover: #d6d6d6;
 }
 
-#ChangeProfile-Overlay{
+#ChangeProfile-Overlay {
   width: 100vw;
   height: 100vh;
   background-color: #24262aa7;
@@ -61,16 +61,24 @@
   backdrop-filter: blur(2px);
 }
 
-#ChangeProfile-container{
+#ChangeProfile-container {
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   margin: auto;
-  width: 35rem;
+  width: 27rem;
   background-color: var(--nav-color);
   border-radius: 9px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.3s ease-out forwards;
+}
+
+#ChangeProfile-container h3 {
+  padding: 0.6rem 1rem;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 @keyframes fadeIn {
@@ -83,8 +91,147 @@
   }
 }
 
-#imageContainer{
+.imageContainer-Parent{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#imageContainer {
   display: none;
+  border: none;
   width: 100%;
   height: 20rem;
+}
+
+#CurrentimageContainer{
+  display: flex;
+  border: none;
+  width: 9rem;
+  height: 9rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.ChangeProfile-Btns {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.CPB-Top {
+  padding: 1rem;
+  display: none;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.CPB-Top button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: var(--input-create-post);
+  border: none;
+  border-radius: 50%;
+  color: var(--text-color);
+}
+
+.CPB-Top button:hover {
+  background-color: var(--TopNavHover);
+  cursor: pointer;
+}
+
+.CPB-Top button img {
+  width: 1.1rem;
+  height: 1.1rem;
+  filter: var(--icon-filter);
+  object-fit: cover;
+}
+
+.CPB-Bottom {
+  margin-top: 1rem;
+  row-gap: 0.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.CPB-Bottom button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.9rem 0.5rem;
+  background-color: var(--input-create-post);
+  border: none;
+  color: var(--text-color);
+  font-family: "Work Sans", sans-serif;
+  font-weight: 600;
+}
+
+#SaveNewProfile{
+  display: none;
+}
+
+#Browse-Profile:hover {
+  background-color: var(--button-hover);
+  cursor: pointer;
+}
+
+#SaveNewProfile:hover{
+  background-color: var(--button-hover);
+  cursor: pointer;
+}
+
+#CancelNewProfile:hover{
+  background-color: var(--button-hover);
+  cursor: pointer;
+}
+
+.tooltip {
+  position: relative;
+
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  bottom: 130%;
+  left: -160%;
+  width: 9rem;
+  text-align: center;
+  border-radius: 10px;
+  padding: 0.6rem;
+  color: var(--text-color);
+  position: absolute;
+  background-color: var(--input-create-post);
+  z-index: 2;
+  font-size: 0.7rem;
+  font-family: "Work Sans", sans-serif;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--input-create-post) transparent transparent transparent;
+}
+
+ .cropper-wrap-box{
+  background-color: var(--input-create-post);
+}
+
+.cropper-modal{
+  opacity: 0.3;
 }

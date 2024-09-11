@@ -61,7 +61,7 @@ def dashboard(request):
         'friends': showfriends,
         'hashtags': hashtags,
         'search_results': search.get('results', []),
-        'user_id': user_id, 
+        'user_id': user_id,
     }
 
     return render(request, 'dashboard.html', context)
@@ -119,7 +119,7 @@ def signup(request):
         if password1 == password2:
             if not User.objects.filter(username=username).exists():
                 if not User.objects.filter(email=email).exists():
-                    
+
                     user = User.objects.create_user(
                         username=username,
                         email=email,
@@ -573,6 +573,7 @@ def UserProfile(request, id):
         'totalGlows': totalGlows,
         'total_photos_count': total_photos_count,
         'unique_acc_who_glowed': unique_acc_who_glowed,
+        'account_profile': accID.profile_photo,
     }
 
     return render(request, 'user-profile.html', context)

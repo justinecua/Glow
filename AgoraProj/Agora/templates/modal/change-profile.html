@@ -8,24 +8,94 @@
 {% block content %}
 <div id="ChangeProfile-Overlay">
   <div id="ChangeProfile-container">
-    <h3>Profile</h3>
+    <h3>Change Profile</h3>
 
-    <input type="file" id="imageInput" accept="image/*">
-    <div>
+    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+    <div class="imageContainer-Parent">
+      {% if account_profile %}
+      {% with dynamicProf3=account_profile %}
+      {% if 'static' in dynamicProf3 %}
+      <img id="CurrentimageContainer"  class="lazy" src="{{ dynamicProf3 }}" data-src="{{ dynamicProf3 }}">
+      {% else %}
+      <img id="CurrentimageContainer"  class="lazy" src="{{ dynamicProf3|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50' }}"
+        data-src="{{ dynamicProf3 | add:'/tr:q-90,tr:w-150,h-150?'}}">
+      {% endif %}
+      {% endwith %}
+      {% endif %}
       <img id="imageContainer">
     </div>
 
-    <button id="cropButton">Crop Image</button>
-    <button id="resetButton">Reset Crop</button>
-    <button id="rotateButton">Rotate right</button>
-    <button id="rotateButton2">Rotate left</button>
-    <button id="zoomInButton">Zoom In</button>
-    <button id="zoomOutButton">Zoom Out</button>
-    <button id="ratio4x3">4:3</button>
-    <button id="ratio1x1">1:1</button>
-    <button id="ratioFree">Free</button>
-    <button id="flipHorizontal">Flip Horizontal</button>
-    <button id="flipVertical">Flip Vertical</button>
+    <div class="ChangeProfile-Btns">
+
+      <div class="CPB-Top">
+        <div class="tooltip">
+          <button id="ratio4x3">4:3</button>
+          <span class="tooltiptext">Set Aspect Ratio 4:3</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="ratio1x1">1:1</button>
+          <span class="tooltiptext">Set Aspect Ratio 1:1</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="resetButton">
+            <img src="../static/images/Restart-Circle--Streamline-Solar-Ar.png" alt="">
+          </button>
+          <span class="tooltiptext">Reset</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="rotateButton">
+            <img src="../static/images/Rotate-Cw--Streamline-Feather.png" alt="">
+          </button>
+          <span class="tooltiptext">Rotate Right</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="rotateButton2">
+            <img src="../static/images/Rotate-Ccw--Streamline-Feather.png" alt="">
+          </button>
+          <span class="tooltiptext">Rotate Left</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="zoomInButton">
+            <img src="../static/images/Zoom-In--Streamline-Feather.png" alt="">
+          </button>
+          <span class="tooltiptext">Zoom In</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="zoomOutButton">
+            <img src="../static/images/Zoom-Out--Streamline-Feather.png" alt="">
+          </button>
+          <span class="tooltiptext">Zoom Out</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="flipHorizontal">
+            <img src="../static/images/Flip-Horizontal--Streamline-Solar-Ar.png" alt="">
+          </button>
+          <span class="tooltiptext">Flip Horizontally</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="flipVertical">
+            <img src="../static/images/Flip-Vertical--Streamline-Solar-Ar.png" alt="">
+          </button>
+          <span class="tooltiptext">Flip Vertically</span>
+        </div>
+      </div>
+
+      <div class="CPB-Bottom">
+        <button id="Browse-Profile">Browse</button>
+        <button id="CancelNewProfile">Cancel</button>
+        <button id="SaveNewProfile">Apply Changes</button>
+      </div>
+
+    </div>
+
   </div>
 </div>
 

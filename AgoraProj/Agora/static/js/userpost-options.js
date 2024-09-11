@@ -5,6 +5,7 @@ let EditPostOverlay = document.getElementById('EditPost-Overlay');
 let CloseDeletePost = document.getElementById('Close-DeletePost');
 let DPBack = document.getElementById('DP-Back');
 let DPSubmit = document.querySelector('.DP-Submit');
+let ChangeProfIcon = document.getElementById('ChangeProf-Icon');
 
 let postId = null;
 
@@ -76,3 +77,4 @@ document.addEventListener('click', function(event) {
     });
   }
 });
+

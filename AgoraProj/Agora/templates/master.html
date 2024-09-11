@@ -51,8 +51,8 @@
     if ("{{ user_id }}") {
         const userId = "{{ user_id }}";
         let eventData = [];
-        let lastInteractionTime = new Date().toISOString(); 
-        const MAX_EVENTS = 100; 
+        let lastInteractionTime = new Date().toISOString();
+        const MAX_EVENTS = 100;
 
         function captureUserEvents() {
             document.addEventListener('click', function(event) {
@@ -76,7 +76,7 @@
 
         function addEventToData(data) {
             eventData.push(data);
-            lastInteractionTime = new Date().toISOString(); 
+            lastInteractionTime = new Date().toISOString();
 
             if (eventData.length >= MAX_EVENTS) {
                 eventData = [];
@@ -84,18 +84,18 @@
         }
 
         function sendDataToDjango() {
-            if (eventData.length === 0) return; 
+            if (eventData.length === 0) return;
 
             fetch('/capture-event/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': getCSRFToken() 
+                    'X-CSRFToken': getCSRFToken()
                 },
-                body: JSON.stringify(eventData) 
+                body: JSON.stringify(eventData)
             }).then(response => {
                 if (response.ok) {
-                    eventData = []; 
+                    eventData = [];
                 } else {
                     console.error('Failed to send data to Django');
                 }
@@ -109,9 +109,9 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': getCSRFToken() 
+                    'X-CSRFToken': getCSRFToken()
                 },
-                body: JSON.stringify([{ user_id: userId, type: 'status', status: 'offline' }]) 
+                body: JSON.stringify([{ user_id: userId, type: 'status', status: 'offline' }])
             }).catch(error => {
                 console.error('Error:', error);
             });
@@ -123,19 +123,19 @@
             const timeSinceLastInteraction = now - lastInteraction;
 
             if (timeSinceLastInteraction > 180000 && eventData.length > 0) {
-                sendDataToDjango(); 
-                sendOfflineStatus(); 
+                sendDataToDjango();
+                sendOfflineStatus();
             } else if (timeSinceLastInteraction < 180000) {
-                sendDataToDjango(); 
+                sendDataToDjango();
             }
         }
 
         captureUserEvents();
 
-        setInterval(handleInactivity, 60000); 
+        setInterval(handleInactivity, 60000);
 
         window.addEventListener('beforeunload', function () {
-          
+
             navigator.sendBeacon('/capture-event/', JSON.stringify([{ user_id: userId, type: 'status', status: 'offline' }]));
         });
     }
