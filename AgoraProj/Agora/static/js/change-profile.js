@@ -9,6 +9,7 @@ let CPBBottom = document.querySelector('.CPB-Bottom');
 let SaveNewProfile = document.getElementById('SaveNewProfile');
 let CancelNewProfile = document.getElementById('CancelNewProfile');
 let ChangeProfIcon = document.getElementById('ChangeProf-Icon');
+let UserIDProfile = document.getElementById('UserIDProfile');
 let cropper;
 
 imageInput.addEventListener('change', function (event) {
@@ -52,13 +53,46 @@ BrowseProfile.addEventListener('click', function() {
 
 });
 
-document.getElementById('SaveNewProfile').addEventListener('click', function () {
+document.getElementById('SaveNewProfile').addEventListener('click', async function () {
+  const button = this;
+  button.disabled = true;
+
   if (cropper) {
-    const croppedCanvas = cropper.getCroppedCanvas();
-    document.body.appendChild(croppedCanvas);
-    console.log(croppedCanvas);
+    try {
+      const croppedCanvas = cropper.getCroppedCanvas();
+      const originalFile = imageInput.files[0];
+      const UserID = UserIDProfile.getAttribute('data-UserID');
+
+      croppedCanvas.toBlob(async function(blob) {
+        if (!blob) {
+          console.error('Failed to convert canvas to blob');
+          button.disabled = false;
+          return;
+        }
+
+        const croppedFile = new File([blob], originalFile.name, { type: 'image/jpeg' });
+
+        console.log(croppedFile, 'UserID=', UserID);
+        const { sendProfile } = await import ("./ajax/send-profile.js");
+
+        try {
+          await sendProfile(UserID, croppedFile);
+
+        } catch (error) {
+          console.error('Error sending profile:', error);
+
+        }
+      }, 'image/jpeg');
+    } catch (error) {
+      console.error('Error processing image:', error);
+      button.disabled = false;
+    }
+  } else {
+    button.disabled = false;
   }
 });
+
+
 
 document.getElementById('resetButton').addEventListener('click', function () {
   if (cropper) {

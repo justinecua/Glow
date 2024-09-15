@@ -66,7 +66,7 @@
   display: flex;
   flex-direction: column;
   margin: auto;
-  width: 27rem;
+  width: 30rem;
   background-color: var(--nav-color);
   border-radius: 9px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -171,6 +171,7 @@
 }
 
 #SaveNewProfile{
+  position: relative;
   display: none;
 }
 
@@ -234,4 +235,27 @@
 
 .cropper-modal{
   opacity: 0.3;
+}
+
+.loader7 {
+  position: absolute;
+  border: 0.2rem solid white;
+  border-top: 0.2rem solid #6587e6;
+  border-radius: 50%;
+  width: 1.2rem;
+  height: 1.2rem;
+  top: 0.7rem;
+  animation: spin 2s linear infinite;
+  right: 7.8rem;
+  display: none;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

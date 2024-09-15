@@ -10,14 +10,18 @@
   <div id="ChangeProfile-container">
     <h3>Change Profile</h3>
 
+    {% if accountInfo %}
+    <div id="UserIDProfile" data-UserID="{{ accountInfo.id }}"></div>
+    {% endif %}
+
     <input type="file" id="imageInput" accept="image/*" style="display: none;">
     <div class="imageContainer-Parent">
       {% if account_profile %}
       {% with dynamicProf3=account_profile %}
       {% if 'static' in dynamicProf3 %}
-      <img id="CurrentimageContainer"  class="lazy" src="{{ dynamicProf3 }}" data-src="{{ dynamicProf3 }}">
+      <img id="CurrentimageContainer" class="lazy" src="{{ dynamicProf3 }}" data-src="{{ dynamicProf3 }}">
       {% else %}
-      <img id="CurrentimageContainer"  class="lazy" src="{{ dynamicProf3|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50' }}"
+      <img id="CurrentimageContainer" class="lazy" src="{{ dynamicProf3|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50' }}"
         data-src="{{ dynamicProf3 | add:'/tr:q-90,tr:w-150,h-150?'}}">
       {% endif %}
       {% endwith %}
@@ -91,7 +95,9 @@
       <div class="CPB-Bottom">
         <button id="Browse-Profile">Browse</button>
         <button id="CancelNewProfile">Cancel</button>
-        <button id="SaveNewProfile">Apply Changes</button>
+        <button id="SaveNewProfile">Apply Changes
+          <div class="loader7"></div>
+        </button>
       </div>
 
     </div>

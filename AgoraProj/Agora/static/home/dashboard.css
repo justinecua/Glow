@@ -2604,7 +2604,7 @@ input:focus-visible+.slider {
   padding: 0.6rem;
   background-color: var(--input-create-post);
   border-radius: 50%;
-  bottom: 0.6rem;
+  bottom: 0.4rem;
   right: 1rem;
 }
 

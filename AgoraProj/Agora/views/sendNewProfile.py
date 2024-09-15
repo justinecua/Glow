@@ -1,11 +1,13 @@
-from django.views.decorators.csrf import csrf_exempt
+import json
+from django.core.files.base import ContentFile
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from ..models import Account
 from imagekitio import ImageKit
-from dotenv import load_dotenv
 import os
+from ..helpers import ImagekitClient
 
-load_dotenv()
+# Load ImageKit credentials
 imagekit = ImageKit(
     public_key=os.getenv('IMAGEKIT_PUBLIC_KEY'),
     private_key=os.getenv('IMAGEKIT_PRIVATE_KEY'),
@@ -13,25 +15,36 @@ imagekit = ImageKit(
 )
 
 @csrf_exempt
-def sendNewProfile(request, id):
+def sendNewProfile(request):
     if request.method == 'POST':
         try:
-            post = Post.objects.get(id=id)
-            photos = Photo.objects.filter(post=post)
+            accID = request.POST.get("accID")
+            content_file = request.FILES.get("profile_photo")
 
-            for photo in photos:
-                if photo.link_id_imagekit:
-                    imagekit.delete_file(file_id=photo.link_id_imagekit)
-                photo.delete()
+            acc = Account.objects.get(id=accID)
 
-            post.delete()
+            imgkit = ImagekitClient(content_file)
+            Photoresult = imgkit.upload_media_file()
+            photo_link = Photoresult["url"]
+            photo_link_id = Photoresult["fileId"]
 
-            return JsonResponse({"status": "success", "message": "Post deleted successfully!"})
+            if acc.profile_photo_id_imagekit:
+                imagekit.delete_file(file_id=acc.profile_photo_id_imagekit)
 
-        except Post.DoesNotExist:
-            return JsonResponse({"status": "error", "message": "Post does not exist."}, status=404)
+            acc.profile_photo = photo_link
+            acc.profile_photo_id_imagekit = photo_link_id
+            acc.save()
+
+            return JsonResponse({
+                "status": "success",
+                "message": "Profile Updated Successfully",
+                "redirect": f"/myprofile/{acc.id}"
+            }, status=200)
+
+        except Account.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "Account not found."}, status=404)
 
         except Exception as e:
             return JsonResponse({"status": "error", "message": str(e)}, status=500)
-    else:
-        return JsonResponse({"status": "error", "message": "Invalid request method."}, status=400)
+
+    return JsonResponse({"status": "error", "message": "Invalid request method."}, status=400)

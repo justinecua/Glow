@@ -1,31 +1,31 @@
-export function sendProfile(id) {
-  //loader.style.display = 'flex';
-  fetch(`sendProfile/${id}/`, {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-  })
-  .then(response => response.json())
-  .then(result => {
-      if (result.status === 'success') {
-          console.log(result.message);
+let loader = document.querySelector('.loader7');
 
-          /*
-          messages.innerHTML = result.message;
+export function sendProfile(id, profileObject) {
+    loader.style.display = 'flex';
+    const formData = new FormData();
+    formData.append('profile_photo', profileObject);
+    formData.append('accID', id);
 
-          setTimeout(function () {
-              messages.style.opacity = '0';
-          }, 3000);
+    fetch(`sendNewProfile/`, {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.status === 'success') {
+            if (result.status === 'success') {
+                window.location.href = result.redirect;
+                loader.style.display = 'none';
 
-          */
-      } else {
-
-          console.error('Error:', result.message);
-      }
-  })
-  .catch(error => {
-      loader.style.display = 'none';
-      console.error('Error fetching data:', error);
-  });
-}
+            } else {
+                loader.style.display = 'none';
+                message.innerHTML = result.message;
+            }
+        } else {
+            console.error('Error:', result.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+  }
