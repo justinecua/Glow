@@ -67,10 +67,14 @@
                     <div class="PC-Left">
                         <div class="PCL-Top">
                             {% if is_new_user %}
-                            <img src="../static/images/default-avatar-profile-picture-male-icon.png"
+                            <a href="/myprofile/{{ is_new_user.id }}">
+                                <img src="../static/images/default-avatar-profile-picture-male-icon.png"
                                 alt="{{ request.user.username }}">
+                            </a>
                             {% else %}
-                            <img src="{{ accountInfo.profile_photo }}">
+                            <a href="/myprofile/{{ accountInfo.id }}">
+                                <img src="{{ accountInfo.profile_photo }}">
+                            </a>
                             {% endif %}
                         </div>
                     </div>
