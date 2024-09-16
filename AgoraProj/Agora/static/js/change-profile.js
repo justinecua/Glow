@@ -16,97 +16,124 @@ let cropper;
 imageInput.addEventListener('change', function (event) {
   const file = event.target.files[0];
   if (file) {
+    const isGif = file.type === 'image/gif';
+
     CurrentimageContainer.style.display = "none";
     CPBTop.style.display = "flex";
     CPBBottom.style.marginTop = "0";
     SaveNewProfile.style.display = "flex";
     CancelNewProfile.style.display = "none";
 
-    const reader = new FileReader();
+    let reader = new FileReader();
     reader.onload = function (event) {
-      image.src = event.target.result;
-      image.style.display = 'block';
-      if (cropper) {
-        cropper.destroy();
-      }
-      cropper = new Cropper(image, {
-        aspectRatio: 1 / 1,
-        viewMode: 1,
-        dragMode: 'move',
-        cropBoxMovable: true,
-        cropBoxResizable: true,
-        movable: true,
-        zoomable: true,
-        ready: function () {
-          centerCropBox();
-        },
-        crop: function (event) {
+      if (isGif) {
+        image.src = event.target.result;
+        image.style.display = 'block';
+        document.querySelector('.GIF-Note').style.display = 'block';
 
+        document.querySelectorAll('.CPB-Top button').forEach(button => {
+          button.style.display = 'none';
+        });
+
+        if (cropper) {
+          cropper.destroy();
+          cropper = null;
         }
-      });
+      } else {
+        let img = new Image();
+        img.onload = function () {
+          image.src = event.target.result;
+          image.style.display = 'block';
+          document.querySelector('.GIF-Note').style.display = 'none';
+
+          if (cropper) {
+            cropper.destroy();
+          }
+          cropper = new Cropper(image, {
+            aspectRatio: 1 / 1,
+            viewMode: 1,
+            dragMode: 'move',
+            cropBoxMovable: true,
+            cropBoxResizable: true,
+            movable: true,
+            zoomable: true,
+            ready: function () {
+              centerCropBox();
+            },
+            crop: function (event) { }
+          });
+
+          // Show crop buttons for non-GIFs
+          document.querySelectorAll('.CPB-Top button').forEach(button => {
+            button.style.display = 'inline-block';
+          });
+        };
+        img.src = event.target.result;
+      }
     };
     reader.readAsDataURL(file);
   }
 });
+
 
 BrowseProfile.addEventListener('click', function () {
   imageInput.click();
 
 });
 
-document.getElementById('SaveNewProfile').addEventListener('click', async function () {
+
+SaveNewProfile.addEventListener('click', async function () {
   const button = this;
   button.disabled = true;
 
-  if (cropper) {
-    try {
-      const croppedCanvas = cropper.getCroppedCanvas();
-      const originalFile = imageInput.files[0];
+  const originalFile = imageInput.files[0];
+  const maxFileSize = 5 * 1024 * 1024;
 
-      const maxFileSize = 5 * 1024 * 1024;
-      if (originalFile.size > maxFileSize) {
-        ProfileValidation.style.display = "flex";
-        button.disabled = false;
+  if (originalFile.size > maxFileSize) {
+    ProfileValidation.style.display = "flex";
 
-        setTimeout(function () {
-          ProfileValidation.style.display = "flex";
-        }, 100)
-
-        setTimeout(function () {
-          ProfileValidation.style.display = "none";
-        }, 3000);
-
-        return;
-      }
-
-      const UserID = UserIDProfile.getAttribute('data-UserID');
-
-      croppedCanvas.toBlob(async function (blob) {
-        if (!blob) {
-          console.error('Failed to convert canvas to blob');
-          button.disabled = false;
-          return;
-        }
-
-        const croppedFile = new File([blob], originalFile.name, { type: 'image/jpeg' });
-
-        console.log(croppedFile, 'UserID=', UserID);
-        const { sendProfile } = await import("./ajax/send-profile.js");
-
-        try {
-          await sendProfile(UserID, croppedFile);
-        } catch (error) {
-          console.error('Error sending profile:', error);
-        }
-      }, 'image/jpeg');
-    } catch (error) {
-      console.error('Error processing image:', error);
+    setTimeout(() => {
+      ProfileValidation.style.display = "none";
       button.disabled = false;
+    }, 3000);
+
+    return;  // Exit if file exceeds the size limit
+  }
+
+  const isGif = originalFile.type === 'image/gif';
+  if (isGif) {
+    console.log('Detected GIF file. Uploading directly without cropping.');
+
+    const UserID = UserIDProfile.getAttribute('data-UserID');
+    const { sendProfile } = await import("./ajax/send-profile.js");
+
+    sendProfile(UserID, originalFile);
+    return;
+  }
+
+  if (cropper) {
+
+    const croppedCanvas = cropper.getCroppedCanvas();
+
+    croppedCanvas.toBlob(async function (blob) {
+    if (!blob) {
+      console.error('Failed to convert canvas to blob');
+      return;
     }
-  } else {
-    button.disabled = false;
+
+    const croppedFile = new File([blob], originalFile.name, { type: 'image/jpeg' });
+    console.log(croppedFile, 'UserID=', UserIDProfile.getAttribute('data-UserID'));
+
+    const { sendProfile } = await import("./ajax/send-profile.js");
+
+
+    sendProfile(UserIDProfile.getAttribute('data-UserID'), croppedFile);
+
+    }, 'image/jpeg');
+
   }
 });
+
 
 
 document.getElementById('resetButton').addEventListener('click', function () {

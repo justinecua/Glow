@@ -109,9 +109,20 @@
                 <div class="PPC-Cover-Container">
                     <input id="accountID" type="text" value="{{ accountInfo.id }}" style="display:none" ;>
                     {% if accountInfo.cover_photo %}
-                    <img id="UserCoverPhoto" src="{{ accountInfo.cover_photo }}">
+                    <div class="UserCoverPhoto-Parent">
+                        <button class="ChangeCover-Btn">
+                            <img src="../static/images/Camera--Streamline-Font-Awesome.png" alt="">Change Cover
+                        </button>
+                        <img id="UserCoverPhoto" src="{{ accountInfo.cover_photo }}">
+                    </div>
+
                     {% else %}
-                    <img id="UserCoverPhoto" src="https://ik.imagekit.io/mygh9x3hg/pexels-blitzboy-1144176.jpg">
+                    <div class="UserCoverPhoto-Parent">
+                        <button class="ChangeCover-Btn">
+                            <img src="../static/images/Camera--Streamline-Font-Awesome.png" alt="">Change Cover
+                        </button>
+                        <img id="UserCoverPhoto" src="https://ik.imagekit.io/mygh9x3hg/pexels-blitzboy-1144176.jpg">
+                    </div>
                     {% endif %}
 
                     <div class="PPC-Profile-Cont">
@@ -122,7 +133,7 @@
                                 <img class="lazy" src="{{ dynamicProf2 }}" data-src="{{ dynamicProf2 }}">
                                 {% else %}
                                 <img class="lazy" src="{{ dynamicProf2|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50' }}"
-                                    data-src="{{ accountInfo.profile_photo | add:'/tr:q-90,tr:w-150,h-150?'}}"> {% endif %}
+                                    data-src="{{ accountInfo.profile_photo | add:'/tr:q-90,tr:w-100,h-100?'}}"> {% endif %}
                                 {% endwith %}
                             </div>
                             <div id="ChangeProf-Icon">

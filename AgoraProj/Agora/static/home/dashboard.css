@@ -35,6 +35,7 @@ html {
   --TopNavHover: #272a42;
   --messageBg: #1C1E29;
   --font-color: #ffffff;
+  --bg-ChangeCoverBtn: #060c17d2;
 }
 
 [data-theme="light"] {
@@ -63,6 +64,7 @@ html {
   --TopNavHover: #d6d6d6;
   --messageBg: #EBEFFE;
   --font-color: #000000;
+  --bg-ChangeCoverBtn: #eef1f699;
 }
 
 .loaderContainer5 {
@@ -2082,7 +2084,7 @@ input:focus-visible+.slider {
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: inherit;
 }
 
 .NCenter-content-user {
@@ -2561,11 +2563,45 @@ input:focus-visible+.slider {
   border-radius: 10px;
 }
 
+.UserCoverPhoto-Parent {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  position: relative;
+
+}
+
 #UserCoverPhoto {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
+
+}
+
+.ChangeCover-Btn{
+  padding: 0.7rem 1rem;
+  border: none;
+  position: absolute;
+  right: 0;
+  background-color: var(--bg-ChangeCoverBtn);
+  color: var(--font-color);
+  font-family: "Work Sans", sans-serif;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  border-radius: 3px;
+}
+
+.ChangeCover-Btn img{
+  width: 1rem;
+  height: 1rem;
+  object-fit: cover;
+  filter: var(--icon-filter);
+  margin-right: 0.6rem;
 }
 
 .PPC-Profile-Cont {
@@ -2590,8 +2626,8 @@ input:focus-visible+.slider {
 
 #PPC-My-Profile-Container img:not(#ChangeProf-Icon){
   border-radius: 50%;
-  width: 100%;
-  height: 100%;
+  width: 9rem;
+  height: 9rem;
   object-fit: cover;
   border: 5px solid var(--nav-color);
 }

@@ -57,7 +57,7 @@ NRG_Register.addEventListener('click', async() =>{
 
 /*-----------------------Login-------------------------*/
 
-submitlogin.addEventListener('click', function(event) {
+function handleLogin(event) {
   event.preventDefault();
   if (emaillogin.checkValidity() && passwordlogin.checkValidity()) {
     let loginObject = {
@@ -69,11 +69,21 @@ submitlogin.addEventListener('click', function(event) {
     validatelogin(loginObject);
 
   } else {
-  if (!emaillogin.checkValidity()) {
-    emaillogin.reportValidity();
-  } else if (!passwordlogin.checkValidity()) {
-    passwordlogin.reportValidity();
+    if (!emaillogin.checkValidity()) {
+      emaillogin.reportValidity();
+    } else if (!passwordlogin.checkValidity()) {
+      passwordlogin.reportValidity();
+    }
   }
+}
+
+submitlogin.addEventListener('click', function(event) {
+  handleLogin(event);
+});
+
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') {
+    handleLogin(event);
   }
 });
 
