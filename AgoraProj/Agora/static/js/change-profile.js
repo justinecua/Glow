@@ -28,8 +28,8 @@ imageInput.addEventListener('change', function (event) {
     reader.onload = function (event) {
       if (isGif) {
         image.src = event.target.result;
-        image.style.display = 'block';
-        document.querySelector('.GIF-Note').style.display = 'block';
+        image.style.display = 'flex';
+        document.querySelector('.GIF-Note').style.display = 'flex';
 
         document.querySelectorAll('.CPB-Top button').forEach(button => {
           button.style.display = 'none';

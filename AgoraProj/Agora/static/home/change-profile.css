@@ -102,7 +102,6 @@
 #imageContainer {
   display: none;
   border: none;
-  width: 100%;
   height: 20rem;
 }
 
@@ -111,8 +110,8 @@
   border: none;
   width: 9rem;
   height: 9rem;
-  object-fit: cover;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .ChangeProfile-Btns {
