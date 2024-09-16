@@ -10,6 +10,7 @@ let SaveNewProfile = document.getElementById('SaveNewProfile');
 let CancelNewProfile = document.getElementById('CancelNewProfile');
 let ChangeProfIcon = document.getElementById('ChangeProf-Icon');
 let UserIDProfile = document.getElementById('UserIDProfile');
+let ProfileValidation = document.querySelector('.Profile-Validation');
 let cropper;
 
 imageInput.addEventListener('change', function (event) {
@@ -48,7 +49,7 @@ imageInput.addEventListener('change', function (event) {
   }
 });
 
-BrowseProfile.addEventListener('click', function() {
+BrowseProfile.addEventListener('click', function () {
   imageInput.click();
 
 });
@@ -61,9 +62,26 @@ document.getElementById('SaveNewProfile').addEventListener('click', async functi
     try {
       const croppedCanvas = cropper.getCroppedCanvas();
       const originalFile = imageInput.files[0];
+
+      const maxFileSize = 5 * 1024 * 1024;
+      if (originalFile.size > maxFileSize) {
+        ProfileValidation.style.display = "flex";
+        button.disabled = false;
+
+        setTimeout(function () {
+          ProfileValidation.style.display = "flex";
+        }, 100)
+
+        setTimeout(function () {
+          ProfileValidation.style.display = "none";
+        }, 3000);
+
+        return;
+      }
+
       const UserID = UserIDProfile.getAttribute('data-UserID');
 
-      croppedCanvas.toBlob(async function(blob) {
+      croppedCanvas.toBlob(async function (blob) {
         if (!blob) {
           console.error('Failed to convert canvas to blob');
           button.disabled = false;
@@ -73,14 +91,12 @@ document.getElementById('SaveNewProfile').addEventListener('click', async functi
         const croppedFile = new File([blob], originalFile.name, { type: 'image/jpeg' });
 
         console.log(croppedFile, 'UserID=', UserID);
-        const { sendProfile } = await import ("./ajax/send-profile.js");
+        const { sendProfile } = await import("./ajax/send-profile.js");
 
         try {
           await sendProfile(UserID, croppedFile);
-
         } catch (error) {
           console.error('Error sending profile:', error);
-
         }
       }, 'image/jpeg');
     } catch (error) {
@@ -91,7 +107,6 @@ document.getElementById('SaveNewProfile').addEventListener('click', async functi
     button.disabled = false;
   }
 });
-
 
 
 document.getElementById('resetButton').addEventListener('click', function () {
@@ -176,7 +191,7 @@ function centerCropBox() {
 
 let isMouseDown = false;
 
-document.addEventListener('mousedown', function(event) {
+document.addEventListener('mousedown', function (event) {
   isMouseDown = true;
 
   if (ChangeProfilecontainer && !ChangeProfilecontainer.contains(event.target)) {
@@ -184,7 +199,7 @@ document.addEventListener('mousedown', function(event) {
   }
 });
 
-document.addEventListener('mouseup', function(event) {
+document.addEventListener('mouseup', function (event) {
   if (isMouseDown && ChangeProfilecontainer) {
     if (!ChangeProfilecontainer.contains(event.target) && document._clickOutsideTarget === event.target) {
       ChangeProfileOverlay.style.display = "none";
@@ -195,12 +210,12 @@ document.addEventListener('mouseup', function(event) {
 });
 
 
-CancelNewProfile.addEventListener('click', function(event){
+CancelNewProfile.addEventListener('click', function (event) {
   event.stopPropagation();
   ChangeProfileOverlay.style.display = "none";
 })
 
-ChangeProfIcon.addEventListener('click', function(event){
+ChangeProfIcon.addEventListener('click', function (event) {
   event.stopPropagation();
   ChangeProfileOverlay.style.display = "flex";
 })
