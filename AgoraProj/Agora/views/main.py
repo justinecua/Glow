@@ -425,10 +425,20 @@ def FetchForYou(request):
             print(f"Error fetching posts: {e}")
             return JsonResponse({'status': 'error', 'message': str(e)})
 
+from django.utils import timezone
+from datetime import timedelta
+
 def fetchNewUsers(request):
     try:
-        date_joined_gt = timezone.make_aware(timezone.datetime(2024, 5, 15)) #make_aware is required if you filter date without a timezone
-        users = User.objects.filter(date_joined__gt=date_joined_gt).select_related('account').order_by('-date_joined').values(
+        now = timezone.now()
+        two_months_ago = now - timedelta(days=180)
+        start_of_last_two_months = two_months_ago.replace(day=1)
+        end_of_last_two_months = now.replace(day=1) - timedelta(days=1)
+
+        users = User.objects.filter(
+            date_joined__gte=start_of_last_two_months,
+            date_joined__lte=end_of_last_two_months
+        ).select_related('account').order_by('-date_joined').values(
             'account__profile_photo',
             'username',
             'account__firstname',
@@ -440,6 +450,8 @@ def fetchNewUsers(request):
         return JsonResponse({'status': 'success', 'accounts': accounts})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
+
+
 
 
 def time_ago(post_datetime):

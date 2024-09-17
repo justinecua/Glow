@@ -14,7 +14,7 @@ export function fetchNewUsers(loginObject) {
 
             if (account.account__profile_photo.indexOf("static") !== -1) {
                 DynamicProf = account.account__profile_photo;
-                
+
                 let NewProfParent = document.createElement('div');
                 NewProfParent.className = "NewProfParent";
                 let NewProf = document.createElement('img');
@@ -25,7 +25,7 @@ export function fetchNewUsers(loginObject) {
 
             } else {
                 DynamicProf = account.account__profile_photo + "/tr:w-42,h-42";
-                
+
                 let NewProfParent = document.createElement('div');
                 NewProfParent.className = "NewProfParent";
                 let NewProf = document.createElement('img');
@@ -34,7 +34,7 @@ export function fetchNewUsers(loginObject) {
                 NewProfParent.appendChild(NewProf);
                 NRMContents.appendChild(NewProfParent);
 
-                
+
             }
         });
     })

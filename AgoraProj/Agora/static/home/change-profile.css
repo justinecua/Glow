@@ -295,3 +295,26 @@
   color: var(--text-color);
   background-color: var(--bg-validation);
 }
+
+#ChangeCover-Overlay{
+  width: 100vw;
+  height: 100vh;
+  background-color: #24262aa7;
+  z-index: 5;
+  position: fixed;
+  display: none;
+  overflow: hidden;
+  backdrop-filter: blur(2px);
+}
+
+#ChangeCover-container {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 30rem;
+  background-color: var(--nav-color);
+  border-radius: 9px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.3s ease-out forwards;
+}
