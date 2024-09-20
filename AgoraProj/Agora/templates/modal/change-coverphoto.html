@@ -8,7 +8,105 @@
 {% block content %}
 <div id="ChangeCover-Overlay">
   <div id="ChangeCover-container">
+    <h3>Cover Photo</h3>
 
+    {% if accountInfo %}
+    <div id="UserIDProfile" data-UserID="{{ accountInfo.id }}"></div>
+    {% endif %}
+
+    <input type="file" id="CoverInput" accept="image/*" style="display: none;">
+    <div class="imageContainer-Parent">
+      {% if account_coverphoto %}
+      {% with dynamicCover=account_coverphoto %}
+         {% if dynamicCover %}
+            <img id="CurrentCoverContainer" class="lazy" src="{{ dynamicCover|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50' }}"
+            data-src="{{ dynamicCover | add:'/tr:q-90,tr:w-150,h-150?' }}">
+         {% endif %}
+      {% endwith %}
+      {% else %}
+      <img id="CurrentCoverContainer" src="https://ik.imagekit.io/mygh9x3hg/pexels-blitzboy-1144176.jpg">
+      {% endif %}
+      <img id="CoverContainer">
+   </div>
+
+
+    <div class="ChangeCover-Btns"></div>
+
+      <div class="CPB-TopCover">
+        <div class="tooltip">
+          <button id="ratio4x3">4:3</button>
+          <span class="tooltiptext">Set Aspect Ratio 4:3</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="ratio1x1">1:1</button>
+          <span class="tooltiptext">Set Aspect Ratio 1:1</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="resetButton">
+            <img src="../static/images/Restart-Circle--Streamline-Solar-Ar.png" alt="">
+          </button>
+          <span class="tooltiptext">Reset</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="rotateButton">
+            <img src="../static/images/Rotate-Cw--Streamline-Feather.png" alt="">
+          </button>
+          <span class="tooltiptext">Rotate Right</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="rotateButton2">
+            <img src="../static/images/Rotate-Ccw--Streamline-Feather.png" alt="">
+          </button>
+          <span class="tooltiptext">Rotate Left</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="zoomInButton">
+            <img src="../static/images/Zoom-In--Streamline-Feather.png" alt="">
+          </button>
+          <span class="tooltiptext">Zoom In</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="zoomOutButton">
+            <img src="../static/images/Zoom-Out--Streamline-Feather.png" alt="">
+          </button>
+          <span class="tooltiptext">Zoom Out</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="flipHorizontal">
+            <img src="../static/images/Flip-Horizontal--Streamline-Solar-Ar.png" alt="">
+          </button>
+          <span class="tooltiptext">Flip Horizontally</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="flipVertical">
+            <img src="../static/images/Flip-Vertical--Streamline-Solar-Ar.png" alt="">
+          </button>
+          <span class="tooltiptext">Flip Vertically</span>
+        </div>
+      </div>
+
+      <div class="CPB-Bottom">
+        <button id="Browse-Cover">Browse</button>
+        <button id="CancelNewCover">Cancel</button>
+        <button id="SaveNewCover">Apply Changes
+          <div class="loader7"></div>
+        </button>
+
+        <div class="Profile-Validation">
+          <img src="../static/images/Warning-Diamond--Streamline-Plump-Remix.png" alt="">
+          <span>File size exceeds 5MB. Please upload a smaller file</span>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 

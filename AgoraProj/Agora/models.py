@@ -10,6 +10,7 @@ class Account(models.Model):
     bio = models.CharField(null=True, max_length=255)
     UIAppearance = models.CharField(null=True, max_length=255)
     cover_photo = models.URLField(null=True, verbose_name="File Url")
+    cover_photo_id_imagekit = models.CharField(max_length=355, null=True, blank=True)
     profile_photo = models.URLField(verbose_name="File Url")
     profile_photo_id_imagekit = models.CharField(max_length=355, null=True, blank=True)
     auth_user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)

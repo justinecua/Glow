@@ -30,6 +30,7 @@ from allauth.account.views import PasswordResetView, PasswordResetDoneView, Pass
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 import os
+from datetime import timedelta
 
 
 def homepage(request):
@@ -425,9 +426,6 @@ def FetchForYou(request):
             print(f"Error fetching posts: {e}")
             return JsonResponse({'status': 'error', 'message': str(e)})
 
-from django.utils import timezone
-from datetime import timedelta
-
 def fetchNewUsers(request):
     try:
         now = timezone.now()
@@ -450,8 +448,6 @@ def fetchNewUsers(request):
         return JsonResponse({'status': 'success', 'accounts': accounts})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
-
-
 
 
 def time_ago(post_datetime):
@@ -586,6 +582,7 @@ def UserProfile(request, id):
         'total_photos_count': total_photos_count,
         'unique_acc_who_glowed': unique_acc_who_glowed,
         'account_profile': accID.profile_photo,
+        'account_coverphoto': accID.cover_photo,
     }
 
     return render(request, 'user-profile.html', context)
