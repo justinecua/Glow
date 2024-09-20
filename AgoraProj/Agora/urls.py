@@ -16,25 +16,8 @@ urlpatterns = [
     path('loaderio-bf3ddf451e2ba17db18608ca395e3df9/', views.loader, name="loader"),
     path('account/login/validate/', views.validatelogin, name='validatelogin'),
     path('account/signup/', views.signup, name='signup'),
-<<<<<<< HEAD
-    #path('stream/', PostStreamView.as_view(), name = 'stream'),
     path('dashboard', views.dashboard, name='dashboard'),
-    path('publish_to_ably/', views.publish_to_ably, name='publish_to_ably'),
-=======
-
-urlpatterns = [
-    path('', views.home, name="home"),
-    path('accounts/login/validate/', views.validatelogin, name='validatelogin'),
-    path('dashboard', views.dashboard, name='dashboard'),
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
-=======
-    path('dashboard', views.dashboard, name='dashboard'),
-<<<<<<< HEAD
->>>>>>> v1
     path('dashboard/uploadprofile', views.UploadProfile, name='uploadprofile'),
-=======
-    path('dashboard/uploadprofile', views.UploadProfile, name='uploadprofile'),
->>>>>>> v1
     path('handle_media/', views.handle_media, name='handle_media'),
     path('myprofile/<int:id>', views.UserProfile, name='myprofile'),
     path('profile/<int:id>', views.randomProfile, name='profile'),
@@ -164,4 +147,3 @@ urlpatterns = [
 
 
 ]
-
