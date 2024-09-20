@@ -1,6 +1,6 @@
 import { fetchForYou } from "./ajax/fetch-ForYou_guest.js";
 import { fetchFriendPosts } from "./ajax/fetch-friends-posts.js";
-import { loading } from "./ajax/fetch-ForYou.js";
+import { loading } from "./ajax/fetch-ForYou_guest.js";
 
 let ForYou = document.getElementById('For-You');
 let Following = document.getElementById('Following');

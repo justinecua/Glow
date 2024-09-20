@@ -1,0 +1,16 @@
+
+{% extends "master.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'home/error.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="ErrorDiv">
+    <img src="{% static 'images/Site-Builder-1--Streamline-Brooklyn.png' %}" alt="Server Error">
+    <h1>Feature Under Development</h1>
+    <p>We are currently working on a new feature. During this time, you may experience intermittent changes or issues</p>
+</div>
+{% endblock %}

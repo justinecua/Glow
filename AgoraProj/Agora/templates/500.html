@@ -1,0 +1,17 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'home/error.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="ErrorDiv">
+    <img src="{% static 'images/Fixing-Bugs-2--Streamline-Brooklyn.png' %}" alt="Server Error">
+    <h1>Something Went Wrong</h1>
+    <p>We’re currently investigating a technical issue on our end. If you need immediate assistance, contact us at <a
+            href="mailto:glowservice01@gmail.com">glowservice01@gmail.com</a>.
+    <a href="/">Return to Homepage</a></p>
+</div>
+{% endblock %}

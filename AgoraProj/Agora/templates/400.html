@@ -1,0 +1,16 @@
+
+{% extends "master.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'home/error.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="ErrorDiv">
+    <img src="{% static 'images/We-Got-A-Problem-3--Streamline-Brooklyn.png' %}" alt="Server Error">
+    <h1>400 - Bad Request</h1>
+    <p>The request could not be understood by the server due to malformed syntax.</p>
+</div>
+{% endblock %}

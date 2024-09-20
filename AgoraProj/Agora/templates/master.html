@@ -1,56 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>html{visibility: hidden;opacity:0;}</style>
     <title>{% block title %}Glow{% endblock %}</title>
-<<<<<<< HEAD
-    <link rel="icon" type="image/x-icon" href="https://ik.imagekit.io/b9bdd5j68/glow%20logo22.png/tr:q-100,tr:w-100,h-100">
-=======
-<<<<<<< HEAD
-    <link rel="icon" type="image/x-icon" href="https://ik.imagekit.io/b9bdd5j68/glow%20logo5.png">
->>>>>>> ffbf4342142aebec24bbf93a73b4e367b8bd457e
+    <link rel="icon" type="image/x-icon"
+        href="https://ik.imagekit.io/b9bdd5j68/glow%20logo22.png/tr:q-100,tr:w-100,h-100">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 
-    <!--Top Progress Bar library-->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css">
-    -->
     {% block css %}{% endblock %}
+
+    <style>
+        body {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
 </head>
 
-<<<<<<< HEAD
-
-=======
-    
-=======
-    <link rel="icon" type="image/x-icon" href="../static/images/glow logo5.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-    <!--Top Progress Bar library-->
-    <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css">
-    {% block css %}{% endblock %}
-</head>
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
->>>>>>> ffbf4342142aebec24bbf93a73b4e367b8bd457e
 <body>
-
     {% block content %}
-
     {% endblock %}
 
     <script>
         document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
-            document.addEventListener('DOMContentLoaded', () => {
-                document.body.style.opacity = 1;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.visibility = 'visible';
+            document.body.style.opacity = 1;
+        });
+    </script>
+     <script>
+        function getCSRFToken() {
+            return document.querySelector('[name=csrfmiddlewaretoken]').value;
+        }
+    </script>
+
+{% if user_id %}
+
+<script>
+    function getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
+
+    if ("{{ user_id }}") {
+        const userId = "{{ user_id }}";
+        let eventData = [];
+        let lastInteractionTime = new Date().toISOString();
+        const MAX_EVENTS = 100;
+
+        function captureUserEvents() {
+            document.addEventListener('click', function(event) {
+                addEventToData({
+                    type: 'click',
+                    element: event.target.tagName,
+                    timestamp: new Date().toISOString(),
+                    user_id: userId
+                });
             });
-        </script>
+
+            document.addEventListener('keydown', function(event) {
+                addEventToData({
+                    type: 'keypress',
+                    key: event.key,
+                    timestamp: new Date().toISOString(),
+                    user_id: userId
+                });
+            });
+        }
+
+        function addEventToData(data) {
+            eventData.push(data);
+            lastInteractionTime = new Date().toISOString();
+
+            if (eventData.length >= MAX_EVENTS) {
+                eventData = [];
+            }
+        }
+
+        function sendDataToDjango() {
+            if (eventData.length === 0) return;
+
+            fetch('/capture-event/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken()
+                },
+                body: JSON.stringify(eventData)
+            }).then(response => {
+                if (response.ok) {
+                    eventData = [];
+                } else {
+                    console.error('Failed to send data to Django');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function sendOfflineStatus() {
+            fetch('/capture-event/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken()
+                },
+                body: JSON.stringify([{ user_id: userId, type: 'status', status: 'offline' }])
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function handleInactivity() {
+            const now = new Date();
+            const lastInteraction = new Date(lastInteractionTime);
+            const timeSinceLastInteraction = now - lastInteraction;
+
+            if (timeSinceLastInteraction > 180000 && eventData.length > 0) {
+                sendDataToDjango();
+                sendOfflineStatus();
+            } else if (timeSinceLastInteraction < 180000) {
+                sendDataToDjango();
+            }
+        }
+
+        captureUserEvents();
+
+        setInterval(handleInactivity, 60000);
+
+        window.addEventListener('beforeunload', function () {
+
+            navigator.sendBeacon('/capture-event/', JSON.stringify([{ user_id: userId, type: 'status', status: 'offline' }]));
+        });
+    }
+</script>
+{% endif %}
+
+
 </body>
+
 </html>

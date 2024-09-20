@@ -1,0 +1,17 @@
+
+{% extends "master.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'home/error.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="ErrorDiv">
+    <img src="{% static 'images/Hack-4--Streamline-Brooklyn.png' %}" alt="Server Error">
+    <h1>Forbidden</h1>
+    <p>You do not have permission to access this page.</p>
+    <p>Don`t try something funny, I can see you</p>
+</div>
+{% endblock %}

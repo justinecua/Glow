@@ -1,0 +1,15 @@
+<div class="loaderContainer5">
+  <div class="loaderCont">
+    <img src="../static/images/glow logo22.png" alt="Glow Logo">
+  </div>
+</div>
+
+<script>
+  document.onreadystatechange = function () {
+      if (document.readyState === "complete") {
+          setTimeout(() => {
+              document.querySelector('.loaderContainer5').classList.add('fade-out');
+          }, 200);
+      }
+  };
+</script>

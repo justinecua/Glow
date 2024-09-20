@@ -17,6 +17,9 @@ let NCenterContent = document.querySelector('.NCenter-content');
 let PostContainer = document.querySelector('.Post-Container');
 let CenterTop3 = document.querySelector('.Center-Top3');
 let Bottomloadingposts = document.getElementById('Bottom-loading-posts');
+let currentUserId = document.getElementById('currentUserId');
+let LoggedinID = currentUserId.getAttribute('data-userId');
+
 let fetchedPostIds = new Set();
 export let loading = false;
 
@@ -63,7 +66,7 @@ export function fetchForYou() {
 
             response.posts.forEach(post => {
                 if (!fetchedPostIds.has(post.id)) {
-                    let postElement = createPostElement(post);
+                    let postElement = createPostElement(post, LoggedinID);
                     NCenterContent.appendChild(postElement);
                     fetchedPostIds.add(post.id);
                 }
@@ -147,34 +150,42 @@ export function fetchForYou() {
         Bottomloadingposts.style.display = "none";
     });
 }
-
-function createPostElement(post) {
+console.log(LoggedinID);
+function createPostElement(post, LoggedinID) {
     let postContainer = document.createElement('div');
     let UPCcontentgrid = document.querySelector('.UPC-content-grid');
 
     postContainer.classList.add('MUser-Post-Container');
 
     let DynamicProf;
+    let ProfileLink;
 
-    if(post.account.profile_photo == '../static/images/default-avatar-profile-picture-male-icon.png'){
+    if(post.account.profile_photo.indexOf("static") !== -1){
         DynamicProf = post.account.profile_photo;
     }
     else{
         DynamicProf = post.account.profile_photo + "/tr:w-42,h-42";
     }
 
+    if(post.account.id == LoggedinID){
+        ProfileLink = "myprofile/" + LoggedinID;
+    }
+    else{
+        ProfileLink =  "profile/" + post.account.id;
+    }
+
     postContainer.innerHTML =
     `<div class="User-Post-Container">
         <div class="UPC-content-Top">
             <div class="UPCCT-Left">
-                <a href="profile/${post.account.id}">
+                <a href="${ProfileLink}">
                     <div class="Post-Prof-Cont">
                         <img src="${ DynamicProf }">
                     </div>
                 </a>
                 <div class="Post-Prof-Cont2">
                     <div id="Post-Prof-Cont-Name1" class="Post-Prof-Cont-Name">
-                        <a href="profile/${post.account.id}"><p class="Photo-Post-username">${post.account.firstname}</p></a>
+                        <a href="${ProfileLink}"><p class="Photo-Post-username">${post.account.firstname}</p></a>
                         <p class="Post-Photo-Date-Time">${post.time_ago}</p>
                     </div>
                     <div class="Post-Prof-Cont-Username">
@@ -185,10 +196,10 @@ function createPostElement(post) {
             <div class="UPCCT-Right">
             </div>
         </div>
-        <div class="UPC-content-grid ${post.photos.length === 3 ? 'three-photos' : ''}" style="${post.photos.length === 0 ? 'display: none;' : ''}">
+        <div class="UPC-content-grid ${post.photos.length >=2 ? 'three-photos' : ''}" style="${post.photos.length === 0 ? 'display: none;' : ''}">
             ${post.photos.map(photo =>
                 `<div class="UPC-content ${post.photos.length === 1 ? 'single-photo' : ''}">
-                    <img class="lazy" src="${photo.link}/tr:q-90,tr:w-450,bl-30,q-90,h-450?cm-pad_resize,bg-F3F3F3" data-src="${photo.link}/tr:q-90,tr:w-450,h-450?cm-pad_resize,bg-F3F3F3">
+                    <img class="lazy" src="${photo.link}/tr:q-90,tr:w-450,bl-30,q-90,h-450" data-src="${photo.link}/tr:q-90,tr:w-450,h-450">
                 </div>`).join('')}
         </div>
         <div class="UPC-content-Bottom">
@@ -357,6 +368,7 @@ export function LazyLoading(selector) {
             observer.observe(lazyimage);
         });
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 }
 =======
@@ -611,3 +623,6 @@ export function fetchForYou() {
 }
 >>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 >>>>>>> ffbf4342142aebec24bbf93a73b4e367b8bd457e
+=======
+}
+>>>>>>> version1

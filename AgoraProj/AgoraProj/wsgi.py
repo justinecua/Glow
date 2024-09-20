@@ -14,7 +14,4 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'AgoraProj.settings')
 
 application = get_wsgi_application()
-<<<<<<< HEAD
-=======
 
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17

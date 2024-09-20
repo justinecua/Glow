@@ -18,8 +18,7 @@
 
     </div>
     <style>
-        .Search-Results-Container{
-<<<<<<< HEAD
+        .Search-Results-Container {
             display: none;
 =======
             display:none;
@@ -33,23 +32,23 @@
             </div>
             <div class="HashTagsCont">
                 {% if hashtags %}
-                    {% for tags in hashtags %}
-                    <a href="/tags/{{ tags.tag_object.id }}">
-                        <div class="hashtags-div">
-                            <div class="hashtag-a">
-                                <span>#{{ tags.tag_object.tag }} </span>
-                            </div>
-                            <div class="hashtag-span">
-                                {% if tags.post_count > 1 %}
-                                <span>{{ tags.post_count }} posts</span>
-                                {% else %}
-                                <span>{{ tags.post_count }} post</span>
-                                {% endif %}
-                            </div>
+                {% for tags in hashtags %}
+                <a href="/tags/{{ tags.tag_object.id }}">
+                    <div class="hashtags-div">
+                        <div class="hashtag-a">
+                            <span>#{{ tags.tag_object.tag }} </span>
                         </div>
-                    </a>
+                        <div class="hashtag-span">
+                            {% if tags.post_count > 1 %}
+                            <span>{{ tags.post_count }} posts</span>
+                            {% else %}
+                            <span>{{ tags.post_count }} post</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
 
-                    {% endfor %}
+                {% endfor %}
 
                 {% endif %}
             </div>
@@ -63,11 +62,14 @@
             </div>
             <div class="NRBC-Friends">
                 {% if friends %}
-                    {% for friend in friends.friendsInfo %}
-                    <a href="/profile/{{ friend.id }}"><div class="UserFriends-Cont"> <img src="{{ friend.profile_photo }}" alt="">{{ friend.firstname }} {{ friend.lastname }}</div></a>
-                    {% endfor %}
-                    {%else%}
-                    <p>No Friends</p>
+                {% for friend in friends.friendsInfo %}
+                <a href="/profile/{{ friend.id }}">
+                    <div class="UserFriends-Cont"> <img src="{{ friend.profile_photo }}" alt="">{{ friend.firstname }}
+                        {{ friend.lastname }}</div>
+                </a>
+                {% endfor %}
+                {%else%}
+                <p>No Friends</p>
                 {% endif %}
             </div>
         </div>

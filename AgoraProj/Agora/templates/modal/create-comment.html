@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
     <div id="Comment-Overlay">
 
@@ -74,3 +75,69 @@
             </div>
         </div>
     </div>
+=======
+<div id="Comment-Overlay">
+
+    <div class="Comment-Container">
+        <div id="loadingIndicator-Comment">
+            <div class="loader"></div>
+        </div>
+        <div class="Comment-subCont">
+            <div class="CC-Left">
+                <div class="CC-Left-Images">
+
+                </div>
+
+                <div class="Comment-btn-cont">
+                    <button class="prev-button"><img src="static/images/arrow.png" alt=""></button>
+                    <button class="next-button"><img src="static/images/right-arrow.png" alt=""></button>
+                </div>
+
+            </div>
+
+            <div class="CC-Right">
+                <div class="CCR-Main1">
+                    <div class="CCR-Top">
+                        <div class="CCRT-Sub">
+                            <div class="CCRT-Left">
+                                <img class="Post-ProfilePic" src="">
+                            </div>
+                            <div class="CCRT-Right">
+                                <p class="Post-FullName"></p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button class="Close-Comment">x</button>
+                        </div>
+                    </div>
+
+                    <div class="CCRT-Mid">
+                        <div class="Caption-Content">
+                            <p class="Post-Caption"></p>
+                        </div>
+                        <div class="Comments-Section">
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="CCR-Main2">
+                    <div class="User-Comment-Cont">
+                        {% if accountInfo %}
+                        <div id="UserProf-Comment">
+                            <img src="{{ accountInfo.profile_photo }}" alt="">
+                        </div>
+                        {% endif %}
+
+                        <input id="Comment-input" type="text" placeholder="Add a comment..">
+                        <button id="Send-Comment">Send</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+>>>>>>> version1

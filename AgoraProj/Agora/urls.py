@@ -1,13 +1,12 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
-<<<<<<< HEAD
+from .views import deletePost
 from .views import (
     CustomPasswordResetView,
     CustomPasswordResetDoneView,
     CustomPasswordResetFromKeyView,
     CustomPasswordResetFromKeyDoneView,
 )
-
 
 urlpatterns = [
     path('', views.homepage, name="home"),
@@ -19,25 +18,25 @@ urlpatterns = [
     path('account/signup/', views.signup, name='signup'),
 <<<<<<< HEAD
     #path('stream/', PostStreamView.as_view(), name = 'stream'),
-    path('dashboard', views.dashboard, name='dashboard'), 
+    path('dashboard', views.dashboard, name='dashboard'),
     path('publish_to_ably/', views.publish_to_ably, name='publish_to_ably'),
 =======
 
 urlpatterns = [
     path('', views.home, name="home"),
     path('accounts/login/validate/', views.validatelogin, name='validatelogin'),
-    path('dashboard', views.dashboard, name='dashboard'), 
+    path('dashboard', views.dashboard, name='dashboard'),
 >>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 =======
     path('dashboard', views.dashboard, name='dashboard'),
 <<<<<<< HEAD
 >>>>>>> v1
-    path('dashboard/uploadprofile', views.UploadProfile, name='uploadprofile'), 
+    path('dashboard/uploadprofile', views.UploadProfile, name='uploadprofile'),
 =======
     path('dashboard/uploadprofile', views.UploadProfile, name='uploadprofile'),
 >>>>>>> v1
     path('handle_media/', views.handle_media, name='handle_media'),
-    path('dashboard/profile', views.UserProfile, name='UserProfile'),
+    path('myprofile/<int:id>', views.UserProfile, name='myprofile'),
     path('profile/<int:id>', views.randomProfile, name='profile'),
     path('add_friend/', views.AddFriend, name='add_friend'),
     path('confirm_friend/', views.ConfirmFriend, name='confirm_friend'),
@@ -52,7 +51,7 @@ urlpatterns = [
     path('editProfile/<int:id>', views.editProfile, name='editProfile'),
     path('searchResults/', views.searchResults, name='searchResults'),
     path('FetchForYou/', views.FetchForYou, name='FetchForYou'),
-<<<<<<< HEAD
+    re_path(r'^FetchFriendsPosts/$', views.FetchFollowing, name='FetchFriendsPosts'),
     path('account/password/reset/', CustomPasswordResetView.as_view(), name='account_reset_password'),
     path('account/password/reset/done/', CustomPasswordResetDoneView.as_view(), name='account_reset_done_password'),
     path('account/password/reset/key/<uidb64>/<key>/', CustomPasswordResetFromKeyView.as_view(), name='account_reset_from_key'),
@@ -60,10 +59,109 @@ urlpatterns = [
     path('dashboard/emoji', views.emojis, name='get_emoji'),
     #path('dashboard/fetchUserPosts/<int:postId>/', views.auto_fetch_userPost, name='fetchUserPosts')
     #path('stream/', PostStreamView.as_view(), name = 'stream'),
-    path('count_new_posts/', views.count_new_posts, name='count_new_posts'),
+    #path('count_new_posts/', views.count_new_posts, name='count_new_posts'),
     #path('FetchFriendsPosts/', views.FetchFriendsPosts, name='FetchFriendsPosts'),
+    path('fetchNewUsers/', views.fetchNewUsers, name="fetchNewUsers"),
+    path('games/', views.game_list, name='game_list'),
+    path('games/launch/', views.game_launch, name='game_launch'),
+    path('chat_page', views.chat_page, name='chat_page'),
+    path('chat_with_gemini/', views.chat_with_gemini, name='chat_with_gemini'),
+    re_path(r'^settings/$', views.settingsPage, name='settings'),
+    re_path(r'^myprofile/deletePost/(?P<id>\d+)/$', deletePost, name='deletePost'),
+    re_path(r'^capture-event/$', views.capture_event, name='capture-event'),
+    re_path(r'^myprofile/sendNewProfile/$', views.sendNewProfile, name='sendNewProfile'),
+
+
+    #-----------------------------------------Justine------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #----------------------------------------Jefferson------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #------------------------------------------Vaughn------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ]
-=======
-    path('FetchFriendsPosts/', views.FetchFriendsPosts, name='FetchFriendsPosts'),
-]
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
+

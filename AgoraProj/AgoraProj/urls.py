@@ -15,26 +15,30 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf import settings
+from django.shortcuts import render
 from django.urls import path, include
 from django.views.generic import TemplateView
-<<<<<<< HEAD
 from django.contrib.auth import views as auth_views
-=======
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
+
+
+def permission_denied(request):
+    return render(request, '403.html', status=403)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include('Agora.urls')),
     path('', TemplateView.as_view(template_name='index.html'), name='home'),
-<<<<<<< HEAD
     path('account/login/', auth_views.LoginView.as_view(template_name='account/login.html'), name='login'),
     path('account/signup/', TemplateView.as_view(template_name='account/signup.html'), name='signup'),
-    path('account/logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'), 
+    path('account/logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('account/', include('allauth.urls')),
 ]
-=======
-    path('accounts/login', TemplateView.as_view(template_name='accounts/login.html'), name='login'),
-    path('accounts/signup', TemplateView.as_view(template_name='accounts/signup.html'), name='signup'),
-    path('accounts/', include('allauth.urls')),
-]   
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
+
+if settings.ALLOW_ADMIN:
+    urlpatterns += [
+        path('admin/', admin.site.urls),
+    ]
+else:
+    urlpatterns += [
+        path('admin/', permission_denied),
+    ]

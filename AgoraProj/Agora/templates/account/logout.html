@@ -15,7 +15,7 @@
 
         <div class="LC-Bottom">
             <button id="LC-Back">Back</button>
-            
+
             <form action="{% url 'logout' %}" method="post" >
                 {% csrf_token %}
                 <button id="LC-Logout" type="submit">Logout</button>

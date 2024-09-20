@@ -1,0 +1,116 @@
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'home/change-profile.css' %}">
+<script type="module" src="{% static 'js/change-profile.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div id="ChangeProfile-Overlay">
+  <div id="ChangeProfile-container">
+    <h3>Change Profile</h3>
+
+    {% if accountInfo %}
+    <div id="UserIDProfile" data-UserID="{{ accountInfo.id }}"></div>
+    {% endif %}
+
+    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+    <div class="imageContainer-Parent">
+      {% if account_profile %}
+      {% with dynamicProf3=account_profile %}
+      {% if 'static' in dynamicProf3 %}
+      <img id="CurrentimageContainer" class="lazy" src="{{ dynamicProf3 }}" data-src="{{ dynamicProf3 }}">
+      {% else %}
+      <img id="CurrentimageContainer" class="lazy" src="{{ dynamicProf3|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50' }}"
+        data-src="{{ dynamicProf3 | add:'/tr:q-90,tr:w-150,h-150?'}}">
+      {% endif %}
+      {% endwith %}
+      {% endif %}
+      <img id="imageContainer">
+    </div>
+
+    <div class="ChangeProfile-Btns">
+
+      <div class="CPB-Top">
+        <div class="GIF-Note">
+          <span>No edit options available for GIFs yet</span>
+        </div>
+        <div class="tooltip">
+          <button id="ratio4x3">4:3</button>
+          <span class="tooltiptext">Set Aspect Ratio 4:3</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="ratio1x1">1:1</button>
+          <span class="tooltiptext">Set Aspect Ratio 1:1</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="resetButton">
+            <img src="../static/images/Restart-Circle--Streamline-Solar-Ar.png" alt="">
+          </button>
+          <span class="tooltiptext">Reset</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="rotateButton">
+            <img src="../static/images/Rotate-Cw--Streamline-Feather.png" alt="">
+          </button>
+          <span class="tooltiptext">Rotate Right</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="rotateButton2">
+            <img src="../static/images/Rotate-Ccw--Streamline-Feather.png" alt="">
+          </button>
+          <span class="tooltiptext">Rotate Left</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="zoomInButton">
+            <img src="../static/images/Zoom-In--Streamline-Feather.png" alt="">
+          </button>
+          <span class="tooltiptext">Zoom In</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="zoomOutButton">
+            <img src="../static/images/Zoom-Out--Streamline-Feather.png" alt="">
+          </button>
+          <span class="tooltiptext">Zoom Out</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="flipHorizontal">
+            <img src="../static/images/Flip-Horizontal--Streamline-Solar-Ar.png" alt="">
+          </button>
+          <span class="tooltiptext">Flip Horizontally</span>
+        </div>
+
+        <div class="tooltip">
+          <button id="flipVertical">
+            <img src="../static/images/Flip-Vertical--Streamline-Solar-Ar.png" alt="">
+          </button>
+          <span class="tooltiptext">Flip Vertically</span>
+        </div>
+      </div>
+
+      <div class="CPB-Bottom">
+        <button id="Browse-Profile">Browse</button>
+        <button id="CancelNewProfile">Cancel</button>
+        <button id="SaveNewProfile">Apply Changes
+          <div class="loader7"></div>
+        </button>
+
+        <div class="Profile-Validation">
+          <img src="../static/images/Warning-Diamond--Streamline-Plump-Remix.png" alt="">
+          <span>File size exceeds 5MB. Please upload a smaller file</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

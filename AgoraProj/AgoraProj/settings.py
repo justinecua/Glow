@@ -12,14 +12,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 from decouple import config
 from dotenv import load_dotenv
 load_dotenv()
 
->>>>>>> v1
 
 ABLY_API_KEY = os.getenv("ABLY_API_KEY")
 
@@ -27,40 +23,15 @@ ABLY_API_KEY = os.getenv("ABLY_API_KEY")
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-=======
-from channels.routing import ProtocolTypeRouter
-from django.core.asgi import get_asgi_application
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-<<<<<<< HEAD
-<<<<<<< HEAD
-SECRET_KEY = os.getenv("SECRET_KEY")
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'justine014.pythonanywhere.com', 'glow-space.site']
-=======
-SECRET_KEY = 'django-insecure-=(2ebjep4^#sc*w-hjb$#ha(j&85ade9b^^*gont52#1bzrh+v'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.vercel.app']
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
-=======
 SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'glowph.tech', 'www.glowph.tech']
->>>>>>> v1
 
 SITE_ID = 1
 # Application definition
@@ -79,11 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'imagekit',
-<<<<<<< HEAD
-=======
-    'gunicorn'
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -126,11 +94,7 @@ WSGI_APPLICATION = 'AgoraProj.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-<<<<<<< HEAD
 
-=======
-import dj_database_url
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -138,37 +102,18 @@ DATABASES = {
     }
 }
 
-<<<<<<< HEAD
-=======
-DATABASES["default"] = dj_database_url.parse("postgres://glow_database_user:AwfcBAa5OeuT06PLHVqvapspu5iaPGOV@dpg-cp5kvs8cmk4c73f44mrg-a.oregon-postgres.render.com/glow_database")
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-<<<<<<< HEAD
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> v1
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
         'OPTIONS': {
             'min_length': 6,
         }
-=======
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
@@ -190,16 +135,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-<<<<<<< HEAD
-STATIC_URL = 'static/'
-<<<<<<< HEAD
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-=======
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
-=======
 STATIC_URL = '/static/'
 STATIC_ROOT = '/home/Glow/AgoraProj/Agora/static/'
->>>>>>> v1
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -212,28 +149,14 @@ LOGOUT_REDIRECT_URL = '/'
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-<<<<<<< HEAD
-<<<<<<< HEAD
-            'client_id': os.getenv('GOOGLE_CLIENT_ID'),
-            'secret': os.getenv('GOOGLE_SECRET_KEY'),
-=======
-            'client_id': '963977549759-s4h9lvm05kq4gkkd00g7scm19at9q6mc.apps.googleusercontent.com',
-            'secret': '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',
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
-=======
             'client_id': config('GOOGLE_CLIENT_ID'),
             'secret': config('GOOGLE_SECRET_KEY'),
->>>>>>> v1
             'key': ''
         },
         'SCOPE': [
             'profile',
             'email',
-<<<<<<< HEAD
             'https://www.googleapis.com/auth/userinfo.profile',
-=======
-            'https://www.googleapis.com/auth/userinfo.profile', 
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
         ],
         'AUTH_PARAMS': {
             'access_type': 'online',
@@ -242,7 +165,6 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-<<<<<<< HEAD
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -254,9 +176,6 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 
 SITE_NAME = 'Glow'
 
-=======
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
@@ -270,9 +189,6 @@ IMAGEKIT_PUBLIC_KEY = config("IMAGEKIT_PUBLIC_KEY")
 IMAGEKIT_PRIVATE_KEY = config("IMAGEKIT_PRIVATE_KEY")
 IMAGEKIT_URL_ENDPOINT = config("IMAGEKIT_URL_ENDPOINT")
 
-<<<<<<< HEAD
 DATA_UPLOAD_MAX_MEMORY_SIZE = 50 * 1024 * 1024
-=======
-DATA_UPLOAD_MAX_MEMORY_SIZE = 50 * 1024 * 1024  
->>>>>>> 81396d173fbc83a724cab1e1868c7a58497b0e17
 
+ALLOW_ADMIN = True

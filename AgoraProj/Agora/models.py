@@ -10,9 +10,13 @@ class Account(models.Model):
     bio = models.CharField(null=True, max_length=255)
     UIAppearance = models.CharField(null=True, max_length=255)
     cover_photo = models.URLField(null=True, verbose_name="File Url")
+    cover_photo_id_imagekit = models.CharField(max_length=355, null=True, blank=True)
     profile_photo = models.URLField(verbose_name="File Url")
+    profile_photo_id_imagekit = models.CharField(max_length=355, null=True, blank=True)
     auth_user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
-    
+    last_activity = models.DateTimeField(null=True, blank=True)
+    is_online = models.BooleanField(default=False)
+
     def __str__(self):
         return f"{self.firstname} {self.lastname}"
 
@@ -23,18 +27,19 @@ class Audience(models.Model):
 
     def __str__(self):
         return f"{self.audience}"
-    
+
 class Post(models.Model):
     account = models.ForeignKey(Account, null=True,on_delete=models.CASCADE)
     audience = models.ForeignKey(Audience,null=True,on_delete=models.CASCADE)
     caption = models.CharField( null=True, max_length=800)
-    dateTime = models.DateTimeField(auto_now_add=True, null=True, max_length=75) 
+    dateTime = models.DateTimeField(auto_now_add=True, null=True, max_length=75)
 
     def __str__(self):
         return f"{self.caption}"
 
 class Photo(models.Model):
     link = models.URLField(verbose_name="File Url")
+    link_id_imagekit = models.CharField(max_length=355, null=True, blank=True)
     post = models.ForeignKey(Post, null=True,on_delete=models.CASCADE)
 
     def __str__(self):
@@ -43,10 +48,10 @@ class Photo(models.Model):
 class Video(models.Model):
     link = models.URLField(verbose_name="File Url")
     post = models.ForeignKey(Post, null=True,on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return f"{self.link}"
-    
+
 class Tag(models.Model):
     tag = models.CharField(max_length=500)
     post = models.ManyToManyField(Post, related_name='tags')
@@ -58,8 +63,8 @@ class Friend(models.Model):
     user = models.ForeignKey(Account, related_name='user_friendships', null=True, on_delete=models.CASCADE)
     friend = models.ForeignKey(Account, related_name='friend_friendships', null=True, on_delete=models.CASCADE)
     status = models.CharField(max_length=100)
-    date_friend_request = models.DateTimeField(auto_now_add=True, null=True, max_length=75) 
-    date_became_friends = models.DateTimeField(auto_now_add=True, null=True, max_length=75) 
+    date_friend_request = models.DateTimeField(auto_now_add=True, null=True, max_length=75)
+    date_became_friends = models.DateTimeField(auto_now_add=True, null=True, max_length=75)
 
     def __str__(self):
         return f"{self.user.firstname} sent a friend request to {self.friend.firstname}"
@@ -71,10 +76,10 @@ class Notification(models.Model):
 
     def __str__(self):
         return f"{self.content}"
-    
+
 class Comment(models.Model):
     content = models.CharField(max_length=255)
-    dateTime = models.DateTimeField(auto_now_add=True, null=True, max_length=75) 
+    dateTime = models.DateTimeField(auto_now_add=True, null=True, max_length=75)
     post = models.ForeignKey(Post, null=True, on_delete=models.CASCADE)
     account = models.ForeignKey(Account, null=True, on_delete=models.CASCADE)
 

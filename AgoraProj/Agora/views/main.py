@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Account, Audience, Post, Photo, Video, Tag, Friend, Notification, Comment, Glow
-from .helpers import ImagekitClient
+from ..models import Account, Audience, Post, Photo, Video, Tag, Friend, Notification, Comment, Glow
+from ..helpers import ImagekitClient
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.base import ContentFile
@@ -13,6 +13,7 @@ import requests
 import base64
 import json
 import html
+import secrets
 import datetime
 from ably import AblyRealtime
 import asyncio
@@ -28,6 +29,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from allauth.account.views import PasswordResetView, PasswordResetDoneView, PasswordResetFromKeyView, PasswordResetFromKeyDoneView
 from django.contrib.auth import get_user_model
 from django.contrib import messages
+import os
+from datetime import timedelta
 
 
 def homepage(request):
@@ -48,6 +51,8 @@ def dashboard(request):
     hashtags = showTags(request)
     search = searchResults(request)
 
+    user_id = request.user.id if request.user.is_authenticated else None
+
     context = {
         'is_new_user': is_new_user,
         'accountInfo': accountInfo,
@@ -56,7 +61,8 @@ def dashboard(request):
         'unread_count': unread_notifications_count,
         'friends': showfriends,
         'hashtags': hashtags,
-        'search_results': search.get('results', [])
+        'search_results': search.get('results', []),
+        'user_id': user_id,
     }
 
     return render(request, 'dashboard.html', context)
@@ -81,6 +87,12 @@ def validatelogin(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
+
+            account, _ = Account.objects.get_or_create(auth_user=user)
+            account.is_online = True
+            account.last_activity = timezone.now()
+            account.save()
+
             return JsonResponse({"status": "success", "message": "Login successfully", "redirect": "/dashboard"})
         else:
             return JsonResponse({"status": "error", "message": "Incorrect email or password"})
@@ -108,6 +120,7 @@ def signup(request):
         if password1 == password2:
             if not User.objects.filter(username=username).exists():
                 if not User.objects.filter(email=email).exists():
+
                     user = User.objects.create_user(
                         username=username,
                         email=email,
@@ -116,6 +129,11 @@ def signup(request):
                     user = authenticate(username=username, password=password1)
                     if user is not None:
                         login(request, user)
+                        Account.objects.create(
+                            auth_user=user,
+                            is_online=True,
+                            last_activity=timezone.now()
+                        )
                         return JsonResponse({"status": "success", "message": "Signup successfully", "redirect": "/dashboard"})
                     else:
                         return JsonResponse({"status": "error", "message": "Authentication failed"})
@@ -207,29 +225,6 @@ def get_emoji():
 
     return []
 
-Counter = 0
-
-async def count_new_posts(post_id, uploader_id):
-    global Counter
-    Counter += 1
-
-    ably = AblyRealtime("ru_QJA.LX6KeA:6pykpDiiF8i68udlvvVQ6_xn6zlL7CLBUfdFZCSbm4k")
-    await ably.connection.once_async('connected')
-    print('Connected')
-
-    channel = ably.channels.get('posts')
-
-    await channel.publish(
-        'post', {
-            'New_Posts': Counter,
-            'Uploader_Id': uploader_id
-        }
-    )
-
-    await ably.close()
-    print('Closed the connection.')
-
-
 
 @csrf_exempt
 def handle_media(request):
@@ -272,10 +267,12 @@ def handle_media(request):
             imgkit = ImagekitClient(content_file)
             Photoresult = imgkit.upload_media_file()
             photo_link = Photoresult["url"]
+            photo_link_id = Photoresult["fileId"]
 
             Photo.objects.create(
                 link=photo_link,
                 post=new_post,
+                link_id_imagekit=photo_link_id
             )
 
         for vname, base64_data in zip(video_names, video_base64_data):
@@ -307,8 +304,6 @@ def handle_media(request):
         currentTime = datetime.now()
         postDate = new_post.dateTime
 
-        asyncio.run(count_new_posts(new_post.id, request.user.id))
-
         context = {
             'status': 'success',
             'message': 'Successfully posted!',
@@ -329,7 +324,6 @@ def handle_media(request):
 
         return JsonResponse( context, encoder = DjangoJSONEncoder)
     return JsonResponse({"status": "error", "message": "Only POST method is accepted"})
-
 
 
 def FetchForYou(request):
@@ -432,6 +426,28 @@ def FetchForYou(request):
             print(f"Error fetching posts: {e}")
             return JsonResponse({'status': 'error', 'message': str(e)})
 
+def fetchNewUsers(request):
+    try:
+        now = timezone.now()
+        two_months_ago = now - timedelta(days=180)
+        start_of_last_two_months = two_months_ago.replace(day=1)
+        end_of_last_two_months = now.replace(day=1) - timedelta(days=1)
+
+        users = User.objects.filter(
+            date_joined__gte=start_of_last_two_months,
+            date_joined__lte=end_of_last_two_months
+        ).select_related('account').order_by('-date_joined').values(
+            'account__profile_photo',
+            'username',
+            'account__firstname',
+            'account__lastname',
+        )[:25]
+
+        accounts = list(users)
+
+        return JsonResponse({'status': 'success', 'accounts': accounts})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)})
 
 
 def time_ago(post_datetime):
@@ -486,35 +502,89 @@ def NotifDate(post_datetime):
         return f"{years} year{'s' if years != 1 else ''} ago"
 
 
-def UserProfile(request):
-    accountInfo = getAccountInfo(request)
-    audience = getAudience(request)
+def UserProfile(request, id):
+    otherAccount = Account.objects.get(id=id)
+    accID = Account.objects.get(auth_user=request.user)
+    randomAccId = User.objects.get(id=otherAccount.auth_user.id)
+
+    friendship_is_pending = Friend.objects.filter(user=accID, friend=otherAccount, status='pending').exists() or \
+                            Friend.objects.filter(user=otherAccount, friend=accID, status='pending').exists()
+
+    friendship_is_friends = Friend.objects.filter(user=accID, friend=otherAccount, status='Friends').exists() or \
+                            Friend.objects.filter(user=otherAccount, friend=accID, status='Friends').exists()
+
     notif_data, unread_notifications_count = fetchNotif(request)
     showfriends = showFriends(request)
     hashtags = showTags(request)
+    audience = getAudience(request)
+    search = searchResults(request)
+    accountInfo = getAccountInfo(request)
+    randomUserFriends = showRandomUsers_Friends(request, randomAccId)
+    glowCountOfPosts = 0
 
+    posts = Post.objects.filter(account=otherAccount).order_by('-dateTime')
     posts_with_photos = {}
-    posts = Post.objects.filter(account=accountInfo)
+    posts_without_photos = {}
+    totalGlows = 0
+    total_photos_count = 0
+    unique_acc_who_glowed = {}
+
     for post in posts:
         photos = Photo.objects.filter(post=post)
-        glows = Glow.objects.filter(post=post)
+        glows = Glow.objects.filter(post=post).order_by('-timestamp')
         comments = Comment.objects.filter(post=post)
-        posts_with_photos[post] = {
-            'photos': photos,
+        totalPostGlows = Glow.objects.filter(post=post).count()
+
+        totalGlows += totalPostGlows
+
+        for glow in glows:
+            unique_acc_who_glowed[glow.account.id] = [
+                glow.account.firstname,
+                glow.account.lastname,
+                glow.account.profile_photo,
+                glow.timestamp,
+            ]
+
+        post_info = {
+            'totalPhotos': photos.count(),
             'time_ago': time_ago(post.dateTime),
             'glows_count': glows.count(),
             'comments_count': comments.count(),
         }
 
+        if photos.exists():
+            total_photos_count += photos.count()
+            posts_with_photos[post] = {
+                **post_info,
+                'photos': photos,
+            }
+        else:
+            posts_without_photos[post] = post_info
+
     context = {
-        'accountInfo': accountInfo,
-        'audienceInfo': audience,
-        'notifications': notif_data,
+        'randomaccount': otherAccount,
+        'friendship_is_pending': friendship_is_pending,
+        'friendship_is_friends': friendship_is_friends,
         'unread_count': unread_notifications_count,
+        'notifications': notif_data,
+        'random_accountInfo': randomAccId,
+        'accountInfo': accountInfo,
         'friends': showfriends,
         'hashtags': hashtags,
-        'posts': {'posts_with_photos': posts_with_photos},
+        'search_results': search.get('results', []),
+        'audienceInfo': audience,
+        'posts': {
+            'posts_with_photos': posts_with_photos,
+            'posts_without_photos': posts_without_photos,
+        },
+        'randomUserFriends': randomUserFriends,
+        'totalGlows': totalGlows,
+        'total_photos_count': total_photos_count,
+        'unique_acc_who_glowed': unique_acc_who_glowed,
+        'account_profile': accID.profile_photo,
+        'account_coverphoto': accID.cover_photo,
     }
+
     return render(request, 'user-profile.html', context)
 
 
@@ -570,38 +640,44 @@ def randomProfile(request, id):
         randomUserFriends = showRandomUsers_Friends(request, randomAccId)
         glowCountOfPosts = 0
 
+        posts = Post.objects.filter(account=otherAccount).order_by('-dateTime')
         posts_with_photos = {}
+        posts_without_photos = {}
         totalGlows = 0
         total_photos_count = 0
         unique_acc_who_glowed = {}
-        posts = Post.objects.filter(account=otherAccount).order_by('-dateTime')
 
         for post in posts:
             photos = Photo.objects.filter(post=post)
+            glows = Glow.objects.filter(post=post).order_by('-timestamp')
+            comments = Comment.objects.filter(post=post)
+            totalPostGlows = Glow.objects.filter(post=post).count()
+
+            totalGlows += totalPostGlows
+
+            for glow in glows:
+                unique_acc_who_glowed[glow.account.id] = [
+                    glow.account.firstname,
+                    glow.account.lastname,
+                    glow.account.profile_photo,
+                    glow.timestamp,
+                ]
+
+            post_info = {
+                'totalPhotos': photos.count(),
+                'time_ago': time_ago(post.dateTime),
+                'glows_count': glows.count(),
+                'comments_count': comments.count(),
+            }
+
             if photos.exists():
-                countphotos = photos.count()
-                total_photos_count += countphotos
-                glows = Glow.objects.filter(post=post).order_by('-timestamp')
-                comments = Comment.objects.filter(post=post)
-                totalPostGlows = Glow.objects.filter(post=post).count()
-
-                totalGlows += totalPostGlows
-
-                for glow in glows:
-                    unique_acc_who_glowed[glow.account.id] = [
-                        glow.account.firstname,
-                        glow.account.lastname,
-                        glow.account.profile_photo,
-                        glow.timestamp,
-                    ]
-
+                total_photos_count += photos.count()
                 posts_with_photos[post] = {
+                    **post_info,
                     'photos': photos,
-                    'totalPhotos': countphotos,
-                    'time_ago': time_ago(post.dateTime),
-                    'glows_count': glows.count(),
-                    'comments_count': comments.count(),
                 }
+            else:
+                posts_without_photos[post] = post_info
 
         context = {
             'randomaccount': otherAccount,
@@ -615,7 +691,10 @@ def randomProfile(request, id):
             'hashtags': hashtags,
             'search_results': search.get('results', []),
             'audienceInfo': audience,
-            'posts': {'posts_with_photos': posts_with_photos},
+            'posts': {
+                'posts_with_photos': posts_with_photos,
+                'posts_without_photos': posts_without_photos,
+            },
             'randomUserFriends': randomUserFriends,
             'totalGlows': totalGlows,
             'total_photos_count': total_photos_count,
@@ -624,7 +703,74 @@ def randomProfile(request, id):
 
         return render(request, 'random-profile.html', context)
     else:
-        return redirect('dashboard')
+        otherAccount = Account.objects.get(id=id)
+        randomAccId = User.objects.get(id=otherAccount.auth_user.id)
+
+        showfriends = showFriends(request)
+        hashtags = showTags(request)
+        audience = getAudience(request)
+        accountInfo = getAccountInfo(request)
+        randomUserFriends = showRandomUsers_Friends(request, randomAccId)
+        glowCountOfPosts = 0
+
+        posts = Post.objects.filter(account=otherAccount).order_by('-dateTime')
+        posts_with_photos = {}
+        posts_without_photos = {}
+        totalGlows = 0
+        total_photos_count = 0
+        unique_acc_who_glowed = {}
+
+        for post in posts:
+            photos = Photo.objects.filter(post=post)
+            glows = Glow.objects.filter(post=post).order_by('-timestamp')
+            comments = Comment.objects.filter(post=post)
+            totalPostGlows = Glow.objects.filter(post=post).count()
+
+            totalGlows += totalPostGlows
+
+            for glow in glows:
+                unique_acc_who_glowed[glow.account.id] = [
+                    glow.account.firstname,
+                    glow.account.lastname,
+                    glow.account.profile_photo,
+                    glow.timestamp,
+                ]
+
+            post_info = {
+                'totalPhotos': photos.count(),
+                'time_ago': time_ago(post.dateTime),
+                'glows_count': glows.count(),
+                'comments_count': comments.count(),
+            }
+
+            if photos.exists():
+                total_photos_count += photos.count()
+                posts_with_photos[post] = {
+                    **post_info, #copiees all key value pairs of post_info from above
+                    'photos': photos,
+                }
+            else:
+                posts_without_photos[post] = post_info
+
+        context = {
+            'randomaccount': otherAccount,
+            'accountInfo': accountInfo,
+            'friends': showfriends,
+            'hashtags': hashtags,
+            'audienceInfo': audience,
+            'posts': {
+                'posts_with_photos': posts_with_photos,
+                'posts_without_photos': posts_without_photos,
+            },
+            'totalGlows': totalGlows,
+            'total_photos_count': total_photos_count,
+            'randomUserFriends': randomUserFriends,
+            'unique_acc_who_glowed': unique_acc_who_glowed,
+        }
+
+        return render(request, 'random-profile_guest.html', context)
+
+
 
 
 '''
@@ -1057,7 +1203,32 @@ def showRandomUsers_Friends(request, id):
         except Account.DoesNotExist:
             return None
     else:
-        return None
+        accID = Account.objects.get(auth_user=id)
+        friends = Friend.objects.filter((Q(friend=accID) | Q(user=accID)) & Q(status="Friends")).order_by('date_became_friends').reverse()[:6]
+        totalfriends = Friend.objects.filter((Q(friend=accID) | Q(user=accID)) & Q(status="Friends")).count()
+
+        friendsInfo = []
+        for friend in friends:
+            if friend.user == accID:
+                friend_account = friend.friend
+            else:
+                friend_account = friend.user
+
+            friendsInfo.append({
+                'firstname': friend_account.firstname,
+                'lastname': friend_account.lastname,
+                'profile_photo': friend_account.profile_photo,
+                'date_became_friends': friend.date_became_friends,
+                'id': friend_account.id
+            })
+
+        context = {
+            'totalfriends': totalfriends,
+            'friendsInfo': friendsInfo
+        }
+        return context
+
+
 
 def showTags(request):
     if request.user.is_authenticated:
@@ -1363,3 +1534,136 @@ class CustomPasswordResetFromKeyView(PasswordResetFromKeyView):
 
 class CustomPasswordResetFromKeyDoneView(PasswordResetFromKeyDoneView):
     template_name = 'account/password_reset_from_key_done.html'
+
+
+def generate_session_id():
+    return secrets.token_hex(16)
+
+
+def game_list(request):
+    games = [
+        {"id": "1215", "name": "DG Club", "image": "images/games/DGM_DG_CLUB.jpg", "game_type": "slots", "provider": "1"},
+        {"id": "1358", "name": "Eggsplosion", "image": "images/games/DGM_EGGSPLOSION.jpg", "game_type": "slots", "provider": "1"},
+        {"id": "1192", "name": "Shinobi Wars", "image": "images/games/DGM_SHINOBI_WARS.jpg", "game_type": "slots", "provider": "1"},
+        {"id": "1193", "name": "Saiyan Warriors", "image": "images/games/DGM_SAIYAN_WARRIORS.jpg", "game_type": "slots", "provider": "1"},
+        {"id": "1234", "name": "Demon Train Scratch Card", "image": "images/games/DGM_DEMON_TRAIN_SCRATCH_CARD.jpg", "game_type": "table_games", "provider": "1"},
+        {"id": "1121", "name": "Mines 88", "image": "images/games/1121.jpg", "game_type": "", "provider": "2"},
+        {"id": "1328", "name": "Hi-Lo 98", "image": "images/games/HSG_HI_LO_98.jpg", "game_type": "", "provider": "2"},
+        {"id": "1067", "name": "Wanted Dead or a Wild 96", "image": "images/games/1067.jpg", "game_type": "", "provider": "2"},
+        {"id": "1001", "name": "SCRATCH! Platinum", "image": "images/games/1001.jpg", "game_type": "", "provider": "2"},
+        {"id": "1321", "name": "Wheel 99", "image": "images/games/HSG_WHEEL_99.jpg", "game_type": "", "provider": "2"},
+        {"id": "1446", "name": "Baccarat 98", "image": "images/games/HSG_BACCARAT_98.jpg", "game_type": "", "provider": "2"},
+    ]
+    return render(request, 'game_list.html', {'games': games})
+
+
+
+def game_launch(request):
+    if request.method == 'GET':
+        api_key = request.GET.get('api_key', 'rMrNJRwYKow1ot13')
+        session_id = generate_session_id()
+        provider = request.GET.get('provider')  # This might be None
+        game_type = request.GET.get('game_type', 'slots')
+        game_id = request.GET.get('game_id')
+        platform = request.GET.get('platform', 'desktop')
+        language = request.GET.get('language', 'en')
+        amount_type = request.GET.get('amount_type', 'fun')
+        lobby_url = request.GET.get('lobby_url', '')
+        deposit_url = request.GET.get('deposit_url', '')
+        game_name = request.GET.get('game_name')
+
+        context = {
+            "id": request.GET.get('context_id', '0'),
+            "username": request.GET.get('context_username', 'fun_player'),
+            "country": request.GET.get('context_country', 'PH'),
+            "currency": request.GET.get('context_currency', 'PHP')
+        }
+
+        headers = {
+            "Content-Type": "application/json"
+        }
+
+        api_url = ""
+        payload = {}
+        launch_url = ""  # Initialize launch_url to avoid UnboundLocalError
+        if provider == "1":
+            api_url = "https://staging-api.dragongaming.com/v1/games/game-launch/"
+            payload = {
+                "api_key": api_key,
+                "session_id": session_id,
+                "provider": "dragongaming",
+                "game_type": game_type,
+                "game_id": game_id,
+                "platform": platform,
+                "language": language,
+                "amount_type": amount_type,
+                "lobby_url": lobby_url,
+                "deposit_url": deposit_url,
+                "context": context
+            }
+            response = requests.post(api_url, headers=headers, json=payload)
+            response_data = response.json()
+            launch_url = response_data.get("result", {}).get("launch_url", "")
+            print(f"Provider 1 Response Data: {response_data}")
+
+        # Handle Provider 2
+        elif provider == "2":
+            api_url = "https://static-stg.hacksawgaming.com/launcher/static-launcher.html?"
+            partner = "tigergames_stagev2"
+            launch_url = api_url + "language=" + language + "&channel=" + platform + "&gameid=" + game_id + "&mode=demo&token=" + session_id + "&lobbyurl=" + lobby_url + "&currency=PHP"  + "&partner=" + partner
+            print(f"Provider 2 URL: {launch_url, game_name}")
+
+        # Handle Invalid Provider
+        else:
+            return JsonResponse({"error": "Invalid provider"}, status=404)
+
+        print(f"Final launch_url: {launch_url}")  # Print after assignment
+        return render(request, 'game_launch.html', {'launch_url': launch_url, 'game_name' : game_name})
+
+    return JsonResponse({"error": "Method not allowed"}, status=405)
+
+def chat_page(request):
+    return render(request, 'chat.html')
+
+
+@csrf_exempt
+def chat_with_gemini(request):
+    if request.method == "POST":
+        user_message = request.POST.get('message', '')
+
+        if not user_message:
+            return JsonResponse({'error': 'No message provided'}, status=400)
+
+
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyAjDzsgtZTFb-Lf-UqYAyD7v3VYeWsOx6A"
+        headers = {
+            'Content-Type': 'application/json'
+        }
+
+        payload = {
+            "contents": [
+                {
+                    "parts": [
+                        {"text": user_message}
+                    ]
+                }
+            ]
+        }
+
+        try:
+
+            response = requests.post(url, json=payload, headers=headers)
+            response_data = response.json()
+            gemini_response = (
+                response_data.get('candidates', [{}])[0]
+                .get('content', {})
+                .get('parts', [{}])[0]
+                .get('text', 'Sorry, Please Contact Glow Developer.')
+            )
+
+            return JsonResponse({'message': gemini_response})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
+
