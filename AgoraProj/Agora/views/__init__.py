@@ -4,3 +4,4 @@ from .deletePost import *
 from .FetchFollowing import *
 from .UserActivity import *
 from .sendNewProfile import *
+from .sendNewCover import *

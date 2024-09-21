@@ -63,7 +63,6 @@ imageInput.addEventListener('change', function (event) {
             crop: function (event) { }
           });
 
-          // Show crop buttons for non-GIFs
           document.querySelectorAll('.CPB-Top button').forEach(button => {
             button.style.display = 'inline-block';
           });
@@ -97,7 +96,7 @@ SaveNewProfile.addEventListener('click', async function () {
       button.disabled = false;
     }, 3000);
 
-    return;  // Exit if file exceeds the size limit
+    return;  // Exit
   }
 
   const isGif = originalFile.type === 'image/gif';

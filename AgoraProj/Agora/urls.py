@@ -53,10 +53,8 @@ urlpatterns = [
     re_path(r'^myprofile/deletePost/(?P<id>\d+)/$', deletePost, name='deletePost'),
     re_path(r'^capture-event/$', views.capture_event, name='capture-event'),
     re_path(r'^myprofile/sendNewProfile/$', views.sendNewProfile, name='sendNewProfile'),
-
-
     #-----------------------------------------Justine------------------------------------------------
-
+    re_path(r'^myprofile/sendNewCover/$', views.sendNewCover, name='sendNewCover'),
 
 
 
