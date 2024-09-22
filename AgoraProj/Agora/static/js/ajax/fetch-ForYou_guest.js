@@ -118,27 +118,6 @@ export function fetchForYou() {
 
             });
 
-            sendComment.addEventListener('click', () => {
-                SendCommentToDB(CommentObject, dataPostIDForSend);
-            });
-
-            commentInput.addEventListener('change', (event) => {
-                const newComment = event.target.value;
-                updateComment(newComment);
-            });
-
-            let accountID = document.getElementById('accountID');
-            let AccountID = accountID.value;
-
-            function updateComment(comment) {
-                CommentObject = {
-                    accID: AccountID,
-                    postID: dataPostID,
-                    comment: comment
-                };
-                console.log(CommentObject);
-                return CommentObject;
-            }
         }
     })
     .catch(error => {

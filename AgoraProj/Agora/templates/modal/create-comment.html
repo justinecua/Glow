@@ -49,9 +49,9 @@
 
 
                 <div class="CCR-Main2">
+                    {% if accountInfo %}
                     <div class="User-Comment-Cont">
                         <div id="UserProf-Comment">
-                            {% if accountInfo %}
                             {% with dynamicProf=accountInfo.profile_photo %}
                             {% if 'static' in dynamicProf %}
                             <img src="{{ dynamicProf }}" alt="">
@@ -59,13 +59,11 @@
                             <img class="lazy" src="{{ dynamicProf|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50' }}"
                                 data-src="{{ dynamicProf | add:'/tr:q-90,tr:w-42,h-42?'}}"> {% endif %}
                             {% endwith %}
-                            {% endif %}
                         </div>
-
                         <input id="Comment-input" type="text" placeholder="Add a comment..">
                         <button id="Send-Comment">Send</button>
                     </div>
-
+                    {% endif %}
                 </div>
             </div>
         </div>
