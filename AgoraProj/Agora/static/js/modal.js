@@ -64,9 +64,10 @@ SearchNav.addEventListener('click', async() =>{
 })
 
 CreateBtnNav.addEventListener('click', async() =>{
-    const { switchModal } = await import ("./modal/switchmodal.js");
+    const { switchModal, getEmoji } = await import ("./modal/switchmodal.js");
 
     switchModal();
+    getEmoji();
 })
 
 
