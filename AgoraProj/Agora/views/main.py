@@ -472,7 +472,6 @@ def time_ago(post_datetime):
         years = int(time_diff.total_seconds() / 31536000)
         return f"•{years} year{'s' if years != 1 else ''} ago"
 
-
 def NotifDate(post_datetime):
     now = datetime.now(pytz.utc)
     time_diff = now - post_datetime
@@ -1013,8 +1012,7 @@ def getCommentPost(request, id):
         post = Post.objects.get(id=id)
         photos = Photo.objects.filter(post=post)
         accountInfo = post.account
-        comments = Comment.objects.filter(post=post)
-
+        comments = Comment.objects.filter(post=post).order_by('-dateTime')
         comments_data = []
 
         post_data = {
@@ -1023,12 +1021,14 @@ def getCommentPost(request, id):
             'dateTime': time_ago(post.dateTime),
         }
 
+        total_comments = comments.count()
+
         for comment in comments:
             dateTime = time_ago(comment.dateTime)
             comments_data.append({
                 'postID': comment.post.id,
                 'content': comment.content,
-                'dateTime':  dateTime,
+                'dateTime': dateTime,
                 'profile_photo': comment.account.profile_photo,
                 'firstname': comment.account.firstname,
                 'lastname': comment.account.lastname
@@ -1043,7 +1043,6 @@ def getCommentPost(request, id):
         photo_data = [{
             'id': photo.id,
             'url': photo.link,
-
         } for photo in photos]
 
         response_data = {
@@ -1053,11 +1052,13 @@ def getCommentPost(request, id):
             'photos': photo_data,
             'accountInfo': account_data,
             'comments': comments_data,
+            'total_comments': total_comments,
         }
 
         return JsonResponse(response_data, encoder=DjangoJSONEncoder)
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)})
+
 
 
 @csrf_exempt
@@ -1108,21 +1109,24 @@ def sendComment(request):
             accIDUser2 = Account.objects.get(id=accIDUser)
 
             newComment = Comment.objects.create(
-                content = comment,
-                dateTime = dateTime,
-                post = postID,
-                account = accIDUser2
+                content=comment,
+                dateTime=dateTime,
+                post=postID,
+                account=accIDUser2
             )
+
+            total_comments = Comment.objects.filter(post=postID).count()
 
             response = {
                 'status': "success",
                 'comment': newComment.content,
-                'dateTime': newComment.dateTime,
+                'dateTime': time_ago(newComment.dateTime),
                 'post': newComment.post.id,
                 'account': newComment.account.id,
                 'accFirstName': newComment.account.firstname,
                 'accLastName': newComment.account.lastname,
                 'profile_photo': newComment.account.profile_photo,
+                'total_comments': total_comments
             }
 
             return JsonResponse(response, encoder=DjangoJSONEncoder)

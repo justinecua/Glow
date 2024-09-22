@@ -2,6 +2,7 @@
 const sendCommentBtn = document.getElementById('Send-Comment');
 let CommentsSection = document.querySelector('.Comments-Section');
 let noCommentsMessage = document.querySelector('.noCommentsMessage');
+let CTCounts = document.querySelector('.CT-Counts');
 
 export function SendCommentToDB(commentObject){
     const xhr = new XMLHttpRequest();
@@ -20,29 +21,52 @@ export function SendCommentToDB(commentObject){
                 if (response.status === "success") {
                     console.log("comment successful: " + response);
 
-                    noCommentsMessage.style.display = "none";
-                    let commentDiv = document.createElement('div');
+                    if(noCommentsMessage){
+                        noCommentsMessage.style.display = "none";
+                    }
+
+                    var commentDiv = document.createElement('div');
+                    let commentTop = document.createElement('div');
+                    let commentBottom = document.createElement('div');
                     let commentProf = document.createElement('img');
-                    let commentDivRight = document.createElement('commentDivRight');
-                    let commentName = document.createElement('p');
-                    let commentContent = document.createElement('commentContent');
+                    var commentName = document.createElement('p');
+                    var commentContent = document.createElement('p');
+                    let commmentDate = document.createElement('p');
+                    let commentOptions = document.createElement('div');
+                    let commentGlow = document.createElement('p');
+                    let commentReply = document.createElement('p');
+                    let totalComments = response.total_comments;
 
-                    commentDiv.classList.add('commentDiv');
-                    commentProf.classList.add('commentProf');
-                    commentDivRight.classList.add('commentDivRight');
-                    commentName.classList.add('commentName');
-                    commentContent.classList.add('commentContent');
+                    if(response.profile_photo.indexOf("static")!== -1){
+                        commentProf.src = response.profile_photo;
+                    }
+                    else {
+                        commentProf.src = response.profile_photo + '/tr:q-100,tr:w-42,h-42';
+                    }
 
-                    commentProf.src = response.profile_photo;
-                    commentName.innerHTML = response.accFirstName + response.accLastName;
+                    commentDiv.className = "commentDiv";
+                    commentName.className = "commentName";
+                    commentContent.className = "commentContent";
+                    commentProf.className = "commentProf";
+                    commentTop.className = "commentTop";
+                    commentBottom.className = "commentBottom";
+                    commmentDate.className = "commentDate";
+                    commentOptions.className = "commentOptions";
+
+                    commentName.innerHTML = response.accFirstName + " " + response.accLastName;
                     commentContent.innerHTML = response.comment;
+                    commmentDate.innerHTML = response.dateTime;
+                    CTCounts.innerHTML = `&nbsp(${totalComments})`;
+                    commentGlow.innerHTML = "glow";
+                    commentReply.innerHTML = "reply";
 
-                    commentDivRight.append(commentName, commentContent);
-                    commentDiv.append(commentProf, commentDivRight);
-                    CommentsSection.append(commentDiv);
+                    commentTop.append(commentProf, commentName, commmentDate);
+                    commentBottom.append(commentContent);
+                    commentOptions.append(commentGlow, commentReply);
+                    commentDiv.append(commentTop, commentBottom, commentOptions);
+                    CommentsSection.prepend(commentDiv);
 
                     document.getElementById('Comment-input').value = '';
-
                     sendCommentBtn.innerHTML = "Send";
 
                 } else {

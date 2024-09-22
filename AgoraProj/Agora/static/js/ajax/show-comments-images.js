@@ -19,6 +19,8 @@ export function getPost(dataPostID, currentPhotoIndex) {
     let CaptionContent = document.querySelector('.Caption-Content');
     let CommentsSection = document.querySelector('.Comments-Section');
     let commentContainer = document.querySelectorAll('.Comment-Container');
+    let CommentsTitle = document.querySelector('.CommentsTitle');
+    let CTCounts = document.querySelector('.CT-Counts');
     let photos = [];
 
     //Necessary to clear previous comments in the commentContainer
@@ -111,19 +113,19 @@ export function getPost(dataPostID, currentPhotoIndex) {
         CommentsSection.innerHTML = '';
         if (result.comments.length > 0) {
             result.comments.forEach(comment => {
+                CommentsTitle.style.display = "flex";
+
                 var commentDiv = document.createElement('div');
-                commentDiv.className = "commentDiv";
-
-                var commentContent = document.createElement('p');
-                commentContent.className = "commentContent";
-                commentContent.textContent = comment.content;
-
+                let commentTop = document.createElement('div');
+                let commentBottom = document.createElement('div');
+                let commentProf = document.createElement('img');
                 var commentName = document.createElement('p');
-                commentName.className = "commentName";
-                commentName.textContent = comment.firstname + " " + comment.lastname;
-
-                var commentProf = document.createElement('img');
-                commentProf.className = "commentProf";
+                var commentContent = document.createElement('p');
+                let commmentDate = document.createElement('p');
+                let commentOptions = document.createElement('div');
+                let commentGlow = document.createElement('p');
+                let commentReply = document.createElement('p');
+                let totalComments = result.total_comments;
 
                 if(comment.profile_photo.indexOf("static")!== -1){
                     commentProf.src = comment.profile_photo;
@@ -132,19 +134,34 @@ export function getPost(dataPostID, currentPhotoIndex) {
                     commentProf.src = comment.profile_photo + '/tr:q-100,tr:w-42,h-42';
                 }
 
-                console.log(comment.profile_photo);
-                var commentDivRight = document.createElement('div');
-                commentDivRight.className = "commentDivRight";
-                commentDivRight.appendChild(commentName);
-                commentDivRight.appendChild(commentContent);
+                commentDiv.className = "commentDiv";
+                commentName.className = "commentName";
+                commentContent.className = "commentContent";
+                commentProf.className = "commentProf";
+                commentTop.className = "commentTop";
+                commentBottom.className = "commentBottom";
+                commmentDate.className = "commentDate";
+                commentOptions.className = "commentOptions";
 
-                commentDiv.appendChild(commentProf);
-                commentDiv.appendChild(commentDivRight);
+                commentName.innerHTML = comment.firstname + " " + comment.lastname;
+                commentContent.innerHTML = comment.content;
+                commmentDate.innerHTML = comment.dateTime;
+                CTCounts.innerHTML = `&nbsp(${totalComments})`;
+                commentGlow.innerHTML = "glow";
+                commentReply.innerHTML = "reply";
+
+                commentTop.append(commentProf, commentName, commmentDate);
+                commentBottom.append(commentContent);
+                commentOptions.append(commentGlow, commentReply);
+                commentDiv.append(commentTop, commentBottom, commentOptions);
                 CommentsSection.appendChild(commentDiv);
+
+
             });
         } else {
             var noCommentsMessage = document.createElement('p');
             noCommentsMessage.className = "noCommentsMessage";
+            CommentsTitle.style.display = "none";
             noCommentsMessage.style.display = "flex";
             noCommentsMessage.style.height = "3rem";
             noCommentsMessage.style.justifyContent = "center";
