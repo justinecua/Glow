@@ -12,6 +12,7 @@ export function getPost(dataPostID, currentPhotoIndex) {
     let nextButton = document.querySelector('.next-button');
     let prevButton = document.querySelector('.prev-button');
     let PostFullName = document.querySelector('.Post-FullName');
+    let PostDate = document.querySelector('.Post-Date');
     let PostProfilePic = document.querySelector('.Post-ProfilePic');
     let PostCaption = document.querySelector('.Post-Caption');
     let Commentbtncont = document.querySelector('.Comment-btn-cont');
@@ -94,10 +95,11 @@ export function getPost(dataPostID, currentPhotoIndex) {
         }
 
         let account = result.accountInfo;
+        let postInfo = result.post;
         PostFullName.innerHTML = account.firstname + " " + account.lastname;
+        PostDate.innerHTML = postInfo.dateTime;
 
-
-        if(account.profile_photo.indexOf("static")){
+        if(account.profile_photo.indexOf("static")!== -1){
             PostProfilePic.src = account.profile_photo;
         }
         else {
@@ -122,8 +124,15 @@ export function getPost(dataPostID, currentPhotoIndex) {
 
                 var commentProf = document.createElement('img');
                 commentProf.className = "commentProf";
-                commentProf.src = comment.profile_photo;
 
+                if(comment.profile_photo.indexOf("static")!== -1){
+                    commentProf.src = comment.profile_photo;
+                }
+                else {
+                    commentProf.src = comment.profile_photo + '/tr:q-100,tr:w-42,h-42';
+                }
+
+                console.log(comment.profile_photo);
                 var commentDivRight = document.createElement('div');
                 commentDivRight.className = "commentDivRight";
                 commentDivRight.appendChild(commentName);

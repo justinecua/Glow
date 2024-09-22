@@ -39,9 +39,6 @@ def homepage(request):
 def about(request):
     return render(request, 'index.html')
 
-def loader(request):
-    return render (request, 'loaderio-bf3ddf451e2ba17db18608ca395e3df9.html')
-
 def dashboard(request):
     is_new_user = check_user(request)
     accountInfo = getAccountInfo(request)
@@ -1023,7 +1020,7 @@ def getCommentPost(request, id):
         post_data = {
             'id': post.id,
             'caption': post.caption,
-            'dateTime': post.dateTime
+            'dateTime': time_ago(post.dateTime),
         }
 
         for comment in comments:
@@ -1122,7 +1119,10 @@ def sendComment(request):
                 'comment': newComment.content,
                 'dateTime': newComment.dateTime,
                 'post': newComment.post.id,
-                'account': newComment.account.id
+                'account': newComment.account.id,
+                'accFirstName': newComment.account.firstname,
+                'accLastName': newComment.account.lastname,
+                'profile_photo': newComment.account.profile_photo,
             }
 
             return JsonResponse(response, encoder=DjangoJSONEncoder)

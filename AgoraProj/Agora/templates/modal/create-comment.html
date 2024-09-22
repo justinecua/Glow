@@ -27,6 +27,9 @@
                             <div class="CCRT-Right">
                                 <p class="Post-FullName"></p>
                             </div>
+                            <div class="DateTime-PostComment">
+                                <p class="Post-Date"></p>
+                            </div>
                         </div>
 
                         <div>
@@ -47,11 +50,17 @@
 
                 <div class="CCR-Main2">
                     <div class="User-Comment-Cont">
-                        {% if accountInfo %}
                         <div id="UserProf-Comment">
-                            <img src="{{ accountInfo.profile_photo }}" alt="">
+                            {% if accountInfo %}
+                            {% with dynamicProf=accountInfo.profile_photo %}
+                            {% if 'static' in dynamicProf %}
+                            <img src="{{ dynamicProf }}" alt="">
+                            {% else %}
+                            <img class="lazy" src="{{ dynamicProf|add:'/tr:q-90,tr:w-50,bl-30,q-90,h-50' }}"
+                                data-src="{{ dynamicProf | add:'/tr:q-90,tr:w-42,h-42?'}}"> {% endif %}
+                            {% endwith %}
+                            {% endif %}
                         </div>
-                        {% endif %}
 
                         <input id="Comment-input" type="text" placeholder="Add a comment..">
                         <button id="Send-Comment">Send</button>

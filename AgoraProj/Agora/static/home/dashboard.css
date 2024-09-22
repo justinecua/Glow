@@ -14,17 +14,19 @@ html {
   --color: white;
   --accent-1: #111;
   --accent-2: #999;
-  --icon-filter: brightness(0) invert(1);
+  --icon-filter: brightness(0.5) invert(0.8);
   --link-color: white;
   --nav-color: #15161A;
   --border-color: 1px solid #1d2532;
   --input-create-post: #1C1E29;
   --glow-color: #0058ca;
   --audience-arrow-color: 5px solid#ffff;
-  --hover-elements: #bfc6d719;
+  --hover-elements: #3b3e4544;
   --glow-button: #0058ca;
   --top-nav-color: #1C1E29;
   --text-color: #BABABA;
+  --text-color2: #6d6d71;
+  --text-color3: #6f6f74;
   --tool-tip-bgcolor: #6961FF;
   --tool-tip-color: #ffff;
   --login-border-color: #545a63;
@@ -37,6 +39,7 @@ html {
   --font-color: #ffffff;
   --bg-ChangeCoverBtn: #05152e89;
   --bg-ChangeCoverBtnHover: #05152eb8;
+  --seperator: #212124;
 }
 
 [data-theme="light"] {
@@ -55,6 +58,8 @@ html {
   --glow-button: #0058ca;
   --top-nav-color: #edf3fc;
   --text-color: #373131;
+  --text-color2: #595656;
+  --text-color3: #6f6f74;
   --tool-tip-bgcolor: #6961FF;
   --tool-tip-color: #ffff;
   --login-border-color: #7c7c7c;
@@ -67,6 +72,7 @@ html {
   --font-color: #000000;
   --bg-ChangeCoverBtn: #eef1f699;
   --bg-ChangeCoverBtnHover: #eef1f6c9;
+  --seperator: #dcdcdc;
 }
 
 .loaderContainer5 {
@@ -327,8 +333,8 @@ body {
 }
 
 .NLeft li img {
-  width: 1.4rem;
-  height: 1.4rem;
+  width: 1.3rem;
+  height: 1.3rem;
   object-fit: cover;
   margin-right: 4%;
   filter: var(--icon-filter);
@@ -2163,6 +2169,8 @@ input:focus-visible+.slider {
   font-family: "Work Sans", sans-serif;
   font-size: clamp(0.8rem, 1vw, 0.8rem);
   padding-left: 0.5rem;
+  font-size: 800;
+  color: var(--text-color);
 }
 
 .UPCCT-Right {
@@ -2226,6 +2234,7 @@ input:focus-visible+.slider {
   font-family: "Work Sans", sans-serif;
   font-size: clamp(0.8rem, 1vw, 0.8rem);
   padding-left: 2%;
+  color: var(--text-color2);
 }
 
 .Post-Prof-Cont2 {
@@ -2295,6 +2304,7 @@ input:focus-visible+.slider {
   align-items: center;
   width: 45%;
   height: 100%;
+  color: var(--text-color);
 }
 
 .React-Counts div {
@@ -3335,8 +3345,6 @@ input:focus-visible+.slider {
   border-radius: 10px;
   background-color: var(--nav-color);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.5s ease-out forwards;
-  visibility: hidden;
 }
 
 .Comment-subCont {
@@ -3482,11 +3490,10 @@ input:focus-visible+.slider {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  border-bottom: 1px solid #b0b0b0;
+  border-bottom: 1px solid var(--seperator);
   height: 3.8rem;
   font-family: "Work Sans", sans-serif;
   font-weight: 500;
-
 }
 
 .CCRT-Sub {
@@ -3524,6 +3531,7 @@ input:focus-visible+.slider {
   overflow-wrap: break-word;
   max-height: 20rem;
   overflow-y: auto;
+  color: var(--text-color);
 }
 
 .Post-Caption::-webkit-scrollbar {
@@ -3540,6 +3548,7 @@ input:focus-visible+.slider {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--text-color);
 }
 
 .Post-FullName {
@@ -3547,6 +3556,17 @@ input:focus-visible+.slider {
   margin-left: 1rem;
 }
 
+.DateTime-PostComment {
+  display: flex;
+  align-items: center;
+}
+
+.Post-Date {
+  color: var(--text-color);
+  width: 100%;
+  margin-left: 0.6rem;
+  font-size: clamp(0.8rem, 1vw, 0.8rem);
+}
 
 .User-Comment-Cont {
   display: flex;
@@ -3557,15 +3577,16 @@ input:focus-visible+.slider {
 }
 
 .User-Comment-Cont input {
-  width: 67%;
+  width: 70%;
   height: 100%;
   border-radius: 20px;
   padding: 0.7rem 1rem;
   max-width: 95%;
   padding-left: 1.2rem;
-  background: none;
-  border: 1.5px solid #bccbe0;
+  background-color: var(--input-create-post);
+  border:none;
   color: var(--text-color);
+  outline: none;
 }
 
 #UserProf-Comment {
@@ -3583,26 +3604,25 @@ input:focus-visible+.slider {
 
 #Send-Comment {
   padding: 0.6rem 1.7rem;
-  background-color: none;
+  background-color: var(--input-create-post);
   border: 1px solid #000000;
   border: none;
   border-radius: 5px;
   font-family: "Work Sans", sans-serif;
   font-size: clamp(0.8rem, 1vw, 0.8rem);
   font-weight: 600;
-  color: #6e6e6e;
+  color: var(--text-color);
 }
 
 #Send-Comment:hover {
-  background-color: #d5cece;
+  background-color: var(--button-hover);
   cursor: pointer;
-  color: #111;
 }
 
 .Close-Comment {
   width: 1.8rem;
   height: 1.8rem;
-  background-color: var(--bg-color);
+  background-color: var(--messageBg);
   border-radius: 50%;
   color: var(--text-color);
   border: none;
@@ -3616,7 +3636,7 @@ input:focus-visible+.slider {
 }
 
 .Close-Comment:hover {
-  background-color: var(--hover-elements);
+  background-color: var(--button-hover);
   cursor: pointer;
 }
 
@@ -3625,7 +3645,7 @@ input:focus-visible+.slider {
   height: 2.4rem;
   object-fit: cover;
   border-radius: 50%;
-  margin-right: 3%;
+  margin-right: 2%;
 }
 
 .commentDiv {
@@ -3637,7 +3657,7 @@ input:focus-visible+.slider {
 }
 
 .commentDivRight {
-  width: 100%;
+
 
 }
 
@@ -3648,7 +3668,8 @@ input:focus-visible+.slider {
   font-family: "Work Sans", sans-serif;
   font-size: clamp(0.8rem, 1vw, 1rem);
   padding: 10px;
-  max-height: 25rem;
+  max-height: 40rem;
+  height: 100%;
 }
 
 
@@ -3663,6 +3684,7 @@ input:focus-visible+.slider {
 .commentContent {
   width: 100%;
   height: 50%;
+  color: var(--text-color);
 }
 
 
