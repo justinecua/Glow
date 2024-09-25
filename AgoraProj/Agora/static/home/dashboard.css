@@ -3951,8 +3951,7 @@ input:focus-visible+.slider {
   align-items: center;
   justify-content: center;
   animation: heartBeat 0.5s ease;
-  margin-top: -4%;
-
+  margin-top: -0.2rem;
 }
 
 .custom-select-wrapper {

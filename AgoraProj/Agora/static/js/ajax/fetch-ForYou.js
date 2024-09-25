@@ -140,7 +140,7 @@ export function fetchForYou() {
         Bottomloadingposts.style.display = "none";
     });
 }
-console.log(LoggedinID);
+
 function createPostElement(post, LoggedinID) {
     let postContainer = document.createElement('div');
     let UPCcontentgrid = document.querySelector('.UPC-content-grid');
@@ -297,7 +297,7 @@ function handleLike(glow_button) {
             handleUnlike(ChangeGlow);
         });
     } else {
-        ChangeGlow.style.display = "inline";
+        ChangeGlow.style.display = "flex";
     }
 
     let LikeObject = {
