@@ -18,4 +18,4 @@
 
 <hr>
 
-<p>© 2024 Glow. All rights reserved. Join us in creating a great community!</p>
+<p>© 2024 Glow. All rights reserved Join us in creating a great community!</p>
