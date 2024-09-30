@@ -99,7 +99,7 @@ html {
 }
 
 
-.loaderCont img{
+.loaderCont img {
   width: 5rem;
   height: 5rem;
   object-fit: cover;
@@ -2604,7 +2604,7 @@ input:focus-visible+.slider {
   object-position: center;
 }
 
-.ChangeCover-Btn{
+.ChangeCover-Btn {
   padding: 0.7rem 1rem;
   border: none;
   position: absolute;
@@ -2621,12 +2621,12 @@ input:focus-visible+.slider {
   border-radius: 3px;
 }
 
-.ChangeCover-Btn:hover{
+.ChangeCover-Btn:hover {
   background-color: var(--bg-ChangeCoverBtnHover);
   cursor: pointer;
 }
 
-.ChangeCover-Btn img{
+.ChangeCover-Btn img {
   width: 1rem;
   height: 1rem;
   object-fit: cover;
@@ -2654,7 +2654,7 @@ input:focus-visible+.slider {
 }
 
 
-#PPC-My-Profile-Container img:not(#ChangeProf-Icon){
+#PPC-My-Profile-Container img:not(#ChangeProf-Icon) {
   border-radius: 50%;
   width: 9rem;
   height: 9rem;
@@ -2662,7 +2662,7 @@ input:focus-visible+.slider {
   border: 5px solid var(--nav-color);
 }
 
-#ChangeProf-Icon{
+#ChangeProf-Icon {
   position: absolute;
   width: 2.3rem;
   height: 2.3rem;
@@ -2674,14 +2674,14 @@ input:focus-visible+.slider {
   right: 1rem;
 }
 
-#ChangeProf-Icon img{
+#ChangeProf-Icon img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   filter: var(--icon-filter);
 }
 
-#ChangeProf-Icon:hover{
+#ChangeProf-Icon:hover {
   background-color: var(--TopNavHover);
   cursor: pointer;
 }
@@ -3589,7 +3589,7 @@ input:focus-visible+.slider {
   max-width: 95%;
   padding-left: 1.2rem;
   background-color: var(--input-create-post);
-  border:none;
+  border: none;
   color: var(--text-color);
   outline: none;
 }
@@ -3657,30 +3657,30 @@ input:focus-visible+.slider {
   font-family: "Work Sans", sans-serif;
   font-size: clamp(1rem, 1vw, 1rem);
   display: flex;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   flex-direction: column;
   border-radius: 5px;
-  margin-bottom: 0.5rem;
-
 }
 
-.commentTop{
+.commentTop {
   display: flex;
 }
 
-.commentBottom{
+.commentBottom {
   display: flex;
   flex-direction: column;
   margin-left: 1%;
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
 
 
-.CommentsTitle{
+.CommentsTitle {
   padding: 0.4rem 1rem;
   font-family: "Work Sans", sans-serif;
   font-size: clamp(0.9rem, 1vw, 0.9rem);
   width: 100%;
-  display:none;
+  display: none;
   justify-content: center;
   align-items: center;
   color: var(--text-color);
@@ -3711,20 +3711,18 @@ input:focus-visible+.slider {
   border-radius: 5px;
 }
 
-
-
-.commentDate{
+.commentDate {
   color: var(--text-color3);
   font-family: "Work Sans", sans-serif;
   font-size: clamp(0.8rem, 1vw, 0.8rem);
   display: flex;
   align-items: center;
   margin-left: 0.5rem;
+
 }
 
-.commentOptions{
+.commentOptions {
   display: flex;
-
 }
 
 .commentOptions p {
@@ -3732,7 +3730,6 @@ input:focus-visible+.slider {
   font-size: clamp(0.9rem, 1vw, 0.9rem);
   color: var(--text-color3);
   margin-left: 1%;
-  width: 4rem;
   margin-top: 0.5rem;
 }
 
@@ -3745,12 +3742,33 @@ input:focus-visible+.slider {
 }
 
 .commentContent {
-  width: 100%;
   color: var(--commentContent);
-  font-size: clamp(1rem, 1vw, 1rem);
+  font-size: clamp(0.9rem, 1vw, 0.9rem);
+  padding: 0.5rem 1rem;
+  word-break: break-all;
+  background-color: var(--input-create-post);
+  display: inline-block;
+  max-width: max-content;
+  align-self: flex-start;
+  border-radius: 10px;
+  position: relative;
   margin-top: 0.4rem;
+  border: var(--border-color);
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
+
 }
 
+.commentContent::after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid var(--input-create-post);
+}
 
 .NRightBottom-content {
   display: flex;

@@ -152,7 +152,7 @@ export function getPost(dataPostID, currentPhotoIndex) {
 
                 commentTop.append(commentProf, commentName, commmentDate);
                 commentBottom.append(commentContent);
-                commentOptions.append(commentGlow, commentReply);
+                //commentOptions.append(commentGlow, commentReply);
                 commentDiv.append(commentTop, commentBottom, commentOptions);
                 CommentsSection.appendChild(commentDiv);
 
