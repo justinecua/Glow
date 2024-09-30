@@ -21,6 +21,7 @@ export function getPost(dataPostID, currentPhotoIndex) {
     let commentContainer = document.querySelectorAll('.Comment-Container');
     let CommentsTitle = document.querySelector('.CommentsTitle');
     let CTCounts = document.querySelector('.CT-Counts');
+    let CCRTLeft = document.querySelector('.CCRT-Left');
     let photos = [];
 
     //Necessary to clear previous comments in the commentContainer
@@ -98,8 +99,18 @@ export function getPost(dataPostID, currentPhotoIndex) {
 
         let account = result.accountInfo;
         let postInfo = result.post;
+        let aTag = document.createElement('a');
+        let LoggedinID = currentUserId.getAttribute('data-userId');
+
         PostFullName.innerHTML = account.firstname + " " + account.lastname;
         PostDate.innerHTML = postInfo.dateTime;
+
+        if(account.id == LoggedinID){
+            aTag.href =  "myprofile/" + account.id;
+        }
+        else{
+            aTag.href =  "profile/" + account.id;
+        }
 
         if(account.profile_photo.indexOf("static")!== -1){
             PostProfilePic.src = account.profile_photo;
@@ -109,6 +120,8 @@ export function getPost(dataPostID, currentPhotoIndex) {
         }
 
         PostCaption.innerText = result.post.caption;
+        aTag.appendChild(PostProfilePic);
+        CCRTLeft.appendChild(aTag);
 
         CommentsSection.innerHTML = '';
         if (result.comments.length > 0) {
