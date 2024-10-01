@@ -3515,6 +3515,10 @@ input:focus-visible+.slider {
   border-radius: 50%;
 }
 
+.CCRT-Right{
+  display: flex;
+}
+
 .CCRT-Mid {
   max-width: 40rem;
   max-height: 47rem;
@@ -3558,7 +3562,12 @@ input:focus-visible+.slider {
 
 .Post-FullName {
   width: 100%;
-  margin-left: 1rem;
+  margin-left: 0.7rem;
+}
+
+.CCRT-Right a{
+  text-decoration: none;
+  color: var(--font-color);
 }
 
 .DateTime-PostComment {
@@ -3620,6 +3629,24 @@ input:focus-visible+.slider {
 }
 
 #Send-Comment:hover {
+  background-color: var(--button-hover);
+  cursor: pointer;
+}
+
+#Send-Comment2 {
+  padding: 0.6rem 1.7rem;
+  background-color: var(--input-create-post);
+  border: 1px solid #000000;
+  border: none;
+  border-radius: 5px;
+  font-family: "Work Sans", sans-serif;
+  font-size: clamp(0.8rem, 1vw, 0.8rem);
+  font-weight: 600;
+  color: var(--text-color);
+  display: none;
+}
+
+#Send-Comment2:hover {
   background-color: var(--button-hover);
   cursor: pointer;
 }
@@ -3739,10 +3766,11 @@ input:focus-visible+.slider {
   font-family: "Work Sans", sans-serif;
   font-weight: 600;
   font-size: clamp(1rem, 1vw, 1rem);
+  margin-left: 0.7rem;
 }
 
 .commentContent {
-  color: var(--commentContent);
+  color: var(--font-color);
   font-size: clamp(0.9rem, 1vw, 0.9rem);
   padding: 0.5rem 1rem;
   word-break: break-all;
@@ -3755,7 +3783,6 @@ input:focus-visible+.slider {
   margin-top: 0.4rem;
   border: var(--border-color);
   box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
-
 }
 
 .commentContent::after {

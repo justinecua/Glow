@@ -12,6 +12,7 @@ export function SendPost(mediaObject){
     var fadeBox = document.getElementById('messages');
     let UserPostBtn = document.getElementById("User-PostBtn");
     let NewPostId = document.getElementById("NewPost_Id");
+    let noCommentsMessage = document.querySelector('.noCommentsMessage');
 
     xhr.open('POST', '/handle_media/');
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -27,10 +28,8 @@ export function SendPost(mediaObject){
             if (xhr.status === 200) {
                 var response = JSON.parse(xhr.responseText);
                 if (response.status === "success") {
-                    console.log("Post successful: " + response.message);
                     fadeBox.innerHTML = response.message;
 
-                    console.log(response.caption);
                     createAndAppendPost(response);
                     ModalOverlay.style.display = "none";
 
@@ -56,9 +55,8 @@ export function SendPost(mediaObject){
                     const postCaption = document.querySelector('.Post-Caption');
                     const commentInput = document.getElementById('Comment-input');
                     const sendComment = document.getElementById('Send-Comment');
+                    const sendComment2 = document.getElementById('Send-Comment2');
                     let CommentObject = '';
-                    let SendComment = document.getElementById('Send-Comment');
-
                     let dataPostIDForSend = '';
 
                     commentBtnShow.forEach(commentBtn => {
@@ -72,8 +70,21 @@ export function SendPost(mediaObject){
                             dataPostIDForSend = dataPostID;
                         });
                     });
+                    let accountID = document.getElementById('accountID');
+                    let AccountID = accountID.value;
 
-                    sendComment.addEventListener('click', () => {
+                    function updateComment(comment) {
+                        CommentObject = {
+                            accID: AccountID,
+                            postID: dataPostID,
+                            comment: comment
+                        };
+                        console.log(CommentObject);
+                        return CommentObject;
+                    }
+                    sendComment.style.display = "none";
+                    sendComment2.style.display = "flex";
+                    sendComment2.addEventListener('click', () => {
                         SendCommentToDB(CommentObject, dataPostIDForSend);
                     });
 
@@ -89,18 +100,7 @@ export function SendPost(mediaObject){
                         updateComment(newComment);
                     });
 
-                    let accountID = document.getElementById('accountID');
-                    let AccountID = accountID.value;
 
-                    function updateComment(comment) {
-                        CommentObject = {
-                            accID: AccountID,
-                            postID: dataPostID,
-                            comment: comment
-                        };
-                        console.log(CommentObject);
-                        return CommentObject;
-                    }
 
                 } else {
                     console.error("Post failed: " + response.message);
@@ -181,7 +181,7 @@ function createAndAppendPost(response) {
                 </div>
             </div>
         `;
-
+        console.log(response.post_id)
         NCenterContent.insertBefore(postContainer, NCenterContent.firstChild);
 
         let CapCaption = document.createElement('div');

@@ -1,10 +1,11 @@
-
 const sendCommentBtn = document.getElementById('Send-Comment');
 let CommentsSection = document.querySelector('.Comments-Section');
 let noCommentsMessage = document.querySelector('.noCommentsMessage');
 let CTCounts = document.querySelector('.CT-Counts');
+let CommentsTitle = document.querySelector('.CommentsTitle');
+let Comments = document.querySelector('.Comments');
 
-export function SendCommentToDB(commentObject){
+export function SendCommentToDB(commentObject) {
     const xhr = new XMLHttpRequest();
 
     xhr.open('POST', '/sendComment/');
@@ -21,8 +22,16 @@ export function SendCommentToDB(commentObject){
                 if (response.status === "success") {
                     console.log("comment successful: " + response);
 
-                    if(noCommentsMessage){
-                        noCommentsMessage.style.display = "none";
+                    document.getElementById('Comment-input').value = ''; // Clear input
+                    sendCommentBtn.innerHTML = "Send";
+
+
+                    const totalComments = response.total_comments;
+                    if (totalComments > 0) {
+                        CommentsTitle.style.display = "flex";
+                    }
+                    else{
+                        CommentsTitle.style.display = "none";
                     }
 
                     var commentDiv = document.createElement('div');
@@ -35,12 +44,10 @@ export function SendCommentToDB(commentObject){
                     let commentOptions = document.createElement('div');
                     let commentGlow = document.createElement('p');
                     let commentReply = document.createElement('p');
-                    let totalComments = response.total_comments;
 
-                    if(response.profile_photo.indexOf("static")!== -1){
+                    if (response.profile_photo.indexOf("static") !== -1) {
                         commentProf.src = response.profile_photo;
-                    }
-                    else {
+                    } else {
                         commentProf.src = response.profile_photo + '/tr:q-100,tr:w-42,h-42';
                     }
 
@@ -62,7 +69,7 @@ export function SendCommentToDB(commentObject){
 
                     commentTop.append(commentProf, commentName, commmentDate);
                     commentBottom.append(commentContent);
-                    commentOptions.append(commentGlow, commentReply);
+                    // commentOptions.append(commentGlow, commentReply);
                     commentDiv.append(commentTop, commentBottom, commentOptions);
                     CommentsSection.prepend(commentDiv);
 

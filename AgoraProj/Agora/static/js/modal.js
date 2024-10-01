@@ -285,7 +285,7 @@ function updateMediaObject(caption) {
         caption: caption,
         tags: hashtags,
     };
-    console.log(mediaObject);
+
     return mediaObject;
 }
 

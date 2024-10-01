@@ -108,15 +108,6 @@ export function fetchForYou() {
                 isGettingPost = false;
             });
 
-            sendComment.addEventListener('click', () => {
-                SendCommentToDB(CommentObject, dataPostIDForSend);
-            });
-
-            commentInput.addEventListener('change', (event) => {
-                const newComment = event.target.value;
-                updateComment(newComment);
-            });
-
             let accountID = document.getElementById('accountID');
             let AccountID = accountID.value;
 
@@ -126,9 +117,19 @@ export function fetchForYou() {
                     postID: dataPostID,
                     comment: comment
                 };
-                console.log(CommentObject);
                 return CommentObject;
             }
+
+            sendComment.addEventListener('click', () => {
+                SendCommentToDB(CommentObject, dataPostIDForSend);
+            });
+
+            commentInput.addEventListener('change', (event) => {
+                const newComment = event.target.value;
+                updateComment(newComment);
+            });
+
+
         }
     })
     .catch(error => {
@@ -214,7 +215,7 @@ function createPostElement(post, LoggedinID) {
                         <p>${post.glows_count} ${post.glows_count > 1 ? 'glows' : 'glow'}</p>
                     </div>
                     <div class="Comments">
-                        <p>${post.comment_count} ${post.comment_count > 1 ? 'comments' : 'comment'}</p>
+                        <p class="CommentTotal">${post.comment_count} ${post.comment_count > 1 ? 'comments' : 'comment'}</p>
                     </div>
                 </div>
             </div>

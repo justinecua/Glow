@@ -1031,7 +1031,8 @@ def getCommentPost(request, id):
                 'dateTime': dateTime,
                 'profile_photo': comment.account.profile_photo,
                 'firstname': comment.account.firstname,
-                'lastname': comment.account.lastname
+                'lastname': comment.account.lastname,
+                'id': comment.account.id
             })
 
         account_data = {

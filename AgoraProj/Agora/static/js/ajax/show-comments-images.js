@@ -24,8 +24,9 @@ export function getPost(dataPostID, currentPhotoIndex) {
     let CCRTLeft = document.querySelector('.CCRT-Left');
     let photos = [];
 
+
     //Necessary to clear previous comments in the commentContainer
-    commentContainer.forEach(comments =>{
+    commentContainer.forEach(comments => {
         comments.style.visibility = "visible";
     })
 
@@ -47,144 +48,171 @@ export function getPost(dataPostID, currentPhotoIndex) {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => {
-        return response.json();
-    })
-    .then(result => {
-        loadingBar.style.display = 'none';
+        .then(response => {
+            return response.json();
+        })
+        .then(result => {
+            loadingBar.style.display = 'none';
 
-        photos = result.photos;
-        if (photos.length > 0) {
-            CCLeft.innerHTML = '';
-            CCLeft1.style.width = "40rem";
-            CCLeft.style.width = "100%";
-            CCLeft.style.height = "";
-            CCLeft.style.borderRadius = "10px";
-            CCRight1.style.borderRadius = "10px";
+            photos = result.photos;
+            if (photos.length > 0) {
+                CCLeft.innerHTML = '';
+                CCLeft1.style.width = "40rem";
+                CCLeft.style.width = "100%";
+                CCLeft.style.height = "";
+                CCLeft.style.borderRadius = "10px";
+                CCRight1.style.borderRadius = "10px";
 
-            photos.forEach(function (photo, index) {
-                var img = document.createElement('img');
-                img.className = "lazy";
-                img.src = photo.url;
-                img.dataset.src = photo.url;
-                img.style.display = index === currentPhotoIndex ? 'block' : 'none';
-                CCLeft.appendChild(img);
-            });
-            LazyLoading(".lazy");
-            prevButton.style.display = currentPhotoIndex === 0 ? "none" : "flex";
-            nextButton.style.display = currentPhotoIndex === photos.length - 1 ? "none" : "flex";
-            Commentbtncont.style.justifyContent = photos.length > 1 ? (currentPhotoIndex === 1 ? "space-between" : (currentPhotoIndex === photos.length - 1 ? "flex-start" : "end")) : "space-between";
+                photos.forEach(function (photo, index) {
+                    var img = document.createElement('img');
+                    img.className = "lazy";
+                    img.src = photo.url;
+                    img.dataset.src = photo.url;
+                    img.style.display = index === currentPhotoIndex ? 'block' : 'none';
+                    CCLeft.appendChild(img);
+                });
+                LazyLoading(".lazy");
+                prevButton.style.display = currentPhotoIndex === 0 ? "none" : "flex";
+                nextButton.style.display = currentPhotoIndex === photos.length - 1 ? "none" : "flex";
+                Commentbtncont.style.justifyContent = photos.length > 1 ? (currentPhotoIndex === 1 ? "space-between" : (currentPhotoIndex === photos.length - 1 ? "flex-start" : "end")) : "space-between";
 
-            nextButton.addEventListener('click', showNextPhoto);
-            prevButton.addEventListener('click', showPrevPhoto);
+                nextButton.addEventListener('click', showNextPhoto);
+                prevButton.addEventListener('click', showPrevPhoto);
 
-        } else {
-            let NoImage = document.createElement('img');
-            NoImage.className= "NoImage";
-            NoImage.src = "https://ik.imagekit.io/b9bdd5j68/thinking-39.png";
+            } else {
+                let existingNoImage = CCLeft.querySelector('.NoImage');
+                let existingNoImageText = CCLeft.querySelector('.NoImageText');
+                if (existingNoImage) {
+                    CCLeft.removeChild(existingNoImage);
+                }
+                if (existingNoImageText) {
+                    CCLeft.removeChild(existingNoImageText);
+                }
 
-            CCLeft.style.width = "60%";
-            CCLeft.style.height = "60%";
+                let NoImage = document.createElement('img');
+                NoImage.className = "NoImage";
+                NoImage.src = "https://ik.imagekit.io/b9bdd5j68/thinking-39.png";
 
-            let NoImageText = document.createElement('span');
-            NoImageText.innerHTML = "No images found";
-            NoImageText.className= "NoImageText";
-            CCLeft.appendChild(NoImage);
-            CCLeft.appendChild(NoImageText);
-            nextButton.style.display = "none";
-            prevButton.style.display = "none";
-            CCRight1.style.borderRadius = "10px";
+                CCLeft.style.width = "60%";
+                CCLeft.style.height = "60%";
 
-        }
+                let NoImageText = document.createElement('span');
+                NoImageText.innerHTML = "No images found";
+                NoImageText.className = "NoImageText";
+                CCLeft.appendChild(NoImage);
+                CCLeft.appendChild(NoImageText);
+                nextButton.style.display = "none";
+                prevButton.style.display = "none";
+                CCRight1.style.borderRadius = "10px";
+            }
 
-        let account = result.accountInfo;
-        let postInfo = result.post;
-        let aTag = document.createElement('a');
-        let LoggedinID = currentUserId.getAttribute('data-userId');
+            let account = result.accountInfo;
+            let postInfo = result.post;
+            let aTag = document.createElement('a');
 
-        PostFullName.innerHTML = account.firstname + " " + account.lastname;
-        PostDate.innerHTML = postInfo.dateTime;
+            PostFullName.innerHTML = account.firstname + " " + account.lastname;
+            PostDate.innerHTML = postInfo.dateTime;
 
-        if(account.id == LoggedinID){
-            aTag.href =  "myprofile/" + account.id;
-        }
-        else{
-            aTag.href =  "profile/" + account.id;
-        }
-
-        if(account.profile_photo.indexOf("static")!== -1){
-            PostProfilePic.src = account.profile_photo;
-        }
-        else {
-            PostProfilePic.src = account.profile_photo + '/tr:q-100,tr:w-42,h-42';
-        }
-
-        PostCaption.innerText = result.post.caption;
-        aTag.appendChild(PostProfilePic);
-        CCRTLeft.appendChild(aTag);
-
-        CommentsSection.innerHTML = '';
-        if (result.comments.length > 0) {
-            result.comments.forEach(comment => {
-                CommentsTitle.style.display = "flex";
-
-                var commentDiv = document.createElement('div');
-                let commentTop = document.createElement('div');
-                let commentBottom = document.createElement('div');
-                let commentProf = document.createElement('img');
-                var commentName = document.createElement('p');
-                var commentContent = document.createElement('p');
-                let commmentDate = document.createElement('p');
-                let commentOptions = document.createElement('div');
-                let commentGlow = document.createElement('p');
-                let commentReply = document.createElement('p');
-                let totalComments = result.total_comments;
-
-                if(comment.profile_photo.indexOf("static")!== -1){
-                    commentProf.src = comment.profile_photo;
+            if (document.getElementById('currentUserId')) {
+                let LoggedinID = currentUserId.getAttribute('data-userId');
+                if (account.id == LoggedinID) {
+                    aTag.href = "myprofile/" + account.id;
+                    aTag.appendChild(PostProfilePic);
+                    CCRTLeft.appendChild(aTag);
                 }
                 else {
-                    commentProf.src = comment.profile_photo + '/tr:q-100,tr:w-42,h-42';
+                    aTag.href = "profile/" + account.id;
+                    aTag.appendChild(PostProfilePic);
+                    CCRTLeft.appendChild(aTag);
                 }
+            }
+            else {
+                aTag.href = "profile/" + account.id;
+                aTag.appendChild(PostProfilePic);
+                CCRTLeft.appendChild(aTag);
+            }
 
-                commentDiv.className = "commentDiv";
-                commentName.className = "commentName";
-                commentContent.className = "commentContent";
-                commentProf.className = "commentProf";
-                commentTop.className = "commentTop";
-                commentBottom.className = "commentBottom";
-                commmentDate.className = "commentDate";
-                commentOptions.className = "commentOptions";
+            if (account.profile_photo.indexOf("static") !== -1) {
+                PostProfilePic.src = account.profile_photo;
+            }
+            else {
+                PostProfilePic.src = account.profile_photo + '/tr:q-100,tr:w-42,h-42';
+            }
 
-                commentName.innerHTML = comment.firstname + " " + comment.lastname;
-                commentContent.innerHTML = comment.content;
-                commmentDate.innerHTML = comment.dateTime;
-                CTCounts.innerHTML = `&nbsp(${totalComments})`;
-                commentGlow.innerHTML = "glow";
-                commentReply.innerHTML = "reply";
+            PostCaption.innerText = result.post.caption;
 
-                commentTop.append(commentProf, commentName, commmentDate);
-                commentBottom.append(commentContent);
-                //commentOptions.append(commentGlow, commentReply);
-                commentDiv.append(commentTop, commentBottom, commentOptions);
-                CommentsSection.appendChild(commentDiv);
+            CommentsSection.innerHTML = '';
+            if (result.comments.length > 0) {
+                result.comments.forEach(comment => {
+                    CommentsTitle.style.display = "flex";
+
+                    var commentDiv = document.createElement('div');
+                    let commentTop = document.createElement('div');
+                    let commentBottom = document.createElement('div');
+                    let commentProf = document.createElement('img');
+                    var commentName = document.createElement('p');
+                    var commentContent = document.createElement('p');
+                    let commmentDate = document.createElement('p');
+                    let commentOptions = document.createElement('div');
+                    let commentGlow = document.createElement('p');
+                    let commentReply = document.createElement('p');
+                    let commentATag = document.createElement('a');
+                    let totalComments = result.total_comments;
+
+                    if (document.getElementById('currentUserId')) {
+                        let LoggedinID = currentUserId.getAttribute('data-userId');
+                        if (comment.id == LoggedinID) {
+                            commentATag.href = "myprofile/" + comment.id;
+                            commentATag.appendChild(commentProf);
+                        }
+                        else {
+                            commentATag.href = "profile/" + comment.id;
+                            commentATag.appendChild(commentProf);
+                        }
+                    }
+                    else {
+                        commentATag.href = "profile/" + comment.id;
+                        commentATag.appendChild(commentProf);
+                    }
+
+                    if (comment.profile_photo.indexOf("static") !== -1) {
+                        commentProf.src = comment.profile_photo;
+                    }
+                    else {
+                        commentProf.src = comment.profile_photo + '/tr:q-100,tr:w-42,h-42';
+                    }
+
+                    commentDiv.className = "commentDiv";
+                    commentName.className = "commentName";
+                    commentContent.className = "commentContent";
+                    commentProf.className = "commentProf";
+                    commentTop.className = "commentTop";
+                    commentBottom.className = "commentBottom";
+                    commmentDate.className = "commentDate";
+                    commentOptions.className = "commentOptions";
+
+                    commentName.innerHTML = comment.firstname + " " + comment.lastname;
+                    commentContent.innerHTML = comment.content;
+                    commmentDate.innerHTML = comment.dateTime;
+                    CTCounts.innerHTML = `&nbsp(${totalComments})`;
+                    commentGlow.innerHTML = "glow";
+                    commentReply.innerHTML = "reply";
+
+                    commentTop.append(commentATag, commentName, commmentDate);
+                    commentBottom.append(commentContent);
+                    //commentOptions.append(commentGlow, commentReply);
+                    commentDiv.append(commentTop, commentBottom, commentOptions);
+                    CommentsSection.appendChild(commentDiv);
 
 
-            });
-        } else {
-            var noCommentsMessage = document.createElement('p');
-            noCommentsMessage.className = "noCommentsMessage";
-            CommentsTitle.style.display = "none";
-            noCommentsMessage.style.display = "flex";
-            noCommentsMessage.style.height = "3rem";
-            noCommentsMessage.style.justifyContent = "center";
-            noCommentsMessage.textContent = "No comments";
-            CommentsSection.appendChild(noCommentsMessage);
-        }
-    })
-    .catch(error => {
-        console.error('Error fetching data:', error);
-    });
+                });
+            } else {
+                CommentsTitle.style.display = "none";
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
 
 
     function showNextPhoto() {
