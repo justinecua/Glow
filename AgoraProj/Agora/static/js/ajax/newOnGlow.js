@@ -12,30 +12,35 @@ export function fetchNewUsers(loginObject) {
         result.accounts.forEach((account) => {
             let DynamicProf;
 
-            if (account.account__profile_photo.indexOf("static") !== -1) {
+            if (account.account__profile_photo && account.account__profile_photo.indexOf("static") !== -1) {
                 DynamicProf = account.account__profile_photo;
-
-                let NewProfParent = document.createElement('div');
-                NewProfParent.className = "NewProfParent";
-                let NewProf = document.createElement('img');
-                NewProf.className = "NewProf";
-                NewProf.src = DynamicProf;
-                NewProfParent.appendChild(NewProf);
-                NRMContents.appendChild(NewProfParent);
-
-            } else {
+            } 
+            else if (account.account__profile_photo) {
                 DynamicProf = account.account__profile_photo + "/tr:w-42,h-42";
-
-                let NewProfParent = document.createElement('div');
-                NewProfParent.className = "NewProfParent";
-                let NewProf = document.createElement('img');
-                NewProf.className = "NewProf";
-                NewProf.src = DynamicProf;
-                NewProfParent.appendChild(NewProf);
-                NRMContents.appendChild(NewProfParent);
-
-
+            } 
+            else {
+                DynamicProf = "static/images/photos-icon.png";
             }
+
+            let NewProfParent = document.createElement('div');
+            NewProfParent.className = "NewProfParent";
+
+            let NewProf = document.createElement('img');
+            let NewProfName = document.createElement('p');
+
+            NewProf.className = "NewProf";
+            NewProfName.className = "NewProfName";
+            NewProfName.innerHTML = account.account__firstname;
+            NewProf.src = DynamicProf;
+
+
+            NewProf.onerror = function() {
+                NewProf.src = "static/images/photos-icon.png";
+            };
+
+            NewProfParent.append(NewProf);
+
+            NRMContents.appendChild(NewProfParent);
         });
     })
     .catch(error => {

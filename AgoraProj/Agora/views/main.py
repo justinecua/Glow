@@ -425,21 +425,16 @@ def FetchForYou(request):
 
 def fetchNewUsers(request):
     try:
-        now = timezone.now()
-        two_months_ago = now - timedelta(days=180)
-        start_of_last_two_months = two_months_ago.replace(day=1)
-        end_of_last_two_months = now.replace(day=1) - timedelta(days=1)
-
+        two_months_ago = timezone.now() - timedelta(days=190)
+ 
         users = User.objects.filter(
-            date_joined__gte=start_of_last_two_months,
-            date_joined__lte=end_of_last_two_months
-        ).select_related('account').order_by('-date_joined').values(
+            date_joined__gte=two_months_ago
+        ).order_by('-date_joined').values(
             'account__profile_photo',
             'username',
             'account__firstname',
             'account__lastname',
-        )[:25]
-
+        )[:25]        
         accounts = list(users)
 
         return JsonResponse({'status': 'success', 'accounts': accounts})
