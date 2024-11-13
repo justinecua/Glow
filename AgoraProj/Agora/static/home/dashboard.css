@@ -468,6 +468,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 48rem;
 }
 
@@ -737,10 +738,11 @@ input:focus-visible+.slider {
   height: 3.5rem;
   position: fixed;
   z-index: 1;
+  position: fixed;
 }
 
 .Center-Top {
-  width: 37.5rem;
+
   height: 100%;
   display: flex;
   font-family: "Work Sans", sans-serif;
@@ -755,14 +757,12 @@ input:focus-visible+.slider {
 }
 
 .Center-Top2 {
-  width: 32%;
   height: 3.7rem;
 }
 
 
 .Center-Top3 {
   display: none;
-  width: 32%;
   justify-content: center;
   align-items: center;
   margin-top: 4rem;
@@ -3515,7 +3515,7 @@ input:focus-visible+.slider {
   border-radius: 50%;
 }
 
-.CCRT-Right{
+.CCRT-Right {
   display: flex;
 }
 
@@ -3565,7 +3565,7 @@ input:focus-visible+.slider {
   margin-left: 0.7rem;
 }
 
-.CCRT-Right a{
+.CCRT-Right a {
   text-decoration: none;
   color: var(--font-color);
 }
@@ -4457,6 +4457,7 @@ input:focus-visible+.slider {
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  width: 19rem;
 }
 
 #For-You p,
@@ -5368,7 +5369,6 @@ footer img {
 
 @media (max-width: 690px) {
 
-
   .responsive {
     max-width: 500px;
   }
@@ -5550,6 +5550,9 @@ footer img {
 
 @media (max-width: 670px) {
 
+  .Center-Top2 {
+    height: 58rem;
+  }
 
   .responsive {
     max-width: 500px;
@@ -5731,6 +5734,10 @@ footer img {
 }
 
 @media (max-width: 600px) {
+
+  .Center-Top2 {
+    height: 53.5rem;
+  }
 
   .responsive {
     max-width: 500px;

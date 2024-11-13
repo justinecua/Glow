@@ -4,6 +4,7 @@ import { getPost } from "./show-comments-images.js";
 let NCenterContent = document.querySelector('.NCenter-content');
 let PostContainer = document.querySelector('.Post-Container');
 let CenterTop3 = document.querySelector('.Center-Top3');
+let CenterTop2 = document.querySelector('.Center-Top2');
 let Bottomloadingposts = document.getElementById('Bottom-loading-posts');
 let fetchedPostIds = new Set();
 export let loading = false;
@@ -20,6 +21,7 @@ function hideLoading() {
 }
 
 export function fetchForYou() {
+
     if (loading) return;
     loading = true;
     displayLoading();

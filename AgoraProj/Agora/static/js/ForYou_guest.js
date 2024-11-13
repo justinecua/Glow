@@ -57,6 +57,7 @@ function handleFollowingClick() {
 function handleScroll() {
     checkScroll();
     fetchMoreIfAllPostsInView();
+
 }
 
 function fetchMoreIfAllPostsInView() {
