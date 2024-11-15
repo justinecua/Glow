@@ -323,105 +323,65 @@ def handle_media(request):
     return JsonResponse({"status": "error", "message": "Only POST method is accepted"})
 
 
+from django.db.models import Count, Exists, OuterRef
+
 def FetchForYou(request):
-    if request.user.is_authenticated:
+    try:
+        posts_query = Post.objects.annotate(
+            tag_count=Count('tags'),  
+            comment_count=Count('comment'),
+            glows_count=Count('glow'),
+        ).select_related('account', 'account__auth_user')
+
+        if request.user.is_authenticated:
+            posts_query = posts_query.annotate(
+                has_liked=Exists(Glow.objects.filter(post=OuterRef('pk'), account__auth_user=request.user))
+            )
+        else:
+            posts_query = posts_query.annotate(
+                has_liked=Exists(Glow.objects.filter(post=OuterRef('pk'), account=None))  
+            )
+
+        posts_query = posts_query.order_by('-dateTime')
+
+        paginator = Paginator(posts_query, 5)
+        page_number = request.GET.get('page')
         try:
-            accounts = Account.objects.all()
-            posts_with_accounts = []
+            paginated_posts = paginator.page(page_number)
+        except PageNotAnInteger:
+            paginated_posts = paginator.page(1)
+        except EmptyPage:
+            paginated_posts = paginator.page(paginator.num_pages)
 
-            for account in accounts:
-                posts = Post.objects.filter(account=account)
-                posts_with_accounts.extend(posts)
+        posts_data = []
+        for post in paginated_posts:
+            tags = list(post.tags.values('id', 'tag'))  
+            photos = list(Photo.objects.filter(post=post).values())
+            post_data = {
+                'id': post.id,
+                'account': {
+                    'id': post.account.id,
+                    'firstname': post.account.firstname,
+                    'profile_photo': post.account.profile_photo,
+                    'username': post.account.auth_user.username
+                },
+                'caption': post.caption,
+                'dateTime': post.dateTime.isoformat(),
+                'time_ago': time_ago(post.dateTime),
+                'tags': tags,  
+                'comment_count': post.comment_count,
+                'glows_count': post.glows_count,
+                'has_liked': post.has_liked,
+                'photos': photos
+            }
+            posts_data.append(post_data)
 
-            posts_with_accounts.sort(key=lambda x: x.dateTime, reverse=True)
+        return JsonResponse({'status': 'success', 'posts': posts_data})
 
-            paginator = Paginator(posts_with_accounts, 5)
-            page_number = request.GET.get('page')
-            try:
-                posts_with_accounts = paginator.page(page_number)
-            except PageNotAnInteger:
-                posts_with_accounts = paginator.page(1)
-            except EmptyPage:
-                posts_with_accounts = paginator.page(paginator.num_pages)
+    except Exception as e:
+        print(f"Error fetching posts: {e}")
+        return JsonResponse({'status': 'error', 'message': str(e)})
 
-            posts_data = []
-            for post in posts_with_accounts:
-                tags = list(Tag.objects.filter(post=post).values('id', 'tag'))
-                comment_count = Comment.objects.filter(post=post).count()
-                glows_count = Glow.objects.filter(post=post).count()
-                has_liked = Glow.objects.filter(post=post, account__auth_user=request.user).exists()
-                photos = list(Photo.objects.filter(post=post).values())
-                post_data = {
-                    'id': post.id,
-                    'account': {
-                        'id': post.account.id,
-                        'firstname': post.account.firstname,
-                        'profile_photo': post.account.profile_photo,
-                        'username': post.account.auth_user.username
-                    },
-                    'caption': post.caption,
-                    'dateTime': post.dateTime.isoformat(),
-                    'time_ago': time_ago(post.dateTime),
-                    'tags': tags,
-                    'comment_count': comment_count,
-                    'glows_count': glows_count,
-                    'has_liked': has_liked,
-                    'photos': photos
-                }
-                posts_data.append(post_data)
-
-            return JsonResponse({'status': 'success', 'posts': posts_data})
-        except Exception as e:
-            print(f"Error fetching posts: {e}")
-            return JsonResponse({'status': 'error', 'message': str(e)})
-    else:
-        try:
-            accounts = Account.objects.all()
-            posts_with_accounts = []
-
-            for account in accounts:
-                posts = Post.objects.filter(account=account)
-                posts_with_accounts.extend(posts)
-
-            posts_with_accounts.sort(key=lambda x: x.dateTime, reverse=True)
-
-            paginator = Paginator(posts_with_accounts, 5)
-            page_number = request.GET.get('page')
-            try:
-                posts_with_accounts = paginator.page(page_number)
-            except PageNotAnInteger:
-                posts_with_accounts = paginator.page(1)
-            except EmptyPage:
-                posts_with_accounts = paginator.page(paginator.num_pages)
-
-            posts_data = []
-            for post in posts_with_accounts:
-                tags = list(Tag.objects.filter(post=post).values('id', 'tag'))
-                comment_count = Comment.objects.filter(post=post).count()
-                glows_count = Glow.objects.filter(post=post).count()
-                photos = list(Photo.objects.filter(post=post).values())
-                post_data = {
-                    'id': post.id,
-                    'account': {
-                        'id': post.account.id,
-                        'firstname': post.account.firstname,
-                        'profile_photo': post.account.profile_photo,
-                        'username': post.account.auth_user.username
-                    },
-                    'caption': post.caption,
-                    'dateTime': post.dateTime.isoformat(),
-                    'time_ago': time_ago(post.dateTime),
-                    'tags': tags,
-                    'comment_count': comment_count,
-                    'glows_count': glows_count,
-                    'photos': photos
-                }
-                posts_data.append(post_data)
-
-            return JsonResponse({'status': 'success', 'posts': posts_data})
-        except Exception as e:
-            print(f"Error fetching posts: {e}")
-            return JsonResponse({'status': 'error', 'message': str(e)})
 
 def fetchNewUsers(request):
     try:

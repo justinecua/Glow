@@ -1,6 +1,7 @@
 from django.urls import path, re_path
 from . import views
 from .views import deletePost
+from .views import getrandomPosts
 from .views import (
     CustomPasswordResetView,
     CustomPasswordResetDoneView,
@@ -52,8 +53,10 @@ urlpatterns = [
     re_path(r'^myprofile/deletePost/(?P<id>\d+)/$', deletePost, name='deletePost'),
     re_path(r'^capture-event/$', views.capture_event, name='capture-event'),
     re_path(r'^myprofile/sendNewProfile/$', views.sendNewProfile, name='sendNewProfile'),
+    re_path(r'^myprofile/sendNewCover/$', views.sendNewCover, name='sendNewCover'), 
+    re_path(r'^getrandomPosts/', getrandomPosts.as_view(), name='getrandomPosts'),
+    
     #-----------------------------------------Justine------------------------------------------------
-    re_path(r'^myprofile/sendNewCover/$', views.sendNewCover, name='sendNewCover'),
 
 
 

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'imagekit',
+    'rest_framework',
 ]
 
 
@@ -110,11 +111,16 @@ DATABASES = {
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT')
+        'PORT': config('DB_PORT', cast=int),
+        'OPTIONS': {
+            'compress': True,
+            'charset': 'utf8mb4',
+        },
     }
 }
 
 """
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

@@ -3,8 +3,8 @@ from .models import Account, Audience, Post, Photo, Video, Tag, Friend, Notifica
 
 class AccountAdmin(admin.ModelAdmin):
     list_display = (
-        'firstname', 'lastname', 'gender', 'Age', 'Birthday', 'bio', 
-        'UIAppearance', 'cover_photo', 'profile_photo', 'auth_user', 
+        'firstname', 'lastname', 'gender', 'age', 'birthday', 'bio', 
+        'ui_appearance', 'cover_photo', 'profile_photo', 'auth_user', 
         'last_activity', 'is_online_display'
     )
     
