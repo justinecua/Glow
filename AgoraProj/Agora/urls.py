@@ -2,6 +2,8 @@ from django.urls import path, re_path
 from . import views
 from .views import deletePost
 from .views import getrandomPosts
+from .views import SignupView
+
 from .views import (
     CustomPasswordResetView,
     CustomPasswordResetDoneView,
@@ -55,7 +57,7 @@ urlpatterns = [
     re_path(r'^myprofile/sendNewProfile/$', views.sendNewProfile, name='sendNewProfile'),
     re_path(r'^myprofile/sendNewCover/$', views.sendNewCover, name='sendNewCover'), 
     re_path(r'^getrandomPosts/', getrandomPosts.as_view(), name='getrandomPosts'),
-    
+    re_path(r'^signupApi/', SignupView.as_view(), name='signupApi'), 
     #-----------------------------------------Justine------------------------------------------------
 
 
