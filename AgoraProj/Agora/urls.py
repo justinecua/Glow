@@ -2,6 +2,7 @@ from django.urls import path, re_path
 from . import views
 from .views import deletePost
 from .views import getrandomPosts
+from .views import loginApi
 from .views import SignupView
 
 from .views import (
@@ -59,7 +60,7 @@ urlpatterns = [
     re_path(r'^getrandomPosts/', getrandomPosts.as_view(), name='getrandomPosts'),
     re_path(r'^signupApi/', SignupView.as_view(), name='signupApi'), 
     #-----------------------------------------Justine------------------------------------------------
-
+    re_path(r'^loginApi/', views.loginApi, name='loginApi'),
 
 
 

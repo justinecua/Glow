@@ -77,3 +77,48 @@ class SignupView(APIView):
         
         return Response({"message": "Authentication failed."}, status=status.HTTP_400_BAD_REQUEST)
 
+from django.contrib.auth import authenticate, login
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view
+from rest_framework.permissions import AllowAny
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+import json
+from django.utils.timezone import now
+
+@csrf_exempt
+@api_view(['POST'])
+def loginApi(request):
+    """
+    Login API endpoint for validating users
+    """
+    try:
+        data = request.data
+        email = data.get('email')
+        password = data.get('password')
+
+        if not email or not password:
+            return Response({"status": "error", "message": "Email and Password are required."},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        user = authenticate(email=email, password=password)
+        if user:
+            login(request, user)
+
+            # Update Account model or create if it doesn't exist
+            account, _ = Account.objects.get_or_create(auth_user=user)
+            account.is_online = True
+            account.last_activity = now()
+            account.save()
+
+            return Response({"status": "success", "message": "Login successful", "redirect": "/dashboard"},
+                            status=status.HTTP_200_OK)
+        else:
+            return Response({"status": "error", "message": "Invalid email or password."},
+                            status=status.HTTP_401_UNAUTHORIZED)
+    except Exception as e:
+        return Response({"status": "error", "message": str(e)},
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
