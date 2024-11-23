@@ -92,7 +92,7 @@ from django.utils.timezone import now
 @api_view(['POST'])
 def loginApi(request):
     """
-    Login API endpoint for validating users
+    Login API endpoint for validating users.
     """
     try:
         data = request.data
@@ -100,8 +100,10 @@ def loginApi(request):
         password = data.get('password')
 
         if not email or not password:
-            return Response({"status": "error", "message": "Email and Password are required."},
-                            status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"status": "error", "message": "Email and Password are required."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         user = authenticate(email=email, password=password)
         if user:
@@ -113,12 +115,26 @@ def loginApi(request):
             account.last_activity = now()
             account.save()
 
-            return Response({"status": "success", "message": "Login successful", "redirect": "/dashboard"},
-                            status=status.HTTP_200_OK)
+            return Response(
+                {
+                    "status": "success",
+                    "message": "Login successful",
+                    "user": {
+                        "email": user.email,
+                        "username": user.username,
+                        # Add any additional user details you wish to include
+                    },
+                },
+                status=status.HTTP_200_OK
+            )
         else:
-            return Response({"status": "error", "message": "Invalid email or password."},
-                            status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                {"status": "error", "message": "Invalid email or password."},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
     except Exception as e:
-        return Response({"status": "error", "message": str(e)},
-                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(
+            {"status": "error", "message": f"An error occurred: {str(e)}"},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
