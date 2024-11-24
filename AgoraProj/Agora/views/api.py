@@ -77,64 +77,73 @@ class SignupView(APIView):
         
         return Response({"message": "Authentication failed."}, status=status.HTTP_400_BAD_REQUEST)
 
-from django.contrib.auth import authenticate, login
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view
-from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
-import json
+from rest_framework.permissions import AllowAny
 from django.utils.timezone import now
+from rest_framework import status
 
-@csrf_exempt
-@api_view(['POST'])
-def loginApi(request):
+class LoginApiView(APIView):
     """
     Login API endpoint for validating users.
     """
-    try:
-        data = request.data
-        email = data.get('email')
-        password = data.get('password')
+    permission_classes = [AllowAny]  # Allow anyone to access this endpoint
 
-        if not email or not password:
-            return Response(
-                {"status": "error", "message": "Email and Password are required."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        user = authenticate(email=email, password=password)
-        if user:
-            login(request, user)
-
-            # Update Account model or create if it doesn't exist
-            account, _ = Account.objects.get_or_create(auth_user=user)
-            account.is_online = True
-            account.last_activity = now()
-            account.save()
-
-            return Response(
-                {
-                    "status": "success",
-                    "message": "Login successful",
-                    "user": {
-                        "email": user.email,
-                        "username": user.username,
-                        # Add any additional user details you wish to include
-                    },
-                },
-                status=status.HTTP_200_OK
-            )
-        else:
-            return Response(
-                {"status": "error", "message": "Invalid email or password."},
-                status=status.HTTP_401_UNAUTHORIZED
-            )
-    except Exception as e:
+    def get(self, request, *args, **kwargs):
+        """
+        Allow GET requests for testing or informational purposes.
+        """
         return Response(
-            {"status": "error", "message": f"An error occurred: {str(e)}"},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            {"message": "This is the login endpoint. Use POST to log in."},
+            status=status.HTTP_200_OK
         )
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests for user login.
+        """
+        try:
+            data = request.data
+            email = data.get('email')
+            password = data.get('password')
+
+            if not email or not password:
+                return Response(
+                    {"status": "error", "message": "Email and Password are required."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Authenticate user
+            user = authenticate(username=email, password=password)  # Assuming email is used as username
+            if user:
+                login(request, user)
+
+                # Update Account model or create if it doesn't exist
+                account, _ = Account.objects.get_or_create(auth_user=user)
+                account.is_online = True
+                account.last_activity = now()
+                account.save()
+
+                return Response(
+                    {
+                        "status": "success",
+                        "message": "Login successful",
+                        "user": {
+                            "email": user.email,
+                            "username": user.username,
+                            # Add any additional user details you wish to include
+                        },
+                    },
+                    status=status.HTTP_200_OK
+                )
+            else:
+                return Response(
+                    {"status": "error", "message": "Invalid email or password."},
+                    status=status.HTTP_401_UNAUTHORIZED
+                )
+        except Exception as e:
+            return Response(
+                {"status": "error", "message": f"An error occurred: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
