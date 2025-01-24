@@ -9,6 +9,7 @@ export function fetchNewUsers(loginObject) {
     })
     .then(response => response.json())
     .then(result => {
+        console.log(result.accounts);
         result.accounts.forEach((account) => {
             let DynamicProf;
 

@@ -4,10 +4,12 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'home/see-all-photos-myProfile.css' %}">
 <script type="module" src="{% static 'js/toggle.js' %}"></script>
 <script type="module" src="{% static 'js/logout.js' %}"></script>
 <script type="module" src="{% static 'js/audience.js' %}"></script>
 <script type="module" src="{% static 'js/userpost-options.js' %}"></script>
+<script type="module" src="{% static 'js/modal/see-all-photos-myProfile.js' %}"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
@@ -21,6 +23,8 @@
 {% include "modal/edit-post.html" %}
 {% include "modal/change-profile.html" %}
 {% include "modal/change-coverphoto.html" %}
+
+        {% include "modal/seeAllPhotosMyProfile.html" %}
 
 <div id="Comment-Overlay">
 
@@ -255,7 +259,7 @@
         <div class="RP-PhotosTitle">
             {% if randomaccount %}
             <p>{{ total_photos_count }} Recent Photos</p>
-            <span>See all</span>
+            <span id="SAP-MyProfile">See all</span>
             {% endif %}
         </div>
 
@@ -533,6 +537,8 @@
     }
 
     LazyLoading(".lazy");
+
+    
 </script>
 
 

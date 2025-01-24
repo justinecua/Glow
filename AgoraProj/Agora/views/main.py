@@ -385,7 +385,7 @@ def FetchForYou(request):
 
 def fetchNewUsers(request):
     try:
-        two_months_ago = timezone.now() - timedelta(days=190)
+        two_months_ago = timezone.now() - timedelta(days=900)
  
         users = User.objects.filter(
             date_joined__gte=two_months_ago
@@ -534,7 +534,7 @@ def UserProfile(request, id):
         'unique_acc_who_glowed': unique_acc_who_glowed,
         'account_profile': accID.profile_photo,
         'account_coverphoto': accID.cover_photo,
-    }
+    }# Print the URL of each photo
 
     return render(request, 'user-profile.html', context)
 
