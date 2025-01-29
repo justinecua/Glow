@@ -512,6 +512,11 @@ def UserProfile(request, id):
         else:
             posts_without_photos[post] = post_info
 
+    photos = []
+    for post in posts:
+        for photo in Photo.objects.filter(post=post):  # Directly get photos related to post
+            photos.append(photo)
+
     context = {
         'randomaccount': otherAccount,
         'friendship_is_pending': friendship_is_pending,
@@ -534,7 +539,8 @@ def UserProfile(request, id):
         'unique_acc_who_glowed': unique_acc_who_glowed,
         'account_profile': accID.profile_photo,
         'account_coverphoto': accID.cover_photo,
-    }# Print the URL of each photo
+        'photos': photos,
+        }
 
     return render(request, 'user-profile.html', context)
 

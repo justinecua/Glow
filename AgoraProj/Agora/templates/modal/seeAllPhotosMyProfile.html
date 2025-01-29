@@ -1,32 +1,25 @@
 {% block modal %}
-
-<div id="SeeAllModalPhoto-Overlay">
+<div id="SeeAllModalPhoto-Overlay" style="display: none;">
     <div id="SeeAllModalPhoto-Container">
-        <!-- Image Wrapper with navigation buttons -->
-        <div id="modalImageWrapper">
-            <button id="prevButton" class="modalButton">Prev</button>
-            <img id="modalImage" src="{{ photos.0.link }}" alt="Image" />
-            <button id="nextButton" class="modalButton">Next</button>
-        </div>
 
-        <!-- Render the photos directly inside the modal -->
+	    <button id="prevButton" class="modalButton"><</button>
+        <div id="modalImageWrapper">
+            <img id="modalImage" src="" alt="Image" />
+        </div>
         <div id="photosContainer">
-            {% for post, post_info in posts.posts_with_photos.items %}
-                {% for photo in post_info.photos %}
-                    <img class="photo-thumbnail" src="{{ photo.link }}" alt="Photo" />
-                {% endfor %}
+            {% for photo in photos %}
+                <img class="photo-thumbnail" src="{{ photo.link }}" alt="Photo" data-index="{{ forloop.counter0 }}" style="display:none" />
             {% endfor %}
         </div>
 
-        {% if not posts.posts_with_photos %}
-        <div class="NCU-NoPhotos">
-            <img src="../static/images/No-Product--Streamline-Tokyo (1).png" alt="">
-            <span>{{ randomaccount.firstname }} has no photos</span>
-        </div>
+        {% if not photos %}
+            <div class="NCU-NoPhotos">
+                <img src="../static/images/No-Product--Streamline-Tokyo (1).png" alt="">
+                <span>{{ randomaccount.firstname }} has no photos</span>
+            </div>
         {% endif %}
+
+	<button id="nextButton" class="modalButton">></button>
     </div>
 </div>
-
-
-
 {% endblock %}

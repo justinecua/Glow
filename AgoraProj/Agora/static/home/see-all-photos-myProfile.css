@@ -1,3 +1,73 @@
+[data-theme="dark"] {
+  --bg-color: #0D0D0F;
+  --color: white;
+  --accent-1: #111;
+  --accent-2: #999;
+  --icon-filter: brightness(0.5) invert(0.8);
+  --icon-filter2: brightness(0) invert(1);
+  --link-color: white;
+  --nav-color: #15161A;
+  --border-color: 1px solid #1d2532;
+  --input-create-post: #1C1E29;
+  --glow-color: #0058ca;
+  --audience-arrow-color: 5px solid#ffff;
+  --hover-elements: #3b3e4544;
+  --glow-button: #0058ca;
+  --top-nav-color: #1C1E29;
+  --text-color: #BABABA;
+  --text-color2: #acacaf;
+  --text-color3: #949191;
+  --tool-tip-bgcolor: #6961FF;
+  --tool-tip-color: #ffff;
+  --login-border-color: #545a63;
+  --button-hover: #1c1f32;
+  --input-signup-icon-filter: invert(0);
+  --button-hover2: #247aeb;
+  --friend-title: #898789;
+  --TopNavHover: #272a42;
+  --messageBg: #1C1E29;
+  --font-color: #ffffff;
+  --bg-ChangeCoverBtn: #05152e89;
+  --bg-ChangeCoverBtnHover: #05152eb8;
+  --seperator: #212124;
+  --commentContent: #757575;
+  --commentDate: #abb9c1;
+}
+
+[data-theme="light"] {
+  --bg-color: #f6f6f9;
+  --color: black;
+  --accent-1: #EAEAEA;
+  --accent-2: #333;
+  --icon-filter: none;
+  --link-color: black;
+  --nav-color: #ffff;
+  --border-color: 1px solid #e5e4e4;
+  --input-create-post: #ececec;
+  --glow-color: #0058ca;
+  --audience-arrow-color: 5px solid black;
+  --hover-elements: #ebebeb;
+  --glow-button: #0058ca;
+  --top-nav-color: #edf3fc;
+  --text-color: #373131;
+  --text-color2: #595656;
+  --text-color3: #6f6f74;
+  --tool-tip-bgcolor: #6961FF;
+  --tool-tip-color: #ffff;
+  --login-border-color: #7c7c7c;
+  --button-hover: #e5e7ea;
+  --input-signup-icon-filter: invert(1);
+  --button-hover2: #247aeb;
+  --friend-title: #898789;
+  --TopNavHover: #d6d6d6;
+  --messageBg: #EBEFFE;
+  --font-color: #000000;
+  --bg-ChangeCoverBtn: #eef1f699;
+  --bg-ChangeCoverBtnHover: #eef1f6c9;
+  --seperator: #dcdcdc;
+  --commentContent: #757575;
+  --commentDate: #abb9c1;
+}
 
 #SeeAllModalPhoto-Overlay {
     width: 100vw;
@@ -7,13 +77,57 @@
     position: fixed;
     display: none;
     backdrop-filter: blur(2px);
+
   }
   
   #SeeAllModalPhoto-Container {
     display: flex;
     margin: auto;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-    width: 27%;
-    background-color: var(--nav-color);
+    width: auto;
+    background-color: #24262aa7;
     border-radius: 10px;
+    height: 90%;
   }
+
+  #modalImageWrapper{
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  #modalImage{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .modalButton{
+    position: absolute;
+    background-color: var(--nav-color);
+    color: var(--Prof-FriendTitle);
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .modalButton:hover{
+    background-color: var(--TopNavHover);
+  }
+
+  #prevButton{
+    top: 50%;
+    left: 0;
+    margin-left: 2%;
+    border: none;
+    padding: 0.8rem 1rem;
+    border-radius: 50%;
+   }
+   
+  #nextButton{
+    padding: 0.8rem 1rem;
+    top: 50%;
+    right: 0;
+    border: none;
+    margin-right: 2%;
+    border-radius: 50%;
+   }

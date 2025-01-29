@@ -9,4 +9,4 @@ AgoraProj/db.sqlite3
 .vscode/
 vercel.json
 requirements.txt
-
+env/

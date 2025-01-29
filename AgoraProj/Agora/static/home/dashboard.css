@@ -6691,3 +6691,9 @@ footer img {
   background-color: var(--button-hover);
   cursor: pointer;
 }
+
+#SAP-MyProfile:hover{
+  color: var(--button-hover2);
+  cursor: pointer;
+  font-weight: 600;
+}

@@ -1,46 +1,52 @@
 let SAPMyProfile = document.getElementById('SAP-MyProfile');
 let SeeAllModalPhotoOverlay = document.getElementById('SeeAllModalPhoto-Overlay');
-
-// Event listener for showing the modal
-SAPMyProfile.addEventListener('click', function(){
-    SeeAllModalPhotoOverlay.style.display = "flex";
-});
-
-// Select the modal image and navigation buttons
-const modalImage = document.getElementById('modalImage');
-const prevButton = document.getElementById('prevButton');
-const nextButton = document.getElementById('nextButton');
-
-// Get all photo thumbnails from the DOM
-const photoThumbnails = document.querySelectorAll('#photosContainer .photo-thumbnail');
-
-// Initialize the current photo index
+let modalImage = document.getElementById('modalImage');
+let prevButton = document.getElementById('prevButton');
+let nextButton = document.getElementById('nextButton');
+let photoThumbnails = document.querySelectorAll('#photosContainer img.photo-thumbnail');
 let currentIndex = 0;
 
-// Function to update the displayed image
+SAPMyProfile.addEventListener('click', function() {
+    SeeAllModalPhotoOverlay.style.display = "flex";
+    currentIndex = 0;
+    updateImage();
+});
+
 function updateImage() {
-    modalImage.src = photoThumbnails[currentIndex].src;  // Update the src of the modal image
+    photoThumbnails.forEach((thumbnail, index) => {
+        if (index === currentIndex) {
+            modalImage.src = thumbnail.src;
+        }
+    });
 }
 
-// Event listener for Prev button
 prevButton.addEventListener('click', () => {
-    if (currentIndex > 0) {
-        currentIndex--;
-    } else {
-        currentIndex = photoThumbnails.length - 1; // Loop back to the last image
+    currentIndex--;
+    if (currentIndex < 0) {
+        currentIndex = photoThumbnails.length - 1;
     }
     updateImage();
 });
 
-// Event listener for Next button
 nextButton.addEventListener('click', () => {
-    if (currentIndex < photoThumbnails.length - 1) {
-        currentIndex++;
-    } else {
-        currentIndex = 0; // Loop back to the first image
+    currentIndex++;
+    if (currentIndex >= photoThumbnails.length) {
+        currentIndex = 0;
     }
     updateImage();
 });
 
-// Initially display the first image when the modal is shown
-updateImage();
+SeeAllModalPhotoOverlay.addEventListener('click', (event) => {
+    if (event.target === SeeAllModalPhotoOverlay) {
+        SeeAllModalPhotoOverlay.style.display = 'none';
+    }
+});
+
+photoThumbnails.forEach((thumbnail, index) => {
+    thumbnail.addEventListener('click', () => {
+        currentIndex = index;
+        updateImage();
+    });
+});
+
+
