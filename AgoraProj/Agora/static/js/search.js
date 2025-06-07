@@ -3,15 +3,15 @@
     let GlobalSearch = document.querySelector('.GlobalSearch');
     let SearchResultsContainer = document.querySelector('.Search-Results-Container');
     let ClearButton = document.getElementById('ClearButton');
-    
+
     import { SearchResults } from './ajax/search.js';
-    
+
     GlobalSearch.addEventListener('input', function(){
         let searchInfo = GlobalSearch.value;
         if(GlobalSearch.value.length >= 2){
             SearchResultsContainer.style.display = "flex";
             ClearButton.style.display = "flex";
-            SearchResults(searchInfo); 
+            SearchResults(searchInfo);
         }
         else{
             SearchResultsContainer.style.display = "none";
@@ -19,10 +19,10 @@
             SearchResultsContainer.innerHTML = '';
         }
     });
-    
+
     ClearButton.addEventListener('click', function(){
-        GlobalSearch.value = ''; 
-        SearchResultsContainer.style.display = "none"; 
+        GlobalSearch.value = '';
+        SearchResultsContainer.style.display = "none";
         ClearButton.style.display = "none";
         SearchResultsContainer.innerHTML = '';
     });
@@ -39,7 +39,7 @@ let SaveEditProfile = document.getElementById('Save-EditProfile');
 let EditMyProfile = document.getElementById('Edit-MyProfile');
 let EditProfileOverlay = document.getElementById('EditProfile-Overlay');
 let EditProfileObject = '';
-import { SendEditProfile } from './ajax/send-editprofile.js';  
+import { SendEditProfile } from './ajax/send-editprofile.js';
 
 const { AddCoverPhoto, getCoverPhoto } = await import ("./modal/add-coverphoto.js");
 const { AddProfilePhoto, getProfilePhoto } = await import ("./modal/add-profile-photo.js");

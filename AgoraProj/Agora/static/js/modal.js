@@ -1,109 +1,107 @@
-
-import { SendPost } from './ajax/send-post.js';
-import { SendEditProfile } from './ajax/send-editprofile.js';
+import { SendPost } from "./ajax/send-post.js";
+import { SendEditProfile } from "./ajax/send-editprofile.js";
 import { AcceptFriend } from "./ajax/accept-friend.js";
 import { sendLike } from "./ajax/send-like.js";
 import { sendUnlike } from "./ajax/send-unlike.js";
 
-let Post = document.getElementById('Post-Container');
-let createpost = document.getElementById('create-post');
-let ImagesIcon = document.getElementById('Images-Icon');
-let RemovePostImage = document.getElementById('Remove-Post-Image');
-let RemovePostImage2 = document.getElementById('Remove-Post-Image2');
-let RPIContainer = document.getElementById('RPI-container');
-let VideoPost = document.getElementById('Video-Post');
-let RemovePostVideo = document.getElementById('Remove-Post-Video');
-let VideosIcon = document.getElementById('Videos-Icon');
-let SizeCounter = document.getElementById('SizeCounter');
-let MMTop = document.querySelector('.MM-Top');
-let ModalBottom2 = document.querySelector('.Modal-Bottom2');
-let MMBottom = document.querySelector('.MM-Bottom');
-let EmojiIcon = document.getElementById('Emoji-Icon');
-let emojiFloatingDiv = document.querySelector('.emoji-floating-div');
+let Post = document.getElementById("Post-Container");
+let createpost = document.getElementById("create-post");
+let ImagesIcon = document.getElementById("Images-Icon");
+let RemovePostImage = document.getElementById("Remove-Post-Image");
+let RemovePostImage2 = document.getElementById("Remove-Post-Image2");
+let RPIContainer = document.getElementById("RPI-container");
+let VideoPost = document.getElementById("Video-Post");
+let RemovePostVideo = document.getElementById("Remove-Post-Video");
+let VideosIcon = document.getElementById("Videos-Icon");
+let SizeCounter = document.getElementById("SizeCounter");
+let MMTop = document.querySelector(".MM-Top");
+let ModalBottom2 = document.querySelector(".Modal-Bottom2");
+let MMBottom = document.querySelector(".MM-Bottom");
+let EmojiIcon = document.getElementById("Emoji-Icon");
+let emojiFloatingDiv = document.querySelector(".emoji-floating-div");
 let UserPostBtn = document.getElementById("User-PostBtn");
-let postTextarea = document.getElementById('post-textarea');
-let confirmFriendObject = '';
+let postTextarea = document.getElementById("post-textarea");
+let confirmFriendObject = "";
 var confirmButtons = document.querySelectorAll(".Confirm-friend");
 
-let audienceSelect = document.getElementById('audience-select');
-let audienceSelect2 = document.getElementById('audience-select2');
-let Heart = document.querySelector('.Heart');
-let ModalOverlay = document.getElementById('Modal-Overlay');
-var customSelect = document.querySelector('.custom-select');
-var selectTrigger = customSelect.querySelector('.custom-select-trigger');
-var customOptions = customSelect.querySelectorAll('.custom-option');
+let audienceSelect = document.getElementById("audience-select");
+let audienceSelect2 = document.getElementById("audience-select2");
+let Heart = document.querySelector(".Heart");
+let ModalOverlay = document.getElementById("Modal-Overlay");
+var customSelect = document.querySelector(".custom-select");
+var selectTrigger = customSelect.querySelector(".custom-select-trigger");
+var customOptions = customSelect.querySelectorAll(".custom-option");
 
-let accountID = document.getElementById('accountID');
-let accountID2 = document.getElementById('accountID2');
-let ShareBtn = document.querySelectorAll('.Share-btn');
-let ShareOverlay = document.getElementById('Share-Overlay');
-let ShareContainer = document.getElementById('Share-Container');
-let CreateBtnNav = document.getElementById('Create-Btn-Nav');
-let hiddenSelect = document.getElementById('audience-select')
-let Logoutbtn = document.getElementById('Logout-btn');
-let LogoutOverlay = document.getElementById('Logout-Overlay');
-let Logoutcontainer = document.getElementById('Logout-container');
-let LCBack = document.getElementById('LC-Back');
+let accountID = document.getElementById("accountID");
+let accountID2 = document.getElementById("accountID2");
+let ShareBtn = document.querySelectorAll(".Share-btn");
+let ShareOverlay = document.getElementById("Share-Overlay");
+let ShareContainer = document.getElementById("Share-Container");
+let CreateBtnNav = document.getElementById("Create-Btn-Nav");
+let hiddenSelect = document.getElementById("audience-select");
+let Logoutbtn = document.getElementById("Logout-btn");
+let LogoutOverlay = document.getElementById("Logout-Overlay");
+let Logoutcontainer = document.getElementById("Logout-container");
+let LCBack = document.getElementById("LC-Back");
 
 let hasCalled = false;
 
-Logoutbtn.addEventListener('click', async() =>{
-    const { logout } = await import ("./modal/logout.js");
-    logout();
-})
-
-LCBack.addEventListener('click', async() =>{
-    LogoutOverlay.style.display = "none";
-    document.body.style.overflowY = "auto";
-})
-
-SearchNav.addEventListener('click', async() =>{
-    const { ShowSearch } = await import ("./modal/show-search.js");
-
-    ShowSearch();
-})
-
-CreateBtnNav.addEventListener('click', async() =>{
-    const { switchModal, getEmoji } = await import ("./modal/switchmodal.js");
-
-    switchModal();
-    getEmoji();
-})
-
-
-createpost.addEventListener('click', async() =>{
-    const { switchModal, getEmoji } = await import ("./modal/switchmodal.js");
-
-    switchModal();
-    getEmoji();
-})
-
-
-ImagesIcon.addEventListener('click', async () => {
-    const inputValue = document.getElementById("Image-Post").value;
-
-    if (!inputValue && !hasCalled) {
-        hasCalled = true;
-        const { addImagePost } = await import("./modal/add-image-option.js");
-        addImagePost();
-
-    } else {
-        hasCalled = false;
-        RPIContainer.style.display = "flex";
-        const { addImagePost } = await import("./modal/add-image-option.js");
-        addImagePost();
-    }
+Logoutbtn.addEventListener("click", async () => {
+  const { logout } = await import("./modal/logout.js");
+  logout();
 });
 
-RemovePostImage.addEventListener('click', async() =>{
-    const { removeImagePost } = await import ("./modal/remove-photo-option.js");
-    removeImagePost();
-})
+LCBack.addEventListener("click", async () => {
+  LogoutOverlay.style.display = "none";
+  document.body.style.overflowY = "auto";
+});
 
-RemovePostImage2.addEventListener('click', async() =>{
-    const { removeImageSelection } = await import ("./modal/remove-image-selection.js");
-    removeImageSelection();
-})
+SearchNav.addEventListener("click", async () => {
+  const { ShowSearch } = await import("./modal/show-search.js");
+
+  ShowSearch();
+});
+
+CreateBtnNav.addEventListener("click", async () => {
+  const { switchModal, getEmoji } = await import("./modal/switchmodal.js");
+
+  switchModal();
+  getEmoji();
+});
+
+createpost.addEventListener("click", async () => {
+  const { switchModal, getEmoji } = await import("./modal/switchmodal.js");
+
+  switchModal();
+  getEmoji();
+});
+
+ImagesIcon.addEventListener("click", async () => {
+  const inputValue = document.getElementById("Image-Post").value;
+
+  if (!inputValue && !hasCalled) {
+    hasCalled = true;
+    const { addImagePost } = await import("./modal/add-image-option.js");
+    addImagePost();
+  } else {
+    hasCalled = false;
+    RPIContainer.style.display = "flex";
+    const { addImagePost } = await import("./modal/add-image-option.js");
+    addImagePost();
+  }
+});
+
+RemovePostImage.addEventListener("click", async () => {
+  const { removeImagePost } = await import("./modal/remove-photo-option.js");
+  removeImagePost();
+});
+
+RemovePostImage2.addEventListener("click", async () => {
+  const { removeImageSelection } = await import(
+    "./modal/remove-image-selection.js"
+  );
+  removeImageSelection();
+});
 
 /*
 VideosIcon.addEventListener('click', async() =>{
@@ -112,15 +110,15 @@ VideosIcon.addEventListener('click', async() =>{
 })
 
 */
-RemovePostVideo.addEventListener('click', async() =>{
-    const { removeVideoPost } = await import ("./modal/remove-video-option.js");
+RemovePostVideo.addEventListener("click", async () => {
+  const { removeVideoPost } = await import("./modal/remove-video-option.js");
 
-    removeVideoPost();
-})
+  removeVideoPost();
+});
 
-EmojiIcon.addEventListener('click', async() =>{
-    const { ShowEmojis } = await import ("./modal/show-emoji-overlay.js");
-    ShowEmojis();
+EmojiIcon.addEventListener("click", async () => {
+  const { ShowEmojis } = await import("./modal/show-emoji-overlay.js");
+  ShowEmojis();
 });
 
 /*
@@ -132,65 +130,58 @@ AddEmojiComment.addEventListener('click', async() =>{
 
 */
 
-
-ShareBtn.forEach(buttonShare => {
-    buttonShare.addEventListener('click', (event) => {
-        event.stopPropagation();
-        ShareOverlay.style.display = "flex";
-        console.log("Clicked share");
-    });
-});
-
-ShareContainer.addEventListener('click', function(event) {
+ShareBtn.forEach((buttonShare) => {
+  buttonShare.addEventListener("click", (event) => {
     event.stopPropagation();
+    ShareOverlay.style.display = "flex";
+    console.log("Clicked share");
+  });
 });
 
-Logoutcontainer.addEventListener('click', function(event) {
-    event.stopPropagation();
+ShareContainer.addEventListener("click", function (event) {
+  event.stopPropagation();
 });
 
-
-let ImageContainer = document.querySelector('.ImageContainer');
-
-document.addEventListener('click', function(event) {
-
-    if (!emojiFloatingDiv.contains(event.target)) {
-        HideEmojis();
-    }
-
-    if (Post) {
-        if (!Post.contains(event.target)) {
-            ModalOverlay.style.display = "none";
-        }
-    }
-
-    if (ImageContainer) {
-        if (!ImageContainer.contains(event.target)) {
-            ModalOverlay.style.display = "none";
-        }
-    }
-
-    if(!ShareContainer.contains(event.target)){
-        ShareOverlay.style.display = "none";
-    }
-
-    if (!customSelect.contains(event.target)) {
-        customSelect.classList.remove('open');
-    }
-
+Logoutcontainer.addEventListener("click", function (event) {
+  event.stopPropagation();
 });
 
+let ImageContainer = document.querySelector(".ImageContainer");
 
-function HideEmojis(){
-    emojiFloatingDiv.style.display = "none";
+document.addEventListener("click", function (event) {
+  if (!emojiFloatingDiv.contains(event.target)) {
+    HideEmojis();
+  }
+
+  if (Post) {
+    if (!Post.contains(event.target)) {
+      ModalOverlay.style.display = "none";
+    }
+  }
+
+  if (ImageContainer) {
+    if (!ImageContainer.contains(event.target)) {
+      ModalOverlay.style.display = "none";
+    }
+  }
+
+  if (!ShareContainer.contains(event.target)) {
+    ShareOverlay.style.display = "none";
+  }
+
+  if (!customSelect.contains(event.target)) {
+    customSelect.classList.remove("open");
+  }
+});
+
+function HideEmojis() {
+  emojiFloatingDiv.style.display = "none";
 }
 
-
-
-const { PostPhotos, getPhotos} = await import ("./modal/add-photos.js");
+const { PostPhotos, getPhotos } = await import("./modal/add-photos.js");
 PostPhotos(updateTotalSize);
 
-const { PostVideos, getVideos } = await import ("./modal/add-videos.js");
+const { PostVideos, getVideos } = await import("./modal/add-videos.js");
 PostVideos(updateTotalSize);
 
 const photosArray = getPhotos();
@@ -200,315 +191,295 @@ let totalUploadedSizeBytes = 0;
 let AccountID = accountID.value;
 let AudienceID = audienceSelect.value;
 
-let mediaObject = '';
-let UserCaption = '';
+let mediaObject = "";
+let UserCaption = "";
 var hashtags = [];
 
+postTextarea.addEventListener("input", function () {
+  var userCaption = postTextarea.value;
+  var words = userCaption.split(" ");
 
-postTextarea.addEventListener('input', function() {
-    var userCaption = postTextarea.value;
-    var words = userCaption.split(' ');
+  hashtags = [];
+  var caption = userCaption;
 
-    hashtags = [];
-    var caption = userCaption;
-
-    for (var i = 0; i < words.length; i++) {
-        var word = words[i];
-        if (word.startsWith('#') && !word.endsWith(' ')) {
-            hashtags.push(word.slice(1));
-            caption = caption.replace(word, '');
-        }
+  for (var i = 0; i < words.length; i++) {
+    var word = words[i];
+    if (word.startsWith("#") && !word.endsWith(" ")) {
+      hashtags.push(word.slice(1));
+      caption = caption.replace(word, "");
     }
+  }
 
-    updateMediaObject(caption);
-
+  updateMediaObject(caption);
 });
 
-accountID.addEventListener('change', function() {
-    AccountID = accountID.value;
-    updateMediaObject();
+accountID.addEventListener("change", function () {
+  AccountID = accountID.value;
+  updateMediaObject();
 });
-
-
 
 /*-----------------------------------Custom Audience Dropdown --------------------------------------*/
 
-
-selectTrigger.addEventListener('click', function () {
-    customSelect.classList.toggle('open');
+selectTrigger.addEventListener("click", function () {
+  customSelect.classList.toggle("open");
 });
 
 customOptions.forEach(function (option) {
-    option.addEventListener('click', function () {
-        var value = this.getAttribute('data-value');
-        var img = this.getAttribute('data-img');
-        var text = this.textContent.trim();
+  option.addEventListener("click", function () {
+    var value = this.getAttribute("data-value");
+    var img = this.getAttribute("data-img");
+    var text = this.textContent.trim();
 
-        selectTrigger.querySelector('span').textContent = text;
-        hiddenSelect.value = value;
-        customSelect.classList.remove('open');
-    });
+    selectTrigger.querySelector("span").textContent = text;
+    hiddenSelect.value = value;
+    customSelect.classList.remove("open");
+  });
 });
 
-
-
 if (customOptions.length > 0) {
-    var firstOption = customOptions[0];
-    selectTrigger.querySelector('span').textContent = firstOption.textContent.trim();
-    audienceSelect.value = firstOption.getAttribute('data-value');
-    audienceSelect2.value = firstOption.getAttribute('data-value');
+  var firstOption = customOptions[0];
+  selectTrigger.querySelector("span").textContent =
+    firstOption.textContent.trim();
+  audienceSelect.value = firstOption.getAttribute("data-value");
+  audienceSelect2.value = firstOption.getAttribute("data-value");
 }
-
 
 /*------------------------------------------------------------------------------*/
 
 const placeholderTexts = [
-    "Enter your glowing caption here...",
-    "Share your glowing thoughts...",
-    "Oops, You forgot to add a glowing caption...",
-    "What's on your glowing mind?",
-    "Don't leave it blank! Write something glowing!"
+  "Enter your glowing caption here...",
+  "Share your glowing thoughts...",
+  "Oops, You forgot to add a glowing caption...",
+  "What's on your glowing mind?",
+  "Don't leave it blank! Write something glowing!",
 ];
-
 
 let placeholderIndex = 0;
 
 function updateMediaObject(caption) {
-    if (!caption.trim() && !photosArray.length >= 1) {
-        return null;
-    }
-    let mediaObject = {
-        accID: AccountID,
-        audience: hiddenSelect.value,
-        photos: photosArray,
-        videos: VideosArray,
-        caption: caption,
-        tags: hashtags,
-    };
+  if (!caption.trim() && !photosArray.length >= 1) {
+    return null;
+  }
+  let mediaObject = {
+    accID: AccountID,
+    audience: hiddenSelect.value,
+    photos: photosArray,
+    videos: VideosArray,
+    caption: caption,
+    tags: hashtags,
+  };
 
-    return mediaObject;
+  return mediaObject;
 }
 
+UserPostBtn.addEventListener("click", async () => {
+  UserPostBtn.disabled = true;
+  let caption = postTextarea.value;
+  caption = removeHashtags(caption);
+  let mediaObject = updateMediaObject(caption);
 
-UserPostBtn.addEventListener('click', async () => {
-    UserPostBtn.disabled = true;
-    let caption = postTextarea.value;
-    caption = removeHashtags(caption);
-    let mediaObject = updateMediaObject(caption);
-
-    if (mediaObject) {
-        SendPost(mediaObject);
-
+  if (mediaObject) {
+    SendPost(mediaObject);
   } else {
-        postTextarea.placeholder = placeholderTexts[placeholderIndex];
-        placeholderIndex = (placeholderIndex + 1) % placeholderTexts.length;
-        UserPostBtn.disabled = false;
-    }
+    postTextarea.placeholder = placeholderTexts[placeholderIndex];
+    placeholderIndex = (placeholderIndex + 1) % placeholderTexts.length;
+    UserPostBtn.disabled = false;
+  }
 });
 
-
 function removeHashtags(caption) {
-    const words = caption.split(' ');
-    const filteredWords = words.filter(word => !word.startsWith('#'));
-    const newCaption = filteredWords.join(' ');
-    return newCaption;
+  const words = caption.split(" ");
+  const filteredWords = words.filter((word) => !word.startsWith("#"));
+  const newCaption = filteredWords.join(" ");
+  return newCaption;
 }
 
 function formatFileSize(bytes) {
-    if (bytes < 1024) {
-        return bytes + ' bytes';
-    } else if (bytes < 1024 * 1024) {
-        return (bytes / 1024).toFixed(2) + ' KB';
-    } else {
-        return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
-    }
+  if (bytes < 1024) {
+    return bytes + " bytes";
+  } else if (bytes < 1024 * 1024) {
+    return (bytes / 1024).toFixed(2) + " KB";
+  } else {
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+  }
 }
 function updateTotalSize(fileSize) {
-    const maxSizeBytes = 25 * 1024 * 1024;
+  const maxSizeBytes = 25 * 1024 * 1024;
 
-    if (totalUploadedSizeBytes + fileSize > maxSizeBytes) {
-        alert('Total uploaded size cannot exceed 25 MB.');
-        if (UserPostBtn) {
-            UserPostBtn.disabled = true;
-        }
-        return false;
+  if (totalUploadedSizeBytes + fileSize > maxSizeBytes) {
+    alert("Total uploaded size cannot exceed 25 MB.");
+    if (UserPostBtn) {
+      UserPostBtn.disabled = true;
     }
+    return false;
+  }
 
-    ModalBottom2.style.height = "7rem";
-    MMBottom.style.height = "50%";
-    MMTop.style.display = "flex";
-    totalUploadedSizeBytes += fileSize;
+  ModalBottom2.style.height = "7rem";
+  MMBottom.style.height = "50%";
+  MMTop.style.display = "flex";
+  totalUploadedSizeBytes += fileSize;
 
-    SizeCounter.innerHTML = formatFileSize(totalUploadedSizeBytes) + "&nbsp;/&nbsp;25 MB";
-    console.log(`Total uploaded size: ${formatFileSize(totalUploadedSizeBytes)}`);
+  SizeCounter.innerHTML =
+    formatFileSize(totalUploadedSizeBytes) + "&nbsp;/&nbsp;25 MB";
+  console.log(`Total uploaded size: ${formatFileSize(totalUploadedSizeBytes)}`);
 
-    return true;
+  return true;
 }
 
+confirmButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    var notifId = button.getAttribute("data-notif-id");
+    var friendID = button.getAttribute("friendrequestID");
 
+    confirmFriendObject = {
+      NotifId: notifId,
+      friend_requestID: friendID,
+    };
 
-    confirmButtons.forEach(function(button) {
-        button.addEventListener("click", function() {
-            var notifId = button.getAttribute("data-notif-id");
-            var friendID = button.getAttribute("friendrequestID");
-
-            confirmFriendObject ={
-                NotifId: notifId,
-                friend_requestID: friendID,
-
-            }
-
-            AcceptFriend(confirmFriendObject);
-            console.log(confirmFriendObject)
-        });
-    });
-
+    AcceptFriend(confirmFriendObject);
+    console.log(confirmFriendObject);
+  });
+});
 
 /*--------------------Like Functionality---------------------------*/
 
 function initializeButtons() {
-    let glowReactButtons = document.querySelectorAll('.glow-react');
-    let changeGlowButtons = document.querySelectorAll('.ChangeGlow');
+  let glowReactButtons = document.querySelectorAll(".glow-react");
+  let changeGlowButtons = document.querySelectorAll(".ChangeGlow");
 
-    glowReactButtons.forEach(glow_button => {
-        glow_button.addEventListener('click', function() {
-            handleLike(glow_button);
-        });
+  glowReactButtons.forEach((glow_button) => {
+    glow_button.addEventListener("click", function () {
+      handleLike(glow_button);
     });
+  });
 
-    changeGlowButtons.forEach(changeGlow => {
-        changeGlow.addEventListener('click', function() {
-            handleUnlike(changeGlow);
-        });
+  changeGlowButtons.forEach((changeGlow) => {
+    changeGlow.addEventListener("click", function () {
+      handleUnlike(changeGlow);
     });
+  });
 }
 
 function handleLike(glow_button) {
-    const parentDiv = glow_button.parentNode;
-    const dataPost_ID = parentDiv.getAttribute("data-PostIDD");
-    const dataAcc_ID = parentDiv.getAttribute("data-AccID");
+  const parentDiv = glow_button.parentNode;
+  const dataPost_ID = parentDiv.getAttribute("data-PostIDD");
+  const dataAcc_ID = parentDiv.getAttribute("data-AccID");
 
-    glow_button.style.display = "none";
-    let ChangeGlow = parentDiv.querySelector('.ChangeGlow');
+  glow_button.style.display = "none";
+  let ChangeGlow = parentDiv.querySelector(".ChangeGlow");
 
-    if (!ChangeGlow) {
-        ChangeGlow = document.createElement('span');
-        ChangeGlow.className = "ChangeGlow";
-        ChangeGlow.innerHTML = "&#10022;";
-        ChangeGlow.style.width = "2.5rem";
-        ChangeGlow.style.height = "2.4rem";
-        ChangeGlow.style.userSelect = "none";
-        parentDiv.appendChild(ChangeGlow);
-        ChangeGlow.addEventListener('click', function() {
-            handleUnlike(ChangeGlow);
-        });
-    } else {
-        ChangeGlow.style.display = "inline";
-    }
+  if (!ChangeGlow) {
+    ChangeGlow = document.createElement("span");
+    ChangeGlow.className = "ChangeGlow";
+    ChangeGlow.innerHTML = "&#10022;";
+    ChangeGlow.style.width = "2.5rem";
+    ChangeGlow.style.height = "2.4rem";
+    ChangeGlow.style.userSelect = "none";
+    parentDiv.appendChild(ChangeGlow);
+    ChangeGlow.addEventListener("click", function () {
+      handleUnlike(ChangeGlow);
+    });
+  } else {
+    ChangeGlow.style.display = "inline";
+  }
 
-    let LikeObject = {
-        accID: dataAcc_ID,
-        postID: dataPost_ID,
-    };
+  let LikeObject = {
+    accID: dataAcc_ID,
+    postID: dataPost_ID,
+  };
 
-    sendLike(LikeObject, dataPost_ID);
-    console.log("Like");
+  sendLike(LikeObject, dataPost_ID);
+  console.log("Like");
 
-    ChangeGlow.classList.add('animate-heart');
+  ChangeGlow.classList.add("animate-heart");
 }
 
 function handleUnlike(changeGlow) {
-    const parentDiv = changeGlow.parentNode;
-    const dataPost_ID = parentDiv.getAttribute("data-PostIDD");
+  const parentDiv = changeGlow.parentNode;
+  const dataPost_ID = parentDiv.getAttribute("data-PostIDD");
 
-    changeGlow.style.display = "none";
-    let glowButton = parentDiv.querySelector('.glow-react');
-    if (!glowButton) {
-        glowButton = document.createElement('img');
-        glowButton.className = "glow-react";
-        glowButton.src = "static/images/glow4.png";
-        glowButton.alt = "Glow";
-        parentDiv.appendChild(glowButton);
-        glowButton.addEventListener('click', function() {
-            handleLike(glowButton);
-        });
-    } else {
-        glowButton.style.display = "block";
-    }
+  changeGlow.style.display = "none";
+  let glowButton = parentDiv.querySelector(".glow-react");
+  if (!glowButton) {
+    glowButton = document.createElement("img");
+    glowButton.className = "glow-react";
+    glowButton.src = "static/images/glow4.png";
+    glowButton.alt = "Glow";
+    parentDiv.appendChild(glowButton);
+    glowButton.addEventListener("click", function () {
+      handleLike(glowButton);
+    });
+  } else {
+    glowButton.style.display = "block";
+  }
 
-    let LikeObject = {
-        postID: dataPost_ID,
-    };
+  let LikeObject = {
+    postID: dataPost_ID,
+  };
 
-    sendUnlike(LikeObject, dataPost_ID);
-    console.log("Unlike");
-    console.log(dataPost_ID);
+  sendUnlike(LikeObject, dataPost_ID);
+  console.log("Unlike");
+  console.log(dataPost_ID);
 }
 
 initializeButtons();
 
-
 /*-------------------------------Edit Profile ------------------------------------------*/
-let EPCoverPhoto = document.querySelector('.EP-CoverPhoto');
-let EPFirstname = document.getElementById('EP-Firstname');
-let EPLastname = document.getElementById('EP-Lastname');
-let EPUsername = document.getElementById('EP-Username');
-let EPBio = document.getElementById('EP-Bio');
-let EPBirthday = document.getElementById('EP-Birthday');
-let SaveEditProfile = document.getElementById('Save-EditProfile');
-let EditMyProfile = document.getElementById('Edit-MyProfile');
-let EditProfileOverlay = document.getElementById('EditProfile-Overlay');
-let EditProfileObject = '';
+let EPCoverPhoto = document.querySelector(".EP-CoverPhoto");
+let EPFirstname = document.getElementById("EP-Firstname");
+let EPLastname = document.getElementById("EP-Lastname");
+let EPUsername = document.getElementById("EP-Username");
+let EPBio = document.getElementById("EP-Bio");
+let EPBirthday = document.getElementById("EP-Birthday");
+let SaveEditProfile = document.getElementById("Save-EditProfile");
+let EditMyProfile = document.getElementById("Edit-MyProfile");
+let EditProfileOverlay = document.getElementById("EditProfile-Overlay");
+let EditProfileObject = "";
 
-
-const { AddCoverPhoto, getCoverPhoto } = await import ("./modal/add-coverphoto.js");
-const { AddProfilePhoto, getProfilePhoto } = await import ("./modal/add-profile-photo.js");
+const { AddCoverPhoto, getCoverPhoto } = await import(
+  "./modal/add-coverphoto.js"
+);
+const { AddProfilePhoto, getProfilePhoto } = await import(
+  "./modal/add-profile-photo.js"
+);
 
 AddCoverPhoto();
 AddProfilePhoto();
 
+EPBio.addEventListener("change", function () {
+  let epBio = EPBio.value;
+  UpdateEditObject();
+});
 
-EPBio.addEventListener('change', function(){
-    let epBio = EPBio.value;
-    UpdateEditObject();
-})
+EPBirthday.addEventListener("change", function () {
+  let epBirthday = EPBirthday.value;
+  UpdateEditObject();
+});
 
-EPBirthday.addEventListener('change', function(){
-    let epBirthday = EPBirthday.value;
-    UpdateEditObject();
-})
+function UpdateEditObject() {
+  const User_CoverPhoto = getCoverPhoto();
+  const User_ProfilePhoto = getProfilePhoto();
 
-function UpdateEditObject(){
-    const User_CoverPhoto = getCoverPhoto();
-    const User_ProfilePhoto = getProfilePhoto();
-
-    EditProfileObject = {
-        accID: AccountID,
-        firstname: EPFirstname.value,
-        lastname: EPLastname.value,
-        username: EPUsername.value,
-        bio: EPBio.value,
-        birthday: EPBirthday.value,
-        cover_photo: User_CoverPhoto,
-        profile_photo: User_ProfilePhoto
-    }
-    return EditProfileObject;
+  EditProfileObject = {
+    accID: AccountID,
+    firstname: EPFirstname.value,
+    lastname: EPLastname.value,
+    username: EPUsername.value,
+    bio: EPBio.value,
+    birthday: EPBirthday.value,
+    cover_photo: User_CoverPhoto,
+    profile_photo: User_ProfilePhoto,
+  };
+  return EditProfileObject;
 }
 
-
-SaveEditProfile.addEventListener('click', function(){
-    SaveEditProfile.innerHTML = "Saving..."
-    UpdateEditObject();
-    SendEditProfile(EditProfileObject, AccountID);
-})
-
-
+SaveEditProfile.addEventListener("click", function () {
+  SaveEditProfile.innerHTML = "Saving...";
+  UpdateEditObject();
+  SendEditProfile(EditProfileObject, AccountID);
+});
 
 /*----------------------------Share-btn-Functionality----------------------------*/
-
-
-
-
 
 /*---------------------------- WebSocket -------------------------------*/
 /*

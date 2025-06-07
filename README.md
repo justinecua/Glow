@@ -18,4 +18,8 @@
 
 <hr>
 
+<<<<<<< HEAD
 <p>© 2024 Glow. All rights reserved Join us in creating a great community!</p>
+=======
+<p>© 2024 Glow. All rights reserved. Join us in creating a great community!</p>
+>>>>>>> 5d3d5850e63c80939288d10be922a761d063bf92

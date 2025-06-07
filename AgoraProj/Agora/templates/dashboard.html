@@ -1,29 +1,25 @@
-{% extends "master.html" %}
-{% load static %}
-{% load account %}
-
-{% block css %}
-<link rel="stylesheet" href="{% static 'home/dashboard.css' %}">
+{% extends "master.html" %} {% load static %} {% load account %} {% block css %}
+<link rel="stylesheet" href="{% static 'home/dashboard.css' %}" />
 <script type="module" src="{% static 'js/ForYou.js' %}"></script>
 <script type="module" src="{% static 'js/toggle.js' %}"></script>
 <script type="module" src="{% static 'js/search.js' %}"></script>
-<link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<link
+  href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap"
+  rel="stylesheet"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-{% endblock %}
-
-{% block content %}
-{% include "modal/loader.html" %}
-{% include "modal/create-post.html" %}
-{% include "modal/create-comment.html" %}
-{% include "modal/create-share.html" %}
-{% include "modal/edit-userprofile.html" %}
-
-{% if is_new_user %}
+{% endblock %} {% block content %} {% include "modal/loader.html" %} {% include
+"modal/create-post.html" %} {% include "modal/create-comment.html" %} {% include
+"modal/create-share.html" %} {% include "modal/edit-userprofile.html" %} {% if
+is_new_user %}
 <style>
-    body {
-        overflow-y: hidden;
-    }
+  body {
+    overflow-y: hidden;
+  }
 </style>
 {% include "modal/new-user.html" %}
 <script type="module" src="{% static 'js/main-new-user.js' %}"></script>
@@ -32,79 +28,84 @@
 {% endif %}
 
 <div class="Top-Options">
-    <div class="Center-Top">
-
-    </div>
+  <div class="Center-Top"></div>
 </div>
 
 <div id="Logo-Overlay">
-    <img src="https://ik.imagekit.io/b9bdd5j68/glow%20logo5.png/tr:q-100,tr:w-200,h-200" alt="">
+  <img
+    src="https://ik.imagekit.io/b9bdd5j68/glow%20logo5.png/tr:q-100,tr:w-200,h-200"
+    alt=""
+  />
 </div>
 <div id="root">
-    {% if request.user.is_authenticated %}
-    {% include "account/logout.html" %}
-    {% include "nav.html" %}
-    <div id="Bottom-loading-posts">
-        <p>Please Wait...</p>
-    </div>
-    <div class="responsive">
-
-        <div class="NCenter">
-            <div class="Center-Top3">
-                <div class="loader"></div>
+  {% if request.user.is_authenticated %} {% include "account/logout.html" %} {%
+  include "nav.html" %}
+  <div id="Bottom-loading-posts">
+    <p>Please Wait...</p>
+  </div>
+  <div class="responsive">
+    <div class="NCenter">
+      <div class="Center-Top3">
+        <div class="loader"></div>
+      </div>
+      <div class="NCenter-cont">
+        <div class="Center-Top2"></div>
+        <input
+          id="accountID"
+          type="text"
+          value="{{accountInfo.id}}"
+          style="display: none"
+          ;
+        />
+        <div class="Post-Container">
+          <div class="PC-Left">
+            <div class="PCL-Top">
+              {% if is_new_user %}
+              <a href="/myprofile/{{ is_new_user.id }}">
+                <img
+                  src="../static/images/default-avatar-profile-picture-male-icon.png"
+                  alt="{{ request.user.username }}"
+                />
+              </a>
+              {% else %}
+              <a href="/myprofile/{{ accountInfo.id }}">
+                <img src="{{ accountInfo.profile_photo }}" />
+              </a>
+              {% endif %}
             </div>
-            <div class="NCenter-cont">
-                <div class="Center-Top2">
-
-                </div>
-                <input id="accountID" type="text" value="{{accountInfo.id}}" style="display:none" ;>
-                <div class="Post-Container">
-                    <div class="PC-Left">
-                        <div class="PCL-Top">
-                            {% if is_new_user %}
-                            <a href="/myprofile/{{ is_new_user.id }}">
-                                <img src="../static/images/default-avatar-profile-picture-male-icon.png"
-                                alt="{{ request.user.username }}">
-                            </a>
-                            {% else %}
-                            <a href="/myprofile/{{ accountInfo.id }}">
-                                <img src="{{ accountInfo.profile_photo }}">
-                            </a>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <p id="currentUserId" data-userId="{{ accountInfo.id }}"></p>
-                    <div class="PC-Right">
-                        <div class="PCR-Top">
-                            <input type="text" id="create-post" readonly
-                                placeholder="Tell your friends about your thoughts">
-                        </div>
-
-                    </div>
-                </div>
+          </div>
+          <p id="currentUserId" data-userId="{{ accountInfo.id }}"></p>
+          <div class="PC-Right">
+            <div class="PCR-Top">
+              <input
+                type="text"
+                id="create-post"
+                readonly
+                placeholder="Tell your friends about your thoughts"
+              />
             </div>
-
-            <div class="NCenter-content">
-            </div>
-
-            <div class="NCenter-content2">
-            </div>
+          </div>
         </div>
-        <div id="messages">Successfully Posted!</div>
-        {% include "nav-right.html" %}
-        {% endif %}
+      </div>
+
+      <div class="NCenter-content"></div>
+
+      <div class="NCenter-content2"></div>
     </div>
+    <div id="messages">Successfully Posted!</div>
+    {% include "nav-right.html" %} {% endif %}
+  </div>
 </div>
 
 <script>
-    var swiper = new Swiper(".mySwiper", {
-        slidesPerView: 6,
-        spaceBetween: 30,
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-    });
+  var swiper = new Swiper(".mySwiper", {
+    slidesPerView: 6,
+    spaceBetween: 30,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
 </script>
 
 {% endblock %}

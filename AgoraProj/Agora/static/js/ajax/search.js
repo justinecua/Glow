@@ -15,7 +15,7 @@ export function SearchResults(searchInfo) {
                 if (response.status === "success") {
                     console.log("Post successful: " + response.message);
                     let Queryresults = response.results;
-                    let displayedTags = new Set(); 
+                    let displayedTags = new Set();
 
                     Queryresults.forEach((result, index) => {
                         let ResultId = `Result-Search-${result.type}-${result.id}`;
@@ -46,7 +46,7 @@ export function SearchResults(searchInfo) {
                                     tag.innerHTML = "#" + result.tag;
 
                                     Result.appendChild(tag);
-                                    
+
                                     Result.addEventListener('click', () => {
                                         window.location.href = `/tags/${result.id}`;
                                     });
