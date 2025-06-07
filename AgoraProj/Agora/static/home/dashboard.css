@@ -741,32 +741,6 @@ input:focus-visible+.slider {
   position: fixed;
 }
 
-.Center-Top {
-
-  height: 100%;
-  display: flex;
-  font-family: "Work Sans", sans-serif;
-  font-weight: 600;
-  font-size: clamp(0.7rem, 0.9vw, 0.8rem);
-  position: relative;
-  background-color: var(--nav-color);
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-  z-index: 4;
-}
-
-.Center-Top2 {
-  height: 3.7rem;
-}
-
-
-.Center-Top3 {
-  display: none;
-  justify-content: center;
-  align-items: center;
-  margin-top: 4rem;
-}
 
 #Bottom-loading-posts {
   width: 100%;
@@ -5077,6 +5051,24 @@ footer img {
   .EP-Content {
     width: 60rem;
   }
+
+  footer{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+   .footerLeft {
+    display: flex;
+    width: auto;
+
+  }
+
+  .footerRight {
+    width: auto;
+    display: flex;
+  }
+
+
 }
 
 @media (max-width: 1100px) {
@@ -5528,6 +5520,8 @@ footer img {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 77rem;
+
   }
 
 
@@ -5546,13 +5540,13 @@ footer img {
   .Nav-Cont {
     display: block;
   }
+
+
 }
 
 @media (max-width: 670px) {
 
-  .Center-Top2 {
-    height: 58rem;
-  }
+
 
   .responsive {
     max-width: 500px;
@@ -5713,13 +5707,12 @@ footer img {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 68rem;
+   }
+
+   #root{
+   width: 100%;
   }
-
-
-  .Post-Container {
-    width: 27rem;
-  }
-
   .Center-Top {
     width: 27rem;
   }
@@ -5734,13 +5727,9 @@ footer img {
 }
 
 @media (max-width: 600px) {
+  html, body {
+    overflow-x: hidden; 
 
-  .Center-Top2 {
-    height: 53.5rem;
-  }
-
-  .responsive {
-    max-width: 500px;
   }
 
   #SearchNav {
@@ -5915,24 +5904,35 @@ footer img {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 67.5rem;
+    width: 100%;
   }
 
-
-  #Post-Container {
-    width: 25rem;
+  .NCenter-content{
+    width: 100%;
+       display: flex;
+    align-items: center;
+    justify-content: center; 
+  }
+  
+  #root{
+    width: 100%;
   }
 
-  .Post-Container {
-    width: 25rem;
+  footer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
-  .Center-Top {
-    width: 25rem;
+  .footerRight{
+     margin-left: 10%;
+   }
+
+  .footerLeft p{
+    display: none;
   }
 
-  .User-Post-Container {
-    width: 25rem;
-  }
 
 }
 

@@ -2,8 +2,7 @@ import { fetchForYou } from "./ajax/fetch-ForYou_guest.js";
 import { fetchFriendPosts } from "./ajax/fetch-friends-posts.js";
 import { loading } from "./ajax/fetch-ForYou_guest.js";
 
-let ForYou = document.getElementById('For-You');
-let Following = document.getElementById('Following');
+
 let NCenterContent = document.querySelector('.NCenter-content');
 let NCenterContent2 = document.querySelector('.NCenter-content2');
 let Bottomloadingposts = document.getElementById('Bottom-loading-posts');
@@ -24,35 +23,12 @@ function allPostsInView() {
 //fetchNewPosts();
 document.addEventListener('DOMContentLoaded', function() {
     fetchForYou();
-    ForYou.classList.add('active');
-    Following.classList.remove('active');
-    ForYou.addEventListener('click', handleForYouClick);
-    Following.addEventListener('click', handleFollowingClick);
+
     window.addEventListener('scroll', handleScroll);
 
 });
 
-function handleForYouClick() {
-    NCenterContent.style.display = "flex";
-    NCenterContent2.style.display = "none";
-    ForYou.classList.add('active');
-    Following.classList.remove('active');
-    if (!forYouPostsFetched) {
-        fetchForYou();
-        forYouPostsFetched = true;
-    }
-}
 
-function handleFollowingClick() {
-    NCenterContent.style.display = "none";
-    NCenterContent2.style.display = "flex";
-    ForYou.classList.remove('active');
-    Following.classList.add('active');
-    if (!friendPostsFetched) {
-        fetchFriendPosts();
-        friendPostsFetched = true;
-    }
-}
 
 function handleScroll() {
     checkScroll();

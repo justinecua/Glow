@@ -31,7 +31,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'glowph.tech', 'www.glowph.tech', '192.168.18.11']
+ALLOWED_HOSTS = ['*']
 
 SITE_ID = 1
 # Application definition
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'imagekit',
     'rest_framework',
+    'dbbackup'
 ]
 
 
@@ -95,6 +96,7 @@ WSGI_APPLICATION = 'AgoraProj.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -102,7 +104,7 @@ DATABASES = {
     }
 }
 
-"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -119,6 +121,18 @@ DATABASES = {
 }
 
 """
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'glow',
+        'USER': 'postgres',
+        'PASSWORD': 'domain09',
+        'HOST': 'localhost',
+        'PORT': '5432',  
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -208,3 +222,12 @@ IMAGEKIT_URL_ENDPOINT = config("IMAGEKIT_URL_ENDPOINT")
 DATA_UPLOAD_MAX_MEMORY_SIZE = 50 * 1024 * 1024
 
 ALLOW_ADMIN = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}

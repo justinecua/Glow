@@ -20,6 +20,10 @@ from django.shortcuts import render
 from django.urls import path, include
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 def permission_denied(request):
     return render(request, '403.html', status=403)
@@ -27,6 +31,8 @@ def permission_denied(request):
 urlpatterns = [
     path('', include('Agora.urls')),
     path('', TemplateView.as_view(template_name='index.html'), name='home'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('account/login/', auth_views.LoginView.as_view(template_name='account/login.html'), name='login'),
     path('account/signup/', TemplateView.as_view(template_name='account/signup.html'), name='signup'),
     path('account/logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),

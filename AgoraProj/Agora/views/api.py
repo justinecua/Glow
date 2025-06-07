@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
 from django.contrib.auth import authenticate, login
 from django.utils import timezone
+from rest_framework import status
 
 class getrandomPosts(APIView):
     def get(self, request):
@@ -77,11 +78,7 @@ class SignupView(APIView):
         
         return Response({"message": "Authentication failed."}, status=status.HTTP_400_BAD_REQUEST)
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from django.utils.timezone import now
-from rest_framework import status
+
 
 class LoginApiView(APIView):
     """
@@ -146,4 +143,6 @@ class LoginApiView(APIView):
                 {"status": "error", "message": f"An error occurred: {str(e)}"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+
 
